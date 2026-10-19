@@ -245,6 +245,88 @@
   /* Groups (Group League) */
   .lg-mine { display:flex; gap:14px; align-items:center; margin:18px 0 0; padding:16px; border-radius:22px; background:#fff; border:2px solid var(--gc); box-shadow:0 14px 30px rgba(46,26,120,.12); }
   .lg-mine .lg-medal { font:800 30px/1 var(--head); min-width:46px; height:46px; border-radius:50%; display:grid; place-items:center; background:var(--gc); color:#fff; flex:none; }
+  /* ---------- 👑 Group leaders (inside the Groups tab) ---------- */
+  .ld-seg { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin:16px 0 0; padding:5px; background:#fff; border:1px solid var(--line); border-radius:18px; box-shadow:0 2px 0 var(--line); }
+  .ld-seg.two { grid-template-columns:repeat(2,1fr); }
+  .ld-seg button { border:0; background:none; border-radius:14px; padding:10px 6px; min-height:48px; font-weight:800; font-size:14.5px; color:var(--muted); }
+  .ld-seg button.on { background:var(--gc,var(--violet)); color:#fff; }
+  .ld-badge { font-style:normal; display:inline-block; margin-left:3px; background:var(--gold); color:#3A2600; font:800 11px/1 var(--head); border-radius:999px; padding:3px 7px; vertical-align:1px; }
+  .ld-head { display:flex; gap:12px; align-items:center; margin:18px 0 0; padding:14px 16px; border-radius:20px; background:#fff; border:2px solid var(--gc); }
+  .ld-head .ld-crown { width:44px; height:44px; border-radius:14px; background:var(--gc); display:grid; place-items:center; font-size:22px; flex:none; }
+  .ld-head b { display:block; font:800 19px/1.2 var(--head); } .ld-head span { color:var(--muted); font-weight:600; font-size:14px; }
+  .ld-how { margin-top:12px; font-size:15px; line-height:1.5; } .ld-how b { color:var(--violet); }
+  .ld-prog { display:flex; justify-content:space-between; font-weight:700; font-size:14px; color:var(--muted); margin:18px 4px 0; }
+  .ld-card { background:#fff; border:1px solid var(--line); border-radius:20px; margin-top:12px; overflow:hidden; box-shadow:0 2px 0 rgba(46,26,120,.04); }
+  .ld-gh { display:flex; align-items:center; gap:12px; padding:14px 16px; border-top:6px solid var(--gc); }
+  .ld-gb { width:40px; height:40px; border-radius:12px; background:var(--gc); color:#fff; display:grid; place-items:center; font:800 18px/1 var(--head); flex:none; }
+  .ld-gn { font:800 18px/1.2 var(--head); } .ld-gs { font-size:13px; color:var(--muted); font-weight:600; }
+  .ld-done { margin-left:auto; background:var(--ok-soft); color:var(--ok); font-weight:800; font-size:13px; border-radius:999px; padding:5px 11px; white-space:nowrap; }
+  .ld-rs { padding:0 12px 4px; }
+  .ld-r { display:flex; align-items:center; gap:12px; width:100%; padding:12px; margin-bottom:8px; border:2px solid var(--line); border-radius:14px; background:#FAF9FF; text-align:left; font-size:16px; font-weight:600; min-height:54px; }
+  .ld-r .bx { width:26px; height:26px; border-radius:8px; border:2px solid #C9C3E2; background:#fff; flex:none; display:grid; place-items:center; }
+  .ld-r .bx svg { width:16px; height:16px; stroke:#fff; stroke-width:3.5; fill:none; opacity:0; }
+  .ld-r .tx { flex:1; } .ld-r .tx small { display:block; font-size:12px; font-weight:700; color:var(--muted); margin-top:2px; }
+  .ld-r .pt { font-weight:800; font-size:14px; color:var(--gc); background:#fff; border:2px solid var(--gc); border-radius:999px; padding:2px 9px; white-space:nowrap; }
+  .ld-r.on { border-color:var(--gc); background:#fff; } .ld-r.on .bx { background:var(--gc); border-color:var(--gc); } .ld-r.on .bx svg { opacity:1; }
+  .ld-r.dim { opacity:.45; } .ld-r:disabled { opacity:.4; cursor:default; }
+  .ld-foot { padding:6px 16px 16px; }
+  .ld-tot { display:flex; justify-content:space-between; font-weight:800; font-size:15px; margin-bottom:6px; } .ld-tot span { color:var(--muted); font-weight:600; }
+  .ld-bar { height:10px; border-radius:999px; background:#F1EEFB; overflow:hidden; } .ld-bar i { display:block; height:100%; background:var(--gc); border-radius:999px; }
+  .ld-sent { list-style:none; margin:0; padding:0 16px 14px; } .ld-sent li { padding:6px 0; font-size:15px; border-top:1px dashed var(--line); } .ld-sent li:first-child { border-top:0; } .ld-sent li::before { content:'✓ '; color:var(--ok); font-weight:800; }
+  .ld-go { width:100%; border:0; border-radius:16px; padding:14px; min-height:54px; font-weight:800; font-size:16px; background:var(--gc,var(--violet)); color:#fff; }
+  .ld-go:disabled { opacity:.55; cursor:default; } .ld-go.armed { background:var(--ink); }
+  .ld-sendbar { position:sticky; bottom:calc(var(--dock) + 14px + env(safe-area-inset-bottom,0px)); z-index:5; margin-top:16px; background:#fff; border:1px solid var(--line); border-radius:20px; padding:10px 12px 12px; box-shadow:0 10px 28px rgba(46,26,120,.16); }
+  .ld-chips { display:flex; flex-wrap:wrap; justify-content:center; gap:4px; margin-bottom:8px; }
+  .ld-chip { padding:3px 10px; border-radius:999px; font-size:13px; font-weight:700; color:#fff; background:var(--gc); } .ld-chip.zero { background:none; color:var(--muted); box-shadow:inset 0 0 0 2px var(--line); }
+  .ld-note { margin-top:6px; font-size:12.5px; font-weight:600; color:var(--muted); text-align:center; }
+  .ld-grid { display:grid; gap:10px; margin-top:14px; }
+  .ld-gbtn { display:block; width:100%; min-height:64px; padding:12px 16px; border:3px solid var(--gc); border-left-width:10px; border-radius:16px; background:#fff; text-align:left; }
+  .ld-gbtn b { display:block; font:800 18px/1.2 var(--head); } .ld-gbtn span { display:block; margin-top:3px; font-size:14px; font-weight:600; color:var(--muted); }
+  .ld-gbtn.on { background:var(--gc); color:#fff; } .ld-gbtn.on span { color:rgba(255,255,255,.92); } .ld-gbtn.on b::before { content:'✓ '; }
+  .ld-big { text-align:center; padding:24px 18px; } .ld-big .e { font-size:42px; } .ld-big h3 { margin:6px 0 4px; font-size:20px; }
+  .ld-wallet { display:flex; align-items:center; gap:14px; margin-top:16px; padding:16px; border-radius:20px; background:#fff; border:1px solid var(--line); }
+  .ld-wallet .coin { width:52px; height:52px; border-radius:50%; background:var(--gold); color:#fff; display:grid; place-items:center; font-size:24px; flex:none; }
+  .ld-wallet b { display:block; font:800 28px/1.1 var(--head); } .ld-wallet span { font-size:13.5px; color:var(--muted); font-weight:600; }
+  .ld-acc { margin-top:12px; padding:14px 16px; border-radius:16px; font-size:15px; line-height:1.45; } .ld-acc b { display:block; margin-bottom:2px; } .ld-acc span { display:block; font-size:14px; font-weight:600; }
+  .ld-acc.ok { background:var(--ok-soft); color:#0E5E44; } .ld-acc.no { background:var(--warn-soft); color:var(--warn); }
+  .ld-req { padding:14px 16px; border-top:1px solid var(--line); } .ld-req:first-child { border-top:0; }
+  .ld-req.fresh { background:#FFFBEA; }
+  .ld-rq1 { display:flex; align-items:flex-start; gap:10px; } .ld-rq1 .tx { flex:1; min-width:0; } .ld-rq1 .tx b { display:block; font-size:16px; } .ld-rq1 .tx span { font-size:12.5px; color:var(--muted); font-weight:600; }
+  .ld-st { font-size:12.5px; font-weight:800; border-radius:999px; padding:5px 10px; white-space:nowrap; }
+  .ld-st.Pending { background:#FFF4D6; color:#8A5A00; } .ld-st.Approved { background:#E4EDFC; color:#1C5FB8; } .ld-st.Given { background:var(--ok-soft); color:var(--ok); } .ld-st.Rejected { background:var(--danger-soft); color:var(--danger); }
+  .ld-steps { display:flex; align-items:center; margin:12px 2px 2px; }
+  .ld-steps .s { display:flex; flex-direction:column; align-items:center; gap:4px; font-size:11.5px; font-weight:700; color:var(--muted); width:64px; flex:none; text-align:center; }
+  .ld-steps .s i { width:22px; height:22px; border-radius:50%; border:2.5px solid #D5CFEA; background:#fff; display:grid; place-items:center; font-style:normal; font-size:12px; font-weight:800; color:#fff; }
+  .ld-steps .s.on { color:var(--ink); } .ld-steps .s.on i { background:var(--ok); border-color:var(--ok); }
+  .ld-steps .ln { flex:1; height:3px; border-radius:3px; background:#E4DEF6; margin:0 -14px 18px; } .ld-steps .ln.on { background:var(--ok); }
+  .ld-tnote { margin-top:8px; padding:8px 12px; border-radius:12px; background:var(--lilac); font-size:14px; } .ld-tnote b { color:var(--violet); }
+  .ld-rej { margin-top:8px; font-size:13.5px; font-weight:700; color:var(--danger); }
+  .ld-r.used { opacity:.5; } .ld-r.used .pt { border-style:dashed; }
+  .ld-ev { padding:0 12px 4px; } .ld-ev label { display:block; font-weight:800; font-size:14px; margin:4px 4px 6px; }
+  .ld-ev textarea { width:100%; min-height:64px; border:2px solid var(--line); border-radius:14px; padding:10px 12px; font-size:16px; line-height:1.4; resize:vertical; background:#fff; }
+  .ld-ev textarea:focus { outline:none; border-color:var(--gc); }
+  .ld-ev .cnt { font-size:12.5px; font-weight:700; color:var(--muted); margin:4px 4px 0; } .ld-ev .cnt.ok { color:var(--ok); }
+  .ld-said { margin:0 16px 14px; padding:8px 12px; border-radius:12px; background:#F6F4FF; font-size:14px; } .ld-said::before { content:'💬 '; }
+  .ld-bline { margin-top:10px; padding:9px 12px; border-radius:12px; background:#FFF8E1; color:#3A2600; font-size:14px; font-weight:600; }
+  .ld-nums { padding:2px 16px 4px; } .ld-nl { font-weight:800; font-size:14px; margin:4px 0 8px; }
+  .ld-ng { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
+  .ld-ng button { min-height:46px; border-radius:12px; border:2px solid var(--line); background:#FAF9FF; font:800 17px/1 var(--head); color:var(--ink); }
+  .ld-ng button.on { background:var(--gc); border-color:var(--gc); color:#fff; transform:scale(1.04); }
+  @media (min-width:600px) { .ld-ng { grid-template-columns:repeat(10,1fr); } }
+  .ld-addnote { border:0; background:none; color:var(--violet-2); font-weight:800; font-size:14.5px; padding:6px 4px 10px; min-height:40px; }
+  .ld-need { display:inline-block; margin-left:4px; font-size:12px; font-weight:800; color:#8A5A00; background:#FFF3D1; border-radius:999px; padding:2px 8px; }
+  .ld-opt { font-weight:600; color:var(--muted); font-size:13px; }
+  .ld-rules { margin-top:12px; padding:12px 14px; border-radius:16px; background:#fff; border:1px dashed #CFC6F2; font-size:13.5px; line-height:1.5; color:var(--muted); font-weight:600; }
+  .ld-rules b { color:var(--ink); }
+  .ld-bonus { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .ld-bonus > div { background:#fff; border:1px solid var(--line); border-radius:16px; padding:12px 14px; }
+  .ld-bonus b { display:block; font:800 15px/1.25 var(--head); } .ld-bonus span { display:block; font-size:12.5px; color:var(--muted); font-weight:600; margin-top:2px; }
+  .ld-bonus .won { border-color:var(--gold); background:#FFF8E1; }
+  .ld-bonus .ld-bar { margin-top:8px; height:8px; } .ld-bonus .ld-bar i { background:var(--gold); }
+  .lg-mix { margin-top:4px; font-size:12px; font-weight:700; color:var(--muted); }
+  .lg-mix s { opacity:.7; }
+  .ld-news { display:flex; align-items:center; gap:12px; width:100%; margin-top:16px; padding:14px 16px; border:2px solid var(--gold); background:#FFF8E1; color:#3A2600; border-radius:18px; text-align:left; font-weight:600; }
+  .ld-news .e { font-size:28px; } .ld-news b { display:block; font:800 16px/1.25 var(--head); } .ld-news span { font-size:13.5px; color:var(--gold-ink); }
   .lg-mine b { display:block; font:800 20px/1.2 var(--head); } .lg-mine span { color:var(--muted); font-weight:600; font-size:14.5px; }
   .lg-table { margin:16px 0 0; display:grid; gap:10px; }
   .lg-row { display:flex; align-items:center; gap:12px; background:#fff; border-radius:18px; padding:12px 14px; box-shadow:0 8px 20px rgba(46,26,120,.07); border-left:6px solid var(--gc); animation:pop .45s both cubic-bezier(.2,.9,.3,1.2); }
@@ -263,6 +345,33 @@
   .lg-plabel { font-size:13px; font-weight:800; color:var(--muted); }
   .lg-champ { margin-top:4px; font:800 18px/1.25 var(--head); color:var(--violet); } .lg-champ small { font-size:13px; color:var(--muted); } .lg-champ span { font:700 13px var(--body,inherit); color:var(--muted); }
   .lg-rest { margin-top:4px; font-size:13.5px; color:var(--muted); font-weight:600; }
+  /* Today: homework and updates */
+  .tabs.t7 .tabs-in { gap:1px; } .tabs.t7 button { font-size:10px; letter-spacing:-.02em; } .tabs.t7 svg { width:21px; height:21px; }
+  .subj { flex:none; display:inline-block; background:var(--sc); color:#fff; font:800 11.5px/1 var(--head); letter-spacing:.02em; padding:6px 8px; border-radius:8px; max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .hw-row { display:flex; gap:10px; align-items:flex-start; background:#fff; border-radius:16px; padding:12px; margin-top:8px; box-shadow:0 6px 16px rgba(46,26,120,.07); border-left:5px solid var(--sc); }
+  .hw-main { min-width:0; flex:1; } .hw-desc { font-size:16px; font-weight:700; line-height:1.35; word-wrap:break-word; }
+  .hw-meta { margin-top:3px; font-size:13px; color:var(--muted); font-weight:600; } .hw-meta b { color:var(--violet); }
+  .newb { font-style:normal; font:800 10px/1 var(--head); background:var(--gold); color:#3A2600; padding:3px 6px; border-radius:6px; vertical-align:2px; letter-spacing:.06em; }
+  .hw-day { margin-top:14px; } .hw-dayh { display:flex; align-items:baseline; justify-content:space-between; gap:8px; padding:0 2px; }
+  .hw-dayh b { font:800 16px/1.2 var(--head); color:var(--ink,#1E1735); } .hw-dayh span { font-size:13px; color:var(--muted); font-weight:700; }
+  .hw-day.now .hw-dayh b { color:var(--danger,#D6336C); } .hw-day.tmr .hw-dayh b { color:var(--violet-2); }
+  .td-subs { margin-top:10px; } .td-subs .chip[style] { border-color:var(--sc); } .td-subs .chip.on[style] { background:var(--sc); color:#fff; border-color:var(--sc); }
+  .up-card { display:flex; gap:12px; align-items:flex-start; background:#fff; border-radius:18px; padding:12px 14px; margin-top:10px; box-shadow:0 8px 20px rgba(46,26,120,.08); }
+  .up-card.pin { background:linear-gradient(180deg,#FFFBEA,#fff); box-shadow:0 0 0 2px var(--gold), 0 10px 24px rgba(242,174,0,.16); }
+  .dtile { flex:none; width:52px; min-height:56px; border-radius:14px; background:var(--lilac); color:var(--violet); display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .dtile b { font:800 22px/1 var(--head); } .dtile span { font:800 11px/1.2 var(--head); letter-spacing:.08em; } .dtile.ic { font-size:24px; }
+  .dtile.soon { background:var(--violet-2); color:#fff; } .t-exam .dtile.soon { background:#D6336C; } .t-holiday .dtile { background:#D3F9D8; color:#2B8A3E; }
+  .up-main { min-width:0; flex:1; } .up-top { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+  .up-type { font-size:12px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; } .up-pin { font-size:12px; font-weight:800; color:#7A5200; }
+  .up-card h4 { margin:3px 0 0; font:800 17px/1.25 var(--head); } .up-when { margin-top:2px; font-size:13.5px; color:var(--muted); font-weight:600; } .up-when b { color:var(--violet-2); }
+  .up-card p { margin:6px 0 0; font-size:14.5px; line-height:1.45; white-space:pre-wrap; word-wrap:break-word; } .up-card p.clip { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .empty.small { padding:24px 10px; }
+  .pop-hi .hand { font-size:24px; color:var(--violet-2); } .pop-hi p { margin:0; color:var(--muted); font-weight:700; }
+  .pop-sec { margin:18px 0 0; font:800 13px/1 var(--head); letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+  .pop-sub { margin:10px 2px 0; font-size:13.5px; font-weight:800; color:var(--violet); }
+  .pop-btns { display:grid; gap:8px; margin-top:20px; }
+  .td-cols { display:block; }
+  @media (min-width:1024px) { .td-cols { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:28px; align-items:start; } .td-imp { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 14px; } .tabs.t7 button { font-size:15px; letter-spacing:0; } }
   /* ---------- Pop-up sheet ---------- */
   .sheet { position:fixed; inset:0; z-index:50; background:rgba(25,14,60,.5); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); display:flex; align-items:flex-end; justify-content:center; animation:fade .2s; }
   .sheet-in { background:var(--paper); width:100%; max-width:640px; max-height:94vh; overflow:auto; border-radius:28px 28px 0 0; padding:0 18px 28px; animation:up .28s cubic-bezier(.2,.9,.3,1); }
@@ -345,6 +454,8 @@
   .viewer .stage { flex:1; display:flex; align-items:center; justify-content:center; min-height:0; padding:0 10px; }
   .viewer .stage .wm { border-radius:10px; max-width:100%; max-height:100%; display:inline-block; box-shadow:0 20px 50px rgba(0,0,0,.5); }
   .viewer .stage .wm img { display:block; max-width:calc(100vw - 20px); max-height:calc(100vh - 170px); object-fit:contain; transition:opacity .25s; }
+  .viewer .stage .wm img.fit { max-width:none; max-height:none; }
+  .turnhint { position:relative; z-index:1; align-self:center; margin-top:-4px; color:#fff; background:rgba(255,255,255,.14); border-radius:999px; padding:5px 12px; font-size:12.5px; font-weight:700; }      /* sized by fitPhoto(): as big as the screen allows, any shape */
   .viewer .stage .wm img.soft { filter:blur(6px); }
   .vbar { position:absolute; top:0; left:0; right:0; height:4px; z-index:3; background:rgba(255,255,255,.12); opacity:0; transition:opacity .3s; }
   .viewer.playing .vbar { opacity:1; }
@@ -358,6 +469,18 @@
   @media (max-width:600px) { .viewer-top { gap:6px; } .viewer-top button, .viewer-top a { min-width:48px; padding:0 12px; } }
   .protect-note { color:#CFCFE0; font-size:12px; text-align:center; padding:6px 12px 0; }
   .viewer .nav { display:flex; justify-content:space-between; padding:12px 12px calc(14px + env(safe-area-inset-bottom,0px)); gap:12px; }
+  /* Phone turned sideways: the photo gets the whole screen; the buttons float over it (‹ › at the sides) */
+  @media (orientation:landscape) and (max-height:540px) {
+    .viewer-top { position:absolute; top:0; left:0; right:0; z-index:4; padding:8px max(12px, env(safe-area-inset-right,0px)) 18px max(12px, env(safe-area-inset-left,0px)); background:linear-gradient(rgba(0,0,0,.55), transparent); }
+    .viewer-top button, .viewer-top a { min-height:40px; }
+    .viewer .stage { padding:0; }
+    .viewer .nav { position:absolute; inset:0; z-index:3; pointer-events:none; align-items:center; padding:0 max(8px, env(safe-area-inset-right,0px)) 0 max(8px, env(safe-area-inset-left,0px)); }
+    .viewer .nav button#vPrev, .viewer .nav button#vNext { pointer-events:auto; min-width:0; width:46px; min-height:64px; padding:0; font-size:0; border-radius:14px; background:rgba(0,0,0,.35); }
+    .viewer .nav button#vPrev:before, .viewer .nav button#vNext:before { font-size:32px; line-height:1; }
+    .turnhint { display:none !important; }
+    #vPrev:before { content:"‹"; } #vNext:before { content:"›"; }
+    .protect-note { position:absolute; left:50%; bottom:4px; transform:translateX(-50%); z-index:4; font-size:10.5px; padding:2px 10px; background:rgba(0,0,0,.35); border-radius:999px; white-space:nowrap; }
+  }
   .viewer .nav button, .viewer-top button, .viewer-top a { background:rgba(255,255,255,.16); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); color:#fff; border:0; border-radius:16px; min-height:50px; min-width:64px; padding:0 18px; font-weight:800; font-size:16px; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }
 
   /* ---------- PIN slips (teacher prints these) ---------- */
@@ -431,10 +554,11 @@
 </div></header>
 <main class="wrap" id="app"><div class="spin"><i></i><i></i><i></i></div></main>
 <nav class="tabs hidden noprint" id="tabs" aria-label="Class Hub sections"><div class="tabs-in">
-  <button data-tab="wall" class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/></svg>Class wall</button>
+  <button data-tab="wall" class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/></svg><span class="tl" data-full="Class wall" data-short="Wall">Class wall</span></button>
+  <button data-tab="today" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h3v3H8z"/></svg>Today<span class="dot gold hidden" id="todayDot"></span></button>
   <button data-tab="spot" class="hidden"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.8z"/></svg>Spotlight<span class="dot gold hidden" id="spotDot"></span></button>
   <button data-tab="bday" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 21h16v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 16c2 1.5 4 1.5 6 0s4-1.5 6 0 3 1 4 0"/><path d="M12 11V7"/><path d="M12 3.5c.8 1 .8 2 0 2.5-.8-.5-.8-1.5 0-2.5z"/></svg>Birthdays<span class="dot gold hidden" id="bdayDot"></span></button>
-  <button data-tab="league" class="hidden"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>Groups</button>
+  <button data-tab="league" class="hidden"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>Groups<span class="dot gold hidden" id="leagueDot"></span></button>
   <button data-tab="photos"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Photos</button>
   <button data-tab="ask"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span id="askLabel">Ask</span><span class="dot hidden" id="askDot"></span></button>
 </div></nav>
@@ -662,7 +786,7 @@ function tryPin() {
 }
 function signOut(expired, okNote) {
   stopTimers(); store("tok", null); S.token = ""; S.home = null; S.wall = null; S.msgs = []; S.msgVer = ""; S.pingVer = ""; S.albums = null; S.album = null;
-  S.imgs = {}; IMGQ.s = []; IMGQ.l = []; IMGQ.wait = {}; LEAGUE.d = null; CHEER.spot = null; CHEER.bday = null; CHEER.open = {}; if (typeof BIG === "object") for (var bk in BIG) delete BIG[bk];
+  S.imgs = {}; IMGQ.s = []; IMGQ.l = []; IMGQ.wait = {}; LEAGUE.d = null; LEAD.d = null; LEAD.sub = ""; LEAD.picks = {}; LEAD.cart = []; LEAD.sel = []; LEAD.fresh = {}; LEAD.notes = {}; LEAD.noteOpen = {}; LEAD.stamps = {}; S.popShown = false; S.planner = null; CHEER.spot = null; CHEER.bday = null; CHEER.open = {}; if (typeof BIG === "object") for (var bk in BIG) delete BIG[bk];
   window.scrollTo(0, 0);
   showLogin(expired ? "Please sign in again." : "", okNote);
 }
@@ -689,6 +813,8 @@ function loadHome() {
     S.timers.push(setInterval(ping, 60000));
     S.timers.push(setInterval(function() { if (S.tab === "ask" && !document.hidden) loadMsgs(true); }, 15000));
     go(S.tab || "wall");
+    ldDot(); ldNews();
+    if (h.popup && h.planner && !S.popShown) { S.popShown = true; showTodayPopup(h.planner); }   // the moment they come in: homework due and important news
     if (h.gallery !== false) setTimeout(function() { if (!S.albums) call("hubAlbums").then(gotAlbums).catch(function() {}); }, 1500);   // photos ready before they're opened
   }).catch(function(e) { fatal(e.message); });
 }
@@ -718,14 +844,16 @@ function ping() {
 }
 /** Which tabs show (Spotlight / Birthdays can be switched off by the teacher), and their little badges. */
 function setTabs(h) {
-  var on = { spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league }, n = 3 + (on.spot ? 1 : 0) + (on.bday ? 1 : 0) + (on.league ? 1 : 0);
+  var on = { today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader }, n = 3 + (on.today ? 1 : 0) + (on.spot ? 1 : 0) + (on.bday ? 1 : 0) + (on.league ? 1 : 0);
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button[data-tab]"), function(b) { if (b.dataset.tab in on) b.classList.toggle("hidden", !on[b.dataset.tab]); });
   document.querySelector(".tabs-in").style.gridTemplateColumns = "repeat(" + n + ",1fr)";
-  $("tabs").classList.toggle("t5", n > 3); $("tabs").classList.toggle("t6", n > 5);
+  $("tabs").classList.toggle("t5", n > 3); $("tabs").classList.toggle("t6", n > 5); $("tabs").classList.toggle("t7", n > 6);
+  Array.prototype.forEach.call(document.querySelectorAll("#tabs .tl"), function(l) { l.textContent = n > 6 && window.innerWidth < 1024 ? l.getAttribute("data-short") : l.getAttribute("data-full"); });
+  var td = $("todayDot"), tn = (h.planner && h.planner.newCount) || 0; td.textContent = tn > 9 ? "9+" : (tn || ""); td.classList.toggle("hidden", !tn);
   $("askLabel").textContent = n > 3 ? "Ask" : "Ask " + (h.teacher.length <= 12 ? h.teacher : "teacher");
   var c = h.celebrating || {};
   [["spotDot", c.spot], ["bdayDot", c.bday]].forEach(function(x) { var d = $(x[0]); d.textContent = x[1] > 9 ? "9+" : (x[1] || ""); d.classList.toggle("hidden", !x[1]); });
-  if ((S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league)) S.tab = "wall";
+  if ((S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today)) S.tab = "wall";
 }
 function go(tab) {
   stopShow();
@@ -736,6 +864,7 @@ function go(tab) {
   else if (tab === "ask") renderAsk();
   else if (tab === "spot" || tab === "bday") { var dd = $(tab + "Dot"); if (dd) dd.classList.add("hidden"); renderCheers(tab); }
   else if (tab === "league") renderLeague();
+  else if (tab === "today") { $("todayDot").classList.add("hidden"); renderToday(); }
   else renderPhotos();
 }
 $("tabs").onclick = function(e) { var b = e.target.closest("button[data-tab]"); if (b) go(b.dataset.tab); };
@@ -954,16 +1083,19 @@ document.addEventListener("visibilitychange", function() { if (!document.hidden 
 var LEAGUE = { d: null };
 function renderLeague() {
   $("topTitle").textContent = "Groups";
+  var L = S.home && S.home.leader;
+  if (L && (!LEAD.sub || (LEAD.sub === "league" && !S.home.league))) LEAD.sub = S.home.league ? "league" : "give";
+  if (L && LEAD.sub !== "league") return renderLead();
   if (LEAGUE.d) drawLeague(LEAGUE.d); else $("app").innerHTML = SPIN;
-  call("getHubLeague").then(function(d) { LEAGUE.d = d; if (S.tab === "league") drawLeague(d); })
-    .catch(function(e) { if (S.tab === "league") $("app").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+  call("getHubLeague").then(function(d) { LEAGUE.d = d; if (S.tab === "league" && LEAD.sub !== "give" && LEAD.sub !== "shop") drawLeague(d); })
+    .catch(function(e) { if (S.tab === "league" && LEAD.sub !== "give" && LEAD.sub !== "shop") $("app").innerHTML = ldSeg() + '<div class="msg err">' + esc(e.message) + '</div>'; });
 }
 function medal(p) { return p === 1 ? "🥇" : p === 2 ? "🥈" : p === 3 ? "🥉" : p; }
 function ordinal(n) { var s = ["th", "st", "nd", "rd"], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
 function drawLeague(d) {
   var u = d.unit, mine = d.groups.filter(function(g) { return g.mine; })[0], top = d.groups.length ? Math.max(d.groups[0].score, 0) : 0;
   var when = d.paused ? "⏸ The contest is paused right now." : d.label + " · ends " + esc(d.end) + (d.daysLeft != null ? " · " + (d.daysLeft <= 0 ? "last day!" : d.daysLeft === 1 ? "1 day left" : d.daysLeft + " days left") : "");
-  var html = '<div class="cheer-hero"><span class="hand">Go team!</span><h1>Group League</h1><p>' + when + '</p></div><div class="lg-cols"><div class="lg-main">';
+  var html = ldSeg() + '<div class="cheer-hero"><span class="hand">Go team!</span><h1>Group League</h1><p>' + when + '</p></div><div class="lg-cols"><div class="lg-main">';
   if (!d.groups.length) html += '<div class="empty"><span class="e">🏆</span><span class="hand">No groups yet</span>' + esc(S.home.teacher) + ' will set up the groups soon.</div>';
   else {
     if (mine) html += '<div class="lg-mine" style="--gc:' + esc(mine.colour) + '"><span class="lg-medal">' + medal(mine.position) + '</span><div><b>' + esc(mine.group) + ' is ' + ordinal(mine.position) + '</b><span>' +
@@ -972,10 +1104,12 @@ function drawLeague(d) {
       var w = top > 0 ? Math.max(4, Math.round(Math.max(g.score, 0) / top * 100)) : 4;
       return '<div class="lg-row' + (g.mine ? ' me' : '') + '" style="--gc:' + esc(g.colour) + ';animation-delay:' + Math.min(i, 8) * 0.05 + 's"><span class="lg-pos">' + medal(g.position) + '</span>' +
         '<div class="lg-mid"><div class="lg-name"><b>' + esc(g.group) + '</b>' + (g.mine ? '<em>YOUR GROUP</em>' : '') + '</div>' +
-        '<div class="lg-bar"><i style="width:' + w + '%"></i></div>' + (g.members.length ? '<div class="lg-who">' + g.members.map(esc).join(' · ') + '</div>' : '') + '</div>' +
+        '<div class="lg-bar"><i style="width:' + w + '%"></i></div>' + (g.members.length ? '<div class="lg-who">' + g.members.map(esc).join(' · ') + '</div>' : '') +
+        '</div>' +
         '<span class="lg-pts"><b>' + g.score + '</b>' + esc(u) + '</span></div>';
     }).join("") + '</div>';
-    html += '<p class="muted lg-how">⭐ Every stamp you earn adds to your group, including stamps for posting and for kind comments on the Class wall.</p>';
+    html += '<p class="muted lg-how">⭐ Every stamp you earn adds to your group, including stamps for posting and for kind comments on the Class wall.' +
+      '</p>';
   }
   html += '</div><div class="lg-side">';
   if (d.titles.length) html += '<div class="bsec">🏆 Hall of fame</div><div class="lg-titles">' + d.titles.map(function(t) {
@@ -989,6 +1123,328 @@ function drawLeague(d) {
   }).join("");
   else if (d.groups.length) html += '<div class="bsec">Past winners</div><p class="muted" style="margin:8px 2px 0">The first winners will appear here when ' + esc(d.label) + ' ends.</p>';
   $("app").innerHTML = html + '</div></div><div style="height:20px"></div>';
+}
+
+// ---------------- 👑 Group leaders: Give stamps and Prize shop (inside the Groups tab) ----------------
+// Shown only to the student ticked as their group's leader. Same rules as the old leader link.
+var LEAD = { d: null, sub: "", picks: {}, cart: [], sel: [], fresh: {}, notes: {}, noteOpen: {}, stamps: {} };
+function ldWords(t) { return String(t || "").trim().split(/\s+/).filter(function(w) { return /[A-Za-z0-9\u00C0-\uFFFF]/.test(w); }).length; }
+function ldCnt(t, min) { var n = ldWords(t); return n >= min ? '✓ Thank you!' : n ? (min - n) + ' more word' + (min - n === 1 ? '' : 's') + ' please' : 'At least ' + min + ' words'; }
+var LD_ST = { Pending: "⏳ Waiting for teacher", Approved: "👍 Approved", Given: "🎉 Given", Rejected: "Not approved" };
+var LD_TICK = '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
+function plural(n, w) { return n + " " + w + (n === 1 ? "" : "s"); }
+function ldKey() { return "ldseen_" + String(S.me || "").replace(/[^A-Za-z0-9]/g, "").slice(0, 40); }
+function ldSeen() { var v = store(ldKey()); if (!v) return null; try { return JSON.parse(v); } catch (e) { return null; } }
+function ldMarkSeen(req) { var m = {}; (req || []).forEach(function(r) { m[r.id] = r.status; }); store(ldKey(), JSON.stringify(m)); }
+/** Requests whose status changed since this leader last opened the Prize shop. */
+function ldChanged() {
+  var L = S.home && S.home.leader; if (!L) return [];
+  var seen = ldSeen();
+  if (!seen) { ldMarkSeen(L.req); return []; }             // first time on this device: nothing to flag
+  return L.req.filter(function(r) { return r.status !== "Pending" && seen[r.id] !== r.status; });
+}
+function ldDot() { var d = $("leagueDot"); if (!d) return; var n = ldChanged().length; d.textContent = n > 9 ? "9+" : (n || ""); d.classList.toggle("hidden", !n); }
+/** A card at the top of the screen when the teacher has answered a prize request. */
+function ldNews() {
+  var ch = ldChanged(); if (!ch.length || S.tab === "league") return;
+  var r = ch[0], txt = r.status === "Given" ? "has been given! 🎉" : r.status === "Approved" ? "was approved! 👍" : r.status === "Rejected" ? "was not approved. The points are back." : "has news.";
+  var b = document.createElement("button"); b.type = "button"; b.className = "ld-news"; b.setAttribute("data-ldgo", "shop");
+  b.innerHTML = '<span class="e">🎁</span><div><b>' + esc(r.prize) + ' ' + txt + '</b><span>' + (ch.length > 1 ? plural(ch.length, "prize request") + ' changed · ' : '') + 'Tap to see your group’s prizes</span></div>';
+  $("app").insertBefore(b, $("app").firstChild);
+}
+function ldSeg() {
+  var L = S.home && S.home.leader; if (!L) return "";
+  var n = ldChanged().length, lg = !!S.home.league;
+  var b = function(k, t) { return '<button type="button" data-ldsub="' + k + '" class="' + (LEAD.sub === k ? "on" : "") + '" aria-pressed="' + (LEAD.sub === k) + '">' + t + '</button>'; };
+  return '<div class="ld-seg' + (lg ? '' : ' two') + '" style="--gc:' + esc(L.colour) + '">' + (lg ? b("league", "🏆 League") : "") + b("give", "⭐ Give stamps") +
+    b("shop", "🎁 Prize shop" + (n ? ' <i class="ld-badge">' + n + '</i>' : L.shopOpen ? ' <i class="ld-badge">Open!</i>' : '')) + '</div>';
+}
+function ldHead() {
+  var L = S.home.leader;
+  return '<div class="ld-head" style="--gc:' + esc(L.colour) + '"><span class="ld-crown">👑</span><div><b>' + esc(L.group) + ' leader</b><span>' +
+    (LEAD.sub === "shop" ? "Spend your group’s saved points on prizes." : "Give stamps to other groups for what they did well.") + (LEAD.d && LEAD.d.weekLabel && LEAD.sub === "give" ? " This week: " + esc(LEAD.d.weekLabel) : "") + '</span></div></div>';
+}
+function renderLead() {
+  if (LEAD.d) drawLead(); else $("app").innerHTML = ldSeg() + SPIN;
+  call("getHubLeader").then(function(d) { ldGot(d); if (S.tab === "league" && LEAD.sub !== "league") drawLead(); })
+    .catch(function(e) { if (S.tab === "league" && LEAD.sub !== "league") $("app").innerHTML = ldSeg() + '<div class="msg err">' + esc(e.message) + '</div>'; });
+}
+function ldGot(d) {
+  LEAD.d = d;
+  var L = S.home && S.home.leader;
+  if (L && d.shop) { L.req = (d.shop.requests || []).map(function(r) { return { id: r.id, prize: r.prize, status: r.status }; }); L.shopOpen = !!(d.shop.access && d.shop.access.eligible); }
+}
+function drawLead() {
+  var d = LEAD.d, L = S.home.leader;
+  if (LEAD.sub === "shop") {
+    ldChanged().forEach(function(r) { LEAD.fresh[r.id] = 1; });       // highlight what changed, then count it as seen
+    ldMarkSeen(L.req); ldDot();
+    $("app").innerHTML = ldSeg() + ldHead() + ldShop(d) + '<div style="height:20px"></div>';
+  } else {
+    $("app").innerHTML = ldSeg() + ldHead() + ldGive(d) + '<div style="height:20px"></div>';
+  }
+}
+function ldTotal(g) {
+  if (LEAD.d && LEAD.d.free) return LEAD.stamps[g] || 0;             // the leader chose the number
+  return (LEAD.picks[g] || []).reduce(function(n, id) { var c = LEAD.d.criteria.filter(function(x) { return x.id === id; })[0]; return n + (c ? c.stamps : 0); }, 0);
+}
+function ldGive(p) {
+  if (p.needsSelection) {
+    var need = p.pickCount || 3;
+    if (!p.allGroups || !p.allGroups.length) return '<div class="empty">There are no other groups yet. Please tell ' + esc(S.home.teacher) + '.</div>';
+    LEAD.sel = LEAD.sel.filter(function(g) { return p.allGroups.some(function(x) { return x.group === g; }); });
+    var left = need - LEAD.sel.length;
+    return '<div class="card ld-how">First, pick <b>' + plural(need, "group") + '</b> to give stamps to this week. Once you lock them in, you can’t change until next week.</div>' +
+      '<div class="ld-grid">' + p.allGroups.map(function(g) {
+        var on = LEAD.sel.indexOf(g.group) > -1;
+        return '<button type="button" class="ld-gbtn' + (on ? ' on' : '') + '" data-ldsel="' + esc(g.group) + '" style="--gc:' + esc(g.colour) + '" aria-pressed="' + on + '"><b>' + esc(g.group) + '</b><span>' + (g.members.length ? g.members.map(esc).join(', ') : 'No members listed') + '</span></button>';
+      }).join("") + '</div>' +
+      '<div class="ld-sendbar"><div class="ld-note" style="margin:0 0 8px">' + (left > 0 ? 'Tap ' + left + ' more group' + (left === 1 ? '' : 's') + '.' : 'Great! Now lock them in.') + '</div>' +
+      '<button type="button" class="ld-go" id="ldLock" style="--gc:' + esc(S.home.leader.colour) + '"' + (left ? ' disabled' : '') + '>📍 Lock in my groups</button></div>';
+  }
+  if (p.contestPaused) return '<div class="card ld-big"><div class="e">⏸</div><h3>The contest is paused</h3><div class="muted">You can’t give stamps during the break. ' + esc(S.home.teacher) + ' will tell you when it starts again.</div></div>';
+  var html = '<div class="card ld-how">' + (p.auto ? 'Your <b>' + plural(p.targets.length, "group") + '</b> this week. ' : '') + (p.free ? 'Tick what each group did well, choose how many stamps (1 to ' + p.max + '), then tap <b>Send</b>.' : 'Tick what each group did well, then tap <b>Send</b>.') +
+    (p.bonus && p.bonus.give ? '<div class="ld-bline">' + (p.bonus.giveWon ? '🎉 You won the <b>+' + p.bonus.give + ' kind leader bonus</b> this round!' : '🎁 Give stamps to ' + p.bonus.giveNeed + ' different groups this round for <b>+' + p.bonus.give + '</b> (' + p.bonus.gave + ' so far)') + '</div>' : '') + '</div>';
+  if (!p.targets.length) return html + '<div class="empty">There are no other groups yet. Please tell ' + esc(S.home.teacher) + '.</div>';
+  if (!p.criteria.length) return html + '<div class="empty">' + esc(S.home.teacher) + ' hasn’t added any reasons yet. Please check back later.</div>';
+  var done = p.targets.filter(function(t) { return t.sent; }).length;
+  html += '<div class="ld-prog"><span>' + done + ' of ' + p.targets.length + ' groups done</span><span>' + (p.targets.length - done) + ' left</span></div>';
+  if (done === p.targets.length) html += '<div class="card ld-big"><div class="e">🎉</div><h3>All done for this week!</h3><div class="muted">Thank you, ' + esc(first(p.leader)) + '. Come back next Monday' + (p.auto ? ' for your new groups' : '') + '.</div></div>';
+  html += p.targets.map(function(t) {
+    var st = 'style="--gc:' + esc(t.colour) + '"', head = '<div class="ld-gh"><span class="ld-gb">' + esc(t.group.charAt(0)) + '</span><div><div class="ld-gn">' + esc(t.group) + '</div>';
+    if (t.sent) {
+      var items = t.sent.reasons ? t.sent.reasons.split(", ") : [];
+      return '<section class="ld-card" ' + st + '>' + head + '<div class="ld-gs">Sent this week</div></div><span class="ld-done">✓ ' + plural(t.sent.points, "stamp") + '</span></div>' +
+        '<ul class="ld-sent">' + items.map(function(r) { return '<li>' + esc(r) + '</li>'; }).join("") + '</ul>' + (t.sent.evidence ? '<div class="ld-said">' + esc(t.sent.evidence) + '</div>' : '') +
+        (t.sent.status !== "Sent" ? '<div class="muted" style="margin:0 16px 14px;font-size:13px">' + esc(S.home.teacher) + ' has checked this award.</div>' : '') + '</section>';
+    }
+    var sel = LEAD.picks[t.group] || [], tot = ldTotal(t.group), used = t.used || [], note = LEAD.notes[t.group] || "";
+    var sub = 'Tick what ' + esc(t.group) + ' did well', needNote = p.noteOn !== false && p.noteMin && tot >= (p.noteFrom || 0), showNote = needNote || LEAD.noteOpen[t.group] || note;
+    return '<section class="ld-card" ' + st + ' data-ldg="' + esc(t.group) + '">' + head + '<div class="ld-gs">' + sub + '</div></div></div>' +
+      '<div class="ld-rs">' + p.criteria.map(function(c) {
+        var on = sel.indexOf(c.id) > -1, was = used.indexOf(c.id) > -1, dim = !p.free && !on && tot + c.stamps > p.max;
+        return '<button type="button" class="ld-r' + (on ? ' on' : '') + (was ? ' used' : dim ? ' dim' : '') + '" role="checkbox" aria-checked="' + on + '" data-ldc="' + esc(c.id) + '"' + (was ? ' disabled' : '') + '><span class="bx">' + LD_TICK + '</span><span class="tx">' + esc(c.reason) +
+          (was ? '<small>Used for ' + esc(t.group) + ' already</small>' : '') + '</span>' + (p.free ? '' : '<span class="pt">+' + c.stamps + '</span>') + '</button>';
+      }).join("") + '</div>' +
+      (p.free ? '<div class="ld-nums"><div class="ld-nl">How many stamps for ' + esc(t.group) + '?</div><div class="ld-ng" role="radiogroup">' +
+        Array.apply(null, Array(p.max)).map(function(_, k) { var n = k + 1; return '<button type="button" role="radio" aria-checked="' + (tot === n) + '" class="' + (tot === n ? 'on' : '') + '" data-ldnum="' + n + '">' + n + '</button>'; }).join("") + '</div></div>' : '') +
+      (p.noteOn === false ? '' : !showNote ? '<div class="ld-ev"><button type="button" class="ld-addnote" data-ldaddnote="' + esc(t.group) + '">✏️ Add a note (optional)</button></div>' :
+        '<div class="ld-ev"><label for="ldn' + esc(t.group) + '">✏️ What did they do?' + (needNote ? ' <span class="ld-need">Needed for ' + p.noteFrom + '+ stamps</span>' : ' <span class="ld-opt">(optional)</span>') + '</label>' +
+        '<textarea id="ldn' + esc(t.group) + '" data-ldnote="' + esc(t.group) + '" data-need="' + (needNote ? 1 : 0) + '" maxlength="240" placeholder="e.g. Isaac helped us carry the books to the library">' + esc(note) + '</textarea>' +
+        (needNote ? '<div class="cnt' + (ldWords(note) >= p.noteMin ? ' ok' : '') + '" data-ldcnt="' + esc(t.group) + '">' + ldCnt(note, p.noteMin) + '</div>' : '') + '</div>') +
+      (p.free ? '<div style="height:10px"></div></section>' :
+      '<div class="ld-foot"><div class="ld-tot">' + plural(tot, "stamp") + '<span>max ' + p.max + '</span></div><div class="ld-bar"><i style="width:' + Math.min(100, tot / p.max * 100) + '%"></i></div></div></section>');
+  }).join("");
+  var open = p.targets.filter(function(t) { return !t.sent; });
+  if (open.length) {
+    var ready = open.filter(function(t) { return ldTotal(t.group) > 0; }), empty = open.filter(function(t) { return !ldTotal(t.group); });
+    var all = ready.reduce(function(n, t) { return n + ldTotal(t.group); }, 0), names = ready.map(function(t) { return t.group; });
+    var nameText = names.length > 1 ? names.slice(0, -1).join(", ") + " & " + names[names.length - 1] : names.join("");
+    html += '<div class="ld-sendbar"><div class="ld-chips">' + open.map(function(t) { var n = ldTotal(t.group); return '<span class="ld-chip' + (n ? '' : ' zero') + '" style="--gc:' + esc(t.colour) + '">' + esc(t.group) + ' <b>' + (n || '–') + '</b></span>'; }).join("") + '</div>' +
+      '<button type="button" class="ld-go" id="ldSend" style="--gc:' + esc(S.home.leader.colour) + '"' + (all ? '' : ' disabled') + '>' + (all ? 'Send ' + plural(all, "stamp") + ' to ' + esc(nameText) : 'Tick reasons above, then send') + '</button>' +
+      (all && empty.length ? '<div class="ld-note">' + empty.map(function(t) { return esc(t.group); }).join(" & ") + ' ha' + (empty.length === 1 ? 's' : 've') + ' nothing ticked. You can send later this week.</div>' : '') + '</div>';
+  }
+  return html;
+}
+function ldCartTotal() { return LEAD.cart.reduce(function(n, id) { var pr = LEAD.d.shop.prizes.filter(function(x) { return x.id === id; })[0]; return n + (pr ? pr.cost : 0); }, 0); }
+/** Asked → Approved → Given, ticked as the teacher moves the request along. */
+function ldSteps(st) {
+  if (st === "Rejected") return "";
+  var n = st === "Given" ? 3 : st === "Approved" ? 2 : 1;
+  var s = function(i, t) { return '<span class="s' + (n >= i ? ' on' : '') + '"><i>' + (n >= i ? '✓' : '') + '</i>' + t + '</span>'; }, ln = function(i) { return '<span class="ln' + (n >= i ? ' on' : '') + '"></span>'; };
+  return '<div class="ld-steps" aria-hidden="true">' + s(1, "Asked") + ln(2) + s(2, "Approved") + ln(3) + s(3, "Given") + '</div>';
+}
+function ldReqs(sh) {
+  var t = esc(S.home.teacher);
+  if (!sh.requests.length) return '<div class="bsec">Your group’s prize requests</div><div class="ld-card"><div class="ld-req"><span class="muted">No requests yet. When you ask for a prize, you can follow it here.</span></div></div>';
+  return '<div class="bsec">Your group’s prize requests</div><div class="ld-card">' + sh.requests.map(function(r) {
+    var fresh = LEAD.fresh[r.id];
+    return '<div class="ld-req' + (fresh ? ' fresh' : '') + '"><div class="ld-rq1"><div class="tx"><b>' + esc(r.prize) + (fresh ? ' <em class="newb">NEW</em>' : '') + '</b><span>' + r.cost + ' pts · asked ' + esc(r.requested) +
+      (r.updated && r.status !== "Pending" ? ' · updated ' + esc(r.updated) : '') + '</span></div><span class="ld-st ' + esc(r.status) + '">' + esc(LD_ST[r.status] || r.status) + '</span></div>' +
+      ldSteps(r.status) + (r.status === "Rejected" ? '<div class="ld-rej">' + r.cost + ' points went back to your group.</div>' : '') +
+      (r.note ? '<div class="ld-tnote"><b>' + t + ':</b> ' + esc(r.note) + '</div>' : '') + '</div>';
+  }).join("") + '</div><p class="muted" style="text-align:center;margin:10px 0 0;font-size:13.5px">Approved means ' + t + ' said yes. Given means you have it. If the answer is no, the points go back to your group.</p>';
+}
+function ldShop(p) {
+  var sh = p.shop, ac = sh.access || { eligible: true, open: true }, colour = S.home.leader.colour;
+  LEAD.cart = LEAD.cart.filter(function(id) { return sh.prizes.some(function(x) { return x.id === id; }); });
+  var tot = ldCartTotal(), left = sh.balance - tot;
+  var html = '<div class="ld-wallet"><span class="coin">★</span><div><b>' + plural(sh.balance, "point") + '</b><span>' + esc(p.group) + '’s saved points. Earned ' + sh.earned + ', spent ' + sh.spent + '.</span></div></div>';
+  if (!ac.open) {
+    if (ac.eligible) html += '<div class="ld-acc ok"><b>🏅 ' + esc(p.group) + ' came ' + ordinal(ac.place) + ' in ' + esc(ac.monthLabel) + '!</b><span>The top ' + ac.limit + ' groups can buy prizes during this round.</span></div>';
+    else if (ac.firstRound) html += '<div class="ld-acc no"><b>🔒 The shop opens after Round 1.</b><span>The top ' + ac.limit + ' groups of Round 1 can buy prizes during Round 2. Your points are saved!</span></div>';
+    else html += '<div class="ld-acc no"><b>🔒 The shop is only for the top ' + ac.limit + ' groups of ' + esc(ac.monthLabel) + '.</b><span>' +
+      (ac.top.length ? 'Can shop this round: ' + ac.top.map(function(t) { return esc(t.group) + ' (' + ordinal(t.place) + ')'; }).join(", ") + '.' : 'No group earned points in that round.') +
+      (ac.place ? ' ' + esc(p.group) + ' came ' + ordinal(ac.place) + '.' : '') + ' Your points are saved. Finish in the top ' + ac.limit + ' this round to shop in the next one!</span></div>';
+  }
+  var hasOpen = sh.requests.some(function(r) { return r.status === "Pending" || r.status === "Approved" || LEAD.fresh[r.id]; });
+  if (hasOpen) html += ldReqs(sh);                                        // waiting or just answered: show first
+  if (!sh.prizes.length) html += '<div class="empty">No prizes in the shop yet. Check back soon!</div>';
+  else if (!ac.eligible) html += '<div class="bsec">Prizes you could win</div><div class="ld-card">' + sh.prizes.map(function(pr) {
+      return '<div class="ld-req"><div class="ld-rq1"><div class="tx"><b>' + esc(pr.prize) + '</b>' + (pr.left !== null ? '<span>' + (pr.left < 1 ? 'Sold out' : pr.left + ' left') + '</span>' : '') + '</div><b style="white-space:nowrap">' + pr.cost + ' pts</b></div></div>';
+    }).join("") + '</div>';
+  else html += '<div class="bsec">Tick the prizes your group wants</div><section class="ld-card" style="--gc:' + esc(colour) + '"><div class="ld-rs" style="padding-top:12px">' + sh.prizes.map(function(pr) {
+      var on = LEAD.cart.indexOf(pr.id) > -1, out = pr.left !== null && pr.left < 1, dim = !on && pr.cost > left;
+      return '<button type="button" class="ld-r' + (on ? ' on' : '') + (dim ? ' dim' : '') + '" role="checkbox" aria-checked="' + on + '" data-ldprize="' + esc(pr.id) + '"' + (out ? ' disabled' : '') + '><span class="bx">' + LD_TICK + '</span><span class="tx">' + esc(pr.prize) +
+        (out ? '<small>Sold out</small>' : pr.left !== null ? '<small>' + pr.left + ' left</small>' : '') + '</span><span class="pt">' + pr.cost + ' pts</span></button>';
+    }).join("") + '</div><div class="ld-foot"><div class="ld-tot">' + plural(tot, "point") + ' ticked<span>' + left + ' left after</span></div>' +
+    '<button type="button" class="ld-go" id="ldAsk"' + (LEAD.cart.length ? '' : ' disabled') + '>' + (LEAD.cart.length ? 'Ask for ' + plural(LEAD.cart.length, "prize") + ' (' + tot + ' pts)' : 'Tick a prize first') + '</button></div></section>';
+  if (!hasOpen) html += ldReqs(sh);
+  return html;
+}
+document.addEventListener("input", function(e) {
+  var t = e.target; if (!t || !t.getAttribute || !t.hasAttribute("data-ldnote")) return;
+  var g = t.getAttribute("data-ldnote"), min = (LEAD.d && LEAD.d.noteMin) || 0; LEAD.notes[g] = t.value;
+  var c = t.parentNode.querySelector("[data-ldcnt]"); if (c && t.getAttribute("data-need") === "1") { c.textContent = ldCnt(t.value, min); c.classList.toggle("ok", ldWords(t.value) >= min); }
+});
+function ldErr(e) { drawLead(); window.scrollTo(0, 0); flash(e.message, true); }
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-ldgo]");
+  if (t) { LEAD.sub = t.getAttribute("data-ldgo"); LEAD.fresh = {}; go("league"); return; }
+  if (S.tab !== "league" || !LEAD.d && !(e.target.closest && e.target.closest("[data-ldsub]"))) return;
+  if ((t = e.target.closest("[data-ldsub]"))) {
+    var k = t.getAttribute("data-ldsub"); if (k === LEAD.sub) return;
+    LEAD.sub = k; LEAD.fresh = {}; window.scrollTo(0, 0); renderLeague(); return;
+  }
+  var p = LEAD.d, i, done;
+  if ((t = e.target.closest("[data-ldsel]"))) {
+    var g = t.getAttribute("data-ldsel"), need = p.pickCount || 3;
+    i = LEAD.sel.indexOf(g);
+    if (i > -1) LEAD.sel.splice(i, 1); else if (LEAD.sel.length < need) LEAD.sel.push(g); else { flash("You can only pick " + need + ". Tap one to unpick it first.", true); return; }
+    drawLead(); return;
+  }
+  if ((t = e.target.closest("#ldLock")) && !t.disabled) {
+    done = busy(t, "Locking in…");
+    call("hubLeaderPick", LEAD.sel.slice()).then(function(d) { ldGot(d); LEAD.sel = []; drawLead(); window.scrollTo(0, 0); flash("Groups locked in! 📍"); }).catch(function(err) { done(); ldErr(err); });
+    return;
+  }
+  if ((t = e.target.closest("[data-ldnum]"))) {
+    var ngp = t.closest("[data-ldg]").getAttribute("data-ldg"), num = parseInt(t.getAttribute("data-ldnum"), 10);
+    LEAD.stamps[ngp] = LEAD.stamps[ngp] === num ? 0 : num;                // tap the same number again to clear it
+    var y1 = window.scrollY; drawLead(); window.scrollTo(0, y1); return;
+  }
+  if ((t = e.target.closest("[data-ldaddnote]"))) {
+    var ng = t.getAttribute("data-ldaddnote"); LEAD.noteOpen[ng] = true;
+    var y0 = window.scrollY; drawLead(); window.scrollTo(0, y0);
+    var box = document.querySelector('[data-ldnote="' + ng.replace(/"/g, '\\"') + '"]'); if (box) box.focus();
+    return;
+  }
+  if ((t = e.target.closest("[data-ldc]"))) {
+    var grp = t.closest("[data-ldg]").getAttribute("data-ldg"), id = t.getAttribute("data-ldc"), list = LEAD.picks[grp] || (LEAD.picks[grp] = []);
+    i = list.indexOf(id);
+    if (i > -1) list.splice(i, 1);
+    else {
+      var c = p.criteria.filter(function(x) { return x.id === id; })[0];
+      if (!p.free && ldTotal(grp) + c.stamps > p.max) { flash("That would be more than " + p.max + " stamps. Untick something first.", true); window.scrollTo(0, 0); return; }
+      list.push(id);
+    }
+    var y = window.scrollY; drawLead(); window.scrollTo(0, y); return;
+  }
+  if ((t = e.target.closest("#ldSend")) && !t.disabled) {
+    if (p.free) {                                                  // a number needs a reason, and a reason needs a number
+      var half = p.targets.filter(function(x) { return !x.sent && (ldTotal(x.group) > 0) !== ((LEAD.picks[x.group] || []).length > 0); })[0];
+      if (half) {
+        var hc = document.querySelector('[data-ldg="' + half.group.replace(/"/g, '\\"') + '"]'); if (hc) hc.scrollIntoView({ block: "center" });
+        flash(ldTotal(half.group) ? "Tick at least one reason for " + half.group + "." : "Choose how many stamps to give " + half.group + ".", true, hc || null); return;
+      }
+    }
+    var send = p.targets.filter(function(x) { return !x.sent && ldTotal(x.group) > 0; }).map(function(x) { return { group: x.group, ids: (LEAD.picks[x.group] || []).slice(), stamps: ldTotal(x.group), note: (LEAD.notes[x.group] || "").trim() }; });
+    if (!send.length) return;
+    var short = p.noteMin ? send.filter(function(x) { return ldTotal(x.group) >= (p.noteFrom || 0) && ldWords(x.note) < p.noteMin; })[0] : null;
+    if (short) { var ta = document.querySelector('[data-ldnote="' + short.group.replace(/"/g, '\\"') + '"]'); if (ta) { ta.focus(); ta.scrollIntoView({ block: "center" }); } flash("You're giving " + short.group + " " + ldTotal(short.group) + " stamps, so write what they did (at least " + p.noteMin + " words).", true, ta ? ta.parentNode : null); return; }
+    done = busy(t, "Sending…");
+    call("hubLeaderGive", send).then(function(d) {
+      send.forEach(function(x) { delete LEAD.picks[x.group]; delete LEAD.notes[x.group]; delete LEAD.noteOpen[x.group]; delete LEAD.stamps[x.group]; });
+      ldGot(d); drawLead(); window.scrollTo(0, 0); flash("Stamps sent to " + send.map(function(x) { return x.group; }).join(", ") + "! 🎉");
+      LEAGUE.d = null;
+    }).catch(function(err) { done(); ldErr(err); });
+    return;
+  }
+  if ((t = e.target.closest("[data-ldprize]")) && !t.disabled) {
+    var pid = t.getAttribute("data-ldprize");
+    i = LEAD.cart.indexOf(pid);
+    if (i > -1) LEAD.cart.splice(i, 1);
+    else {
+      var pr = p.shop.prizes.filter(function(x) { return x.id === pid; })[0];
+      if (ldCartTotal() + pr.cost > p.shop.balance) { flash("Not enough points for that. Untick something first.", true); window.scrollTo(0, 0); return; }
+      LEAD.cart.push(pid);
+    }
+    var y2 = window.scrollY; drawLead(); window.scrollTo(0, y2); return;
+  }
+  if ((t = e.target.closest("#ldAsk")) && !t.disabled) {
+    if (!t.classList.contains("armed")) {
+      t.classList.add("armed"); t.textContent = "Tap again to ask " + S.home.teacher;
+      setTimeout(function() { if (t.isConnected && t.classList.contains("armed")) { t.classList.remove("armed"); t.textContent = "Ask for " + plural(LEAD.cart.length, "prize") + " (" + ldCartTotal() + " pts)"; } }, 4000);
+      return;
+    }
+    done = busy(t, "Sending…");
+    call("hubLeaderRedeem", LEAD.cart.slice()).then(function(d) {
+      LEAD.cart = []; ldGot(d); drawLead(); window.scrollTo(0, 0); flash("Request sent to " + S.home.teacher + "! 🎁 You can follow it below.");
+    }).catch(function(err) { done(); ldErr(err); });
+  }
+});
+
+// ---------------- 📅 Today: homework and updates / events / exams ----------------
+function subjChip(x) { return '<span class="subj" style="--sc:' + esc(x.colour) + '">' + esc(x.subject) + '</span>'; }
+function hwRow(x, short) {
+  return '<div class="hw-row" style="--sc:' + esc(x.colour) + '">' + subjChip(x) + '<div class="hw-main"><div class="hw-desc">' + esc(x.desc) + (x.isNew ? ' <em class="newb">NEW</em>' : '') + '</div>' +
+    '<div class="hw-meta">' + (short ? '' : (x.setLabel ? 'Given ' + esc(x.setLabel) + ' · ' : '')) + '<b>Due ' + (x.inDays <= 1 ? esc(x.when.toLowerCase()) : esc(x.dueLabel)) + '</b>' + (x.inDays > 1 && !short ? ' · ' + esc(x.when) : '') + '</div></div></div>';
+}
+function upCard(u, compact) {
+  var tile = u.date ? '<div class="dtile' + (u.inDays <= 2 ? ' soon' : '') + '"><b>' + esc(u.dateLabel.split(" ")[1] || "") + '</b><span>' + esc((u.dateLabel.split(" ")[2] || "").toUpperCase()) + '</span></div>' : '<div class="dtile ic">' + u.icon + '</div>';
+  return '<div class="up-card t-' + esc(u.type.toLowerCase()) + (u.pinned ? ' pin' : '') + '">' + tile + '<div class="up-main"><div class="up-top"><span class="up-type">' + u.icon + ' ' + esc(u.type === "Exam" ? "Exam / test" : u.type) + '</span>' +
+    (u.pinned ? '<span class="up-pin">⭐ Important</span>' : '') + (u.isNew ? '<em class="newb">NEW</em>' : '') + '</div><h4>' + esc(u.title) + '</h4>' +
+    (u.date ? '<div class="up-when">' + esc(u.dateLabel) + ' · <b>' + esc(u.when) + '</b></div>' : '') +
+    (u.details && !compact ? '<p>' + esc(u.details) + '</p>' : u.details ? '<p class="clip">' + esc(u.details) + '</p>' : '') + '</div></div>';
+}
+function showTodayPopup(d) {
+  var p = d.popup || {}, hw = p.hw || [], ups = p.updates || [];
+  if (!hw.length && !ups.length) return;
+  var who = S.home && !S.home.preview ? first(S.home.short) : "";
+  var dueNow = hw.filter(function(x) { return x.inDays === 0; }), dueTmr = hw.filter(function(x) { return x.inDays === 1; }), fresh = hw.filter(function(x) { return x.inDays > 1; });
+  var html = '<div class="pop-hi"><span class="hand">' + (who ? 'Hi ' + esc(who) + '!' : 'Hello!') + '</span><p>' + esc(d.todayLabel) + '</p></div>';
+  var imp = ups.filter(function(u) { return u.pinned; }), rest = ups.filter(function(u) { return !u.pinned; });
+  if (imp.length) html += '<div class="pop-sec">⭐ Important</div>' + imp.map(function(u) { return upCard(u, true); }).join("");
+  if (hw.length) {
+    html += '<div class="pop-sec">📚 Homework</div>';
+    if (dueNow.length) html += '<div class="pop-sub">Hand in today</div>' + dueNow.map(function(x) { return hwRow(x, true); }).join("");
+    if (dueTmr.length) html += '<div class="pop-sub">Due tomorrow</div>' + dueTmr.map(function(x) { return hwRow(x, true); }).join("");
+    if (fresh.length) html += '<div class="pop-sub">New today</div>' + fresh.map(function(x) { return hwRow(x, true); }).join("");
+  }
+  if (rest.length) html += '<div class="pop-sec">📅 Coming up &amp; news</div>' + rest.map(function(u) { return upCard(u, true); }).join("");
+  html += '<div class="pop-btns"><button class="btn primary big" id="popAll">📅 See everything</button><button class="btn soft big" data-close>Got it 👍</button></div>';
+  sheet("Today in " + CLASS_NAME, html);
+  var b = $("popAll"); if (b) b.onclick = function() { closeSheet(); go("today"); };
+}
+function renderToday() {
+  $("topTitle").textContent = "Today";
+  if (S.planner) drawToday(S.planner); else if (S.home && S.home.planner) drawToday(S.home.planner); else $("app").innerHTML = SPIN;
+  call("getHubToday").then(function(d) { S.planner = d; if (S.tab === "today") drawToday(d); })
+    .catch(function(e) { if (S.tab === "today") $("app").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+}
+var TODAY = { subj: "" };
+function drawToday(d) {
+  var subs = [], seen = {}; d.hw.forEach(function(x) { if (!seen[x.subject]) { seen[x.subject] = 1; subs.push({ subject: x.subject, colour: x.colour }); } });
+  if (TODAY.subj && !seen[TODAY.subj]) TODAY.subj = "";
+  var hw = d.hw.filter(function(x) { return !TODAY.subj || x.subject === TODAY.subj; });
+  var groups = [], byDay = {};
+  hw.forEach(function(x) { if (!byDay[x.due]) { byDay[x.due] = []; groups.push(x); } byDay[x.due].push(x); });
+  var imp = d.updates.filter(function(u) { return u.pinned; }), dated = d.updates.filter(function(u) { return !u.pinned && u.date; }), news = d.updates.filter(function(u) { return !u.pinned && !u.date; });
+  var html = '<div class="cheer-hero"><span class="hand">' + esc(d.todayLabel) + '</span><h1>Today</h1><p>Your homework, and what’s coming up in ' + esc(CLASS_NAME) + '.</p></div>';
+  if (imp.length) html += '<div class="td-imp">' + imp.map(function(u) { return upCard(u); }).join("") + '</div>';
+  html += '<div class="td-cols"><div class="td-main"><div class="bsec">📚 Homework</div>';
+  if (subs.length > 1) html += '<div class="chips td-subs" role="tablist"><button class="chip' + (TODAY.subj ? '' : ' on') + '" data-subj="">All</button>' + subs.map(function(s) {
+    return '<button class="chip' + (TODAY.subj === s.subject ? ' on' : '') + '" data-subj="' + esc(s.subject) + '" style="--sc:' + esc(s.colour) + '">' + esc(s.subject) + '</button>'; }).join("") + '</div>';
+  if (!d.hw.length) html += '<div class="empty small"><span class="e">🎉</span><span class="hand">No homework due</span>Nothing to hand in for the next two weeks.</div>';
+  html += groups.map(function(g) {
+    return '<div class="hw-day' + (g.inDays === 0 ? ' now' : g.inDays === 1 ? ' tmr' : '') + '"><div class="hw-dayh"><b>' + (g.inDays === 0 ? 'Hand in today' : g.inDays === 1 ? 'Due tomorrow' : 'Due ' + esc(g.dueLabel)) + '</b>' +
+      '<span>' + (g.inDays > 1 ? esc(g.when) : esc(g.dueLabel)) + '</span></div>' + byDay[g.due].map(function(x) { return hwRow(x); }).join("") + '</div>';
+  }).join("");
+  html += '</div><div class="td-side"><div class="bsec">📅 Coming up</div>' + (dated.length ? dated.map(function(u) { return upCard(u); }).join("") : '<p class="muted" style="margin:8px 2px 0">No events or exams coming up.</p>');
+  if (news.length) html += '<div class="bsec">📢 Updates</div>' + news.map(function(u) { return upCard(u); }).join("");
+  html += '</div></div><div style="height:20px"></div>';
+  $("app").innerHTML = html;
+  var sc = $("app").querySelector(".td-subs"); if (sc) sc.onclick = function(e) { var b = e.target.closest("[data-subj]"); if (!b) return; TODAY.subj = b.getAttribute("data-subj"); drawToday(d); };
 }
 
 // ---------------- Class wall ----------------
@@ -1283,15 +1739,29 @@ function openViewer(i, play) {
   v.innerHTML = '<div class="vbg" id="vBg"></div><div class="vbar" aria-hidden="true"><i id="vBar"></i></div><div class="viewer-top"><span><em id="vCount"></em></span>' +
     '<button id="vPlay" aria-label="Play slideshow">▶</button>' + (canFs() ? '<button id="vFs" aria-label="Full screen">⛶</button>' : '') +
     '<a id="vDl" class="hidden" download="photo.jpg">⬇ Save</a><button id="vX" aria-label="Close">✕</button></div>' +
-    '<div class="stage"><div class="wm"><img id="vImg" alt="Class photo"></div></div><div class="protect-note">Class photos are for our class only. Please don’t screenshot or share them.</div><div class="nav"><button id="vPrev">‹ Back</button><button id="vNext">Next ›</button></div>';
+    '<div class="stage"><div class="wm"><img id="vImg" alt="Class photo"></div></div><div class="turnhint hidden" id="vTurn">↻ Turn your phone sideways for a bigger photo</div><div class="protect-note">Class photos are for our class only. Please don’t screenshot or share them.</div><div class="nav"><button id="vPrev">‹ Back</button><button id="vNext">Next ›</button></div>';
   document.body.appendChild(v); document.body.style.overflow = "hidden";
   $("vX").onclick = closeViewer; $("vPrev").onclick = function() { showView(VIEW.i - 1); }; $("vNext").onclick = function() { showView(VIEW.i + 1); };
   $("vPlay").onclick = function() { setPlay(!VIEW.play); };
   if ($("vFs")) $("vFs").onclick = function() { toggleFs(v); };
   var sx = 0; v.addEventListener("touchstart", function(e) { sx = e.touches[0].clientX; }, { passive: true });
   v.addEventListener("touchend", function(e) { var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) showView(VIEW.i + (dx < 0 ? 1 : -1)); });
+  $("vImg").onload = fitPhoto;
   showView(i); setPlay(VIEW.play); $("vX").focus();
 }
+/** Makes the photo as big as the space allows (wide photos fill the width, tall ones the height), also on a sideways phone. */
+function fitPhoto() {
+  var img = $("vImg"), v = $("viewer"); if (!img || !v || !img.naturalWidth) return;
+  var st = v.querySelector(".stage"), pad = window.innerHeight <= 540 && window.innerWidth > window.innerHeight ? 0 : 20;
+  var W = Math.max(50, st.clientWidth - pad), H = Math.max(50, st.clientHeight - (pad ? 12 : 0));
+  var s = Math.min(W / img.naturalWidth, H / img.naturalHeight, 6);
+  img.style.width = Math.floor(img.naturalWidth * s) + "px"; img.style.height = Math.floor(img.naturalHeight * s) + "px";
+  img.classList.add("fit");
+  var th = $("vTurn");                                           // a wide photo on an upright phone: suggest turning it
+  if (th) th.classList.toggle("hidden", !(window.innerWidth < 600 && window.innerHeight > window.innerWidth && img.naturalWidth > img.naturalHeight * 1.2));
+}
+window.addEventListener("resize", function() { if ($("viewer")) fitPhoto(); });
+window.addEventListener("orientationchange", function() { setTimeout(fitPhoto, 300); });
 function setPlay(on) {
   VIEW.play = !!on; clearTimeout(VIEW.t);
   var b = $("vPlay"); if (!b) return;
