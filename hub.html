@@ -366,6 +366,48 @@
     @page { size:A4; margin:10mm; }
   }
   @media (prefers-reduced-motion:reduce) { *, *:before, *:after { animation:none !important; transition:none !important; } }
+  /* ================= Desktop / laptop (1024px and wider) =================
+     Phones keep the bottom dock. On a big screen the sections move to a sidebar on the left,
+     and the wall, Spotlight, Birthdays, Groups and Photos spread out into columns. */
+  .lg-cols { display:block; }
+  @media (min-width:1024px) {
+    :root { --side:228px; --gut:max(24px, calc((100vw - 1400px) / 2)); --dock:0px; }
+    .top-in { max-width:none; padding:12px var(--gut); }
+    .top b { font-size:22px; }
+    .wrap { max-width:1000px; }
+    body.nav .wrap { max-width:none; margin:0; padding:6px var(--gut) 56px calc(var(--gut) + var(--side) + 36px); }
+    .tabs { left:var(--gut); right:auto; top:86px; bottom:auto; width:var(--side); max-width:none !important; margin:0; padding:10px; border-radius:24px; }
+    .tabs-in { display:flex !important; flex-direction:column; gap:4px !important; }
+    .tabs button, .tabs.t5 button, .tabs.t6 button { flex-direction:row; justify-content:flex-start; gap:12px; padding:11px 14px; min-height:48px; font-size:15px; letter-spacing:0; border-radius:16px; cursor:pointer; }
+    .tabs button:hover:not(.on) { background:var(--lilac); color:var(--violet); }
+    .tabs svg, .tabs.t6 svg { width:22px; height:22px; flex:none; }
+    .tabs .dot { position:static; margin-left:auto; box-shadow:none; }
+    /* sign-in */
+    .names { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    /* class wall */
+    .grid { columns:4 210px; column-gap:18px; }
+    /* Spotlight & Birthdays: cards side by side */
+    .cheer-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 22px; align-items:start; }
+    .cheer-list.one { grid-template-columns:minmax(0,1fr); max-width:760px; }
+    .bmini-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 14px; }
+    .show { max-width:none; }
+    .slide { padding:34px 40px 10px; }
+    .slide .pframe { width:190px; height:190px; }
+    .slide h3 { font-size:36px; } .slide .sl-quote { font-size:19px; max-width:720px; }
+    /* Groups: league on the left, hall of fame and past winners on the right */
+    .lg-cols { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:28px; align-items:start; }
+    .lg-side .bsec:first-child { margin-top:18px; }
+    /* Photos */
+    .albums { grid-template-columns:repeat(5,minmax(0,1fr)); }
+    .thumbs { grid-template-columns:repeat(6,minmax(0,1fr)); }
+    /* Ask: a comfortable reading width, typing box under it */
+    #app[data-view="ask"] > * { max-width:860px; }
+    .bub { max-width:min(82%, 560px); }
+    .composer { left:calc(var(--gut) + var(--side) + 36px); right:auto; width:min(860px, calc(100vw - var(--gut) * 2 - var(--side) - 36px)); bottom:22px; max-width:none; margin:0; }
+    /* pop-ups */
+    .sheet-in { max-width:720px; }
+  }
+  @media (min-width:1400px) { .grid { columns:5 210px; } .cheer-list { grid-template-columns:repeat(3,minmax(0,1fr)); } .cheer-list.one { grid-template-columns:minmax(0,1fr); } }
 </style>
 </head>
 <body>
@@ -556,7 +598,7 @@ function start() {
 }
 function showLogin(note, okNote) {
   stopTimers();
-  $("tabs").classList.add("hidden"); $("meBtn").classList.add("hidden"); $("topTitle").textContent = "Class Hub";
+  $("tabs").classList.add("hidden"); document.body.classList.remove("nav"); $("app").removeAttribute("data-view"); $("meBtn").classList.add("hidden"); $("topTitle").textContent = "Class Hub";
   $("app").innerHTML = SPIN;
   api("hubRoster", [HUB_KEY]).then(function(d) {
     S.roster = d.names || [];
@@ -626,7 +668,7 @@ function loadHome() {
       $("meBtn").setAttribute("aria-label", "Sign out (signed in as " + h.short + ")");
     }
     $("meBtn").classList.remove("hidden");
-    $("tabs").classList.remove("hidden");
+    $("tabs").classList.remove("hidden"); document.body.classList.add("nav");
     setTabs(h);
     setDot(h.unread);
     if (!S.boardId || !h.boards.some(function(b) { return b.id === S.boardId; })) S.boardId = (h.boards[0] || {}).id || "";
@@ -674,7 +716,7 @@ function setTabs(h) {
 }
 function go(tab) {
   stopShow();
-  S.tab = tab;
+  S.tab = tab; $("app").setAttribute("data-view", tab);
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button"), function(b) { var on = b.dataset.tab === tab; b.classList.toggle("on", on); b.setAttribute("aria-current", on ? "page" : "false"); });
   window.scrollTo(0, 0);
   if (tab === "wall") renderWallShell();
@@ -747,30 +789,30 @@ function drawCheers(kind) {
     html = '<div class="cheer-hero"><span class="hand">Look who’s shining!</span><h1>Spotlight</h1><p>When a teacher spotlights someone, it shows up here. Send them a kind word!</p></div>';
     html += showHtml("spot", d.items.slice(0, 10));
     if (!d.items.length) html += '<div class="empty"><span class="e">🌟</span><span class="hand">No Spotlights yet</span>When a teacher spotlights someone in our class, it appears here for everyone to cheer.</div>';
-    html += d.items.map(function(it) {
+    html += '<div class="cheer-list">' + d.items.map(function(it) {
       return '<div class="cheer spot" id="c_' + esc(it.id) + '"><div class="cheer-top">' + cheerPhoto(it) + '<div style="min-width:0"><h2>' + esc(it.short) + '</h2>' +
         '<p class="from">' + (it.teacher ? 'from <span class="hand">' + esc(it.teacher) + '</span> · ' : '') + esc(it.date) + '</p></div></div>' +
         '<div class="quote">' + esc(it.text) + '</div>' +
         '<div class="wcount">🎉 ' + (it.count ? it.count + ' congratulation' + (it.count === 1 ? '' : 's') : 'Be the first to say well done!') + '</div>' +
         wishList(it) + wishBox(it, kind, d) + '</div>';
-    }).join("");
+    }).join("") + '</div>';
   } else {
     var today = d.items.filter(function(x) { return x.today; }), soon = d.items.filter(function(x) { return x.inDays > 0; }), past = d.items.filter(function(x) { return x.past; });
     html = '<div class="cheer-hero"><span class="hand">Let’s celebrate!</span><h1>Birthdays</h1><p>' + (today.length ? 'It’s a birthday today! 🎂 Send your wishes.' : 'Birthdays this month in our class.') + '</p></div>';
     html += showHtml("bday", today.concat(soon, past));
     if (!d.items.length) html += '<div class="empty"><span class="e">🎂</span><span class="hand">No birthdays this month</span>Check back next month!</div>';
-    html += today.map(function(it) {
+    if (today.length) html += '<div class="cheer-list' + (today.length === 1 ? ' one' : '') + '">' + today.map(function(it) {
       return '<div class="cheer bday-today" id="c_' + esc(it.id) + '"><div class="confetti"></div><div class="bday-big"><div style="position:relative;display:inline-block"><span class="tape"></span>' + cheerPhoto(it) + '</div>' +
         '<div class="hb">Happy Birthday,</div><h2>' + esc(it.short) + '! 🎉</h2><p class="from">' + esc(it.date) + '</p></div>' +
         '<div class="wcount">💌 ' + (it.count ? it.count + ' wish' + (it.count === 1 ? '' : 'es') : 'Be the first to wish!') + '</div>' + wishList(it) + wishBox(it, kind, d) + '</div>';
-    }).join("");
-    if (soon.length) html += '<div class="bsec">Coming up</div>' + soon.map(function(it) {
+    }).join("") + '</div>';
+    if (soon.length) html += '<div class="bsec">Coming up</div><div class="bmini-list">' + soon.map(function(it) {
       return '<div class="bmini" id="c_' + esc(it.id) + '">' + cheerPhoto(it) + '<div style="min-width:0"><b>' + esc(it.short) + '</b><span>' + esc(it.date) + '</span></div><div class="when">' + (it.inDays === 1 ? 'Tomorrow!' : 'in ' + it.inDays + ' days') + '</div></div>';
-    }).join("");
-    if (past.length) html += '<div class="bsec">Earlier this month</div>' + past.map(function(it) {
+    }).join("") + '</div>';
+    if (past.length) html += '<div class="bsec">Earlier this month</div><div class="cheer-list">' + past.map(function(it) {
       return '<div class="cheer bday-past" id="c_' + esc(it.id) + '"><div class="cheer-top">' + cheerPhoto(it) + '<div><h2>' + esc(it.short) + '</h2><p class="from">🎂 ' + esc(it.date) + '</p></div></div>' +
         '<div class="wcount">💌 ' + (it.count ? it.count + ' wish' + (it.count === 1 ? '' : 'es') : 'No wishes yet') + '</div>' + wishList(it) + wishBox(it, kind, d) + '</div>';
-    }).join("");
+    }).join("") + '</div>';
   }
   var keep = document.activeElement && document.activeElement.id && document.activeElement.id.indexOf("wi_") === 0 ? { id: document.activeElement.id, v: document.activeElement.value } : null;
   $("app").innerHTML = html + '<div style="height:20px"></div>';
@@ -908,7 +950,7 @@ function ordinal(n) { var s = ["th", "st", "nd", "rd"], v = n % 100; return n + 
 function drawLeague(d) {
   var u = d.unit, mine = d.groups.filter(function(g) { return g.mine; })[0], top = d.groups.length ? Math.max(d.groups[0].score, 0) : 0;
   var when = d.paused ? "⏸ The contest is paused right now." : d.label + " · ends " + esc(d.end) + (d.daysLeft != null ? " · " + (d.daysLeft <= 0 ? "last day!" : d.daysLeft === 1 ? "1 day left" : d.daysLeft + " days left") : "");
-  var html = '<div class="cheer-hero"><span class="hand">Go team!</span><h1>Group League</h1><p>' + when + '</p></div>';
+  var html = '<div class="cheer-hero"><span class="hand">Go team!</span><h1>Group League</h1><p>' + when + '</p></div><div class="lg-cols"><div class="lg-main">';
   if (!d.groups.length) html += '<div class="empty"><span class="e">🏆</span><span class="hand">No groups yet</span>' + esc(S.home.teacher) + ' will set up the groups soon.</div>';
   else {
     if (mine) html += '<div class="lg-mine" style="--gc:' + esc(mine.colour) + '"><span class="lg-medal">' + medal(mine.position) + '</span><div><b>' + esc(mine.group) + ' is ' + ordinal(mine.position) + '</b><span>' +
@@ -922,6 +964,7 @@ function drawLeague(d) {
     }).join("") + '</div>';
     html += '<p class="muted lg-how">⭐ Every stamp you earn adds to your group, including stamps for posting and for kind comments on the Class wall.</p>';
   }
+  html += '</div><div class="lg-side">';
   if (d.titles.length) html += '<div class="bsec">🏆 Hall of fame</div><div class="lg-titles">' + d.titles.map(function(t) {
     return '<span class="lg-title' + (t.mine ? ' me' : '') + '" style="--gc:' + esc(t.colour) + '">🏆 ' + esc(t.group) + ' <b>×' + t.wins + '</b></span>';
   }).join("") + '</div>';
@@ -932,7 +975,7 @@ function drawLeague(d) {
       '<div class="lg-rest">' + r.podium.filter(function(p) { return p.position > 1; }).map(function(p) { return medal(p.position) + ' ' + esc(p.group) + ' · ' + p.score; }).join('&nbsp;&nbsp; ') + '</div></div>';
   }).join("");
   else if (d.groups.length) html += '<div class="bsec">Past winners</div><p class="muted" style="margin:8px 2px 0">The first winners will appear here when ' + esc(d.label) + ' ends.</p>';
-  $("app").innerHTML = html + '<div style="height:20px"></div>';
+  $("app").innerHTML = html + '</div></div><div style="height:20px"></div>';
 }
 
 // ---------------- Class wall ----------------

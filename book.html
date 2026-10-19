@@ -48,6 +48,14 @@
     .sheet { grid-template-columns:repeat(3,1fr); gap:6mm; } .label { border:1px dashed #999; } .label.off { display:none; } .label .pick { display:none; } .label { padding:10px; }
     @page { size:A4; margin:10mm; }
   }
+  /* Desktop / laptop: a roomier page (phones keep the layout above) */
+  @media screen and (min-width:1024px) {
+    .wrap { max-width:760px; padding:40px 24px; }
+    .names { grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    .name { font-size:16px; padding:14px 12px; cursor:pointer; } .name:hover { border-color:#5B3FD6; }
+    .big { cursor:pointer; }
+    .sheet { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  }
 </style>
 </head>
 <body>
