@@ -346,6 +346,16 @@
   .viewer .stage .wm { border-radius:10px; max-width:100%; max-height:100%; display:inline-block; box-shadow:0 20px 50px rgba(0,0,0,.5); }
   .viewer .stage .wm img { display:block; max-width:calc(100vw - 20px); max-height:calc(100vh - 170px); object-fit:contain; transition:opacity .25s; }
   .viewer .stage .wm img.soft { filter:blur(6px); }
+  .vbar { position:absolute; top:0; left:0; right:0; height:4px; z-index:3; background:rgba(255,255,255,.12); opacity:0; transition:opacity .3s; }
+  .viewer.playing .vbar { opacity:1; }
+  .vbar i { display:block; height:100%; width:0; background:var(--gold); } .vbar i.run { animation:slidebar 5s linear forwards; }
+  .viewer:fullscreen, .viewer:-webkit-full-screen { width:100%; height:100%; }
+  .viewer:fullscreen .stage .wm img, .viewer:-webkit-full-screen .stage .wm img { max-height:calc(100vh - 140px); }
+  .albhead #play { margin-left:auto; min-height:44px; padding:8px 16px; white-space:nowrap; }
+  .albhead h2 { min-width:0; }
+  @media (max-width:600px) { .albhead { flex-wrap:wrap; } .albhead #play { order:5; width:100%; margin:2px 0 0; } }
+  .viewer-top span em { white-space:nowrap; }
+  @media (max-width:600px) { .viewer-top { gap:6px; } .viewer-top button, .viewer-top a { min-width:48px; padding:0 12px; } }
   .protect-note { color:#CFCFE0; font-size:12px; text-align:center; padding:6px 12px 0; }
   .viewer .nav { display:flex; justify-content:space-between; padding:12px 12px calc(14px + env(safe-area-inset-bottom,0px)); gap:12px; }
   .viewer .nav button, .viewer-top button, .viewer-top a { background:rgba(255,255,255,.16); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); color:#fff; border:0; border-radius:16px; min-height:50px; min-width:64px; padding:0 18px; font-weight:800; font-size:16px; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; }
@@ -538,14 +548,16 @@ function pickPhoto(cb) {
 // ================= Fast pictures =================
 // Pictures arrive a dozen at a time, at most two requests at once (big ones get their own lane), are turned into
 // light-weight picture links once, and are remembered while the page is open. Each one fades in when it's ready.
-var IMGQ = { s: [], l: [], busy: { s: 0, l: 0 }, wait: {} };
+// Sizes: t = album grid (small and quick), s = lists and cards, m / l = one photo full screen (m on phones, l on big screens).
+var IMGQ = { t: [], s: [], m: [], l: [], busy: { t: 0, s: 0, m: 0, l: 0 }, wait: {} };
+function imgSize(s) { return s === "t" || s === "m" || s === "l" ? s : "s"; }
 function toUrl(dataUrl) {
   if (!dataUrl || !window.fetch || !window.URL || !URL.createObjectURL) return Promise.resolve(dataUrl);
   return fetch(dataUrl).then(function(r) { return r.blob(); }).then(function(b) { return URL.createObjectURL(b); }).catch(function() { return dataUrl; });
 }
-/** Ask for pictures. fn/extra = which server function (wall, or an album); size "s" (grids) or "l" (full view). */
+/** Ask for pictures. fn/extra = which server function (wall, or an album); size t / s / m / l (see above). */
 function wantImgs(ids, size, fn, extra) {
-  size = size === "l" ? "l" : "s";
+  size = imgSize(size);
   ids.forEach(function(id) {
     if (!id || S.imgs[size + id] || IMGQ.wait[size + id]) return;
     IMGQ.wait[size + id] = 1; IMGQ[size].push({ id: id, fn: fn || "hubImages", extra: extra || [] });
@@ -553,7 +565,7 @@ function wantImgs(ids, size, fn, extra) {
   pumpImgs(size);
 }
 function pumpImgs(size) {
-  var per = size === "l" ? 1 : 12, max = 2;
+  var per = size === "l" || size === "m" ? 1 : size === "t" ? 18 : 12, max = size === "t" ? 3 : 2;
   while (IMGQ.busy[size] < max && IMGQ[size].length) {
     var head = IMGQ[size][0], batch = [], rest = [];
     IMGQ[size].forEach(function(j) { if (batch.length < per && j.fn === head.fn && JSON.stringify(j.extra) === JSON.stringify(head.extra)) batch.push(j); else rest.push(j); });
@@ -1236,70 +1248,115 @@ function openAlbum(id) {
   $("back").onclick = function() { S.album = null; renderPhotos(); };
   call("hubAlbum", id).then(function(a) {
     S.album = a;
-    var first = a.first || {};
-    return Promise.all(Object.keys(first).map(function(pid) { return first[pid] && !S.imgs["s" + pid] ? toUrl(first[pid]).then(function(u) { S.imgs["s" + pid] = u; }) : null; }));
+    var first = a.first || {}, fs = a.firstSize || "s";
+    return Promise.all(Object.keys(first).map(function(pid) { return first[pid] && !S.imgs[fs + pid] ? toUrl(first[pid]).then(function(u) { S.imgs[fs + pid] = u; }) : null; }));
   }).then(function() { if (S.album && S.tab === "photos") renderAlbum(); })
     .catch(function(e) { $("app").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
 }
 function renderAlbum() {
   var a = S.album;
-  $("app").innerHTML = '<div class="albhead"><button class="btn soft" id="back">‹ Albums</button><h2>' + esc(a.name) + '</h2><span class="count">' + a.photos.length + '</span></div>' +
-    '<div class="thumbs" id="thumbs">' + a.photos.map(function(id, i) { return '<button data-i="' + i + '" aria-label="Photo ' + (i + 1) + '"><img alt="" data-img="' + esc(id) + '"></button>'; }).join("") + '</div>';
+  $("app").innerHTML = '<div class="albhead"><button class="btn soft" id="back">‹ Albums</button><h2>' + esc(a.name) + '</h2><span class="count">' + a.photos.length + '</span>' +
+    (a.photos.length > 1 ? '<button class="btn primary" id="play">▶ Slideshow</button>' : '') + '</div>' +
+    '<div class="thumbs" id="thumbs">' + a.photos.map(function(id, i) { return '<button data-i="' + i + '" aria-label="Photo ' + (i + 1) + '"><img alt="" data-size="t" data-img="' + esc(id) + '"></button>'; }).join("") + '</div>';
   $("back").onclick = function() { S.album = null; renderPhotos(); };
+  if ($("play")) $("play").onclick = function() { openViewer(0, true); };
   $("thumbs").onclick = function(e) { var b = e.target.closest("[data-i]"); if (b) openViewer(Number(b.getAttribute("data-i"))); };
-  paintImgs(null, "s");
+  paintImgs(null, "t");
   var grid = $("thumbs");
   var io = "IntersectionObserver" in window ? new IntersectionObserver(function(entries) {
     var ids = [];
     entries.forEach(function(en) { if (!en.isIntersecting) return; var img = en.target.querySelector("img"), id = img && img.getAttribute("data-img"); if (id) ids.push(id); io.unobserve(en.target); });
-    if (ids.length) wantImgs(ids, "s", "hubGalleryImages", [a.id]);
-  }, { rootMargin: "600px 0px" }) : null;
+    if (ids.length) wantImgs(ids, "t", "hubGalleryImages", [a.id]);
+  }, { rootMargin: "900px 0px" }) : null;
   if (io) Array.prototype.forEach.call(grid.children, function(b) { if (b.querySelector("img[data-img]")) io.observe(b); });
-  else wantImgs(a.photos.slice(0, 60), "s", "hubGalleryImages", [a.id]);
+  else wantImgs(a.photos.slice(0, 60), "t", "hubGalleryImages", [a.id]);
 }
-var VIEW = { i: 0 };
-function openViewer(i) {
-  closeViewer(); VIEW.i = i;
+// ▶ Slideshow: a new photo every PHOTO_SHOW_MS. It waits (up to 4 more seconds) for the sharp copy of the next photo,
+// so slides never arrive blurry. Pauses while the app is hidden. ⛶ = full screen (e.g. the class projector).
+var PHOTO_SHOW_MS = 5000;
+var VIEW = { i: 0, big: "l", play: false, t: null };
+function canFs() { return !!(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen); }
+function openViewer(i, play) {
+  closeViewer(); VIEW.i = i; VIEW.play = !!play;
+  VIEW.big = Math.min(window.innerWidth || 400, 2400) * (window.devicePixelRatio || 1) > 1300 ? "l" : "m";
   var v = document.createElement("div"); v.className = "viewer"; v.id = "viewer"; v.setAttribute("role", "dialog"); v.setAttribute("aria-modal", "true"); v.setAttribute("aria-label", "Photo viewer");
-  v.innerHTML = '<div class="vbg" id="vBg"></div><div class="viewer-top"><span><em id="vCount"></em></span><a id="vDl" class="hidden" download="photo.jpg">⬇ Save</a><button id="vX" aria-label="Close">✕</button></div>' +
+  v.innerHTML = '<div class="vbg" id="vBg"></div><div class="vbar" aria-hidden="true"><i id="vBar"></i></div><div class="viewer-top"><span><em id="vCount"></em></span>' +
+    '<button id="vPlay" aria-label="Play slideshow">▶</button>' + (canFs() ? '<button id="vFs" aria-label="Full screen">⛶</button>' : '') +
+    '<a id="vDl" class="hidden" download="photo.jpg">⬇ Save</a><button id="vX" aria-label="Close">✕</button></div>' +
     '<div class="stage"><div class="wm"><img id="vImg" alt="Class photo"></div></div><div class="protect-note">Class photos are for our class only. Please don’t screenshot or share them.</div><div class="nav"><button id="vPrev">‹ Back</button><button id="vNext">Next ›</button></div>';
   document.body.appendChild(v); document.body.style.overflow = "hidden";
   $("vX").onclick = closeViewer; $("vPrev").onclick = function() { showView(VIEW.i - 1); }; $("vNext").onclick = function() { showView(VIEW.i + 1); };
+  $("vPlay").onclick = function() { setPlay(!VIEW.play); };
+  if ($("vFs")) $("vFs").onclick = function() { toggleFs(v); };
   var sx = 0; v.addEventListener("touchstart", function(e) { sx = e.touches[0].clientX; }, { passive: true });
   v.addEventListener("touchend", function(e) { var dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 50) showView(VIEW.i + (dx < 0 ? 1 : -1)); });
-  showView(i); $("vX").focus();
+  showView(i); setPlay(VIEW.play); $("vX").focus();
+}
+function setPlay(on) {
+  VIEW.play = !!on; clearTimeout(VIEW.t);
+  var b = $("vPlay"); if (!b) return;
+  b.textContent = on ? "⏸" : "▶"; b.setAttribute("aria-label", on ? "Pause slideshow" : "Play slideshow");
+  $("viewer").classList.toggle("playing", VIEW.play);
+  if (on) schedulePhoto();
+  else { var bar = $("vBar"); if (bar) { bar.classList.remove("run"); bar.style.width = "0"; } }
+}
+function schedulePhoto() {
+  clearTimeout(VIEW.t); if (!VIEW.play || !$("viewer")) return;
+  var bar = $("vBar"); bar.classList.remove("run"); bar.style.width = ""; void bar.offsetWidth; bar.style.animationDuration = PHOTO_SHOW_MS + "ms"; bar.classList.add("run");
+  VIEW.t = setTimeout(nextPhoto, PHOTO_SHOW_MS);
+}
+function nextPhoto(waited) {
+  if (!VIEW.play || !$("viewer") || !S.album) return;
+  if (document.hidden) { VIEW.t = setTimeout(function() { nextPhoto(waited); }, 1000); return; }
+  var a = S.album, n = a.photos.length, k = (VIEW.i + 1) % n, nid = a.photos[k];
+  if (!S.imgs[VIEW.big + nid] && (waited || 0) < 4000) {      // the sharp copy isn't here yet: give it a moment
+    loadBig(a, nid); VIEW.t = setTimeout(function() { nextPhoto((waited || 0) + 400); }, 400); return;
+  }
+  showView(k);
 }
 function showView(i) {
   var a = S.album, n = a.photos.length; if (!n || !$("vImg")) return;
   VIEW.i = (i + n) % n; var id = a.photos[VIEW.i];
   $("vCount").textContent = (VIEW.i + 1) + " of " + n;
-  var img = $("vImg"), small = S.imgs["s" + id], big = S.imgs["l" + id];
+  var img = $("vImg"), small = S.imgs["t" + id] || S.imgs["s" + id], big = S.imgs[VIEW.big + id];
   img.setAttribute("data-want", id);
   img.src = big || small || ""; img.classList.toggle("soft", !big && !!small);
   if (small || big) $("vBg").style.backgroundImage = 'url("' + (small || big) + '")';
   var dl = $("vDl"); dl.classList.toggle("hidden", !(a.download && big)); if (big) dl.href = big;
   var show = function(pid) {
     if (!$("vImg") || $("vImg").getAttribute("data-want") !== pid) return;
-    var u = S.imgs["l" + pid]; if (!u) return;
+    var u = S.imgs[VIEW.big + pid]; if (!u) return;
     $("vImg").src = u; $("vImg").classList.remove("soft");
     if (a.download) { dl.href = u; dl.classList.remove("hidden"); }
   };
-  if (!small) wantImgs([id], "s", "hubGalleryImages", [a.id]);
+  if (!small) wantImgs([id], "t", "hubGalleryImages", [a.id]);
   if (!big) loadBig(a, id, function() { show(id); });
-  // the next and previous photos load quietly, so swiping feels instant
-  [VIEW.i + 1, VIEW.i - 1].forEach(function(k) { var nid = a.photos[(k + n) % n]; if (!S.imgs["s" + nid]) wantImgs([nid], "s", "hubGalleryImages", [a.id]); if (!S.imgs["l" + nid]) loadBig(a, nid); });
+  // the next photos (two ahead while the slideshow plays) and the previous one load quietly, so moving on feels instant
+  (VIEW.play ? [VIEW.i + 1, VIEW.i + 2, VIEW.i - 1] : [VIEW.i + 1, VIEW.i - 1]).forEach(function(k) { var nid = a.photos[(k + n) % n]; if (!S.imgs["t" + nid] && !S.imgs["s" + nid]) wantImgs([nid], "t", "hubGalleryImages", [a.id]); if (!S.imgs[VIEW.big + nid]) loadBig(a, nid); });
+  if (VIEW.play) schedulePhoto();
 }
 var BIG = {};
 function loadBig(a, id, cb) {
-  if (S.imgs["l" + id]) { if (cb) cb(); return; }
+  var sz = VIEW.big;
+  if (S.imgs[sz + id]) { if (cb) cb(); return; }
   (BIG[id] = BIG[id] || []).push(cb || function() {});
   if (BIG[id].length > 1) return;
-  api("hubGalleryImages", [HUB_KEY, S.token, a.id, [id], "l"]).then(function(map) {
-    return map[id] ? toUrl(map[id]).then(function(u) { S.imgs["l" + id] = u; }) : null;
+  api("hubGalleryImages", [HUB_KEY, S.token, a.id, [id], sz]).then(function(map) {
+    return map[id] ? toUrl(map[id]).then(function(u) { S.imgs[sz + id] = u; }) : null;
   }).catch(function() {}).then(function() { var l = BIG[id] || []; delete BIG[id]; l.forEach(function(f) { f(); }); });
 }
-function closeViewer() { var v = $("viewer"); if (v) { v.parentNode.removeChild(v); document.body.style.overflow = ""; } }
-document.addEventListener("keydown", function(e) { if (!$("viewer")) return; if (e.key === "ArrowRight") showView(VIEW.i + 1); if (e.key === "ArrowLeft") showView(VIEW.i - 1); });
+function closeViewer() {
+  clearTimeout(VIEW.t); VIEW.play = false;
+  var v = $("viewer"); if (!v) return;
+  if (fsEl() === v) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) {} }
+  v.parentNode.removeChild(v); document.body.style.overflow = "";
+}
+document.addEventListener("keydown", function(e) {
+  if (!$("viewer")) return;
+  if (e.key === "ArrowRight") showView(VIEW.i + 1); if (e.key === "ArrowLeft") showView(VIEW.i - 1);
+  if (e.key === " " || e.key === "k") { e.preventDefault(); setPlay(!VIEW.play); }
+  if (e.key === "Escape" && !fsEl()) closeViewer();
+});
 document.addEventListener("visibilitychange", function() { if (!document.hidden && S.tab === "ask" && S.token) loadMsgs(true); });
 
 // ---------------- Teacher: printable PIN slips ----------------
