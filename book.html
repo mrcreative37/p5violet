@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<style>
+  :root { --bg:#F3F2F8; --card:#FFFFFF; --ink:#1B1E3A; --muted:#5F6383; --line:#E4E1F0; --brand:#3B2A8F; --brand-2:#5A45C9; --soft:#ECE9FB; --ok:#1E7A3C; --ok-soft:#E3F4E8; --warn:#9A5A00; --warn-soft:#FDF0DB; --danger:#B42318; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-text-size-adjust:100%; }
+  button { font:inherit; cursor:pointer; }
+  .wrap { max-width:520px; margin:0 auto; padding:16px; }
+  .head { background:var(--brand); color:#fff; border-radius:18px; padding:18px 20px; }
+  .head small { display:block; color:#CFC6FF; font-weight:700; font-size:13px; letter-spacing:.06em; text-transform:uppercase; }
+  .head h1 { margin:6px 0 2px; font-size:24px; line-height:1.2; }
+  .head p { margin:0; color:#DCD6F5; font-size:15px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px; margin-top:14px; }
+  .status { display:inline-flex; align-items:center; gap:8px; font-weight:700; border-radius:999px; padding:6px 12px; font-size:14px; }
+  .s-in { background:var(--ok-soft); color:var(--ok); } .s-out { background:var(--soft); color:var(--brand); } .s-late { background:var(--warn-soft); color:var(--warn); }
+  .big { width:100%; border:0; border-radius:14px; padding:16px; font-size:18px; font-weight:800; min-height:56px; }
+  a.big { display:block; text-align:center; text-decoration:none; line-height:24px; }
+  a.big.wait { opacity:.7; pointer-events:none; }
+  .primary { background:var(--brand-2); color:#fff; } .soft { background:var(--soft); color:var(--brand); } .ghost { background:none; color:var(--brand-2); font-weight:700; padding:12px; min-height:44px; }
+  .stack { display:flex; flex-direction:column; gap:10px; margin-top:14px; }
+  label.lbl { display:block; font-weight:700; margin:4px 0 8px; }
+  input.search { width:100%; border:2px solid var(--line); border-radius:12px; padding:12px 14px; font-size:17px; min-height:50px; }
+  input.search:focus { outline:none; border-color:var(--brand-2); }
+  .names { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:12px; }
+  .name { border:1.5px solid var(--line); background:#fff; border-radius:12px; padding:12px 10px; min-height:48px; text-align:left; font-size:15px; font-weight:600; color:var(--ink); }
+  .name:active, .name:focus { border-color:var(--brand-2); outline:none; background:var(--soft); }
+  .msg { border-radius:14px; padding:16px; font-weight:700; font-size:17px; line-height:1.4; }
+  .msg.ok { background:var(--ok-soft); color:var(--ok); } .msg.err { background:#FDECEA; color:var(--danger); }
+  .muted { color:var(--muted); font-size:14px; line-height:1.5; }
+  .hidden { display:none !important; }
+  .spin { text-align:center; padding:40px 0; color:var(--muted); }
+  /* Labels */
+  .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin:14px 0; }
+  .toolbar .btn { border:0; border-radius:12px; padding:12px 16px; font-weight:800; min-height:44px; }
+  .sheet { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+  .label { background:#fff; border:1.5px dashed #C9C4DE; border-radius:12px; padding:34px 10px 10px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:6px; break-inside:avoid; page-break-inside:avoid; position:relative; }
+  .label .qr { width:120px; height:120px; } .label .qr img, .label .qr canvas { width:120px !important; height:120px !important; }
+  .label b { font-size:13px; line-height:1.25; max-height:3.75em; overflow:hidden; }
+  .label .meta { font-size:11px; color:var(--muted); }
+  .label .pick { position:absolute; top:6px; left:6px; width:22px; height:22px; }
+  .label.off { opacity:.35; }
+  @media (max-width:560px) { .sheet { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media print {
+    body { background:#fff; } .wrap { max-width:none; padding:0; } .noprint, .head { display:none !important; }
+    .sheet { grid-template-columns:repeat(3,1fr); gap:6mm; } .label { border:1px dashed #999; } .label.off { display:none; } .label .pick { display:none; } .label { padding:10px; }
+    @page { size:A4; margin:10mm; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <small id="clsName">Class library</small>
+    <h1 id="h1">Loading…</h1>
+    <p id="hsub"></p>
+  </div>
+  <div id="app"><div class="spin">Loading…</div></div>
+</div>
+
+<script>
+/* Student page address: this page talks to the class script in the background with NO Google
+   sign-in (credentials: "omit"), so it works on any phone, however many Google accounts it has. */
+(function() {
+  var API = "https://script.google.com/macros/s/AKfycby9Sq43RK3aB35fzOLYD9ZC8zbDZPN-VbF0tG_79UZpm9u9rCGtRyDOf1H9FojHE1Gb/exec";
+  var useGet = false;                       // set if this browser refuses the normal (POST) request
+  function call(fn, args, ok, fail, tries) {
+    var body = JSON.stringify({ fn: fn, args: args }), viaGet = useGet && body.length < 1800;
+    (viaGet ? fetch(API + "?api=1&q=" + encodeURIComponent(body), { credentials: "omit", redirect: "follow", cache: "no-store" })
+            : fetch(API + "?api=1", { method: "POST", body: body, credentials: "omit", redirect: "follow", cache: "no-store" }))
+      .then(function(r) { return r.text(); })
+      .then(function(t) {
+        var d; try { d = JSON.parse(t); } catch (e) { throw new Error("The class server is busy. Please try again in a moment."); }
+        if (d.ok) ok(d.result); else fail(new Error(d.error || "Something went wrong. Please try again."));
+      })
+      .catch(function(e) {
+        if ((tries || 0) < 1 && /fetch|network|load failed/i.test(String(e && e.message))) { useGet = true; return setTimeout(function() { call(fn, args, ok, fail, 1); }, 600); }
+        fail(e && /class server|try again/i.test(e.message) ? e : new Error("Can't reach the class server. Check the internet connection and try again."));
+      });
+  }
+  function runner() {
+    var ok = function() {}, fail = function(e) { console.error(e); }, p;
+    p = new Proxy({}, { get: function(t, k) {
+      if (k === "withSuccessHandler") return function(f) { ok = f; return p; };
+      if (k === "withFailureHandler") return function(f) { fail = f; return p; };
+      if (k === "withUserObject") return function() { return p; };
+      return function() { call(String(k), Array.prototype.slice.call(arguments), ok, fail); };
+    } });
+    return p;
+  }
+  window.google = { script: { get run() { return runner(); } } };
+  window.urlParam = function(n) { var m = new RegExp("[?&]" + n + "=([^&#]*)").exec(location.search); return m ? decodeURIComponent(m[1].replace(/\+/g, " ")).replace(/[^A-Za-z0-9]/g, "") : ""; };
+})();
+</script>
+<script>
+var MODE = "book", BOOK_ID = urlParam("b").substring(0, 12), LIB_KEY = urlParam("k"), DASH_KEY = "";
+var BOOK = null;     // the book page arrives complete; its buttons are plain links (no calls to Google)
+var state = { book: null, roster: [], picked: "" };
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function(c) { return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]; }); }
+function run(fn, args, ok) {
+  var r = google.script.run.withSuccessHandler(ok).withFailureHandler(function(e) { showError(e && e.message ? e.message : String(e)); });
+  r[fn].apply(r, args);
+}
+function showError(m) { $("app").innerHTML = '<div class="card"><div class="msg err">' + esc(m) + '</div><div class="stack"><button class="big soft" onclick="location.reload()">Try again</button></div></div>'; }
+
+// ---------------- Student page (after scanning a sticker) ----------------
+// Works without google.script.run: Borrow / Return / Keep open this page again with &do=…,
+// so it also works on phones signed in to more than one Google account.
+// Opened from the Student page address (no page data built in): ask the script in the background
+// and do Borrow / Return / Keep as background calls too ("live" mode).
+function loadBook() {
+  if (!BOOK) {
+    run("getBook", [LIB_KEY, BOOK_ID], function(d) {
+      BOOK = d; BOOK.live = true;
+      if (d.className) $("clsName").textContent = d.className + " · Class library";
+      state.book = d.book; state.roster = d.roster || []; state.loanDays = d.loanDays;
+      renderBook();
+    });
+    return;
+  }
+  state.book = BOOK.book; state.roster = BOOK.roster || []; state.loanDays = BOOK.loanDays;
+  renderBook(BOOK.note, BOOK.err);
+}
+function liveAct(what, name, btn) {
+  var fn = { borrow: "borrowBook", "return": "returnBook", renew: "renewBook" }[what];
+  var args = what === "borrow" ? [LIB_KEY, state.book.id, name] : [LIB_KEY, state.book.id];
+  btn.disabled = true; btn.textContent = btn.getAttribute("data-busy");
+  google.script.run.withSuccessHandler(function(r) { state.book = r.book; renderBook(r.msg); window.scrollTo(0, 0); })
+    .withFailureHandler(function(e) {
+      var m = e && e.message ? e.message : String(e);
+      run("getBook", [LIB_KEY, state.book.id], function(d) { state.book = d.book; renderBook("", m); window.scrollTo(0, 0); });
+    })[fn].apply(null, args);
+}
+function actUrl(what, name) { return BOOK.link + "&do=" + what + (name ? "&s=" + encodeURIComponent(name) : "") + "&t=" + BOOK.made; }
+function linkBtn(cls, id, what, name, label, busyText) {
+  if (BOOK && BOOK.live) return '<button type="button" class="big ' + cls + '" id="' + id + '" data-live="' + what + '" data-name="' + esc(name || "") + '" data-busy="' + esc(busyText) + '">' + esc(label) + '</button>';
+  return '<a class="big ' + cls + '" id="' + id + '" target="_top" href="' + esc(actUrl(what, name)) + '" data-busy="' + esc(busyText) + '">' + esc(label) + '</a>';
+}
+document.addEventListener("click", function(e) {
+  var lv = e.target.closest && e.target.closest("button[data-live]");
+  if (lv) { liveAct(lv.getAttribute("data-live"), lv.getAttribute("data-name"), lv); return; }
+  var a = e.target.closest && e.target.closest("a[data-busy]");
+  if (a) { a.textContent = a.getAttribute("data-busy"); setTimeout(function() { a.classList.add("wait"); }, 0); }
+});
+
+function renderBook(note, err) {
+  var b = state.book;
+  $("h1").textContent = b.title;
+  $("hsub").textContent = (b.author ? b.author + " · " : "") + b.id;
+  var html = (note ? '<div class="card"><div class="msg ok">' + esc(note) + '</div></div>' : "") +
+             (err ? '<div class="card"><div class="msg err">' + esc(err) + '</div></div>' : "");
+  if (b.out) {
+    var late = b.overdueDays > 0;
+    html += '<div class="card"><span class="status ' + (late ? "s-late" : "s-out") + '">' + (late ? "Overdue by " + b.overdueDays + " day" + (b.overdueDays === 1 ? "" : "s") : "Borrowed") + '</span>' +
+      '<p style="font-size:18px;margin:14px 0 4px"><b>' + esc(b.borrower) + '</b> has this book.</p>' +
+      '<p class="muted" style="margin:0">Borrowed ' + esc(b.borrowed) + ' · due <b>' + esc(b.due) + '</b></p>' +
+      '<div class="stack">' + linkBtn("primary", "retBtn", "return", b.borrower, "Return this book", "Returning…") +
+      linkBtn("soft", "renBtn", "renew", b.borrower, "Keep it " + state.loanDays + " more days", "Renewing…") + '</div>' +
+      '<p class="muted" style="margin:14px 0 0">Someone else wants to borrow it? Return it first, then scan again.</p></div>';
+    $("app").innerHTML = html;
+    return;
+  }
+  html += '<div class="card"><span class="status s-in">On the shelf</span>' +
+    '<p class="muted" style="margin:12px 0 0">You can keep it for ' + state.loanDays + ' days.</p></div>' +
+    '<div class="card"><label class="lbl" for="q">Who is borrowing? Tap your name.</label>' +
+    '<input id="q" class="search" type="search" placeholder="Type to find your name" autocomplete="off">' +
+    '<div class="names" id="names"></div></div>';
+  $("app").innerHTML = html;
+  var draw = function() {
+    var q = $("q").value.trim().toLowerCase();
+    $("names").innerHTML = state.roster.filter(function(n) { return !q || n.toLowerCase().indexOf(q) > -1; })
+      .map(function(n) { return '<button class="name" data-n="' + esc(n) + '">' + esc(n) + '</button>'; }).join("") || '<p class="muted">No name matches.</p>';
+  };
+  $("q").oninput = draw; draw();
+  $("names").onclick = function(e) { var t = e.target.closest("[data-n]"); if (t) confirmBorrow(t.getAttribute("data-n")); };
+}
+
+function confirmBorrow(name) {
+  var b = state.book;
+  $("app").innerHTML = '<div class="card"><p style="font-size:18px;margin:0 0 6px">Borrow <b>' + esc(b.title) + '</b>?</p>' +
+    '<p class="muted" style="margin:0">as <b>' + esc(name) + '</b></p>' +
+    '<div class="stack">' + linkBtn("primary", "yes", "borrow", name, "Yes, borrow it", "Saving…") +
+    '<button class="big ghost" id="no">That’s not me</button></div></div>';
+  $("no").onclick = function() { renderBook(); };
+  window.scrollTo(0, 0);
+}
+function busy(btn, t) { btn.disabled = true; btn.textContent = t; }
+
+// ---------------- Teacher: printable QR labels ----------------
+function loadLabels() {
+  var s = document.createElement("script");
+  s.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
+  s.onload = function() { run("getLabelData", [{ chat: "", key: DASH_KEY }], renderLabels); };
+  s.onerror = function() { showError("Couldn't load the QR maker. Check the internet connection and reload."); };
+  document.head.appendChild(s);
+}
+function renderLabels(d) {
+  document.querySelector(".head").classList.add("noprint");
+  $("h1").textContent = "QR labels";
+  $("hsub").textContent = d.books.length + " book" + (d.books.length === 1 ? "" : "s");
+  if (!d.books.length) { $("app").innerHTML = '<div class="card"><p>No books yet. Add titles in the <b>Class Library</b> tab or on the Dashboard, then reload.</p></div>'; return; }
+  $("app").innerHTML =
+    '<div class="toolbar noprint"><span class="muted">Untick any you don’t need, then print and stick one on each book.</span>' +
+    '<span><button class="btn soft" id="none">Untick all</button> <button class="btn primary" id="print">Print labels</button></span></div>' +
+    '<div class="sheet" id="sheet">' + d.books.map(function(b, i) {
+      return '<div class="label" id="l' + i + '"><input type="checkbox" class="pick noprint" checked aria-label="Print ' + esc(b.title) + '" data-i="' + i + '">' +
+        '<div class="qr" id="q' + i + '"></div><b>' + esc(b.title) + '</b><div class="meta">' + esc(b.id) + ' · ' + esc(d.className) + '</div><div class="meta">Scan to borrow or return</div></div>';
+    }).join("") + '</div>';
+  d.books.forEach(function(b, i) { new QRCode($("q" + i), { text: b.url, width: 240, height: 240, correctLevel: QRCode.CorrectLevel.M }); });
+  $("sheet").onchange = function(e) { var c = e.target; if (c.dataset.i != null) $("l" + c.dataset.i).classList.toggle("off", !c.checked); };
+  $("print").onclick = function() { window.print(); };
+  $("none").onclick = function() {
+    var boxes = document.querySelectorAll(".pick"), any = Array.prototype.some.call(boxes, function(c) { return c.checked; });
+    Array.prototype.forEach.call(boxes, function(c) { c.checked = !any; $("l" + c.dataset.i).classList.toggle("off", any); });
+    this.textContent = any ? "Tick all" : "Untick all";
+  };
+}
+
+if (MODE === "labels") loadLabels(); else loadBook();
+</script>
+</body>
+</html>
