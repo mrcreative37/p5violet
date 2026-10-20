@@ -695,15 +695,69 @@ function pumpImgs(size) {
     IMGQ[size].forEach(function(j) { if (batch.length < per && j.fn === head.fn && JSON.stringify(j.extra) === JSON.stringify(head.extra)) batch.push(j); else rest.push(j); });
     IMGQ[size] = rest; IMGQ.busy[size]++;
     (function(batch) {
-      var ids = batch.map(function(j) { return j.id; });
-      api(batch[0].fn, [HUB_KEY, S.token].concat(batch[0].extra).concat([ids, size])).then(function(map) {
-        return Promise.all(ids.map(function(id) { return map[id] ? toUrl(map[id]).then(function(u) { S.imgs[size + id] = u; }) : null; }));
+      var ids = batch.map(function(j) { return j.id; }), keep = size === "t" || size === "s";
+      (keep ? imgDbGet(ids.map(function(id) { return size + id; })) : Promise.resolve({})).then(function(have) {
+        var need = ids.filter(function(id) { return !have[size + id]; });
+        return Promise.all(ids.filter(function(id) { return have[size + id]; }).map(function(id) {   // pictures already kept on this device: no trip
+          return toUrl(have[size + id]).then(function(u) { S.imgs[size + id] = u; delete IMGQ.wait[size + id]; paintImgs(id, size); });
+        })).then(function() {
+          if (!need.length) return;
+          return api(batch[0].fn, [HUB_KEY, S.token].concat(batch[0].extra).concat([need, size])).then(function(map) {
+            if (keep) { var put = {}; need.forEach(function(id) { if (map[id]) put[size + id] = map[id]; }); imgDbPut(put); }
+            return Promise.all(need.map(function(id) { return map[id] ? toUrl(map[id]).then(function(u) { S.imgs[size + id] = u; }) : null; }));
+          });
+        });
       }).catch(function() {}).then(function() {
         ids.forEach(function(id) { delete IMGQ.wait[size + id]; paintImgs(id, size); });
         IMGQ.busy[size]--; pumpImgs(size);
       });
     })(batch);
   }
+}
+// Small pictures (album grid and wall cards) are also kept on the device, so they appear at once next
+// time. A photo's file never changes, so a kept copy is always right. Wiped when the student signs out.
+var IDB = { p: null, db: null };
+function imgDb() {
+  if (S.preview || !window.indexedDB) return Promise.resolve(null);
+  if (IDB.p) return IDB.p;
+  IDB.p = new Promise(function(res) {
+    var done = false, fin = function(db) { if (!done) { done = true; IDB.db = db; res(db); } };
+    setTimeout(function() { fin(null); }, 1500);                          // never hold up the pictures
+    try {
+      var r = indexedDB.open(STORE + "_pics", 1);
+      r.onupgradeneeded = function() { r.result.createObjectStore("p"); };
+      r.onsuccess = function() {
+        var db = r.result;
+        try { var c = db.transaction("p").objectStore("p").count(); c.onsuccess = function() { if (c.result > 600) { try { db.transaction("p", "readwrite").objectStore("p").clear(); } catch (e) {} } }; } catch (e) {}
+        fin(db);
+      };
+      r.onerror = r.onblocked = function() { fin(null); };
+    } catch (e) { fin(null); }
+  });
+  return IDB.p;
+}
+function imgDbGet(keys) {
+  return imgDb().then(function(db) {
+    if (!db || !keys.length) return {};
+    return new Promise(function(res) {
+      var out = {}, left = keys.length;
+      try {
+        var os = db.transaction("p").objectStore("p");
+        keys.forEach(function(k) { var q = os.get(k); q.onsuccess = function() { if (q.result) out[k] = q.result; if (!--left) res(out); }; q.onerror = function() { if (!--left) res(out); }; });
+      } catch (e) { res(out); }
+    });
+  }).catch(function() { return {}; });
+}
+function imgDbPut(map) {
+  imgDb().then(function(db) {
+    if (!db) return;
+    try { var os = db.transaction("p", "readwrite").objectStore("p"); for (var k in map) os.put(map[k], k); } catch (e) {}
+  }).catch(function() {});
+}
+function imgDbClear() {
+  try { if (IDB.db) IDB.db.close(); } catch (e) {}
+  IDB.p = null; IDB.db = null;
+  try { if (window.indexedDB) indexedDB.deleteDatabase(STORE + "_pics"); } catch (e) {}
 }
 /** Puts any pictures we already have into the page. */
 function paintImgs(onlyId, size) {
@@ -785,7 +839,7 @@ function tryPin() {
   }).catch(function(e) { showPin(S.picked, e.message); });
 }
 function signOut(expired, okNote) {
-  stopTimers(); store("tok", null); S.token = ""; S.home = null; S.wall = null; S.msgs = []; S.msgVer = ""; S.pingVer = ""; S.albums = null; S.album = null;
+  stopTimers(); clearBoots(); store("board", null); S.wallPre = null; store("tok", null); S.token = ""; S.home = null; S.wall = null; S.msgs = []; S.msgVer = ""; S.pingVer = ""; S.albums = null; S.album = null;
   S.imgs = {}; IMGQ.s = []; IMGQ.l = []; IMGQ.wait = {}; LEAGUE.d = null; LEAD.d = null; LEAD.sub = ""; LEAD.picks = {}; LEAD.cart = []; LEAD.sel = []; LEAD.fresh = {}; LEAD.notes = {}; LEAD.noteOpen = {}; LEAD.stamps = {}; S.popShown = false; S.planner = null; CHEER.spot = null; CHEER.bday = null; CHEER.open = {}; if (typeof BIG === "object") for (var bk in BIG) delete BIG[bk];
   window.scrollTo(0, 0);
   showLogin(expired ? "Please sign in again." : "", okNote);
@@ -793,9 +847,52 @@ function signOut(expired, okNote) {
 function stopTimers() { S.timers.forEach(clearInterval); S.timers = []; stopShow(); }
 
 // ---------------- Home ----------------
+// SPEED: the first screen comes in ONE trip (home + the board open last time). It's also kept on this
+// device, so next time the Hub appears at once from that copy while the newest version loads quietly.
+// Signing out (or a sign-in that has ended) wipes the copy.
+var BOOT_MAX_AGE = 3 * 86400000;
+function bootKey() { return "boot" + String(S.token || "").slice(-8); }
+function readBoot() {
+  if (S.preview) return null;
+  try { var b = JSON.parse(store(bootKey()) || "null"); if (b && b.h && Date.now() - b.at < BOOT_MAX_AGE) return b.h; } catch (e) {}
+  return null;
+}
+function saveBoot(h) {
+  if (S.preview) return;
+  try { var j = JSON.stringify({ at: Date.now(), h: h }); if (j.length < 350000) store(bootKey(), j); else store(bootKey(), null); } catch (e) {}
+}
+function clearBoots() {
+  try { Object.keys(localStorage).forEach(function(k) { if (k.indexOf(STORE + "boot") === 0) localStorage.removeItem(k); }); } catch (e) {}
+  imgDbClear();
+}
 function loadHome() {
-  $("app").innerHTML = SPIN;
-  call("getHubHome").then(function(h) {
+  var cached = readBoot();
+  if (cached) { if (!S.boardId) S.boardId = store("board") || ""; gotHome(cached, false, true); }
+  else $("app").innerHTML = SPIN;
+  call("getHubStart", S.boardId || store("board") || "").then(function(h) {
+    saveBoot(h);
+    gotHome(h, !!cached);
+  }).catch(function(e) { if (!cached) fatal(e.message); });
+}
+/** Is the student busy with something on screen (writing, a pop-up open)? Then a quiet refresh waits. */
+function busyOnScreen() {
+  var a = document.activeElement;
+  return !!$("sheet") || !!(a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName));
+}
+function gotHome(h, refresh, fromCache) {
+  if (refresh) {                                   // the screen is already showing the copy kept on this device
+    var oldBoards = JSON.stringify((S.home || {}).boards || []), oldWall = JSON.stringify(S.wall || null);
+    S.home = h; S.me = h.me; S.short = h.short; setWatermark(h.short);
+    setTabs(h); setDot(h.unread); ldDot(); ldNews();
+    if (!h.boards.some(function(b) { return b.id === S.boardId; })) S.boardId = (h.boards[0] || {}).id || "";
+    if (S.tab === "wall" && !busyOnScreen()) {
+      if (oldBoards !== JSON.stringify(h.boards)) { S.wallPre = h.wall; renderWallShell(); }
+      else if (h.wall && h.wall.board.id === S.boardId && JSON.stringify(h.wall) !== oldWall) { S.wall = h.wall; renderWall(); }
+    }
+    if (h.popup && h.planner && !S.popShown && !busyOnScreen()) { S.popShown = true; showTodayPopup(h.planner); }
+    return;
+  }
+  (function() {
     S.home = h; S.me = h.me; S.short = h.short; setWatermark(h.short);
     if (h.preview) {
       $("meBtn").innerHTML = '<span class="so">\uD83D\uDC40 Teacher view</span>'; $("meBtn").setAttribute("aria-label", "About this preview");
@@ -809,14 +906,15 @@ function loadHome() {
     setTabs(h);
     setDot(h.unread);
     if (!S.boardId || !h.boards.some(function(b) { return b.id === S.boardId; })) S.boardId = (h.boards[0] || {}).id || "";
+    if (h.wall && h.wall.board && h.wall.board.id === S.boardId) S.wallPre = h.wall;     // no second trip for the wall
     stopTimers();
     S.timers.push(setInterval(ping, 60000));
     S.timers.push(setInterval(function() { if (S.tab === "ask" && !document.hidden) loadMsgs(true); }, 15000));
     go(S.tab || "wall");
     ldDot(); ldNews();
-    if (h.popup && h.planner && !S.popShown) { S.popShown = true; showTodayPopup(h.planner); }   // the moment they come in: homework due and important news
-    if (h.gallery !== false) setTimeout(function() { if (!S.albums) call("hubAlbums").then(gotAlbums).catch(function() {}); }, 1500);   // photos ready before they're opened
-  }).catch(function(e) { fatal(e.message); });
+    if (!fromCache && h.popup && h.planner && !S.popShown) { S.popShown = true; showTodayPopup(h.planner); }   // the moment they come in: homework due and important news
+    if (h.gallery !== false) setTimeout(function() { if (!S.albums && S.token) call("hubAlbums").then(gotAlbums).catch(function() {}); }, fromCache ? 4000 : 2500);   // photos ready before they're opened (after the wall's pictures)
+  })();
 }
 /** Faint, repeating "name · date" over big photos, so a screenshot shows who took it. */
 function setWatermark(name) {
@@ -1455,11 +1553,12 @@ function renderWallShell() {
   $("app").innerHTML = '<div class="chips" id="chips" role="tablist">' + h.boards.map(function(b) {
     return '<button class="chip' + (b.id === S.boardId ? " on" : "") + '" role="tab" aria-selected="' + (b.id === S.boardId) + '" data-b="' + esc(b.id) + '">' + esc(b.title) + (b.open ? "" : " 🔒") + '</button>';
   }).join("") + '</div><div id="wallBody">' + SPIN + '</div>';
-  $("chips").onclick = function(e) { var c = e.target.closest("[data-b]"); if (!c) return; S.boardId = c.getAttribute("data-b"); renderWallShell(); };
+  $("chips").onclick = function(e) { var c = e.target.closest("[data-b]"); if (!c) return; S.boardId = c.getAttribute("data-b"); if (!S.preview) store("board", S.boardId); renderWallShell(); };
   loadWall();
 }
 function loadWall(note) {
-  var id = S.boardId;
+  var id = S.boardId, pre = S.wallPre; S.wallPre = null;
+  if (pre && pre.board && pre.board.id === id) { S.wall = pre; renderWall(note); return; }   // came with the first screen
   call("getHubWall", id).then(function(w) { if (S.tab !== "wall" || S.boardId !== id) return; S.wall = w; renderWall(note); }).catch(function(e) { $("wallBody").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
 }
 function renderWall(note) {
