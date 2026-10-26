@@ -378,6 +378,69 @@
   .yt .yl { position:absolute; left:10px; bottom:8px; right:10px; color:#fff; font-weight:700; font-size:13px; text-shadow:0 1px 4px rgba(0,0,0,.7); text-align:left; }
   .up-card.compact .yt { max-width:320px; }
   a.btn { text-decoration:none; }
+  .tabs.t8 .tabs-in { gap:0; } .tabs.t8 button { font-size:9.5px; letter-spacing:-.03em; padding-left:0; padding-right:0; } .tabs.t8 svg { width:20px; height:20px; }
+  @media (min-width:1024px) { .tabs.t8 button { font-size:15px; letter-spacing:0; } }
+  /* ✍️ Compo Marker */
+  .cw-card { background:#fff; border-radius:22px; padding:18px 16px; margin-top:12px; box-shadow:0 8px 22px rgba(46,26,120,.08); }
+  .cw-step { display:flex; align-items:center; gap:10px; font:800 17px/1.25 var(--head); margin:4px 0 10px; }
+  .cw-step b { flex:none; width:30px; height:30px; border-radius:50%; background:var(--violet-2); color:#fff; display:grid; place-items:center; font-size:15px; }
+  .cw-kinds { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+  .cw-kind { border:2px solid var(--line); background:var(--paper); border-radius:16px; padding:12px 10px; font:700 15px/1.25 inherit; color:var(--ink); min-height:56px; }
+  .cw-kind.on { border-color:var(--violet-2); background:var(--lilac); color:var(--violet); box-shadow:0 0 0 3px rgba(91,63,214,.15); }
+  .cw-q { width:100%; border:1.5px solid var(--line); border-radius:14px; padding:10px 12px; font:inherit; font-size:15px; resize:vertical; background:var(--paper); }
+  .cw-qbox { background:var(--warn-soft); border-radius:14px; padding:10px 12px; font-size:14.5px; margin-bottom:8px; }
+  .cw-pages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:6px 0 10px; }
+  .cw-pg { position:relative; aspect-ratio:3/4; border-radius:14px; overflow:hidden; background:var(--lilac); box-shadow:0 3px 10px rgba(46,26,120,.15); display:grid; place-items:center; text-align:center; font-weight:700; font-size:13px; color:var(--violet); }
+  .cw-pg img { width:100%; height:100%; object-fit:cover; display:block; }
+  .cw-pg .n { position:absolute; left:6px; top:6px; background:var(--violet-2); color:#fff; border-radius:10px; padding:1px 8px; font-size:12px; font-weight:800; }
+  .cw-pg .x { position:absolute; right:4px; top:4px; width:34px; height:34px; border-radius:50%; border:0; background:rgba(30,23,53,.72); color:#fff; font-size:16px; }
+  .cw-pg.busy { opacity:.6; }
+  .cw-add { display:grid; gap:8px; }
+  .cw-add label.btn { cursor:pointer; width:100%; }
+  .cw-tip { font-size:13.5px; color:var(--muted); margin:8px 2px 0; line-height:1.45; }
+  .cw-work { text-align:center; padding:34px 18px; }
+  .cw-work .big { font-size:54px; display:block; animation:cwbob 1.4s ease-in-out infinite; }
+  @keyframes cwbob { 50% { transform:translateY(-8px) rotate(-6deg); } }
+  .cw-work h2 { font:800 22px/1.2 var(--head); margin:12px 0 6px; } .cw-work p { color:var(--muted); margin:0; }
+  .cw-steps { display:flex; justify-content:center; gap:8px; margin-top:16px; flex-wrap:wrap; } .cw-steps span { padding:6px 12px; border-radius:999px; background:var(--lilac); font-size:13px; font-weight:700; color:var(--muted); } .cw-steps span.on { background:var(--violet-2); color:#fff; } .cw-steps span.done { background:var(--ok-soft); color:var(--ok); }
+  .cw-text { width:100%; min-height:260px; border:1.5px solid var(--line); border-radius:14px; padding:12px 14px; font:16px/1.7 inherit; background:#FFFDF6; resize:vertical; }
+  .cw-score { display:flex; align-items:center; gap:16px; }
+  .cw-ring { flex:none; width:104px; height:104px; border-radius:50%; border:4px solid #CC1530; color:#CC1530; display:grid; place-items:center; font-family:var(--hand); transform:rotate(-6deg); text-align:center; line-height:1; }
+  .cw-ring b { font-size:38px; display:block; } .cw-ring small { font-size:18px; }
+  .cw-parts { flex:1; display:grid; gap:6px; } .cw-parts div { background:var(--paper); border-radius:12px; padding:8px 12px; font-weight:700; font-size:14.5px; display:flex; justify-content:space-between; gap:8px; }
+  .cw-list { margin:6px 0 0; padding-left:20px; } .cw-list li { margin:4px 0; line-height:1.45; }
+  .cw-h { font:800 17px/1.25 var(--head); margin:0 0 6px; }
+  .cw-script { position:relative; background:#FFFDF6; border-radius:16px; padding:22px 16px 18px 18px; font-size:17px; line-height:2.45; white-space:pre-wrap; overflow-wrap:anywhere; color:#1E1735; box-shadow:inset 0 0 0 1px #EFE6C8; }
+  .cw-script .hl { cursor:pointer; border-radius:2px; }
+  .cw-script .hl.good { background:linear-gradient(transparent 50%, #DDF3E6 50%); }
+  .cw-script .hl.fix { text-decoration:underline wavy #CC1530; text-decoration-thickness:1.5px; text-underline-offset:5px; text-decoration-skip-ink:none; }
+  .cw-script .uline { border-bottom:2px solid #CC1530; padding-bottom:1px; }
+  .ann-n { font-family:var(--hand); font-weight:700; font-size:18px; margin-left:1px; cursor:pointer; } .ann-n.good { color:#11784A; } .ann-n.fix { color:#CC1530; }
+  .sym { position:relative; display:inline; cursor:pointer; }
+  .sym>b { position:absolute; left:0; transform:translateX(-45%); bottom:.8em; font-family:var(--hand); font-weight:700; color:#CC1530; font-size:19px; line-height:1; white-space:nowrap; padding:0 2px; }
+  .sym.bump>b { transform:translateX(15%); } .sym.ul>b { text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; }
+  .sym.circ>b { border:1.5px solid #CC1530; border-radius:50%; width:1.25em; height:1.25em; display:grid; place-items:center; font-size:15px; padding:0; bottom:1em; }
+  .sym.caret>b { bottom:auto; top:.5em; font-size:22px; transform:translateX(-50%); }
+  .cw-key { display:flex; flex-wrap:wrap; gap:6px 14px; font-size:13.5px; color:var(--muted); font-weight:700; margin:0 0 10px; }
+  .cw-key .k { display:inline-flex; align-items:baseline; gap:6px; } .cw-key .sym { display:inline-block; } .cw-key .sym>b { position:static; transform:none; font-size:18px; } .cw-key .sym.circ>b { display:inline-grid; } .cw-key .ul-demo { border-bottom:2px solid #CC1530; color:var(--ink); padding:0 2px; }
+  .cw-notes { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+  .cw-notes li { display:flex; gap:10px; background:var(--paper); border-radius:14px; padding:10px 12px; cursor:pointer; }
+  .cw-notes .num { flex:none; font-family:var(--hand); font-weight:700; font-size:22px; width:26px; text-align:center; } .cw-notes .good .num { color:#11784A; } .cw-notes .fix .num { color:#CC1530; }
+  .cw-notes .lb { font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); } .cw-notes .try { margin-top:4px; font-size:14px; color:var(--ok); font-weight:700; }
+  .cw-corr { list-style:none; margin:8px 0 0; padding:0; display:grid; gap:6px; }
+  .cw-corr li { display:flex; gap:10px; align-items:baseline; font-size:15px; } .cw-corr .sy { flex:none; min-width:34px; font-family:var(--hand); font-weight:700; color:#CC1530; font-size:19px; text-align:center; }
+  .cw-corr s { color:var(--muted); } .cw-corr .cf { color:var(--ok); font-weight:800; } .cw-corr .cn { display:block; font-size:12.5px; color:var(--muted); font-weight:600; }
+  .cw-pt { display:flex; gap:8px; margin:6px 0; font-size:14.5px; line-height:1.4; }
+  .cw-hist { display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:#fff; border:0; border-radius:16px; padding:12px 14px; margin-top:8px; box-shadow:0 4px 12px rgba(46,26,120,.07); font:inherit; color:var(--ink); }
+  .cw-hist .ic { font-size:24px; } .cw-hist .t { flex:1; min-width:0; font-weight:700; } .cw-hist .t small { display:block; color:var(--muted); font-weight:600; font-size:13px; }
+  .cw-warn { background:var(--warn-soft); font-size:15px; line-height:1.45; }
+  .cw-title { font:800 19px/1.25 var(--head); }
+  .cw-qpics { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin:4px 0 8px; }
+  .cw-qpics.one { grid-template-columns:1fr; }
+  .cw-qpic { border:0; padding:0; border-radius:12px; overflow:hidden; background:var(--lilac); min-height:110px; display:grid; place-items:center; cursor:zoom-in; }
+  .cw-qpic img { width:100%; height:auto; display:block; }
+  .cw-go { font-weight:800; color:var(--violet-2); white-space:nowrap; } .cw-todo { box-shadow:0 0 0 2px var(--violet-2), 0 4px 12px rgba(46,26,120,.07); }
+  .cw-hist .sc { font-family:var(--hand); color:#CC1530; font-weight:700; font-size:20px; }
   .vo-pages { display:flex; flex-direction:column; gap:10px; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
   .vo-pages canvas { width:100%; height:auto; display:block; border-radius:8px; background:#fff; box-shadow:0 2px 10px rgba(46,26,120,.12); pointer-events:none; }
   .vo-status { text-align:center; color:var(--muted); font-weight:600; padding:18px 0; }
@@ -577,6 +640,7 @@
   <button data-tab="spot" class="hidden"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.8z"/></svg>Spotlight<span class="dot gold hidden" id="spotDot"></span></button>
   <button data-tab="bday" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 21h16v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 16c2 1.5 4 1.5 6 0s4-1.5 6 0 3 1 4 0"/><path d="M12 11V7"/><path d="M12 3.5c.8 1 .8 2 0 2.5-.8-.5-.8-1.5 0-2.5z"/></svg>Birthdays<span class="dot gold hidden" id="bdayDot"></span></button>
   <button data-tab="league" class="hidden"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>Groups<span class="dot gold hidden" id="leagueDot"></span></button>
+  <button data-tab="compo" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/><path d="M14 20h6"/></svg>Compo</button>
   <button data-tab="photos"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Photos</button>
   <button data-tab="ask"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span id="askLabel">Ask</span><span class="dot hidden" id="askDot"></span></button>
 </div></nav>
@@ -960,16 +1024,16 @@ function ping() {
 }
 /** Which tabs show (Spotlight / Birthdays can be switched off by the teacher), and their little badges. */
 function setTabs(h) {
-  var on = { today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader }, n = 3 + (on.today ? 1 : 0) + (on.spot ? 1 : 0) + (on.bday ? 1 : 0) + (on.league ? 1 : 0);
+  var on = { today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo }, n = 3 + (on.today ? 1 : 0) + (on.spot ? 1 : 0) + (on.bday ? 1 : 0) + (on.league ? 1 : 0) + (on.compo ? 1 : 0);
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button[data-tab]"), function(b) { if (b.dataset.tab in on) b.classList.toggle("hidden", !on[b.dataset.tab]); });
   document.querySelector(".tabs-in").style.gridTemplateColumns = "repeat(" + n + ",1fr)";
-  $("tabs").classList.toggle("t5", n > 3); $("tabs").classList.toggle("t6", n > 5); $("tabs").classList.toggle("t7", n > 6);
+  $("tabs").classList.toggle("t5", n > 3); $("tabs").classList.toggle("t6", n > 5); $("tabs").classList.toggle("t7", n > 6); $("tabs").classList.toggle("t8", n > 7);
   Array.prototype.forEach.call(document.querySelectorAll("#tabs .tl"), function(l) { l.textContent = n > 6 && window.innerWidth < 1024 ? l.getAttribute("data-short") : l.getAttribute("data-full"); });
   var td = $("todayDot"), tn = (h.planner && h.planner.newCount) || 0; td.textContent = tn > 9 ? "9+" : (tn || ""); td.classList.toggle("hidden", !tn);
   $("askLabel").textContent = n > 3 ? "Ask" : "Ask " + (h.teacher.length <= 12 ? h.teacher : "teacher");
   var c = h.celebrating || {};
   [["spotDot", c.spot], ["bdayDot", c.bday]].forEach(function(x) { var d = $(x[0]); d.textContent = x[1] > 9 ? "9+" : (x[1] || ""); d.classList.toggle("hidden", !x[1]); });
-  if ((S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today)) S.tab = "wall";
+  if ((S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo)) S.tab = "wall";
 }
 function go(tab) {
   stopShow();
@@ -981,6 +1045,7 @@ function go(tab) {
   else if (tab === "spot" || tab === "bday") { var dd = $(tab + "Dot"); if (dd) dd.classList.add("hidden"); renderCheers(tab); }
   else if (tab === "league") renderLeague();
   else if (tab === "today") { $("todayDot").classList.add("hidden"); renderToday(); }
+  else if (tab === "compo") renderCompo();
   else renderPhotos();
 }
 $("tabs").onclick = function(e) { var b = e.target.closest("button[data-tab]"); if (b) go(b.dataset.tab); };
@@ -1655,6 +1720,272 @@ function drawToday(d) {
   $("app").innerHTML = html;
   var sc = $("app").querySelector(".td-subs"); if (sc) sc.onclick = function(e) { var b = e.target.closest("[data-subj]"); if (!b) return; TODAY.subj = b.getAttribute("data-subj"); drawToday(d); };
 }
+
+// ---------------- ✍️ Compo Marker: photo → read → check → marked with symbols ----------------
+var CW = { st: null, cur: null, pages: [], busy: false, view: null, qimg: {} };
+var CW_EMO = { cw: "📖", sw: "✉️" };
+function renderCompo() {
+  $("topTitle").textContent = "Compo";
+  if (!CW.st) $("app").innerHTML = SPIN;
+  if (CW.busy) return cwWorking(CW.step || 1);
+  if (CW.view) return cwResult(CW.view);
+  if (CW.review && CW.cur) return cwReview();
+  call("compoStart").then(function(d) { CW.st = d; if (CW.cur) { var keep = CW.cur.mine; CW.cur = d.tasks.filter(function(t) { return t.id === CW.cur.id; })[0] || null; if (CW.cur && !CW.cur.mine && keep) CW.cur.mine = keep; } if (S.tab === "compo" && !CW.busy && !CW.view) cwRedraw(); })
+    .catch(function(e) { if (S.tab === "compo") $("app").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+  if (CW.st) cwRedraw();
+}
+function cwRedraw() { if (CW.cur && CW.cur.open && !(CW.cur.mine && CW.cur.mine.status === "Marked")) drawCompoTask(); else { CW.cur = null; drawCompoHome(); } }
+function confirmTap2(btn, label) {
+  if (btn.dataset.armed === "1") { btn.dataset.armed = ""; return true; }
+  btn.dataset.armed = "1"; var o = btn.innerHTML; btn.textContent = label; setTimeout(function() { if (btn.isConnected && btn.dataset.armed === "1") { btn.dataset.armed = ""; btn.innerHTML = o; } }, 4000); return false;
+}
+function cwKind(t) { return t.task === "sw" ? "writing" : "compo"; }
+function drawCompoHome() {
+  var d = CW.st, todo = d.tasks.filter(function(t) { return t.open && !(t.mine && t.mine.status === "Marked"); }), done = d.tasks.filter(function(t) { return t.mine && t.mine.status === "Marked"; });
+  var html = '<div class="cheer-hero"><span class="hand">Your writing, marked</span><h1>Compo</h1><p>When ' + esc(d.teacher) + ' sets a compo, it’s here. Take photos of your writing and hand it in: it comes back marked, with comments and tips.</p></div>';
+  if (!todo.length && !done.length) html += '<div class="empty"><span class="e">✍️</span><span class="hand">Nothing to hand in</span>' + esc(d.teacher) + ' hasn’t set a compo right now.</div>';
+  if (todo.length) html += '<div class="bsec">✍️ To hand in</div>' + todo.map(function(t) {
+    var half = t.mine && t.mine.status === "Read";
+    return '<button class="cw-hist cw-todo" data-cwtask="' + esc(t.id) + '"><span class="ic">' + CW_EMO[t.task] + '</span><span class="t">' + esc(t.title) + '<small>' + esc(t.label + ' ' + t.taskName) +
+      (t.dueLabel ? ' · ' + (t.late ? '⏰ was due ' : 'due ') + esc(t.dueLabel) : '') + '</small></span><span class="cw-go">' + (half ? 'Finish' : 'Start') + ' ›</span></button>';
+  }).join("");
+  if (done.length) html += '<div class="bsec">✅ Handed in</div>' + done.map(function(t) {
+    return '<button class="cw-hist" data-cwopen="' + esc(t.mine.id) + '"><span class="ic">' + CW_EMO[t.task] + '</span><span class="t">' + esc(t.title) + '<small>Marked · ' + esc(cwDate(t.mine.created)) + '</small></span>' +
+      (t.mine.total != null ? '<span class="sc">' + t.mine.total + '/' + t.mine.max + '</span>' : '') + '<span aria-hidden="true">›</span></button>';
+  }).join("");
+  $("app").innerHTML = html + '<div style="height:20px"></div>';
+}
+function drawCompoTask() {
+  var t = CW.cur, d = CW.st, half = t.mine && t.mine.status === "Read";
+  var pages = CW.pages.map(function(p, i) {
+    return '<div class="cw-pg' + (p.busy ? ' busy' : '') + '">' + (p.thumb ? '<img src="' + p.thumb + '" alt="Page ' + (i + 1) + '">' : '<span>' + esc(p.label || "Page") + '</span>') +
+      '<span class="n">' + (i + 1) + '</span>' + (p.busy ? '' : '<button class="x" data-cwdel="' + i + '" aria-label="Remove page ' + (i + 1) + '">✕</button>') + '</div>';
+  }).join("");
+  var pics = t.files.filter(function(f) { return /^image\//.test(f.mime); }), docs = t.files.filter(function(f) { return !/^image\//.test(f.mime); });
+  var html = '<button class="btn soft" id="cwBack" style="margin-top:12px">‹ My compos</button>' +
+    '<div class="cw-card"><div class="cw-step"><b>1</b>The question</div><div class="cw-title">' + CW_EMO[t.task] + ' ' + esc(t.title) + '</div>' +
+    '<div class="muted" style="font-size:13.5px;font-weight:700;margin:2px 0 8px">' + esc(t.label + ' ' + t.taskName) + (t.dueLabel ? ' · ' + (t.late ? '⏰ was due ' : 'due ') + esc(t.dueLabel) : '') + '</div>' +
+    (t.question ? '<div class="cw-qbox" style="white-space:pre-wrap">' + linkify(t.question) + '</div>' : '') +
+    (pics.length ? '<div class="cw-qpics' + (pics.length === 1 ? ' one' : '') + '">' + pics.map(function(f) { var u = CW.qimg[f.id]; return '<button class="cw-qpic" data-cwq="' + esc(f.id) + '" aria-label="See the picture bigger">' + (u ? '<img src="' + u + '" alt="Question picture">' : '<span class="spin"><i></i><i></i><i></i></span>') + '</button>'; }).join("") + '</div>' : '') +
+    docs.map(function(f) { return '<button class="up-att" data-cwq="' + esc(f.id) + '"><span class="ai">📕</span><span class="at">' + esc(f.name) + '<small>The question</small></span><span class="ago">View</span></button>'; }).join("") + '</div>';
+  if (half) html += '<div class="cw-card"><div class="cw-step"><b>2</b>Almost done</div><p style="margin:0 0 12px">I’ve read your photos. Check my typing, then hand it in.</p>' +
+    '<button class="btn primary big" id="cwFinish" style="width:100%">📝 Check and hand in</button></div>';
+  else html += '<div class="cw-card"><div class="cw-step"><b>2</b>Take a photo of every page</div>' +
+    (pages ? '<div class="cw-pages">' + pages + '</div>' : '') +
+    (CW.pages.length < d.maxPages ? '<div class="cw-add"><label class="btn primary big" for="cwCam">📷 Take a photo' + (CW.pages.length ? ' of the next page' : '') + '</label>' +
+      '<label class="btn soft big" for="cwPick">🖼️ Choose photos or files</label></div>' : '<p class="cw-tip">That’s the most pages I can take (' + d.maxPages + ').</p>') +
+    '<input type="file" id="cwCam" accept="image/*" capture="environment" class="hidden" data-cwfile>' +
+    '<input type="file" id="cwPick" accept="image/*,.heic,.heif,.pdf,application/pdf" multiple class="hidden" data-cwfile>' +
+    '<p class="cw-tip">💡 Lay each page flat, in good light, and fill the photo with the page. Any order is fine.</p></div>' +
+    '<div class="cw-card"><div class="cw-step"><b>3</b>Hand it in</div>' +
+    '<button class="btn primary big" id="cwGo" style="width:100%"' + (CW.pages.length && !CW.pages.some(function(p) { return p.busy; }) ? '' : ' disabled') + '>✨ Read my writing</button>' +
+    '<p class="cw-tip" style="text-align:center">Next, you’ll check my typing of your writing. Then it’s marked in about a minute. You can hand it in once.</p></div>';
+  $("app").innerHTML = html + '<div style="height:20px"></div>';
+  pics.forEach(function(f) { if (!CW.qimg[f.id]) cwLoadQ(t, f); });
+}
+function cwLoadQ(t, f, open) {
+  return call("compoQFile", t.id, f.id).then(function(r) {
+    var u = "data:" + r.mime + ";base64," + r.data; if (/^image\//.test(r.mime)) { CW.qimg[f.id] = u; var b = document.querySelector('[data-cwq="' + f.id + '"]'); if (b && !open) b.innerHTML = '<img src="' + u + '" alt="Question picture">'; }
+    return r;
+  });
+}
+function cwDate(ms) { try { return new Date(ms).toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" }); } catch (e) { return ""; } }
+/** Any photo type: shrunk to a sharp JPEG when the browser can open it; HEIC / PDF are sent as they are (the AI reads them). */
+function cwPrepare(file) {
+  var name = String(file.name || ""), type = String(file.type || "").toLowerCase();
+  var isPdf = type === "application/pdf" || /\.pdf$/i.test(name), isHeic = /heic|heif/.test(type) || /\.(heic|heif)$/i.test(name);
+  var raw = function(mime, label) {
+    return new Promise(function(res, rej) {
+      if (file.size > 10 * 1048576) return rej(new Error(name + " is too big. Take the photo again (or use a smaller file)."));
+      var rd = new FileReader(); rd.onload = function() { res({ mime: mime, data: String(rd.result).split(",")[1], label: label }); }; rd.onerror = function() { rej(new Error(name + " couldn’t be opened.")); }; rd.readAsDataURL(file);
+    });
+  };
+  if (isPdf) return raw("application/pdf", "📄 PDF");
+  return new Promise(function(res, rej) {
+    var url = URL.createObjectURL(file), img = new Image();
+    img.onload = function() {
+      var max = 1800, sc = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement("canvas");
+      c.width = Math.round(img.naturalWidth * sc); c.height = Math.round(img.naturalHeight * sc);
+      var x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      var t = document.createElement("canvas"), ts = 240 / Math.max(c.width, c.height); t.width = Math.round(c.width * ts); t.height = Math.round(c.height * ts); t.getContext("2d").drawImage(c, 0, 0, t.width, t.height);
+      res({ mime: "image/jpeg", data: c.toDataURL("image/jpeg", 0.86).split(",")[1], thumb: t.toDataURL("image/jpeg", 0.7) });
+    };
+    img.onerror = function() {
+      URL.revokeObjectURL(url);
+      if (isHeic || !type || /^image\//.test(type)) raw(isHeic ? (/heif/.test(type) ? "image/heif" : "image/heic") : (type || "image/heic"), "📷 Photo").then(res, rej);
+      else rej(new Error(name + " isn’t a photo I can read. Try a JPG, PNG or HEIC photo, or a PDF."));
+    };
+    img.src = url;
+  });
+}
+function cwAddFiles(files) {
+  files = Array.prototype.slice.call(files || []);
+  files.forEach(function(f) {
+    if (CW.pages.length >= CW.st.maxPages) return flash("That’s the most pages I can take (" + CW.st.maxPages + ").", true);
+    var slot = { busy: true, label: "…" }; CW.pages.push(slot);
+    cwPrepare(f).then(function(p) { Object.assign(slot, p); slot.busy = false; if (S.tab === "compo" && !CW.busy && CW.cur) drawCompoTask(); })
+      .catch(function(e) { var i = CW.pages.indexOf(slot); if (i > -1) CW.pages.splice(i, 1); flash(e.message, true); if (S.tab === "compo" && !CW.busy && CW.cur) drawCompoTask(); });
+  });
+  drawCompoTask();
+}
+function cwWorking(step) {
+  CW.step = step;
+  $("app").innerHTML = '<div class="cw-card cw-work"><span class="big">' + (step === 1 ? '🔎' : '✍️') + '</span><h2>' + (step === 1 ? 'Reading your handwriting…' : 'Marking your ' + cwKind(CW.cur) + '…') + '</h2>' +
+    '<p>' + (step === 1 ? 'This takes about half a minute.' : 'Nearly there. Please keep this page open.') + '</p>' +
+    '<div class="cw-steps"><span class="' + (step === 1 ? 'on' : 'done') + '">1 Read</span><span class="' + (step === 2 ? 'done' : '') + '">2 Check</span><span class="' + (step === 2 ? 'on' : '') + '">3 Mark</span></div><div class="spin" style="margin-top:18px"><i></i><i></i><i></i></div></div>';
+  window.scrollTo(0, 0);
+}
+function cwSubmit() {
+  var t = CW.cur; CW.busy = true; cwWorking(1);
+  var imgs = CW.pages.map(function(p) { return { mime: p.mime, data: p.data }; });
+  call("compoRead", t.id, imgs).then(function(r) { CW.busy = false; t.mine = { id: r.id, status: "Read", text: r.text }; CW.job = r; if (S.tab === "compo") cwReview(); })
+    .catch(function(e) { CW.busy = false; if (S.tab === "compo") { drawCompoTask(); flash(e.message || String(e), true); } });
+}
+function cwReview() {
+  var t = CW.cur, r = CW.job || { id: t.mine.id, text: t.mine.text || "", confident: true };
+  CW.job = r; CW.review = true;
+  var thumbs = CW.pages.filter(function(p) { return p.thumb; });
+  $("app").innerHTML = '<button class="btn soft" id="cwBack" style="margin-top:12px">‹ My compos</button>' +
+    '<div class="cheer-hero"><span class="hand">Step 2 of 3</span><h1>Did I read it right?</h1><p>Check my typing against your pages. Fix any word I read wrongly. I wrote <b>[?]</b> where I couldn’t read a word: type what you wrote.</p></div>' +
+    '<div class="cw-card cw-warn"><b>✋ Only fix my reading mistakes.</b> Don’t correct your own spelling or grammar: those get marked. ' + esc((CW.st && CW.st.teacher) || "Your teacher") + ' can see what you changed.</div>' +
+    (r.confident === false ? '<div class="msg" style="margin-top:10px">🤔 I wasn’t sure about the page order. ' + esc(r.note || "") + ' If it’s wrong, retake the photos in order.</div>' : '') +
+    (thumbs.length ? '<div class="cw-card"><div class="cw-h">📷 Your pages</div><p class="cw-tip" style="margin:0 0 8px">Tap a page to see it bigger.</p><div class="cw-pages">' + thumbs.map(function(p, i) { return '<button class="cw-pg" data-cwpg="' + CW.pages.indexOf(p) + '" style="border:0;padding:0"><img src="' + p.thumb + '" alt="Page ' + (i + 1) + '"><span class="n">' + (i + 1) + '</span></button>'; }).join("") + '</div></div>' : '') +
+    '<div class="cw-card"><label for="cwText" class="cw-h" style="display:block">Your writing, typed out <span class="muted" id="cwWc" style="font-weight:700;font-size:14px"></span></label>' +
+    '<textarea class="cw-text" id="cwText" spellcheck="false" autocorrect="off" autocapitalize="off">' + esc(r.text) + '</textarea>' +
+    '<p class="cw-tip" id="cwQs"></p>' +
+    '<div class="pop-btns"><button class="btn primary big" id="cwMark">✅ It’s right. Hand it in!</button><button class="btn soft big" id="cwRetake">📷 Retake the photos</button></div></div><div style="height:20px"></div>';
+  var ta = $("cwText"), upd = function() {
+    var n = (ta.value.trim().match(/\S+/g) || []).length, q = (ta.value.match(/\[\?\]/g) || []).length;
+    $("cwWc").textContent = "(" + n + " words)"; $("cwQs").innerHTML = q ? '⚠️ <b>' + q + '</b> word' + (q > 1 ? 's' : '') + ' still marked [?]. Type what you wrote there.' : '';
+    ta.style.height = "auto"; ta.style.height = Math.min(1200, Math.max(260, ta.scrollHeight + 8)) + "px";
+  };
+  ta.oninput = function() { r.text = ta.value; t.mine.text = ta.value; upd(); }; upd();
+  window.scrollTo(0, 0);
+}
+function cwMarkIt(id, text) {
+  CW.busy = true; CW.review = false; cwWorking(2);
+  call("compoMark", id, text).then(function(v) { CW.busy = false; CW.job = null; CW.pages = []; var t = CW.cur; if (t) t.mine = { id: v.id, status: "Marked", created: v.created, total: v.score ? v.score.total : null, max: v.score ? v.score.max : null };
+      if (S.tab === "compo") cwResult(v); })
+    .catch(function(e) { CW.busy = false; if (S.tab === "compo") { drawCompoTask(); cwReview(); flash((e.message || String(e)) + " Your work is saved: tap Hand it in to try again.", true); } });
+}
+// The marked script: the compo with highlights (comments), underlines and the school's marking symbols, as the Compo Marker draws it.
+function cwPlaceAnns(text, anns) {
+  var placed = [], taken = [], cursor = 0, overlaps = function(s, e) { return taken.some(function(t) { return s < t[1] && e > t[0]; }); };
+  anns.forEach(function(a, i) {
+    var q = String(a.quote || "").trim(), at = -1;
+    if (q) { at = text.indexOf(q, cursor); if (at < 0 || overlaps(at, at + q.length)) at = text.indexOf(q); if (at >= 0 && overlaps(at, at + q.length)) at = -1; }
+    if (at >= 0) { taken.push([at, at + q.length]); cursor = at + q.length; placed.push({ i: i, s: at, e: at + q.length }); }
+  });
+  return placed.sort(function(x, y) { return x.s - y.s; });
+}
+function cwPlaceErrs(text, errors) {
+  var out = [], cursor = 0;
+  (errors || []).forEach(function(er, k) {
+    var q = String(er.quote || "").trim(), t = String(er.target || er.quote || "").trim(); if (!t) return;
+    var qs = q ? text.indexOf(q, cursor) : -1; if (q && qs < 0) qs = text.indexOf(q);
+    var ts = -1; if (qs >= 0) { var rel = q.indexOf(t); if (rel >= 0) ts = qs + rel; }
+    if (ts < 0) { ts = text.indexOf(t, cursor); if (ts < 0) ts = text.indexOf(t); }
+    if (ts < 0) return;
+    out.push({ k: k, s: ts, e: ts + t.length }); cursor = ts;
+  });
+  return out;
+}
+function cwSym(s, attrs, bump) { return '<span class="sym' + (bump ? ' bump' : '') + (s.symLine ? ' ul' : '') + (s.circle ? ' circ' : '') + (s.pos === "gap" ? ' caret' : '') + '"' + (attrs || "") + '><b>' + esc(s.sym) + '</b></span>'; }
+function cwMarked(text, r, syms) {
+  var anns = cwPlaceAnns(text, r.annotations || []), num = {}; anns.forEach(function(p, n) { num[p.i] = n + 1; });
+  var errs = cwPlaceErrs(text, r.errors).filter(function(p) { var s = syms[r.errors[p.k].type]; return s && s.on; });
+  var bs = {}; bs[0] = 1; bs[text.length] = 1; anns.forEach(function(p) { bs[p.s] = 1; bs[p.e] = 1; }); errs.forEach(function(p) { bs[p.s] = 1; bs[p.e] = 1; });
+  var B = Object.keys(bs).map(Number).sort(function(a, b) { return a - b; }), marks = {};
+  var add = function(pos, order, html) { (marks[pos] = marks[pos] || []).push({ o: order, h: html }); };
+  anns.forEach(function(p) { var a = r.annotations[p.i]; add(p.e, 0, '<sup class="ann-n ' + (a.type === "good" ? "good" : "fix") + '" data-cwi="' + p.i + '">' + num[p.i] + '</sup>'); });
+  errs.forEach(function(p) {
+    var e = r.errors[p.k], s = syms[e.type]; if (!s.sym) return;
+    var at = s.pos === "before" ? p.s : p.e, bump = s.pos !== "before" && anns.some(function(q) { return q.e === at; });
+    add(at, s.pos === "before" ? 2 : 1, cwSym(s, ' data-cwe="' + p.k + '"', bump));
+  });
+  var html = "", emit = function(pos) { (marks[pos] || []).sort(function(a, b) { return a.o - b.o; }).forEach(function(m) { html += m.h; }); };
+  for (var k = 0; k < B.length - 1; k++) {
+    var a = B[k], b = B[k + 1]; emit(a);
+    var ann = anns.filter(function(p) { return p.s <= a && p.e >= b; })[0];
+    var inErr = errs.filter(function(p) { return p.s <= a && p.e >= b; });
+    var lined = inErr.some(function(p) { return syms[r.errors[p.k].type].line; });
+    var cls = [ann ? "hl " + (r.annotations[ann.i].type === "good" ? "good" : "fix") : "", lined ? "uline" : ""].filter(Boolean).join(" ");
+    var seg = esc(text.slice(a, b));
+    html += (cls || inErr.length) ? '<span' + (cls ? ' class="' + cls + '"' : '') + (ann ? ' data-cwi="' + ann.i + '"' : (inErr.length ? ' data-cwe="' + inErr[0].k + '"' : '')) + '>' + seg + '</span>' : seg;
+  }
+  emit(text.length);
+  return { html: html, errs: errs, anns: anns, num: num };
+}
+function cwResult(v) {
+  CW.view = v;
+  var r = v.report || {}, syms = {}; (v.symbols || []).forEach(function(s) { syms[s.key] = s; });
+  var m = cwMarked(v.text, r, syms), used = {}; m.errs.forEach(function(p) { used[r.errors[p.k].type] = 1; });
+  var key = (v.symbols || []).filter(function(s) { return used[s.key]; }).map(function(s) { return '<span class="k">' + (s.line ? '<span class="ul-demo">abc</span>' : '') + (s.sym ? cwSym(s) : '') + esc(s.name.toLowerCase()) + '</span>'; }).join("");
+  var sc = v.score;
+  var html = '<button class="btn soft" id="cwHome" style="margin-top:12px">‹ My compos</button>' +
+    '<div class="cheer-hero"><span class="hand">' + esc(cwDate(v.created)) + '</span><h1>' + esc(v.title || 'Your compo') + '</h1><p>Marked · ' + esc(v.label + ' ' + v.taskName) + ' · ' + v.words + ' words</p></div>';
+  if (sc) html += '<div class="cw-card cw-score"><div class="cw-ring"><div><b>' + sc.total + '</b><small>/' + sc.max + '</small></div></div><div class="cw-parts"><div><span>' + esc(v.names.content) + '</span><span>' + sc.content + '/' + sc.cmax + '</span></div><div><span>' + esc(v.names.language) + '</span><span>' + sc.language + '/' + sc.lmax + '</span></div></div></div>';
+  html += '<div class="cw-card"><div class="cw-h">⭐ What you did well</div><ul class="cw-list">' + (r.strengths || []).map(function(x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>' +
+    '<div class="cw-card"><div class="cw-h">🎯 To make it even better</div><ul class="cw-list">' + (r.improvements || []).map(function(x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' +
+    (r.next_step ? '<div class="cw-qbox" style="margin:12px 0 0"><b>👣 Your next step:</b> ' + esc(r.next_step) + '</div>' : '') + '</div>';
+  if (r.points && r.points.length) html += '<div class="cw-card"><div class="cw-h">✅ Content points</div>' + r.points.map(function(p) {
+    return '<div class="cw-pt"><span>' + (p.status === "covered" ? "✅" : p.status === "partly" ? "🟡" : "❌") + '</span><span><b>' + esc(p.point) + '</b>' + (p.note ? '<br><span class="muted">' + esc(p.note) + '</span>' : '') + '</span></div>'; }).join("") + '</div>';
+  html += '<div class="cw-card"><div class="cw-h">📝 Your ' + (v.task === "sw" ? 'writing' : 'compo') + ' with my marks</div><p class="cw-tip" style="margin:0 0 10px">Tap a red mark, a number or an underlined word to see what it means.</p>' +
+    (key ? '<div class="cw-key">' + key + '</div>' : '') + '<div class="cw-script" id="cwScript">' + m.html + '</div></div>';
+  var notes = m.anns.map(function(p) { return p.i; });
+  if (notes.length) html += '<div class="cw-card"><div class="cw-h">💬 My comments</div><ol class="cw-notes">' + notes.map(function(i) {
+    var a = r.annotations[i];
+    return '<li class="' + (a.type === "good" ? "good" : "fix") + '" data-cwi="' + i + '"><span class="num">' + m.num[i] + '</span><span><span class="lb">' + (a.type === "good" ? "👍 " : "✏️ ") + esc(a.label) + '</span><br>' + esc(a.comment) +
+      (a.suggestion ? '<div class="try">Try: “' + esc(a.suggestion) + '”</div>' : '') + '</span></li>'; }).join("") + '</ol></div>';
+  var errs = (r.errors || []).map(function(e, k) { return { e: e, k: k, s: syms[e.type] }; }).filter(function(x) { return x.s && x.s.on; });
+  if (errs.length) html += '<div class="cw-card"><details><summary class="cw-h" style="cursor:pointer;min-height:44px;display:flex;align-items:center">🔧 Corrections (' + errs.length + ')</summary><ul class="cw-corr">' + errs.map(function(x) {
+    return '<li><span class="sy">' + (x.s.sym ? esc(x.s.circle ? "Ⓒ" : x.s.sym) : '<span style="border-bottom:2px solid #CC1530;color:var(--ink);font-family:inherit;font-size:14px">abc</span>') + '</span><span>' +
+      (x.e.type === "missing" ? esc(x.e.target) + ' ^ <b class="cf">' + esc(x.e.fix) + '</b>' : '<s>' + esc(x.e.target.slice(0, 60)) + '</s>' + (x.e.fix ? ' → <b class="cf">' + esc(x.e.fix.slice(0, 90)) + '</b>' : '')) + '<span class="cn">' + esc(x.s.name) + '</span></span></li>'; }).join("") + '</ul></details></div>';
+  var crit = function(part) { var c = r[part] || {}; return (c.criteria || []).map(function(x, i) { return x.comment ? '<li><b>' + esc(v.criteria[part][i] || "") + ':</b> ' + esc(x.comment) + '</li>' : ''; }).join(""); };
+  html += '<div class="cw-card"><div class="cw-h">🔍 More about your ' + (v.task === "sw" ? 'writing' : 'compo') + '</div><div class="lb" style="font-weight:800;margin-top:6px">' + esc(v.names.content) + '</div><ul class="cw-list">' + crit("content") + '</ul>' +
+    '<div class="lb" style="font-weight:800;margin-top:10px">' + esc(v.names.language) + '</div><ul class="cw-list">' + crit("language") + '</ul></div>' +
+    '<p class="cw-tip" style="text-align:center;margin-top:14px">🖨️ ' + esc((CW.st && CW.st.teacher) || "Your teacher") + ' gets a printed copy of this to give back to you.</p>' +
+    '<button class="btn primary big" id="cwAgain" style="width:100%;margin-top:8px">‹ Back to my compos</button><div style="height:24px"></div>';
+  $("app").innerHTML = html; window.scrollTo(0, 0);
+  $("cwHome").onclick = $("cwAgain").onclick = function() { CW.view = null; CW.cur = null; renderCompo(); };
+}
+function cwExplain(t) {
+  var v = CW.view; if (!v || !v.report) return;
+  var r = v.report, syms = {}; (v.symbols || []).forEach(function(s) { syms[s.key] = s; });
+  var ai = t.getAttribute("data-cwi"), ei = t.getAttribute("data-cwe");
+  if (ai != null) { var a = r.annotations[+ai]; if (!a) return;
+    return sheet(a.type === "good" ? "👍 Well done" : "✏️ To improve", '<p style="margin:0 0 6px;font-weight:800">' + esc(a.label) + '</p><p class="muted" style="margin:0 0 8px">“' + esc(a.quote) + '”</p><p style="margin:0;font-size:16px">' + esc(a.comment) + '</p>' +
+      (a.suggestion ? '<div class="cw-qbox" style="margin-top:12px;background:var(--ok-soft)">Try: “' + esc(a.suggestion) + '”</div>' : '') + '<div class="pop-btns"><button class="btn soft big" data-close>Got it 👍</button></div>'); }
+  if (ei != null) { var e = r.errors[+ei], s = e && syms[e.type]; if (!s) return;
+    return sheet((s.sym ? s.sym + "  ·  " : "") + s.name, '<p style="margin:0;font-size:17px">' + (e.type === "missing" ? 'A word is missing after “' + esc(e.target) + '”: <b style="color:var(--ok)">' + esc(e.fix) + '</b>' : '<s class="muted">' + esc(e.target) + '</s>' + (e.fix ? ' → <b style="color:var(--ok)">' + esc(e.fix) + '</b>' : '')) + '</p>' +
+      '<div class="pop-btns"><button class="btn soft big" data-close>Got it 👍</button></div>'); }
+}
+document.addEventListener("click", function(e) {
+  if (S.tab !== "compo") return;
+  var t;
+  if ((t = e.target.closest("[data-cwtask]"))) { var nt = CW.st.tasks.filter(function(x) { return x.id === t.getAttribute("data-cwtask"); })[0]; if (nt) { if (!CW.cur || CW.cur.id !== nt.id) CW.pages = []; CW.cur = nt; drawCompoTask(); window.scrollTo(0, 0); } return; }
+  if ((t = e.target.closest("#cwBack"))) { CW.cur = null; CW.review = false; drawCompoHome(); return; }
+  if ((t = e.target.closest("[data-cwdel]"))) { CW.pages.splice(+t.getAttribute("data-cwdel"), 1); drawCompoTask(); return; }
+  if ((t = e.target.closest("#cwGo"))) { cwSubmit(); return; }
+  if ((t = e.target.closest("#cwFinish"))) { CW.job = null; cwReview(); return; }
+  if ((t = e.target.closest("#cwMark"))) {
+    var txt = $("cwText").value;
+    if (/\[\?\]/.test(txt) && !confirmTap2(t, "Some [?] are left. Tap again to hand in anyway")) return;
+    cwMarkIt(CW.job.id, txt); return;
+  }
+  if ((t = e.target.closest("#cwRetake"))) { CW.review = false; CW.job = null; CW.cur.mine = null; CW.pages = []; drawCompoTask(); window.scrollTo(0, 0); return; }
+  if ((t = e.target.closest("[data-cwpg]"))) { var pg = CW.pages[+t.getAttribute("data-cwpg")]; if (pg && pg.data) sheet("Your page", '<img src="data:' + pg.mime + ';base64,' + pg.data + '" alt="Your page" style="width:100%;border-radius:12px;display:block">'); return; }
+  if ((t = e.target.closest("[data-cwq]"))) {
+    var fid = t.getAttribute("data-cwq"), f = CW.cur && CW.cur.files.filter(function(x) { return x.id === fid; })[0]; if (!f) return;
+    if (CW.qimg[fid]) { sheet("The question", '<img src="' + CW.qimg[fid] + '" alt="Question picture" style="width:100%;border-radius:12px;display:block">'); return; }
+    var dq = busy(t); cwLoadQ(CW.cur, f, true).then(function(r) { dq(); if (/^image\//.test(r.mime)) sheet("The question", '<img src="' + CW.qimg[fid] + '" alt="Question picture" style="width:100%;border-radius:12px;display:block">'); else showViewOnly({ name: r.name, mime: r.mime, data: r.data, who: S.home && S.home.me }); })
+      .catch(function(err) { dq(); flash(err.message, true); });
+    return;
+  }
+  if ((t = e.target.closest("[data-cwopen]"))) { var id = t.getAttribute("data-cwopen"), done = busy(t, "Opening…"); call("compoGet", id).then(function(v) { done(); cwResult(v); }).catch(function(err) { done(); flash(err.message, true); }); return; }
+  if ((t = e.target.closest("[data-cwi],[data-cwe]")) && t.closest("#app")) { cwExplain(t); return; }
+});
+document.addEventListener("change", function(e) { if (e.target && e.target.hasAttribute && e.target.hasAttribute("data-cwfile")) { cwAddFiles(e.target.files); e.target.value = ""; } });
 
 // ---------------- Class wall ----------------
 function renderWallShell() {
