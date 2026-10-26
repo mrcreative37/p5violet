@@ -411,18 +411,26 @@
   .cw-list { margin:6px 0 0; padding-left:20px; } .cw-list li { margin:4px 0; line-height:1.45; }
   .cw-h { font:800 17px/1.25 var(--head); margin:0 0 6px; }
   .cw-script { position:relative; background:#FFFDF6; border-radius:16px; padding:22px 16px 18px 18px; font-size:17px; line-height:2.45; white-space:pre-wrap; overflow-wrap:anywhere; color:#1E1735; box-shadow:inset 0 0 0 1px #EFE6C8; }
-  .cw-script .hl { cursor:pointer; border-radius:2px; }
-  .cw-script .hl.good { background:linear-gradient(transparent 50%, #DDF3E6 50%); }
-  .cw-script .hl.fix { text-decoration:underline wavy #CC1530; text-decoration-thickness:1.5px; text-underline-offset:5px; text-decoration-skip-ink:none; }
-  .cw-script .uline { border-bottom:2px solid #CC1530; padding-bottom:1px; }
+  .cw-script .cwh { cursor:pointer; border-radius:2px; }
+  .cw-script .cwh.good { background:linear-gradient(transparent 45%, #DDF3E6 45%); }
+  .cw-script .cwh.fix { background:linear-gradient(transparent 45%, #FFEDA8 45%); }
+  .cw-script .uline { text-decoration:underline #CC1530; text-decoration-thickness:2px; text-underline-offset:4px; text-decoration-skip-ink:none; }
+  .cw-script .squig { text-decoration:underline wavy #CC1530; text-decoration-thickness:1.5px; text-underline-offset:5px; text-decoration-skip-ink:none; }
   .ann-n { font-family:var(--hand); font-weight:700; font-size:18px; margin-left:1px; cursor:pointer; } .ann-n.good { color:#11784A; } .ann-n.fix { color:#CC1530; }
   .sym { position:relative; display:inline; cursor:pointer; }
-  .sym>b { position:absolute; left:0; transform:translateX(-45%); bottom:.8em; font-family:var(--hand); font-weight:700; color:#CC1530; font-size:19px; line-height:1; white-space:nowrap; padding:0 2px; }
-  .sym.bump>b { transform:translateX(15%); } .sym.ul>b { text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; }
-  .sym.circ>b { border:1.5px solid #CC1530; border-radius:50%; width:1.25em; height:1.25em; display:grid; place-items:center; font-size:15px; padding:0; bottom:1em; }
-  .sym.caret>b { bottom:auto; top:.5em; font-size:22px; transform:translateX(-50%); }
+  .sym>b { position:absolute; left:0; transform:translateX(-50%); bottom:.85em; font-family:var(--hand); font-weight:700; color:#CC1530; font-size:19px; line-height:1; white-space:nowrap; padding:0 2px; }
+  .sym.tick>b { color:#11784A; font-family:inherit; font-size:17px; }
+  .sym.ul>b, .ringc.ul>b { text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:2px; }
+  .sym.caret>b { bottom:auto; top:.5em; font-size:28px; }
+  .spotgap { position:relative; display:inline-block; width:.6em; height:.6em; border:1.7px solid #CC1530; border-radius:50%; vertical-align:-.02em; margin:0 .06em; cursor:pointer; }
+  .ringc { position:relative; border:1.7px solid #CC1530; border-radius:50%; padding:0 .14em; margin:0 .04em; cursor:pointer; }
+  .spotgap>b, .ringc>b { position:absolute; left:50%; transform:translateX(-50%); bottom:.95em; font-family:var(--hand); font-weight:700; color:#CC1530; font-size:19px; line-height:1; }
   .cw-key { display:flex; flex-wrap:wrap; gap:6px 14px; font-size:13.5px; color:var(--muted); font-weight:700; margin:0 0 10px; }
-  .cw-key .k { display:inline-flex; align-items:baseline; gap:6px; } .cw-key .sym { display:inline-block; } .cw-key .sym>b { position:static; transform:none; font-size:18px; } .cw-key .sym.circ>b { display:inline-grid; } .cw-key .ul-demo { border-bottom:2px solid #CC1530; color:var(--ink); padding:0 2px; }
+  .cw-key .k { display:inline-flex; align-items:baseline; gap:6px; } .cw-key .sd, .cw-key .sd-u, .cw-key .sd-w { flex:none; white-space:nowrap; }
+  .sd { font-family:var(--hand); font-weight:700; color:#CC1530; font-size:18px; } .sd.ok { color:#11784A; font-family:inherit; font-size:16px; }
+  .sd-u { color:var(--ink); text-decoration:underline #CC1530; text-decoration-thickness:2px; text-underline-offset:3px; font-size:14px; font-family:inherit; }
+  .sd-w { color:var(--ink); text-decoration:underline wavy #CC1530; text-underline-offset:4px; font-size:14px; font-family:inherit; }
+  .sd-o { display:inline-block; width:.62em; height:.62em; border:1.7px solid #CC1530; border-radius:50%; margin-right:3px; vertical-align:-.02em; }
   .cw-notes { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
   .cw-notes li { display:flex; gap:10px; background:var(--paper); border-radius:14px; padding:10px 12px; cursor:pointer; }
   .cw-notes .num { flex:none; font-family:var(--hand); font-weight:700; font-size:22px; width:26px; text-align:center; } .cw-notes .good .num { color:#11784A; } .cw-notes .fix .num { color:#CC1530; }
@@ -1890,37 +1898,54 @@ function cwPlaceErrs(text, errors) {
   });
   return out;
 }
-function cwSym(s, attrs, bump) { return '<span class="sym' + (bump ? ' bump' : '') + (s.symLine ? ' ul' : '') + (s.circle ? ' circ' : '') + (s.pos === "gap" ? ' caret' : '') + '"' + (attrs || "") + '><b>' + esc(s.sym) + '</b></span>'; }
+/** How a symbol looks in the key and the corrections list. */
+function cwSymDemo(s) {
+  if (s.spot) return '<span class="sd"><span class="sd-o"></span>' + (s.symLine ? '<u>P</u>' : 'P') + '</span>';
+  if (s.mark === "squig") return '<span class="sd-w">abc</span>';
+  if (s.mark === "under" && !s.sym) return '<span class="sd-u">abc</span>';
+  return '<span class="sd">' + esc(s.sym) + '</span>';
+}
+var CW_PUNCT = /[,.!?;:'"‘’“”]$/;
 function cwMarked(text, r, syms) {
   var anns = cwPlaceAnns(text, r.annotations || []), num = {}; anns.forEach(function(p, n) { num[p.i] = n + 1; });
   var errs = cwPlaceErrs(text, r.errors).filter(function(p) { var s = syms[r.errors[p.k].type]; return s && s.on; });
-  var bs = {}; bs[0] = 1; bs[text.length] = 1; anns.forEach(function(p) { bs[p.s] = 1; bs[p.e] = 1; }); errs.forEach(function(p) { bs[p.s] = 1; bs[p.e] = 1; });
+  var ticks = cwPlaceErrs(text, r.ticks || []);
+  var bs = {}, ring = {}, mid = function(p) { return p.s + Math.max(0, Math.floor((p.e - p.s) / 2)); };
+  bs[0] = 1; bs[text.length] = 1;
+  anns.forEach(function(p) { bs[p.s] = 1; bs[p.e] = 1; });
+  errs.forEach(function(p) { bs[p.s] = 1; bs[p.e] = 1; var s = syms[r.errors[p.k].type];
+    if (s.spot && CW_PUNCT.test(text.slice(p.s, p.e))) { ring[p.e - 1] = p; bs[p.e - 1] = 1; }
+    else if (s.sym && !s.spot && s.pos !== "gap") bs[mid(p)] = 1; });
+  ticks.forEach(function(p) { bs[mid(p)] = 1; });
   var B = Object.keys(bs).map(Number).sort(function(a, b) { return a - b; }), marks = {};
   var add = function(pos, order, html) { (marks[pos] = marks[pos] || []).push({ o: order, h: html }); };
   anns.forEach(function(p) { var a = r.annotations[p.i]; add(p.e, 0, '<sup class="ann-n ' + (a.type === "good" ? "good" : "fix") + '" data-cwi="' + p.i + '">' + num[p.i] + '</sup>'); });
+  ticks.forEach(function(p) { add(mid(p), 1, '<span class="sym tick" data-cwt="' + p.k + '"><b>✓</b></span>'); });
   errs.forEach(function(p) {
-    var e = r.errors[p.k], s = syms[e.type]; if (!s.sym) return;
-    var at = s.pos === "before" ? p.s : p.e, bump = s.pos !== "before" && anns.some(function(q) { return q.e === at; });
-    add(at, s.pos === "before" ? 2 : 1, cwSym(s, ' data-cwe="' + p.k + '"', bump));
+    var e = r.errors[p.k], s = syms[e.type], at = ' data-cwe="' + p.k + '"';
+    if (s.spot) { if (!ring[p.e - 1]) add(p.e, 1, '<span class="spotgap' + (s.symLine ? ' ul' : '') + '"' + at + '><b' + (s.symLine ? ' style="text-decoration:underline"' : '') + '>' + esc(s.sym) + '</b></span>'); return; }
+    if (s.pos === "gap") { add(p.e, 2, '<span class="sym caret"' + at + '><b>' + esc(s.sym) + '</b></span>'); return; }
+    if (s.sym) add(mid(p), 2, '<span class="sym' + (s.symLine ? ' ul' : '') + '"' + at + '><b>' + esc(s.sym) + '</b></span>');
   });
   var html = "", emit = function(pos) { (marks[pos] || []).sort(function(a, b) { return a.o - b.o; }).forEach(function(m) { html += m.h; }); };
   for (var k = 0; k < B.length - 1; k++) {
     var a = B[k], b = B[k + 1]; emit(a);
     var ann = anns.filter(function(p) { return p.s <= a && p.e >= b; })[0];
     var inErr = errs.filter(function(p) { return p.s <= a && p.e >= b; });
-    var lined = inErr.some(function(p) { return syms[r.errors[p.k].type].line; });
-    var cls = [ann ? "hl " + (r.annotations[ann.i].type === "good" ? "good" : "fix") : "", lined ? "uline" : ""].filter(Boolean).join(" ");
-    var seg = esc(text.slice(a, b));
+    var under = inErr.some(function(p) { return syms[r.errors[p.k].type].mark === "under"; }), squig = inErr.some(function(p) { return syms[r.errors[p.k].type].mark === "squig"; });
+    var cls = [ann ? "cwh " + (r.annotations[ann.i].type === "good" ? "good" : "fix") : "", under ? "uline" : "", squig ? "squig" : ""].filter(Boolean).join(" ");
+    var seg = esc(text.slice(a, b)), rp = ring[a];
+    if (rp && b === a + 1) { var rs = syms[r.errors[rp.k].type]; seg = '<span class="ringc' + (rs.symLine ? ' ul' : '') + '" data-cwe="' + rp.k + '">' + seg + '<b>' + esc(rs.sym) + '</b></span>'; }
     html += (cls || inErr.length) ? '<span' + (cls ? ' class="' + cls + '"' : '') + (ann ? ' data-cwi="' + ann.i + '"' : (inErr.length ? ' data-cwe="' + inErr[0].k + '"' : '')) + '>' + seg + '</span>' : seg;
   }
   emit(text.length);
-  return { html: html, errs: errs, anns: anns, num: num };
+  return { html: html, errs: errs, anns: anns, num: num, ticks: ticks };
 }
 function cwResult(v) {
   CW.view = v;
   var r = v.report || {}, syms = {}; (v.symbols || []).forEach(function(s) { syms[s.key] = s; });
   var m = cwMarked(v.text, r, syms), used = {}; m.errs.forEach(function(p) { used[r.errors[p.k].type] = 1; });
-  var key = (v.symbols || []).filter(function(s) { return used[s.key]; }).map(function(s) { return '<span class="k">' + (s.line ? '<span class="ul-demo">abc</span>' : '') + (s.sym ? cwSym(s) : '') + esc(s.name.toLowerCase()) + '</span>'; }).join("");
+  var key = (m.ticks.length ? '<span class="k"><span class="sd ok">✓</span>good word or phrase</span>' : '') + (v.symbols || []).filter(function(s) { return used[s.key]; }).map(function(s) { return '<span class="k">' + cwSymDemo(s) + esc(s.name.toLowerCase()) + '</span>'; }).join("");
   var sc = v.score;
   var html = '<button class="btn soft" id="cwHome" style="margin-top:12px">‹ My compos</button>' +
     '<div class="cheer-hero"><span class="hand">' + esc(cwDate(v.created)) + '</span><h1>' + esc(v.title || 'Your compo') + '</h1><p>Marked · ' + esc(v.label + ' ' + v.taskName) + ' · ' + v.words + ' words</p></div>';
@@ -1930,7 +1955,7 @@ function cwResult(v) {
     (r.next_step ? '<div class="cw-qbox" style="margin:12px 0 0"><b>👣 Your next step:</b> ' + esc(r.next_step) + '</div>' : '') + '</div>';
   if (r.points && r.points.length) html += '<div class="cw-card"><div class="cw-h">✅ Content points</div>' + r.points.map(function(p) {
     return '<div class="cw-pt"><span>' + (p.status === "covered" ? "✅" : p.status === "partly" ? "🟡" : "❌") + '</span><span><b>' + esc(p.point) + '</b>' + (p.note ? '<br><span class="muted">' + esc(p.note) + '</span>' : '') + '</span></div>'; }).join("") + '</div>';
-  html += '<div class="cw-card"><div class="cw-h">📝 Your ' + (v.task === "sw" ? 'writing' : 'compo') + ' with my marks</div><p class="cw-tip" style="margin:0 0 10px">Tap a red mark, a number or an underlined word to see what it means.</p>' +
+  html += '<div class="cw-card"><div class="cw-h">📝 Your ' + (v.task === "sw" ? 'writing' : 'compo') + ' with my marks</div><p class="cw-tip" style="margin:0 0 10px">Tap a red mark, a ✓, a number or an underlined word to see what it means.</p>' +
     (key ? '<div class="cw-key">' + key + '</div>' : '') + '<div class="cw-script" id="cwScript">' + m.html + '</div></div>';
   var notes = m.anns.map(function(p) { return p.i; });
   if (notes.length) html += '<div class="cw-card"><div class="cw-h">💬 My comments</div><ol class="cw-notes">' + notes.map(function(i) {
@@ -1939,7 +1964,7 @@ function cwResult(v) {
       (a.suggestion ? '<div class="try">Try: “' + esc(a.suggestion) + '”</div>' : '') + '</span></li>'; }).join("") + '</ol></div>';
   var errs = (r.errors || []).map(function(e, k) { return { e: e, k: k, s: syms[e.type] }; }).filter(function(x) { return x.s && x.s.on; });
   if (errs.length) html += '<div class="cw-card"><details><summary class="cw-h" style="cursor:pointer;min-height:44px;display:flex;align-items:center">🔧 Corrections (' + errs.length + ')</summary><ul class="cw-corr">' + errs.map(function(x) {
-    return '<li><span class="sy">' + (x.s.sym ? esc(x.s.circle ? "Ⓒ" : x.s.sym) : '<span style="border-bottom:2px solid #CC1530;color:var(--ink);font-family:inherit;font-size:14px">abc</span>') + '</span><span>' +
+    return '<li><span class="sy">' + cwSymDemo(x.s) + '</span><span>' +
       (x.e.type === "missing" ? esc(x.e.target) + ' ^ <b class="cf">' + esc(x.e.fix) + '</b>' : '<s>' + esc(x.e.target.slice(0, 60)) + '</s>' + (x.e.fix ? ' → <b class="cf">' + esc(x.e.fix.slice(0, 90)) + '</b>' : '')) + '<span class="cn">' + esc(x.s.name) + '</span></span></li>'; }).join("") + '</ul></details></div>';
   var crit = function(part) { var c = r[part] || {}; return (c.criteria || []).map(function(x, i) { return x.comment ? '<li><b>' + esc(v.criteria[part][i] || "") + ':</b> ' + esc(x.comment) + '</li>' : ''; }).join(""); };
   html += '<div class="cw-card"><div class="cw-h">🔍 More about your ' + (v.task === "sw" ? 'writing' : 'compo') + '</div><div class="lb" style="font-weight:800;margin-top:6px">' + esc(v.names.content) + '</div><ul class="cw-list">' + crit("content") + '</ul>' +
@@ -1952,12 +1977,14 @@ function cwResult(v) {
 function cwExplain(t) {
   var v = CW.view; if (!v || !v.report) return;
   var r = v.report, syms = {}; (v.symbols || []).forEach(function(s) { syms[s.key] = s; });
-  var ai = t.getAttribute("data-cwi"), ei = t.getAttribute("data-cwe");
+  var ai = t.getAttribute("data-cwi"), ei = t.getAttribute("data-cwe"), ti = t.getAttribute("data-cwt");
+  if (ti != null) { var g = (r.ticks || [])[+ti]; if (!g) return;
+    return sheet("✓ Good word or phrase", '<p style="margin:0;font-size:17px">“<b style="color:var(--ok)">' + esc(g.target) + '</b>” is a well-chosen word or phrase. Well done!</p><div class="pop-btns"><button class="btn soft big" data-close>Got it 👍</button></div>'); }
   if (ai != null) { var a = r.annotations[+ai]; if (!a) return;
     return sheet(a.type === "good" ? "👍 Well done" : "✏️ To improve", '<p style="margin:0 0 6px;font-weight:800">' + esc(a.label) + '</p><p class="muted" style="margin:0 0 8px">“' + esc(a.quote) + '”</p><p style="margin:0;font-size:16px">' + esc(a.comment) + '</p>' +
       (a.suggestion ? '<div class="cw-qbox" style="margin-top:12px;background:var(--ok-soft)">Try: “' + esc(a.suggestion) + '”</div>' : '') + '<div class="pop-btns"><button class="btn soft big" data-close>Got it 👍</button></div>'); }
   if (ei != null) { var e = r.errors[+ei], s = e && syms[e.type]; if (!s) return;
-    return sheet((s.sym ? s.sym + "  ·  " : "") + s.name, '<p style="margin:0;font-size:17px">' + (e.type === "missing" ? 'A word is missing after “' + esc(e.target) + '”: <b style="color:var(--ok)">' + esc(e.fix) + '</b>' : '<s class="muted">' + esc(e.target) + '</s>' + (e.fix ? ' → <b style="color:var(--ok)">' + esc(e.fix) + '</b>' : '')) + '</p>' +
+    return sheet(s.name + (s.major ? " (major error)" : ""), '<p style="margin:0;font-size:17px">' + (e.type === "missing" ? 'A word is missing after “' + esc(e.target) + '”: <b style="color:var(--ok)">' + esc(e.fix) + '</b>' : '<s class="muted">' + esc(e.target) + '</s>' + (e.fix ? ' → <b style="color:var(--ok)">' + esc(e.fix) + '</b>' : '')) + '</p>' +
       '<div class="pop-btns"><button class="btn soft big" data-close>Got it 👍</button></div>'); }
 }
 document.addEventListener("click", function(e) {
@@ -1983,7 +2010,7 @@ document.addEventListener("click", function(e) {
     return;
   }
   if ((t = e.target.closest("[data-cwopen]"))) { var id = t.getAttribute("data-cwopen"), done = busy(t, "Opening…"); call("compoGet", id).then(function(v) { done(); cwResult(v); }).catch(function(err) { done(); flash(err.message, true); }); return; }
-  if ((t = e.target.closest("[data-cwi],[data-cwe]")) && t.closest("#app")) { cwExplain(t); return; }
+  if ((t = e.target.closest("[data-cwi],[data-cwe],[data-cwt]")) && t.closest("#app")) { cwExplain(t); return; }
 });
 document.addEventListener("change", function(e) { if (e.target && e.target.hasAttribute && e.target.hasAttribute("data-cwfile")) { cwAddFiles(e.target.files); e.target.value = ""; } });
 
