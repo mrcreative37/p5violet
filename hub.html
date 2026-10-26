@@ -442,6 +442,7 @@
   .cw-hist { display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:#fff; border:0; border-radius:16px; padding:12px 14px; margin-top:8px; box-shadow:0 4px 12px rgba(46,26,120,.07); font:inherit; color:var(--ink); }
   .cw-hist .ic { font-size:24px; } .cw-hist .t { flex:1; min-width:0; font-weight:700; } .cw-hist .t small { display:block; color:var(--muted); font-weight:600; font-size:13px; }
   .cw-warn { background:var(--warn-soft); font-size:15px; line-height:1.45; }
+  .cw-new { color:var(--violet-2); font-weight:800; } .cw-tnote { box-shadow:0 0 0 2px var(--violet-2), 0 8px 22px rgba(46,26,120,.08); }
   .cw-title { font:800 19px/1.25 var(--head); }
   .cw-qpics { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin:4px 0 8px; }
   .cw-qpics.one { grid-template-columns:1fr; }
@@ -1758,7 +1759,7 @@ function drawCompoHome() {
       (t.dueLabel ? ' · ' + (t.late ? '⏰ was due ' : 'due ') + esc(t.dueLabel) : '') + '</small></span><span class="cw-go">' + (half ? 'Finish' : 'Start') + ' ›</span></button>';
   }).join("");
   if (done.length) html += '<div class="bsec">✅ Handed in</div>' + done.map(function(t) {
-    return '<button class="cw-hist" data-cwopen="' + esc(t.mine.id) + '"><span class="ic">' + CW_EMO[t.task] + '</span><span class="t">' + esc(t.title) + '<small>Marked · ' + esc(cwDate(t.mine.created)) + '</small></span>' +
+    return '<button class="cw-hist" data-cwopen="' + esc(t.mine.id) + '"><span class="ic">' + CW_EMO[t.task] + '</span><span class="t">' + esc(t.title) + '<small>' + (t.mine.checked === "new" ? '<b class="cw-new">🆕 ' + esc(d.teacher) + ' checked this</b>' : t.mine.checked ? 'Checked by ' + esc(d.teacher) : 'Marked · ' + esc(cwDate(t.mine.created))) + '</small></span>' +
       (t.mine.total != null ? '<span class="sc">' + t.mine.total + '/' + t.mine.max + '</span>' : '') + '<span aria-hidden="true">›</span></button>';
   }).join("");
   $("app").innerHTML = html + '<div style="height:20px"></div>';
@@ -1950,6 +1951,7 @@ function cwResult(v) {
   var html = '<button class="btn soft" id="cwHome" style="margin-top:12px">‹ My compos</button>' +
     '<div class="cheer-hero"><span class="hand">' + esc(cwDate(v.created)) + '</span><h1>' + esc(v.title || 'Your compo') + '</h1><p>Marked · ' + esc(v.label + ' ' + v.taskName) + ' · ' + v.words + ' words</p></div>';
   if (sc) html += '<div class="cw-card cw-score"><div class="cw-ring"><div><b>' + sc.total + '</b><small>/' + sc.max + '</small></div></div><div class="cw-parts"><div><span>' + esc(v.names.content) + '</span><span>' + sc.content + '/' + sc.cmax + '</span></div><div><span>' + esc(v.names.language) + '</span><span>' + sc.language + '/' + sc.lmax + '</span></div></div></div>';
+  if (r.tnote) html += '<div class="cw-card cw-tnote"><div class="cw-h">💬 From ' + esc((CW.st && CW.st.teacher) || "your teacher") + '</div><p style="margin:0;white-space:pre-wrap;font-size:16px;line-height:1.5">' + esc(r.tnote) + '</p></div>';
   html += '<div class="cw-card"><div class="cw-h">⭐ What you did well</div><ul class="cw-list">' + (r.strengths || []).map(function(x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul></div>' +
     '<div class="cw-card"><div class="cw-h">🎯 To make it even better</div><ul class="cw-list">' + (r.improvements || []).map(function(x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ul>' +
     (r.next_step ? '<div class="cw-qbox" style="margin:12px 0 0"><b>👣 Your next step:</b> ' + esc(r.next_step) + '</div>' : '') + '</div>';
@@ -2009,7 +2011,7 @@ document.addEventListener("click", function(e) {
       .catch(function(err) { dq(); flash(err.message, true); });
     return;
   }
-  if ((t = e.target.closest("[data-cwopen]"))) { var id = t.getAttribute("data-cwopen"), done = busy(t, "Opening…"); call("compoGet", id).then(function(v) { done(); cwResult(v); }).catch(function(err) { done(); flash(err.message, true); }); return; }
+  if ((t = e.target.closest("[data-cwopen]"))) { var id = t.getAttribute("data-cwopen"), done = busy(t, "Opening…"); call("compoGet", id).then(function(v) { done(); (CW.st ? CW.st.tasks : []).forEach(function(x) { if (x.mine && x.mine.id === id && x.mine.checked === "new") x.mine.checked = "yes"; }); cwResult(v); }).catch(function(err) { done(); flash(err.message, true); }); return; }
   if ((t = e.target.closest("[data-cwi],[data-cwe],[data-cwt]")) && t.closest("#app")) { cwExplain(t); return; }
 });
 document.addEventListener("change", function(e) { if (e.target && e.target.hasAttribute && e.target.hasAttribute("data-cwfile")) { cwAddFiles(e.target.files); e.target.value = ""; } });
