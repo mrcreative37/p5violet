@@ -437,15 +437,30 @@
   .cw-notes .lb { font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); } .cw-notes .try { margin-top:4px; font-size:14px; color:var(--ok); font-weight:700; }
   .cw-corr { list-style:none; margin:8px 0 0; padding:0; display:grid; gap:6px; }
   .cw-corr li { display:flex; gap:10px; align-items:baseline; font-size:15px; } .cw-corr .sy { flex:none; min-width:34px; font-family:var(--hand); font-weight:700; color:#CC1530; font-size:19px; text-align:center; }
-  .cw-corr s { color:var(--muted); } .cw-corr .cf { color:var(--ok); font-weight:800; } .cw-corr .cn { display:block; font-size:12.5px; color:var(--muted); font-weight:600; }
+  .cw-corr s { color:var(--muted); } .cw-corr .cf { color:var(--ok); font-weight:800; } .cw-corr .cn { display:block; font-size:12.5px; color:var(--muted); font-weight:600; } .cw-corr .cr { display:block; font-size:13.5px; color:var(--ink); margin-top:2px; line-height:1.4; }
   .cw-pt { display:flex; gap:8px; margin:6px 0; font-size:14.5px; line-height:1.4; }
   .cw-hist { display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:#fff; border:0; border-radius:16px; padding:12px 14px; margin-top:8px; box-shadow:0 4px 12px rgba(46,26,120,.07); font:inherit; color:var(--ink); }
   .cw-hist .ic { font-size:24px; } .cw-hist .t { flex:1; min-width:0; font-weight:700; } .cw-hist .t small { display:block; color:var(--muted); font-weight:600; font-size:13px; }
   .cw-warn { background:var(--warn-soft); font-size:15px; line-height:1.45; }
   .cw-new { color:var(--violet-2); font-weight:800; } .cw-tnote { box-shadow:0 0 0 2px var(--violet-2), 0 8px 22px rgba(46,26,120,.08); }
+  .en-sw { display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#fff; border-radius:16px; padding:5px; margin:12px 0 4px; box-shadow:0 4px 14px rgba(46,26,120,.08); }
+  .en-sw button { border:0; background:transparent; border-radius:12px; min-height:44px; font:800 15px/1.2 var(--head); color:var(--muted); cursor:pointer; }
+  .en-sw button.on { background:var(--violet-2); color:#fff; box-shadow:0 4px 12px rgba(91,63,214,.3); }
+  .cm-frame { width:100%; border:0; display:block; background:transparent; border-radius:14px; }
+  .cm-wrap { margin-top:6px; }
   .cw-title { font:800 19px/1.25 var(--head); }
   .cw-qpics { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin:4px 0 8px; }
   .cw-qpics.one { grid-template-columns:1fr; }
+  .cw-qpic img { max-height:420px; width:auto; max-width:100%; margin:0 auto; }
+  .cw-qpics.one .cw-qpic { background:#fff; }
+  /* Laptop / tablet: keep the Compo pages to a readable width, like a page of writing */
+  @media (min-width:900px) {
+    #app[data-view="compo"] > * { max-width:860px; }
+    #app[data-view="compo"] > .cm-wrap { max-width:none; }
+    .cw-script { font-size:18px; padding:28px 30px 24px 32px; }
+    .cw-pages { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .cw-qpics { grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); }
+  }
   .cw-qpic { border:0; padding:0; border-radius:12px; overflow:hidden; background:var(--lilac); min-height:110px; display:grid; place-items:center; cursor:zoom-in; }
   .cw-qpic img { width:100%; height:auto; display:block; }
   .cw-go { font-weight:800; color:var(--violet-2); white-space:nowrap; } .cw-todo { box-shadow:0 0 0 2px var(--violet-2), 0 4px 12px rgba(46,26,120,.07); }
@@ -649,7 +664,7 @@
   <button data-tab="spot" class="hidden"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.8z"/></svg>Spotlight<span class="dot gold hidden" id="spotDot"></span></button>
   <button data-tab="bday" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 21h16v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 16c2 1.5 4 1.5 6 0s4-1.5 6 0 3 1 4 0"/><path d="M12 11V7"/><path d="M12 3.5c.8 1 .8 2 0 2.5-.8-.5-.8-1.5 0-2.5z"/></svg>Birthdays<span class="dot gold hidden" id="bdayDot"></span></button>
   <button data-tab="league" class="hidden"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>Groups<span class="dot gold hidden" id="leagueDot"></span></button>
-  <button data-tab="compo" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/><path d="M14 20h6"/></svg>Compo</button>
+  <button data-tab="compo" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h5"/></svg>English</button>
   <button data-tab="photos"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Photos</button>
   <button data-tab="ask"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span id="askLabel">Ask</span><span class="dot hidden" id="askDot"></span></button>
 </div></nav>
@@ -1733,8 +1748,48 @@ function drawToday(d) {
 // ---------------- ✍️ Compo Marker: photo → read → check → marked with symbols ----------------
 var CW = { st: null, cur: null, pages: [], busy: false, view: null, qimg: {} };
 var CW_EMO = { cw: "📖", sw: "✉️" };
+// ---------------- English Assistant: ✍️ Compo and 📖 Comprehension ----------------
+var EN = { sec: "" }, CMX = { html: null, route: "home" };
+function enHas() { var h = S.home || {}, e = h.english || { compo: !!h.compo, comp: false }; return { compo: !!e.compo, comp: !!e.comp }; }
+function enSec() {
+  var e = enHas(), s = EN.sec || store("ensec");
+  if (s === "comp" && e.comp) return "comp";
+  if (s === "compo" && e.compo) return "compo";
+  return e.compo ? "compo" : "comp";
+}
+function enSwitch() {
+  var e = enHas(), s = enSec();
+  if (!(e.compo && e.comp)) return "";
+  var b = function(k, t) { return '<button role="tab" aria-selected="' + (s === k) + '" class="' + (s === k ? 'on' : '') + '" data-ensec="' + k + '">' + t + '</button>'; };
+  return '<div class="en-sw" role="tablist" aria-label="English Assistant">' + b("compo", "✍️ Compo") + b("comp", "📖 Comprehension") + '</div>';
+}
+/** 📖 Comprehension: the comprehension screens (the same page the teacher uses) in a frame, signed in as this pupil. */
+function renderComp() {
+  window.scrollTo(0, 0);
+  $("app").innerHTML = '<div id="enSwWrap">' + enSwitch() + '</div><div class="cm-wrap">' + SPIN + '</div>';
+  (CMX.html ? Promise.resolve(CMX.html) : call("cmModule").then(function(h) { CMX.html = h; return h; })).then(function(h) {
+    if (S.tab !== "compo" || enSec() !== "comp") return;
+    var boot = { view: "student", bridge: true, embed: true, student: { name: S.home.preview ? "Teacher preview" : S.home.me, cls: S.home.className || "" } };
+    var f = document.createElement("iframe");
+    f.className = "cm-frame"; f.id = "cmFrame"; f.title = "Comprehension";
+    f.srcdoc = String(h).replace("<" + "?!= boot ?" + ">", JSON.stringify(boot).replace(/</g, "\\u003c"));
+    var w = document.querySelector(".cm-wrap"); if (!w) return;
+    w.innerHTML = ""; w.appendChild(f); CMX.route = "home"; cmFit();
+  }).catch(function(e) { var w = document.querySelector(".cm-wrap"); if (w) w.innerHTML = '<div class="msg err">' + esc(e.message || String(e)) + '</div>'; });
+}
+window.cmBridge = function(action, payload) { return call("cmApi", action, payload); };
+window.cmRoute = function(r) { CMX.route = r; var w = $("enSwWrap"); if (w) w.style.display = r === "home" ? "" : "none"; cmFit(); };
+/** The frame fills the screen between the top bar (and the Compo/Comprehension switch) and the tab bar. */
+function cmFit() {
+  var f = $("cmFrame"); if (!f) return;
+  var top = f.getBoundingClientRect().top, bottom = 0, t = $("tabs");
+  if (t && !t.classList.contains("hidden")) { var r = t.getBoundingClientRect(); if (r.height && r.top > window.innerHeight / 2) bottom = window.innerHeight - r.top; }
+  f.style.height = Math.max(360, Math.round(window.innerHeight - Math.max(0, top) - bottom - 6)) + "px";
+}
+window.addEventListener("resize", function() { if (S.tab === "compo") cmFit(); });
 function renderCompo() {
-  $("topTitle").textContent = "Compo";
+  $("topTitle").textContent = "English Assistant";
+  if (enSec() === "comp") return renderComp();
   if (!CW.st) $("app").innerHTML = SPIN;
   if (CW.busy) return cwWorking(CW.step || 1);
   if (CW.view) return cwResult(CW.view);
@@ -1751,7 +1806,7 @@ function confirmTap2(btn, label) {
 function cwKind(t) { return t.task === "sw" ? "writing" : "compo"; }
 function drawCompoHome() {
   var d = CW.st, todo = d.tasks.filter(function(t) { return t.open && !(t.mine && t.mine.status === "Marked"); }), done = d.tasks.filter(function(t) { return t.mine && t.mine.status === "Marked"; });
-  var html = '<div class="cheer-hero"><span class="hand">Your writing, marked</span><h1>Compo</h1><p>When ' + esc(d.teacher) + ' sets a compo, it’s here. Take photos of your writing and hand it in: it comes back marked, with comments and tips.</p></div>';
+  var html = enSwitch() + '<div class="cheer-hero"><span class="hand">Your writing, marked</span><h1>Compo</h1><p>When ' + esc(d.teacher) + ' sets a compo, it’s here. Take photos of your writing and hand it in: it comes back marked, with comments and tips.</p></div>';
   if (!todo.length && !done.length) html += '<div class="empty"><span class="e">✍️</span><span class="hand">Nothing to hand in</span>' + esc(d.teacher) + ' hasn’t set a compo right now.</div>';
   if (todo.length) html += '<div class="bsec">✍️ To hand in</div>' + todo.map(function(t) {
     var half = t.mine && t.mine.status === "Read";
@@ -1967,7 +2022,7 @@ function cwResult(v) {
   var errs = (r.errors || []).map(function(e, k) { return { e: e, k: k, s: syms[e.type] }; }).filter(function(x) { return x.s && x.s.on; });
   if (errs.length) html += '<div class="cw-card"><details><summary class="cw-h" style="cursor:pointer;min-height:44px;display:flex;align-items:center">🔧 Corrections (' + errs.length + ')</summary><ul class="cw-corr">' + errs.map(function(x) {
     return '<li><span class="sy">' + cwSymDemo(x.s) + '</span><span>' +
-      (x.e.type === "missing" ? esc(x.e.target) + ' ^ <b class="cf">' + esc(x.e.fix) + '</b>' : '<s>' + esc(x.e.target.slice(0, 60)) + '</s>' + (x.e.fix ? ' → <b class="cf">' + esc(x.e.fix.slice(0, 90)) + '</b>' : '')) + '<span class="cn">' + esc(x.s.name) + '</span></span></li>'; }).join("") + '</ul></details></div>';
+      (x.e.type === "missing" ? esc(x.e.target) + ' ^ <b class="cf">' + esc(x.e.fix) + '</b>' : '<s>' + esc(x.e.target.slice(0, 60)) + '</s>' + (x.e.fix ? ' → <b class="cf">' + esc(x.e.fix.slice(0, 90)) + '</b>' : '')) + '<span class="cn">' + esc(x.s.name) + '</span>' + (x.e.rule ? '<span class="cr">💡 ' + esc(x.e.rule) + '</span>' : '') + '</span></li>'; }).join("") + '</ul></details></div>';
   var crit = function(part) { var c = r[part] || {}; return (c.criteria || []).map(function(x, i) { return x.comment ? '<li><b>' + esc(v.criteria[part][i] || "") + ':</b> ' + esc(x.comment) + '</li>' : ''; }).join(""); };
   html += '<div class="cw-card"><div class="cw-h">🔍 More about your ' + (v.task === "sw" ? 'writing' : 'compo') + '</div><div class="lb" style="font-weight:800;margin-top:6px">' + esc(v.names.content) + '</div><ul class="cw-list">' + crit("content") + '</ul>' +
     '<div class="lb" style="font-weight:800;margin-top:10px">' + esc(v.names.language) + '</div><ul class="cw-list">' + crit("language") + '</ul></div>' +
@@ -1987,11 +2042,13 @@ function cwExplain(t) {
       (a.suggestion ? '<div class="cw-qbox" style="margin-top:12px;background:var(--ok-soft)">Try: “' + esc(a.suggestion) + '”</div>' : '') + '<div class="pop-btns"><button class="btn soft big" data-close>Got it 👍</button></div>'); }
   if (ei != null) { var e = r.errors[+ei], s = e && syms[e.type]; if (!s) return;
     return sheet(s.name + (s.major ? " (major error)" : ""), '<p style="margin:0;font-size:17px">' + (e.type === "missing" ? 'A word is missing after “' + esc(e.target) + '”: <b style="color:var(--ok)">' + esc(e.fix) + '</b>' : '<s class="muted">' + esc(e.target) + '</s>' + (e.fix ? ' → <b style="color:var(--ok)">' + esc(e.fix) + '</b>' : '')) + '</p>' +
+      (e.rule ? '<div class="cw-qbox" style="margin-top:12px">💡 ' + esc(e.rule) + '</div>' : '') +
       '<div class="pop-btns"><button class="btn soft big" data-close>Got it 👍</button></div>'); }
 }
 document.addEventListener("click", function(e) {
   if (S.tab !== "compo") return;
   var t;
+  if ((t = e.target.closest("[data-ensec]"))) { EN.sec = t.getAttribute("data-ensec"); if (!S.preview) store("ensec", EN.sec); CW.view = null; CW.cur = null; renderCompo(); return; }
   if ((t = e.target.closest("[data-cwtask]"))) { var nt = CW.st.tasks.filter(function(x) { return x.id === t.getAttribute("data-cwtask"); })[0]; if (nt) { if (!CW.cur || CW.cur.id !== nt.id) CW.pages = []; CW.cur = nt; drawCompoTask(); window.scrollTo(0, 0); } return; }
   if ((t = e.target.closest("#cwBack"))) { CW.cur = null; CW.review = false; drawCompoHome(); return; }
   if ((t = e.target.closest("[data-cwdel]"))) { CW.pages.splice(+t.getAttribute("data-cwdel"), 1); drawCompoTask(); return; }
