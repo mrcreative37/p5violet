@@ -380,6 +380,12 @@
   a.btn { text-decoration:none; }
   .tabs.t8 .tabs-in { gap:0; } .tabs.t8 button { font-size:9.5px; letter-spacing:-.03em; padding-left:0; padding-right:0; } .tabs.t8 svg { width:20px; height:20px; }
   @media (min-width:1024px) { .tabs.t8 button { font-size:15px; letter-spacing:0; } }
+  @media (max-width:559px) {
+    .tabs.t9 .tabs-in { display:flex !important; overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; scroll-snap-type:x proximity; gap:2px; }
+    .tabs.t9 .tabs-in::-webkit-scrollbar { display:none; }
+    .tabs.t9 button { flex:0 0 58px; font-size:10.5px; letter-spacing:-.01em; scroll-snap-align:start; }
+    .tabs.t9 { -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent); mask-image:linear-gradient(90deg,#000 88%,transparent); }
+  }
   /* ✍️ Compo Marker */
   .cw-card { background:#fff; border-radius:22px; padding:18px 16px; margin-top:12px; box-shadow:0 8px 22px rgba(46,26,120,.08); }
   .cw-step { display:flex; align-items:center; gap:10px; font:800 17px/1.25 var(--head); margin:4px 0 10px; }
@@ -448,6 +454,19 @@
   .en-sw button.on { background:var(--violet-2); color:#fff; box-shadow:0 4px 12px rgba(91,63,214,.3); }
   .cm-frame { width:100%; border:0; display:block; background:transparent; border-radius:14px; }
   .cm-wrap { margin-top:6px; }
+  .ma-cols { display:grid; gap:0; }
+  @media (min-width:900px) { .ma-cols { grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr); gap:14px; align-items:start; } }
+  .ma-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:10px; }
+  .ma-sel { border:1.5px solid var(--line); border-radius:12px; padding:10px 12px; font:inherit; font-size:16px; background:var(--paper); min-height:48px; }
+  .ma-photo { position:relative; border-radius:14px; overflow:hidden; background:var(--lilac); max-width:260px; }
+  .ma-photo img { width:100%; display:block; max-height:200px; object-fit:cover; object-position:top; }
+  .ma-photo .x { position:absolute; right:6px; top:6px; width:36px; height:36px; border-radius:50%; border:0; background:rgba(30,23,53,.72); color:#fff; font-size:16px; }
+  .ma-qtext { font-size:15px; line-height:1.5; margin-bottom:10px; }
+  .ma-tag { display:inline-block; font-size:12px; font-weight:800; padding:2px 9px; border-radius:999px; background:var(--warn-soft); color:#8A6400; white-space:nowrap; }
+  .ma-svg { background:#fff; border-radius:14px; padding:8px; background-image:linear-gradient(#EEF1F8 1px,transparent 1px),linear-gradient(90deg,#EEF1F8 1px,transparent 1px); background-size:20px 20px; box-shadow:inset 0 0 0 1px var(--line); overflow-x:auto; }
+  .ma-steps { margin:6px 0 0; padding-left:22px; display:grid; gap:8px; font-size:15.5px; line-height:1.45; }
+  .ma-steps li::marker { color:var(--violet-2); font-weight:800; }
+  .ma-ans { background:var(--ok-soft); color:var(--ok); font-weight:800; border-radius:12px; padding:10px 14px; }
   .cw-title { font:800 19px/1.25 var(--head); }
   .cw-qpics { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin:4px 0 8px; }
   .cw-qpics.one { grid-template-columns:1fr; }
@@ -456,6 +475,7 @@
   /* Laptop / tablet: keep the Compo pages to a readable width, like a page of writing */
   @media (min-width:900px) {
     #app[data-view="compo"] > * { max-width:860px; }
+    #app[data-view="math"] > * { max-width:1100px; }
     #app[data-view="compo"] > .cm-wrap { max-width:none; }
     .cw-script { font-size:18px; padding:28px 30px 24px 32px; }
     .cw-pages { grid-template-columns:repeat(4,minmax(0,1fr)); }
@@ -665,6 +685,7 @@
   <button data-tab="bday" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 21h16v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 16c2 1.5 4 1.5 6 0s4-1.5 6 0 3 1 4 0"/><path d="M12 11V7"/><path d="M12 3.5c.8 1 .8 2 0 2.5-.8-.5-.8-1.5 0-2.5z"/></svg>Birthdays<span class="dot gold hidden" id="bdayDot"></span></button>
   <button data-tab="league" class="hidden"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>Groups<span class="dot gold hidden" id="leagueDot"></span></button>
   <button data-tab="compo" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h5"/></svg>English</button>
+  <button data-tab="math" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 8h4M9.5 6v4M13 8h4M7.5 15.5l3 3M10.5 15.5l-3 3M13 15h4M13 18h4"/></svg>Math</button>
   <button data-tab="photos"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Photos</button>
   <button data-tab="ask"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span id="askLabel">Ask</span><span class="dot hidden" id="askDot"></span></button>
 </div></nav>
@@ -1048,16 +1069,16 @@ function ping() {
 }
 /** Which tabs show (Spotlight / Birthdays can be switched off by the teacher), and their little badges. */
 function setTabs(h) {
-  var on = { today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo }, n = 3 + (on.today ? 1 : 0) + (on.spot ? 1 : 0) + (on.bday ? 1 : 0) + (on.league ? 1 : 0) + (on.compo ? 1 : 0);
+  var on = { today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math }, n = 3 + (on.today ? 1 : 0) + (on.spot ? 1 : 0) + (on.bday ? 1 : 0) + (on.league ? 1 : 0) + (on.compo ? 1 : 0) + (on.math ? 1 : 0);
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button[data-tab]"), function(b) { if (b.dataset.tab in on) b.classList.toggle("hidden", !on[b.dataset.tab]); });
   document.querySelector(".tabs-in").style.gridTemplateColumns = "repeat(" + n + ",1fr)";
-  $("tabs").classList.toggle("t5", n > 3); $("tabs").classList.toggle("t6", n > 5); $("tabs").classList.toggle("t7", n > 6); $("tabs").classList.toggle("t8", n > 7);
+  $("tabs").classList.toggle("t5", n > 3); $("tabs").classList.toggle("t6", n > 5); $("tabs").classList.toggle("t7", n > 6); $("tabs").classList.toggle("t8", n > 7); $("tabs").classList.toggle("t9", n > 8);
   Array.prototype.forEach.call(document.querySelectorAll("#tabs .tl"), function(l) { l.textContent = n > 6 && window.innerWidth < 1024 ? l.getAttribute("data-short") : l.getAttribute("data-full"); });
   var td = $("todayDot"), tn = (h.planner && h.planner.newCount) || 0; td.textContent = tn > 9 ? "9+" : (tn || ""); td.classList.toggle("hidden", !tn);
   $("askLabel").textContent = n > 3 ? "Ask" : "Ask " + (h.teacher.length <= 12 ? h.teacher : "teacher");
   var c = h.celebrating || {};
   [["spotDot", c.spot], ["bdayDot", c.bday]].forEach(function(x) { var d = $(x[0]); d.textContent = x[1] > 9 ? "9+" : (x[1] || ""); d.classList.toggle("hidden", !x[1]); });
-  if ((S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo)) S.tab = "wall";
+  if ((S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo) || (S.tab === "math" && !on.math)) S.tab = "wall";
 }
 function go(tab) {
   stopShow();
@@ -1070,7 +1091,10 @@ function go(tab) {
   else if (tab === "league") renderLeague();
   else if (tab === "today") { $("todayDot").classList.add("hidden"); renderToday(); }
   else if (tab === "compo") renderCompo();
+  else if (tab === "math") renderMath();
   else renderPhotos();
+  var tb = document.querySelector('#tabs button[data-tab="' + tab + '"]');
+  if (tb && $("tabs").classList.contains("t9") && tb.scrollIntoView) try { tb.scrollIntoView({ block: "nearest", inline: "nearest" }); } catch (e) {}
 }
 $("tabs").onclick = function(e) { var b = e.target.closest("button[data-tab]"); if (b) go(b.dataset.tab); };
 /** Sign out: asks first, then ends the sign-in on this device AND on Google's side (safe on a shared iPad). */
@@ -2072,6 +2096,108 @@ document.addEventListener("click", function(e) {
   if ((t = e.target.closest("[data-cwi],[data-cwe],[data-cwt]")) && t.closest("#app")) { cwExplain(t); return; }
 });
 document.addEventListener("change", function(e) { if (e.target && e.target.hasAttribute && e.target.hasAttribute("data-cwfile")) { cwAddFiles(e.target.files); e.target.value = ""; } });
+
+// ---------------- 🧮 Math Assistant (sections: 📊 Model drawing; add more to MA_SECTIONS) ----------------
+var MA_SECTIONS = [{ k: "model", t: "📊 Model drawing" }];
+var MA = { sec: "model", model: null, shown: 1, photo: null, q: "", level: "", busy: false, status: "", revealed: false };
+var MA_SAMPLE = { sample: true, question: "Ali had 3 times as many stickers as Ben. Together they had 240 stickers. How many stickers did Ali have?", heuristic: "Part-whole (units)",
+  models: [{ title: "", bars: [{ name: "Ali", parts: [{ value: 3, divisions: 3, label: "", kind: "known" }], right: "" }, { name: "Ben", parts: [{ value: 1, divisions: 1, label: "", kind: "known" }], right: "" }], total: { label: "240", from: 0, to: 1 } }],
+  steps: ["Ali has 3 times as many as Ben, so draw 1 unit for Ben and 3 equal units for Ali.", "Together they have 240, so put a bracket around both bars: 4 units = 240.", "1 unit = 240 ÷ 4 = 60.", "Ali has 3 units: 3 × 60 = 180."],
+  answer: "Ali had 180 stickers." };
+function renderMath() {
+  $("topTitle").textContent = "Math Assistant";
+  if (!MA.model) { try { MA.model = JSON.parse(store("mamodel") || "null"); } catch (e) {} if (!MA.model) MA.model = MA_SAMPLE; MA.shown = 1; }
+  if (!MA.level) MA.level = store("malevel") || (/^P\d/.test(S.home.className || "") ? S.home.className.slice(0, 2) : "P5");
+  var sw = MA_SECTIONS.length > 1 ? '<div class="en-sw" role="tablist" aria-label="Math Assistant">' + MA_SECTIONS.map(function(x) { return '<button role="tab" aria-selected="' + (MA.sec === x.k) + '" class="' + (MA.sec === x.k ? 'on' : '') + '" data-masec="' + x.k + '">' + x.t + '</button>'; }).join("") + '</div>' : '';
+  $("app").innerHTML = sw + maModelView() + '<div style="height:24px"></div>';
+}
+function maModelView() {
+  var m = MA.model, lv = ["P1", "P2", "P3", "P4", "P5", "P6"];
+  var steps = m.steps || [], done = MA.shown >= steps.length;
+  return '<div class="cheer-hero"><span class="hand">Draw the model</span><h1>Model drawing</h1><p>Take a photo of a word problem, or type it. I’ll draw the bar model, then show you how to use it one step at a time.</p></div>' +
+    '<div class="ma-cols"><div class="cw-card ma-in"><div class="cw-step"><b>1</b>Your question</div>' +
+    (MA.photo ? '<div class="ma-photo"><img src="' + (MA.photo.thumb || '') + '" alt="Your question photo"><button class="x" data-maphoto="x" aria-label="Remove the photo">✕</button></div>'
+      : '<div class="cw-add"><label class="btn primary big" for="maCam">📷 Take a photo</label><label class="btn soft big" for="maPick">🖼️ Choose a photo</label></div>') +
+    '<input type="file" id="maCam" accept="image/*" capture="environment" class="hidden" data-mafile><input type="file" id="maPick" accept="image/*,.heic,.heif" class="hidden" data-mafile>' +
+    '<label class="lbl" for="maQ" style="display:block;font-weight:700;margin:12px 0 6px">' + (MA.photo ? 'Anything to add? (optional)' : 'Or type the question') + '</label>' +
+    '<textarea class="cw-q" id="maQ" rows="3" placeholder="e.g. Mei had $45 more than Raju. They had $305 altogether. How much did Raju have?">' + esc(MA.q) + '</textarea>' +
+    '<div class="ma-row"><label for="maLvl" style="font-weight:700">Level</label><select id="maLvl" class="ma-sel">' + lv.map(function(l) { return '<option' + (l === MA.level ? ' selected' : '') + '>' + l + '</option>'; }).join("") + '</select>' +
+    '<button class="btn primary big" id="maGo" style="flex:1"' + (MA.busy ? ' disabled' : '') + '>' + (MA.busy ? 'Drawing…' : '✨ Draw the model') + '</button></div>' +
+    (MA.status ? '<p class="cw-tip" style="margin-top:10px">' + esc(MA.status) + '</p>' : '') + '</div>' +
+    '<div class="cw-card ma-out" id="maOut"><div class="cw-step"><b>2</b>' + (m.sample ? 'Here’s an example' : 'The model') + '</div>' +
+    '<div class="ma-qtext"><b>Question:</b> ' + esc(m.question || '') + (m.heuristic ? ' <span class="ma-tag">' + esc(m.heuristic) + '</span>' : '') + '</div>' +
+    (m.models && m.models.length ? '<div class="ma-svg">' + maSvg(m) + '</div>' : '<div class="msg err">That doesn’t look like a maths word problem. Try a clearer photo, or type the question.</div>') +
+    (steps.length ? '<div class="cw-h" style="margin-top:12px">💭 Think it through</div><ol class="ma-steps">' + steps.slice(0, MA.shown).map(function(x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ol>' : '') +
+    '<div class="ma-row" style="margin-top:12px">' + (done ? '' : '<button class="btn primary" id="maNext">👣 Show next step</button>') +
+    (m.answer ? (MA.revealed ? '<div class="ma-ans">✅ ' + esc(m.answer) + '</div>' : '<button class="btn soft" id="maAns">Show answer</button>') : '') + '</div>' +
+    '<p class="cw-tip">Check the model matches the question. If something looks wrong, draw it your way and ask ' + esc(S.home.teacher || 'your teacher') + '.</p></div></div>';
+}
+/** The bar model as a picture (same layout as Model & Disc Math Studio). */
+function maSvg(m) {
+  var FILLS = ["#DCD3FB", "#FFE0C7", "#D6F2DF"], INK = "#1E1735", MUTED = "#6B6489", ACC = "#4B2FC4";
+  var narrow = window.innerWidth < 600, VW = narrow ? 420 : 640;            // phones: a narrower drawing so the labels stay readable
+  var y = 10, out = "", LX = narrow ? 62 : 86, W = narrow ? 250 : 430, BH = 34, GAP = 26;
+  (m.models || []).forEach(function(mod) {
+    if (mod.title) { out += '<text x="0" y="' + (y + 14) + '" font-weight="800" font-size="14" fill="' + MUTED + '">' + esc(mod.title) + '</text>'; y += 26; }
+    var maxT = Math.max.apply(null, [1].concat(mod.bars.map(function(b) { return b.parts.reduce(function(a, p) { return a + (+p.value || 0); }, 0); })));
+    var sc = W / maxT, ys = [];
+    mod.bars.forEach(function(b, bi) {
+      ys.push(y);
+      out += '<text x="' + (LX - 10) + '" y="' + (y + BH / 2 + 5) + '" text-anchor="end" font-weight="800" font-size="15" fill="' + INK + '">' + esc(b.name) + '</text>';
+      var x = LX;
+      b.parts.forEach(function(p) {
+        var w = (+p.value || 0) * sc, kind = p.kind || "known", fill = kind === "unknown" ? "#fff" : FILLS[bi % 3];
+        out += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + BH + '" fill="' + (kind === "difference" ? "none" : fill) + '" stroke="' + INK + '" stroke-width="2"' + (kind === "difference" ? ' stroke-dasharray="6 4"' : '') + ' rx="2"/>';
+        var n = Math.max(1, Math.min(20, +p.divisions || 1));
+        for (var k = 1; k < n; k++) out += '<line x1="' + (x + w * k / n) + '" y1="' + y + '" x2="' + (x + w * k / n) + '" y2="' + (y + BH) + '" stroke="' + INK + '" stroke-width="1.5"/>';
+        if (p.label) {
+          out += '<path d="M' + (x + 2) + ' ' + (y + BH + 4) + ' q0 6 6 6 H' + (x + w / 2 - 5) + ' l5 6 l5 -6 H' + (x + w - 8) + ' q6 0 6 -6" fill="none" stroke="' + MUTED + '" stroke-width="1.5"/>';
+          out += '<text x="' + (x + w / 2) + '" y="' + (y + BH + 30) + '" text-anchor="middle" font-size="13" font-weight="700" fill="' + INK + '">' + esc(p.label) + '</text>';
+        }
+        x += w;
+      });
+      if (b.right) out += '<text x="' + (x + 8) + '" y="' + (y + BH / 2 + 5) + '" font-size="14" font-weight="800" fill="' + ACC + '">' + esc(b.right) + '</text>';
+      y += BH + (b.parts.some(function(p) { return p.label; }) ? 40 : GAP);
+    });
+    if (mod.total && mod.total.label && ys.length) {
+      var f = Math.max(0, Math.min(ys.length - 1, mod.total.from || 0)), t = Math.max(0, Math.min(ys.length - 1, mod.total.to == null ? ys.length - 1 : mod.total.to));
+      var y1 = ys[f], y2 = ys[t] + BH, bx = LX + W + (narrow ? 40 : 52);
+      out += '<path d="M' + (bx - 10) + ' ' + y1 + ' q8 0 8 8 V' + ((y1 + y2) / 2 - 6) + ' l8 6 l-8 6 V' + (y2 - 8) + ' q0 8 -8 8" fill="none" stroke="' + MUTED + '" stroke-width="2"/>';
+      out += '<text x="' + (bx + 12) + '" y="' + ((y1 + y2) / 2 + 5) + '" font-size="15" font-weight="800" fill="' + INK + '">' + esc(mod.total.label) + '</text>';
+    }
+    y += 12;
+  });
+  return '<svg viewBox="0 0 ' + VW + ' ' + Math.max(80, y) + '" width="100%" role="img" aria-label="Bar model" style="font-family:inherit">' + out + '</svg>';
+}
+function maDraw(btn) {
+  var q = ($("maQ") || {}).value || "";
+  MA.q = q; MA.level = ($("maLvl") || {}).value || MA.level; store("malevel", MA.level);
+  if (!MA.photo && !q.trim()) { MA.status = "Take a photo of the question, or type it, first."; renderMath(); return; }
+  MA.busy = true; MA.status = "Reading the question and drawing the model… (about 20 seconds)"; renderMath();
+  call("mathModel", { question: q, level: MA.level, image: MA.photo ? { mime: MA.photo.mime, data: MA.photo.data } : null }).then(function(r) {
+    MA.busy = false; MA.model = r; MA.shown = 1; MA.revealed = false;
+    MA.status = r.models && r.models.length ? "Model drawn. Check it matches the question, then step through it." : "";
+    try { store("mamodel", JSON.stringify(r)); } catch (e) {}
+    if (S.tab === "math") { renderMath(); var o = $("maOut"); if (o && o.scrollIntoView) o.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  }).catch(function(e) { MA.busy = false; MA.status = e.message || String(e); if (S.tab === "math") renderMath(); });
+}
+document.addEventListener("click", function(e) {
+  if (S.tab !== "math") return;
+  var t;
+  if ((t = e.target.closest("#maGo"))) { maDraw(t); return; }
+  if ((t = e.target.closest("#maNext"))) { MA.shown++; renderMath(); return; }
+  if ((t = e.target.closest("#maAns"))) { MA.revealed = true; renderMath(); return; }
+  if ((t = e.target.closest("[data-maphoto]"))) { MA.q = ($("maQ") || {}).value || MA.q; MA.photo = null; renderMath(); return; }
+  if ((t = e.target.closest("[data-masec]"))) { MA.sec = t.getAttribute("data-masec"); renderMath(); return; }
+});
+document.addEventListener("input", function(e) { if (e.target && e.target.id === "maQ") MA.q = e.target.value; });
+document.addEventListener("change", function(e) {
+  if (!e.target || !e.target.hasAttribute || !e.target.hasAttribute("data-mafile")) return;
+  var f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f) return;
+  MA.q = ($("maQ") || {}).value || MA.q;
+  cwPrepare(f).then(function(p) { MA.photo = p; MA.status = ""; if (S.tab === "math") renderMath(); })
+    .catch(function(err) { MA.status = err.message; if (S.tab === "math") renderMath(); });
+});
 
 // ---------------- Class wall ----------------
 function renderWallShell() {
