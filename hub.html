@@ -451,6 +451,80 @@
   .cw-new { color:var(--violet-2); font-weight:800; } .cw-tnote { box-shadow:0 0 0 2px var(--violet-2), 0 8px 22px rgba(46,26,120,.08); }
   .en-sw { display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#fff; border-radius:16px; padding:5px; margin:12px 0 4px; box-shadow:0 4px 14px rgba(46,26,120,.08); }
   .en-sw button { border:0; background:transparent; border-radius:12px; min-height:44px; font:800 15px/1.2 var(--head); color:var(--muted); cursor:pointer; }
+  /* 🧩 Cloze and ✏️ Spelling & Grammar */
+  .pr-text { font-family:'Literata',Georgia,serif; font-size:17px; line-height:2.15; }
+  .pr-text p { margin:0 0 12px; } .pr-text p:last-child { margin:0; }
+  .pr-text sup { font-family:var(--head); font-size:11px; font-weight:800; color:var(--violet-2); margin-right:2px; }
+  .pr-b { white-space:nowrap; }
+  .pr-in { font:16px/1.3 'Literata',Georgia,serif; width:7.2em; border:0; border-bottom:2px solid var(--violet-2); background:#F4F1FF; border-radius:6px 6px 0 0; padding:3px 6px; color:var(--ink,#1E1735); }
+  .pr-in:focus { outline:none; background:#fff; box-shadow:0 0 0 3px rgba(91,63,214,.18); }
+  .pr-in.wide { width:100%; border:2px solid var(--line); border-radius:12px; padding:9px 11px; background:#FFFDF8; }
+  .pr-u { text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px; font-weight:600; }
+  .pr-r { white-space:nowrap; border-radius:6px; padding:1px 5px; cursor:pointer; }
+  .pr-r.ok { background:var(--ok-soft); } .pr-r.ok b { color:var(--ok); }
+  .pr-r.no { background:var(--danger-soft); } .pr-r.no b { color:var(--ok); font-family:var(--head); font-size:.92em; } .pr-r s { color:#B4232F; text-decoration-thickness:2px; } .pr-r.ok s { color:var(--muted); }
+  .pr-list { display:grid; gap:8px; }
+  .pr-row { display:grid; grid-template-columns:30px minmax(70px,auto) 18px minmax(0,1fr); gap:8px; align-items:center; }
+  .pr-num { background:var(--lilac,#EDE8FD); color:var(--violet-2); font:800 14px/1 var(--head); border-radius:9px; padding:7px 0; text-align:center; }
+  .pr-wrong { font-family:'Literata',Georgia,serif; text-decoration:underline; text-underline-offset:3px; font-size:16px; overflow-wrap:anywhere; } .pr-arrow { color:var(--muted); font-weight:800; }
+  .pr-x { border-left:6px solid var(--line); padding:12px 14px; margin-top:8px; } .pr-x.ok { border-left-color:var(--ok); } .pr-x.no { border-left-color:var(--danger); }
+  .pr-x.flash { box-shadow:0 0 0 4px rgba(91,63,214,.35); transition:box-shadow .3s; }
+  .pr-line { font-size:15px; line-height:1.55; } .pr-line .g { color:var(--ok); } .pr-line s.r { color:#B4232F; } .pr-also { color:var(--muted); font-size:13px; }
+  .sy-type.t-blank { background:#EEE; color:#555; }
+  /* 🔁 Synthesis & Transformation */
+  .en-sw.n3 { grid-template-columns:1fr 1fr 1fr; } .en-sw.n3 button { font-size:13.5px; padding:6px 4px; line-height:1.15; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; min-height:54px; } .en-sw.n3 button .i { font-size:17px; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  .sy-start { display:grid; gap:12px; } @media (min-width:640px) { .sy-start { grid-template-columns:minmax(0,1fr) auto; align-items:center; } }
+  .sy-btns { display:flex; gap:8px; flex-wrap:wrap; } .sy-btns .btn { flex:1 1 auto; }
+  .sy-sets { display:grid; gap:8px; } @media (min-width:640px) { .sy-sets { grid-template-columns:1fr 1fr; } }
+  .sy-set { text-align:left; border:0; background:#FFF6DF; border-radius:16px; padding:14px 16px; display:grid; gap:3px; cursor:pointer; font:inherit; color:inherit; box-shadow:0 4px 14px rgba(46,26,120,.06); }
+  .sy-set b { font:800 16px/1.25 var(--head); } .sy-set span { color:var(--muted); font-size:13.5px; font-weight:700; }
+  .sy-topics { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+  .sy-topic { background:#fff; border-radius:18px; box-shadow:0 6px 16px rgba(46,26,120,.07); display:flex; flex-direction:column; overflow:hidden; }
+  .sy-tmain { flex:1; border:0; background:transparent; text-align:left; padding:14px 14px 8px; display:grid; gap:4px; cursor:pointer; font:inherit; color:inherit; }
+  .sy-te { font-size:26px; line-height:1; } .sy-tmain b { font:800 15px/1.25 var(--head); } .sy-tn { font-size:12.5px; color:var(--muted); font-weight:700; }
+  .sy-tnew { border:0; border-top:1px solid var(--line); background:#FBFAFF; color:var(--violet-2); font:800 13px/1 var(--head); padding:10px; cursor:pointer; }
+  .sy-top { margin-top:10px; }
+  .sy-instr { background:#fff; border-radius:16px; padding:12px 14px; font-size:14.5px; line-height:1.45; color:var(--muted); font-weight:700; border-left:5px solid var(--violet-2); }
+  .sy-qh { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+  .sy-qn { background:var(--lilac,#EDE8FD); color:var(--violet-2); font:800 15px/1 var(--head); padding:7px 11px; border-radius:11px; }
+  .sy-m { margin-left:auto; background:#F3F1FA; color:var(--muted); font-weight:800; font-size:12.5px; padding:3px 10px; border-radius:999px; }
+  .sy-given { font-family:'Literata',Georgia,serif; font-size:17px; line-height:1.55; }
+  .sy-use { margin:8px 0 6px; font-size:14px; color:var(--muted); font-weight:700; } .sy-use b { color:#8A4B00; background:#FFF0D6; border-radius:8px; padding:2px 8px; }
+  .sy-line { font-family:'Literata',Georgia,serif; font-size:16px; color:var(--ink,#1E1735); margin:6px 0 10px; line-height:2; }
+  .sy-blank { display:inline-block; width:4.5em; border-bottom:2px solid var(--muted); margin:0 4px; vertical-align:-2px; }
+  .sy-ans { width:100%; box-sizing:border-box; border:2px solid var(--line); border-radius:14px; padding:11px 13px; font:16px/1.5 'Literata',Georgia,serif; resize:none; overflow:hidden; background:#FFFDF8; min-height:56px; }
+  .sy-ans:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(91,63,214,.15); background:#fff; }
+  .sy-go { text-align:center; } .sy-go .btn { min-width:240px; }
+  .sy-score { display:flex; gap:16px; align-items:center; }
+  .sy-ring { --p:0; width:92px; height:92px; border-radius:50%; flex:none; display:grid; place-items:center; background:conic-gradient(var(--violet-2) calc(var(--p)*1%), #EEEAF9 0); }
+  .sy-ring span { width:74px; height:74px; border-radius:50%; background:#fff; display:grid; place-items:center; font:800 24px/1 var(--head); text-align:center; }
+  .sy-ring small { display:block; font-size:12px; color:var(--muted); }
+  .sy-r { border-left:6px solid var(--line); } .sy-r.full { border-left-color:var(--ok); } .sy-r.part { border-left-color:#E9A23B; } .sy-r.zero { border-left-color:var(--danger); }
+  .sy-chip { font-weight:800; font-size:14px; border-radius:999px; padding:4px 11px; } .sy-chip.full { background:var(--ok-soft); color:var(--ok); } .sy-chip.part { background:var(--warn-soft); color:var(--warn); } .sy-chip.zero { background:var(--danger-soft); color:var(--danger); }
+  .sy-verdict { font-weight:800; font-size:14px; }
+  .sy-yours { margin-top:10px; } .sy-yours > span { font-size:12.5px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+  .sy-sent { margin-top:4px; background:#F6F3FF; border-radius:12px; padding:10px 12px; font-family:'Literata',Georgia,serif; font-size:16.5px; line-height:1.7; }
+  .sy-sent.blank { color:var(--muted); font-style:italic; }
+  .sy-w { color:#B4232F; text-decoration-thickness:2px; } .sy-w.t-structure, .sy-w.t-meaning, .sy-w.t-givenword { background:#FDECEE; border-radius:4px; }
+  .sy-f { text-decoration:none; color:#B4232F; font-family:var(--head); font-weight:800; font-size:.9em; background:#FDECEE; border-radius:5px; padding:0 5px; margin-left:3px; }
+  .sy-errs { list-style:none; margin:10px 0 0; padding:0; display:grid; gap:8px; }
+  .sy-errs li { display:flex; gap:8px; align-items:flex-start; font-size:14.5px; line-height:1.45; } .sy-errs s { color:var(--muted); }
+  .sy-type { flex:none; font-size:11.5px; font-weight:800; border-radius:999px; padding:3px 8px; background:#EEE; color:#333; margin-top:1px; }
+  .sy-type.t-spelling { background:#E4EDFC; color:#1C5FB8; } .sy-type.t-grammar { background:#F1E8FD; color:#6D3FC0; } .sy-type.t-punctuation { background:#FFF0D6; color:#8A4B00; }
+  .sy-type.t-structure, .sy-type.t-meaning, .sy-type.t-givenword { background:var(--danger-soft); color:var(--danger); }
+  .sy-rule { color:var(--muted); font-size:13.5px; }
+  .sy-fb { margin:10px 0 0; font-size:15px; line-height:1.5; }
+  .sy-ok { margin-top:10px; background:var(--ok-soft); border-radius:12px; padding:10px 12px; font-family:'Literata',Georgia,serif; font-size:16px; line-height:1.55; }
+  .sy-ok b { display:block; font-family:var(--head); color:var(--ok); font-size:13.5px; } .sy-ok.alt { background:#F1FAF5; }
+  .sy-lesson { margin-top:12px; background:#F1EDFD; border-radius:14px; padding:12px 14px; display:grid; gap:8px; font-size:15px; line-height:1.5; }
+  .sy-lesson p { margin:0; } .sy-lh { font:800 16px/1.3 var(--head); color:var(--violet-2); }
+  .sy-pat { background:#fff; border-radius:10px; padding:8px 11px; font-weight:800; border:1.5px dashed #CBBEF6; }
+  .sy-ex { background:#fff; border-radius:10px; padding:8px 11px; font-family:'Literata',Georgia,serif; } .sy-ex span { display:block; font-family:var(--head); font-size:12px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+  .sy-watch { color:var(--warn); font-weight:700; }
+  .sy-r > .btn { margin-top:12px; }
+  .sy-sim { margin-top:14px; border-top:2px dashed var(--line); padding-top:12px; } .sy-sim .cw-card { box-shadow:none; background:#FBFAFF; margin-top:8px; } .sy-simh { font:800 15px/1.3 var(--head); }
+  .sy-sim > .btn { margin-top:10px; }
   .en-sw button.on { background:var(--violet-2); color:#fff; box-shadow:0 4px 12px rgba(91,63,214,.3); }
   .cm-frame { width:100%; border:0; display:block; background:transparent; border-radius:14px; }
   .cm-wrap { margin-top:6px; }
@@ -467,6 +541,46 @@
   .ma-steps { margin:6px 0 0; padding-left:22px; display:grid; gap:8px; font-size:15.5px; line-height:1.45; }
   .ma-steps li::marker { color:var(--violet-2); font-weight:800; }
   .ma-ans { background:var(--ok-soft); color:var(--ok); font-weight:800; border-radius:12px; padding:10px 14px; }
+  /* 🦉 Maths Buddy */
+  .mb-lv { display:grid; grid-template-columns:repeat(6,1fr); gap:6px; }
+  .mb-lv button { min-height:46px; border-radius:12px; border:2px solid var(--line); background:#fff; font:800 16px/1 var(--head); color:var(--muted); cursor:pointer; }
+  .mb-lv button.on { background:var(--violet-2); border-color:var(--violet-2); color:#fff; }
+  .mb-qbox { display:grid; gap:8px; } .mb-qbox .mb-mic { justify-self:start; }
+  .mb-mic { display:inline-flex; align-items:center; gap:6px; min-height:46px; padding:0 14px; border-radius:999px; border:2px solid #CBBEF6; background:#F4F1FF; color:var(--violet-2); font:800 15px/1 var(--head); cursor:pointer; flex:none; }
+  .mb-mic.on { background:#E8453C; border-color:#E8453C; color:#fff; animation:mbpulse 1.2s infinite; }
+  @keyframes mbpulse { 50% { box-shadow:0 0 0 6px rgba(232,69,60,.2); } } @media (prefers-reduced-motion:reduce) { .mb-mic.on { animation:none; } }
+  .mb-say { border:0; background:#F1EDFD; border-radius:50%; width:34px; height:34px; font-size:16px; cursor:pointer; vertical-align:middle; flex:none; }
+  .mb-q .mb-qh { display:flex; align-items:center; gap:8px; flex-wrap:wrap; } .mb-qt { margin-top:8px; font-size:16.5px; line-height:1.55; }
+  .mb-stages { display:flex; flex-wrap:wrap; gap:4px; align-items:center; margin:12px 2px 0; font-size:13px; font-weight:800; color:var(--muted); }
+  .mb-stages span { background:#fff; border-radius:999px; padding:5px 10px; box-shadow:0 2px 8px rgba(46,26,120,.06); } .mb-stages span.on { background:var(--violet-2); color:#fff; } .mb-stages span.done { background:var(--ok-soft); color:var(--ok); } .mb-stages i { font-style:normal; opacity:.5; }
+  .mb-bub { display:flex; gap:10px; align-items:flex-start; margin-top:8px; } .mb-av { font-size:28px; line-height:1; flex:none; }
+  .mb-bt { background:#F1EDFD; border-radius:4px 16px 16px 16px; padding:10px 13px; font-size:16px; line-height:1.5; flex:1; min-width:0; }
+  .mb-n { display:block; font-size:12.5px; font-weight:800; color:var(--violet-2); text-transform:uppercase; letter-spacing:.04em; margin-bottom:2px; }
+  .mb-ans { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:10px; }
+  .mb-ans input { flex:1 1 140px; min-width:0; min-height:50px; border:2px solid var(--line); border-radius:14px; padding:0 14px; font:18px/1.2 var(--body,inherit); background:#FFFDF8; }
+  .mb-ans input:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(91,63,214,.15); }
+  .mb-unit { font-weight:800; color:var(--muted); }
+  .mb-ch { display:grid; gap:8px; margin-top:10px; }
+  .mb-done { border-left:4px solid var(--ok); background:#F4FBF7; border-radius:0 12px 12px 0; padding:8px 11px; margin:8px 0; display:grid; gap:2px; font-size:14.5px; }
+  .mb-done span { font-weight:800; color:var(--ok); } .mb-done em { font-style:normal; color:var(--muted); }
+  .mb-me { margin:8px 0 0 auto; max-width:85%; width:fit-content; background:var(--violet-2); color:#fff; border-radius:16px 4px 16px 16px; padding:9px 13px; font-size:15.5px; }
+  .mb-win .ma-ans { margin-top:6px; }
+  .mb-link { display:block; margin-top:12px; border:0; background:none; color:var(--violet-2); font:800 14.5px/1.3 var(--head); text-decoration:underline; text-underline-offset:3px; cursor:pointer; padding:4px 0; }
+  .mb-req { margin-top:12px; background:#FFF6DF; border-radius:14px; padding:12px; } .mb-mine .mb-qt { font-size:15px; }
+  .kb-bar { display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; background:#fff; border-radius:16px; padding:10px 12px; margin:10px 0 8px; box-shadow:0 4px 14px rgba(46,26,120,.08); }
+  .kb-bar b { display:block; font:800 16px/1.2 var(--head); } .kb-bar span { color:var(--muted); font-size:13.5px; }
+  .kb-frame { width:100%; border:0; border-radius:16px; background:#fff; display:block; box-shadow:0 6px 18px rgba(46,26,120,.08); }
+  .ma-empty { min-height:120px; display:grid; place-items:center; text-align:center; color:var(--muted,#6B6489); font-weight:700; padding:16px; }
+  .ma-guide { margin-top:12px; background:var(--lilac,#F1EDFD); border-radius:16px; padding:14px; display:grid; gap:10px; }
+  .ma-gq { font:800 17px/1.35 var(--head); display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; }
+  .ma-gn { font:800 12px/1 var(--body,inherit); background:var(--violet-2,#4B2FC4); color:#fff; border-radius:999px; padding:4px 9px; white-space:nowrap; }
+  .ma-gc { display:grid; gap:8px; }
+  .ma-gb { text-align:left; font:inherit; font-size:15.5px; font-weight:700; padding:12px 14px; min-height:48px; border-radius:12px; border:2px solid var(--line); background:#fff; color:inherit; cursor:pointer; }
+  .ma-gb:hover { border-color:var(--violet-2,#4B2FC4); }
+  .ma-gb.no { border-color:var(--danger); background:var(--danger-soft); }
+  .ma-gf { margin:0; border-radius:12px; padding:9px 12px; font-weight:700; font-size:15px; }
+  .ma-gf.no { background:var(--warn-soft); color:var(--warn); }
+  .ma-gf.ok { background:var(--ok-soft); color:var(--ok); }
   .cw-title { font:800 19px/1.25 var(--head); }
   .cw-qpics { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin:4px 0 8px; }
   .cw-qpics.one { grid-template-columns:1fr; }
@@ -1774,18 +1888,20 @@ var CW = { st: null, cur: null, pages: [], busy: false, view: null, qimg: {} };
 var CW_EMO = { cw: "📖", sw: "✉️" };
 // ---------------- English Assistant: ✍️ Compo and 📖 Comprehension ----------------
 var EN = { sec: "" }, CMX = { html: null, route: "home" };
-function enHas() { var h = S.home || {}, e = h.english || { compo: !!h.compo, comp: false }; return { compo: !!e.compo, comp: !!e.comp }; }
+function enHas() { var h = S.home || {}, e = h.english || { compo: !!h.compo, comp: false }; return { compo: !!e.compo, comp: !!e.comp, syn: !!e.syn, cloze: !!e.cloze, edit: !!e.edit }; }
 function enSec() {
   var e = enHas(), s = EN.sec || store("ensec");
   if (s === "comp" && e.comp) return "comp";
   if (s === "compo" && e.compo) return "compo";
-  return e.compo ? "compo" : "comp";
+  if ((s === "syn" || s === "cloze" || s === "edit") && e[s]) return s;
+  return e.compo ? "compo" : e.comp ? "comp" : e.syn ? "syn" : e.cloze ? "cloze" : "edit";
 }
 function enSwitch() {
   var e = enHas(), s = enSec();
-  if (!(e.compo && e.comp)) return "";
+  var n = (e.compo ? 1 : 0) + (e.comp ? 1 : 0) + (e.syn ? 1 : 0) + (e.cloze ? 1 : 0) + (e.edit ? 1 : 0);
+  if (n < 2) return "";
   var b = function(k, t) { return '<button role="tab" aria-selected="' + (s === k) + '" class="' + (s === k ? 'on' : '') + '" data-ensec="' + k + '">' + t + '</button>'; };
-  return '<div class="en-sw" role="tablist" aria-label="English Assistant">' + b("compo", "✍️ Compo") + b("comp", "📖 Comprehension") + '</div>';
+  return '<div class="en-sw' + (n >= 3 ? ' n3' : '') + '" role="tablist" aria-label="English Assistant">' + (e.compo ? b("compo", '<span class="i">✍️</span> <span>Compo</span>') : '') + (e.comp ? b("comp", '<span class="i">📖</span> <span>Comprehension</span>') : '') + (e.syn ? b("syn", '<span class="i">🔁</span> <span>Synthesis</span>') : '') + (e.cloze ? b("cloze", '<span class="i">🧩</span> <span>Cloze</span>') : '') + (e.edit ? b("edit", '<span class="i">✏️</span> <span>Spelling &amp; Grammar</span>') : '') + '</div>';
 }
 /** 📖 Comprehension: the comprehension screens (the same page the teacher uses) in a frame, signed in as this pupil. */
 function renderComp() {
@@ -1814,6 +1930,8 @@ window.addEventListener("resize", function() { if (S.tab === "compo") cmFit(); }
 function renderCompo() {
   $("topTitle").textContent = "English Assistant";
   if (enSec() === "comp") return renderComp();
+  if (enSec() === "syn") return renderSyn();
+  if (enSec() === "cloze" || enSec() === "edit") return renderPrac(enSec());
   if (!CW.st) $("app").innerHTML = SPIN;
   if (CW.busy) return cwWorking(CW.step || 1);
   if (CW.view) return cwResult(CW.view);
@@ -2097,23 +2215,510 @@ document.addEventListener("click", function(e) {
 });
 document.addEventListener("change", function(e) { if (e.target && e.target.hasAttribute && e.target.hasAttribute("data-cwfile")) { cwAddFiles(e.target.files); e.target.value = ""; } });
 
+// ---------------- 🧩 Comprehension Cloze and ✏️ Spelling & Grammar (English tab) ----------------
+var PR_INFO = {
+  cloze: { title: "Comprehension Cloze", hand: "PSLE Paper 2 · 15 marks", blurb: "Read the passage and write ONE word in each blank so the passage makes sense.", unit: "blank" },
+  edit: { title: "Spelling & Grammar", hand: "PSLE Paper 2 · Editing · 10 marks", blurb: "Each underlined word has a spelling or grammar mistake. Write the correct word for each one.", unit: "word" }
+};
+var PR = { cloze: {}, edit: {} };
+function prCall(kind, action, d) { return call("pracApi", kind, action, JSON.stringify(d || {})).then(function(r) { var o = JSON.parse(r); if (!o.ok) throw new Error(o.error); return o.data; }); }
+function prSeen(kind) { try { return JSON.parse(store("prseen_" + kind) || "[]"); } catch (e) { return []; } }
+function prBest(kind) { try { return JSON.parse(store("prbest_" + kind) || "{}"); } catch (e) { return {}; } }
+function renderPrac(kind) {
+  window.scrollTo(0, 0);
+  var X = PR[kind], top = '<div id="enSwWrap">' + enSwitch() + '</div>';
+  if (!X.home) {
+    $("app").innerHTML = top + SPIN;
+    prCall(kind, "home").then(function(h) { X.home = h; if (S.tab === "compo" && enSec() === kind) renderPrac(kind); })
+      .catch(function(e) { if (S.tab === "compo") $("app").innerHTML = top + '<div class="msg err">' + esc(e.message) + '</div>'; });
+    return;
+  }
+  $("app").innerHTML = top + (X.p ? prPassageView(kind) : prHomeView(kind)) + '<div style="height:24px"></div>';
+}
+function prHomeView(kind) {
+  var X = PR[kind], h = X.home, I = PR_INFO[kind], best = prBest(kind);
+  var row = function(p, tag) { var b = best[p.id]; return '<button class="sy-set pr-pick" data-prstart="' + esc(p.id) + '"><b>' + esc(p.title) + '</b><span>' + p.n + ' ' + I.unit + 's · ' + p.n + ' marks' + (b != null ? ' · your best ' + b + '/' + p.n : '') + (tag ? ' · ' + tag : '') + '</span></button>'; };
+  var out = '<div class="cheer-hero"><span class="hand">' + esc(I.hand) + '</span><h1>' + esc(I.title) + '</h1><p>' + esc(I.blurb) + '</p></div>';
+  if (X.err) out += '<div class="msg err">' + esc(X.err) + '</div>';
+  out += '<div class="cw-card sy-start"><div><div class="cw-h">' + (kind === "cloze" ? '🧩' : '✏️') + ' Practise a passage</div><p class="cw-tip" style="margin:0">' + esc(h.instr) + '</p></div>' +
+    '<div class="sy-btns"><button class="btn primary big" data-prstart="">Start</button><button class="btn soft" data-prfresh>✨ New passage</button></div></div>';
+  if (h.sets && h.sets.length) out += '<div class="cw-h" style="margin:18px 2px 8px">📌 From ' + esc(h.teacher || "your teacher") + '</div><div class="sy-sets">' + h.sets.map(function(p) { return row(p); }).join("") + '</div>';
+  out += '<div class="cw-h" style="margin:18px 2px 8px">📚 Practice passages</div><div class="sy-sets">' + h.bank.map(function(p) { return row(p); }).join("") + '</div>';
+  return out;
+}
+/** The passage: blanks to fill (cloze), underlined words (editing), or the marked answers. */
+function prTextHtml(kind, p, res) {
+  var R = {}; if (res) res.results.forEach(function(r) { R[r.n] = r; });
+  var W = {}; p.items.forEach(function(it) { W[it.n] = it; });
+  return String(p.text).split(/\n\s*\n/).map(function(para) {
+    return '<p>' + esc(para).replace(/\[(\d{1,2})\]/g, function(m, n) {
+      n = Number(n); var it = W[n] || {}, r = R[n];
+      if (r) {
+        var shown = kind === "edit" ? (it.wrong || "") : "";
+        if (r.ok) return '<span class="pr-r ok" data-prgo="' + n + '"><sup>' + n + '</sup>' + (kind === "edit" ? '<s>' + esc(shown) + '</s> ' : '') + '<b>' + esc(r.ans) + '</b> ✓</span>';
+        return '<span class="pr-r no" data-prgo="' + n + '"><sup>' + n + '</sup>' + (kind === "edit" ? '<s>' + esc(shown) + '</s> ' : '') + (r.ans && (kind !== "edit") ? '<s class="pr-mine">' + esc(r.ans) + '</s> ' : '') + '<b>' + esc(r.key) + '</b></span>';
+      }
+      if (kind === "edit") return '<sup>' + n + '</sup><span class="pr-u">' + esc(it.wrong || "") + '</span>';
+      var v = (PR[kind].answers || {})[n] || "";
+      return '<span class="pr-b"><sup>' + n + '</sup><input class="pr-in" data-prn="' + n + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Blank ' + n + '"></span>';
+    }).replace(/\n/g, "<br>") + '</p>';
+  }).join("");
+}
+function prPassageView(kind) {
+  var X = PR[kind], p = X.p, res = X.res, I = PR_INFO[kind];
+  var out = '<div class="sy-top"><button class="btn soft" data-prback>‹ All passages</button></div>' +
+    '<div class="cheer-hero" style="padding-top:8px"><span class="hand">' + esc(I.title) + '</span><h1>' + esc(p.title) + '</h1></div>';
+  if (res) {
+    var pc = res.max ? Math.round(100 * res.total / res.max) : 0;
+    var cheer = pc >= 85 ? "🌟 Superb!" : pc >= 70 ? "🎉 Great work!" : pc >= 50 ? "👍 Good effort!" : "💪 Keep practising, you’re learning!";
+    out += '<div class="cw-card sy-score"><div class="sy-ring" style="--p:' + pc + '"><span>' + res.total + '<small>/ ' + res.max + '</small></span></div><div><div class="cw-h">' + cheer + '</div><p class="cw-tip" style="margin:0">' + esc(res.summary || '') + ' Tap a number in the passage to see why.</p></div></div>';
+  } else out += '<div class="sy-instr">' + esc(p.instr || X.home.instr) + '</div>';
+  out += '<div class="cw-card pr-text">' + prTextHtml(kind, p, res) + '</div>';
+  if (!res && kind === "edit") {
+    out += '<div class="cw-card"><div class="cw-h">Your corrections</div><div class="pr-list">' + p.items.map(function(it) {
+      var v = (X.answers || {})[it.n] || "";
+      return '<label class="pr-row"><span class="pr-num">' + it.n + '</span><span class="pr-wrong">' + esc(it.wrong) + '</span><span class="pr-arrow">→</span><input class="pr-in wide" data-prn="' + it.n + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Correct word for ' + esc(it.wrong) + '"></label>';
+    }).join("") + '</div></div>';
+  }
+  if (!res) {
+    out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="prMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button>' +
+      '<p class="cw-tip" id="prNote">' + (X.busy ? 'Checking every answer… (about 15 seconds)' : X.confirm || 'Check your spelling: a misspelt word gets no mark.') + '</p></div>';
+    return out;
+  }
+  // marked: every answer explained, then tips
+  out += '<div class="cw-h" style="margin:16px 2px 6px">🔍 Every answer</div>' + res.results.map(function(r) {
+    var it = p.items.filter(function(x) { return x.n === r.n; })[0] || {};
+    return '<div class="cw-card pr-x ' + (r.ok ? 'ok' : 'no') + '" id="prx' + r.n + '"><div class="sy-qh"><span class="sy-qn">' + r.n + '</span><span class="sy-chip ' + (r.ok ? 'full' : 'zero') + '">' + (r.ok ? '1 / 1' : '0 / 1') + '</span>' +
+      (!r.ok && r.type ? '<span class="sy-type t-' + esc(r.type) + '">' + esc({ spelling: 'Spelling', grammar: 'Grammar', meaning: 'Meaning', blank: 'Blank' }[r.type] || r.type) + '</span>' : '') + '</div>' +
+      '<div class="pr-line">' + (kind === "edit" ? 'Underlined: <s>' + esc(it.wrong || r.wrong) + '</s> · ' : '') + 'You wrote: ' + (r.ans ? (r.ok ? '<b class="g">' + esc(r.ans) + '</b>' : '<s class="r">' + esc(r.ans) + '</s>') : '<i>nothing</i>') +
+      (r.ok ? '' : ' → <b class="g">' + esc(r.key) + '</b>') + (r.also && r.also.length ? ' <span class="pr-also">(also right: ' + esc(r.also.join(', ')) + ')</span>' : '') + (r.alt ? ' <span class="pr-also">(not in the answer key, but correct)</span>' : '') + '</div>' +
+      (r.why ? '<p class="sy-fb" style="margin-top:6px">' + esc(r.why) + '</p>' : '') + '</div>';
+  }).join("");
+  if (res.lessons && res.lessons.length) out += '<div class="sy-lesson" style="margin-top:14px"><div class="sy-lh">📘 Tips for next time</div>' + res.lessons.map(function(l) { return '<p><b>' + esc(l.title) + '.</b> ' + esc(l.tip) + '</p>'; }).join("") + '</div>';
+  out += '<div class="sy-btns" style="margin-top:14px"><button class="btn soft big" data-pragain>↻ Try this passage again</button><button class="btn primary big" data-prstart="">➡️ Another passage</button><button class="btn soft big" data-prfresh>✨ New passage</button></div>';
+  return out;
+}
+function prStart(kind, opts, btn) {
+  var X = PR[kind]; if (btn) { btn.disabled = true; btn.textContent = opts.fresh ? "Writing a new passage…" : "Opening…"; }
+  X.err = "";
+  prCall(kind, "start", Object.assign({ seen: prSeen(kind) }, opts)).then(function(p) { X.p = p; X.answers = {}; X.res = null; X.confirm = ""; if (S.tab === "compo") renderPrac(kind); })
+    .catch(function(e) { X.err = e.message; X.p = null; if (S.tab === "compo") renderPrac(kind); });
+}
+function prMarkAll(kind) {
+  var X = PR[kind], p = X.p;
+  document.querySelectorAll(".pr-in").forEach(function(el) { X.answers[el.getAttribute("data-prn")] = el.value; });
+  var blank = p.items.filter(function(it) { return !String(X.answers[it.n] || "").trim(); }).length;
+  if (!X.confirm && blank) { X.confirm = blank + " " + PR_INFO[kind].unit + (blank > 1 ? "s are" : " is") + " still empty. Tap again to mark anyway."; var y = window.scrollY; renderPrac(kind); window.scrollTo(0, y); return; }
+  X.busy = true; X.err = ""; var y2 = window.scrollY; renderPrac(kind); window.scrollTo(0, y2);
+  prCall(kind, "mark", { id: p.id, answers: X.answers }).then(function(r) {
+    X.busy = false; X.res = r; X.confirm = "";
+    var s = prSeen(kind); if (s.indexOf(p.id) < 0) s.push(p.id); store("prseen_" + kind, JSON.stringify(s.slice(-50)));
+    var b = prBest(kind); if (!/^pa_/.test(p.id) && (b[p.id] == null || r.total > b[p.id])) { b[p.id] = r.total; store("prbest_" + kind, JSON.stringify(b)); }
+    if (S.tab === "compo") renderPrac(kind);
+  }).catch(function(e) { X.busy = false; X.err = e.message; if (S.tab === "compo") { var y3 = window.scrollY; renderPrac(kind); window.scrollTo(0, y3); } });
+}
+document.addEventListener("click", function(e) {
+  var kind = S.tab === "compo" ? enSec() : ""; if (kind !== "cloze" && kind !== "edit") return;
+  var t, X = PR[kind];
+  if ((t = e.target.closest("[data-prstart]"))) { prStart(kind, t.getAttribute("data-prstart") ? { id: t.getAttribute("data-prstart") } : {}, t); return; }
+  if ((t = e.target.closest("[data-prfresh]"))) { prStart(kind, { fresh: true }, t); return; }
+  if ((t = e.target.closest("[data-prback]"))) { X.p = null; X.res = null; X.err = ""; renderPrac(kind); return; }
+  if ((t = e.target.closest("[data-pragain]"))) { X.res = null; X.answers = {}; X.confirm = ""; renderPrac(kind); return; }
+  if ((t = e.target.closest("#prMark"))) { prMarkAll(kind); return; }
+  if ((t = e.target.closest("[data-prgo]"))) { var el = $("prx" + t.getAttribute("data-prgo")); if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.add("flash"); setTimeout(function() { el.classList.remove("flash"); }, 1400); } return; }
+});
+document.addEventListener("input", function(e) {
+  var el = e.target; if (!el || !el.classList || !el.classList.contains("pr-in")) return;
+  var kind = enSec(), X = PR[kind]; if (!X) return;
+  X.answers = X.answers || {}; X.answers[el.getAttribute("data-prn")] = el.value;
+  if (X.confirm) { X.confirm = ""; var b = $("prMark"); if (b) b.textContent = "✅ Mark my answers"; var n = $("prNote"); if (n) n.textContent = "Check your spelling: a misspelt word gets no mark."; }
+});
+document.addEventListener("keydown", function(e) {   // Enter in a blank jumps to the next blank
+  var el = e.target; if (e.key !== "Enter" || !el || !el.classList || !el.classList.contains("pr-in")) return;
+  e.preventDefault(); var all = [].slice.call(document.querySelectorAll(".pr-in")), i = all.indexOf(el); if (all[i + 1]) all[i + 1].focus(); else el.blur();
+});
+
+// ---------------- 🔁 Synthesis & Transformation (English tab) ----------------
+var SY = { home: null, set: null, answers: {}, res: null, extra: {}, busy: false, err: "" };
+function synCall(action, d) {
+  return call("synApi", action, JSON.stringify(d || {})).then(function(r) { var o = JSON.parse(r); if (!o.ok) throw new Error(o.error); return o.data; });
+}
+function synSeen() { try { return JSON.parse(store("synseen") || "[]"); } catch (e) { return []; } }
+function synMarkSeen(ids) { var s = synSeen(); ids.forEach(function(i) { if (/^b_/.test(i) && s.indexOf(i) < 0) s.push(i); }); store("synseen", JSON.stringify(s.slice(-200))); }
+/** The answer line, with the given word(s) shown and the blanks drawn. */
+function synTpl(tpl) { return esc(tpl).split("___").join('<span class="sy-blank"></span>'); }
+/** The pupil's sentence with each mistake struck through and the fix written beside it. */
+function synAnno(text, marks) {
+  text = String(text || ""); var low = text.toLowerCase(), h = "", cur = 0;
+  (marks || []).map(function(m) { return { m: m, at: low.indexOf(String(m.wrong).toLowerCase()) }; }).filter(function(x) { return x.at >= 0; })
+    .sort(function(a, b) { return a.at - b.at; }).forEach(function(x) {
+      if (x.at < cur) return;
+      h += esc(text.slice(cur, x.at)) + '<s class="sy-w t-' + esc(x.m.type.replace(/\s/g, "")) + '">' + esc(text.substr(x.at, x.m.wrong.length)) + '</s><ins class="sy-f">' + esc(x.m.fix) + '</ins>';
+      cur = x.at + x.m.wrong.length;
+    });
+  return h + esc(text.slice(cur));
+}
+var SY_TYPE = { spelling: "Spelling", grammar: "Grammar", punctuation: "Punctuation", structure: "Structure", meaning: "Meaning", "given word": "Given word" };
+function renderSyn() {
+  window.scrollTo(0, 0);
+  var top = '<div id="enSwWrap">' + enSwitch() + '</div>';
+  if (!SY.home) {
+    $("app").innerHTML = top + SPIN;
+    synCall("home").then(function(h) { SY.home = h; if (S.tab === "compo" && enSec() === "syn") renderSyn(); })
+      .catch(function(e) { if (S.tab === "compo") $("app").innerHTML = top + '<div class="msg err">' + esc(e.message) + '</div>'; });
+    return;
+  }
+  $("app").innerHTML = top + (SY.res ? synResultView() : SY.set ? synSetView() : synHomeView()) + '<div style="height:24px"></div>';
+  document.querySelectorAll(".sy-ans").forEach(synGrow);
+}
+function synGrow(el) { el.style.height = "auto"; el.style.height = (el.scrollHeight + 2) + "px"; }
+function synHomeView() {
+  var h = SY.home, seen = synSeen();
+  var out = '<div class="cheer-hero"><span class="hand">PSLE Paper 2</span><h1>Synthesis &amp; Transformation</h1><p>Join or change sentences using the word given, without changing the meaning. Each question is worth 2 marks.</p></div>';
+  if (SY.err) out += '<div class="msg err">' + esc(SY.err) + '</div>';
+  out += '<div class="cw-card sy-start"><div><div class="cw-h">📝 PSLE practice set</div><p class="cw-tip" style="margin:0">5 questions, each a different type, like the real paper. 10 marks.</p></div>' +
+    '<div class="sy-btns"><button class="btn primary big" data-systart="">Start</button><button class="btn soft" data-syfresh="">✨ 5 new questions</button></div></div>';
+  if (h.sets && h.sets.length) out += '<div class="cw-h" style="margin:18px 2px 8px">📌 From ' + esc(h.teacher || "your teacher") + '</div><div class="sy-sets">' +
+    h.sets.map(function(st) { return '<button class="sy-set" data-syset="' + esc(st.id) + '"><b>' + esc(st.title) + '</b><span>' + st.n + ' question' + (st.n === 1 ? '' : 's') + ' · ' + (st.n * 2) + ' marks</span></button>'; }).join("") + '</div>';
+  out += '<div class="cw-h" style="margin:18px 2px 8px">🧩 Practise one type</div><div class="sy-topics">' + h.topics.map(function(t) {
+    return '<div class="sy-topic"><button class="sy-tmain" data-systart="' + t.k + '"><span class="sy-te">' + t.e + '</span><b>' + esc(t.t) + '</b><span class="sy-tn">' + t.n + ' questions</span></button>' +
+      '<button class="sy-tnew" data-syfresh="' + t.k + '" aria-label="5 new questions: ' + esc(t.t) + '">✨ New</button></div>';
+  }).join("") + '</div>';
+  out += '<p class="cw-tip" style="margin-top:14px">' + esc(h.instr) + '</p>';
+  return out;
+}
+function synQCard(q, i, val, idp) {
+  return '<div class="cw-card sy-q"><div class="sy-qh"><span class="sy-qn">Q' + i + '</span><span class="sy-m">2 marks</span></div>' +
+    '<div class="sy-given">' + esc(q.s) + '</div><div class="sy-use">Use: <b>' + esc(q.w) + '</b></div>' +
+    '<div class="sy-line" aria-hidden="true">' + synTpl(q.tpl) + '</div>' +
+    '<label class="sr" for="' + idp + esc(q.id) + '">Your answer to question ' + i + '</label>' +
+    '<textarea class="sy-ans" rows="2" id="' + idp + esc(q.id) + '" data-syq="' + esc(q.id) + '" placeholder="Write the whole sentence here" autocapitalize="sentences" spellcheck="false">' + esc(val || "") + '</textarea></div>';
+}
+function synSetView() {
+  var st = SY.set, out = '<div class="sy-top"><button class="btn soft" data-syback>‹ All practice</button></div>' +
+    '<div class="cheer-hero" style="padding-top:8px"><span class="hand">' + esc(st.label || "Practice") + '</span><h1>' + st.questions.length + ' question' + (st.questions.length === 1 ? '' : 's') + '</h1></div>' +
+    '<div class="sy-instr">' + esc(st.instr) + '</div>';
+  out += st.questions.map(function(q, i) { return synQCard(q, i + 1, SY.answers[q.id], "syA_"); }).join("");
+  out += (SY.err ? '<div class="msg err">' + esc(SY.err) + '</div>' : '') +
+    '<div class="cw-card sy-go"><button class="btn primary big" id="syMark"' + (SY.busy ? ' disabled' : '') + '>' + (SY.busy ? 'Marking…' : SY.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button>' +
+    '<p class="cw-tip" id="syNote">' + (SY.busy ? 'Checking every sentence… (about 15 seconds)' : SY.confirm || 'Check spelling, capital letters and the full stop before you mark.') + '</p></div>';
+  return out;
+}
+function synResOne(q, r, i, ans, extraKey) {
+  var cls = r.awarded === 2 ? "full" : r.awarded === 1 ? "part" : "zero";
+  var out = '<div class="cw-card sy-r ' + cls + '"><div class="sy-qh"><span class="sy-qn">Q' + i + '</span><span class="sy-chip ' + cls + '">' + r.awarded + ' / 2</span>' +
+    '<span class="sy-verdict">' + (r.awarded === 2 ? '🌟 Correct!' : r.awarded === 1 ? '👍 Nearly there' : '💪 Let’s fix this') + '</span></div>' +
+    '<div class="sy-given">' + esc(q.s) + '</div><div class="sy-use">Use: <b>' + esc(q.w) + '</b></div>' +
+    '<div class="sy-yours"><span>Your answer</span>' + (String(ans || "").trim() ? '<div class="sy-sent">' + synAnno(ans, r.marks) + '</div>' : '<div class="sy-sent blank">No answer</div>') + '</div>';
+  if (r.marks && r.marks.length) out += '<ul class="sy-errs">' + r.marks.map(function(m) {
+    return '<li><span class="sy-type t-' + esc(m.type.replace(/\s/g, "")) + '">' + esc(SY_TYPE[m.type] || m.type) + '</span><span><s>' + esc(m.wrong) + '</s> → <b>' + esc(m.fix) + '</b>' + (m.rule ? '<br><span class="sy-rule">' + esc(m.rule) + '</span>' : '') + '</span></li>';
+  }).join("") + '</ul>';
+  if (r.feedback) out += '<p class="sy-fb">' + esc(r.feedback) + '</p>';
+  if (r.awarded < 2) {
+    if (r.corrected) out += '<div class="sy-ok"><b>✅ ' + (r.awarded === 1 ? 'Your sentence, corrected' : 'A correct answer') + '</b>' + esc(r.corrected) + '</div>';
+    if (r.model && r.model !== r.corrected) out += '<div class="sy-ok alt"><b>Another correct answer</b>' + esc(r.model) + '</div>';
+    if (r.lesson) {
+      var L = r.lesson;
+      out += '<div class="sy-lesson"><div class="sy-lh">📘 Learn it: ' + esc(L.title || "") + '</div>' + (L.rule ? '<p>' + esc(L.rule) + '</p>' : '') +
+        (L.pattern ? '<div class="sy-pat">' + esc(L.pattern) + '</div>' : '') +
+        (L.example && L.example.given ? '<div class="sy-ex"><span>Example</span>' + esc(L.example.given) + '<br><b>→ ' + esc(L.example.answer) + '</b></div>' : '') +
+        (L.watch ? '<p class="sy-watch">⚠️ ' + esc(L.watch) + '</p>' : '') + '</div>';
+    }
+    out += synExtraHtml(q, extraKey);
+  }
+  return out + '</div>';
+}
+/** "Try a similar one": a new question of the same type, answered and marked right here. */
+function synExtraHtml(q, key) {
+  var x = SY.extra[key];
+  if (!x) return '<button class="btn soft" data-sysim="' + esc(key) + '" data-syqid="' + esc(q.id) + '">🔁 Try a similar one</button>';
+  if (x.busy && !x.q) return '<p class="cw-tip">Finding a similar question…</p>';
+  if (x.err && !x.q) return '<div class="msg err">' + esc(x.err) + '</div>';
+  if (x.res) return '<div class="sy-sim">' + synResOne(x.q, x.res, "★", x.ans, key + "+") + '</div>';
+  return '<div class="sy-sim"><div class="sy-simh">🔁 Try a similar one</div>' + synQCard(x.q, "★", x.ans, "syX_") +
+    (x.err ? '<div class="msg err">' + esc(x.err) + '</div>' : '') + '<button class="btn primary" data-symark1="' + esc(key) + '"' + (x.busy ? ' disabled' : '') + '>' + (x.busy ? 'Marking…' : '✅ Mark this one') + '</button></div>';
+}
+function synResultView() {
+  var st = SY.set, R = SY.res, pc = R.max ? Math.round(100 * R.total / R.max) : 0;
+  var cheer = pc >= 85 ? "🌟 Superb sentences!" : pc >= 70 ? "🎉 Great work!" : pc >= 50 ? "👍 Good effort!" : "💪 Keep practising, you’re learning!";
+  var out = '<div class="sy-top"><button class="btn soft" data-syback>‹ All practice</button></div>' +
+    '<div class="cw-card sy-score"><div class="sy-ring" style="--p:' + pc + '"><span>' + R.total + '<small>/ ' + R.max + '</small></span></div><div><div class="cw-h">' + cheer + '</div><p class="cw-tip" style="margin:0">' + esc(st.label || "") + '. Read each correction, then tap <b>Try a similar one</b> for any question you didn’t get full marks for.</p></div></div>';
+  out += st.questions.map(function(q, i) { var r = R.results.filter(function(x) { return x.id === q.id; })[0]; return r ? synResOne(q, r, i + 1, SY.answers[q.id], q.id) : ''; }).join("");
+  out += '<div class="sy-btns" style="margin-top:14px"><button class="btn primary big" data-syagain>🔁 Another set</button><button class="btn soft big" data-syback>All practice</button></div>';
+  return out;
+}
+function synStart(opts, btn) {
+  if (btn) { btn.disabled = true; btn.textContent = opts.fresh ? "Writing new questions…" : "Getting questions…"; }
+  SY.err = ""; SY.last = opts;
+  synCall("start", Object.assign({ seen: synSeen() }, opts)).then(function(st) {
+    SY.set = st; SY.answers = {}; SY.res = null; SY.extra = {}; SY.confirm = ""; if (S.tab === "compo") renderSyn();
+  }).catch(function(e) { SY.err = e.message; SY.set = null; if (S.tab === "compo") renderSyn(); });
+}
+function synMarkAll() {
+  var st = SY.set; document.querySelectorAll('.sy-ans[id^="syA_"]').forEach(function(t) { SY.answers[t.getAttribute("data-syq")] = t.value; });
+  var blank = st.questions.filter(function(q) { return !String(SY.answers[q.id] || "").trim(); }).length;
+  if (!SY.confirm && blank) { SY.confirm = blank + " question" + (blank > 1 ? "s are" : " is") + " still blank. Tap again to mark anyway."; renderSyn(); var b = $("syMark"); if (b) b.scrollIntoView({ block: "center" }); return; }
+  SY.busy = true; SY.err = ""; renderSyn(); var b2 = $("syMark"); if (b2) b2.scrollIntoView({ block: "center" });
+  synCall("mark", { questions: st.questions, answers: SY.answers, label: st.label }).then(function(r) {
+    SY.busy = false; SY.res = r; SY.confirm = ""; synMarkSeen(st.questions.map(function(q) { return q.id; })); if (S.tab === "compo") renderSyn();
+  }).catch(function(e) { SY.busy = false; SY.err = e.message; if (S.tab === "compo") renderSyn(); });
+}
+function synRedrawKeepScroll() { var y = window.scrollY; renderSyn(); window.scrollTo(0, y); }
+document.addEventListener("click", function(e) {
+  if (S.tab !== "compo" || enSec() !== "syn") return;
+  var t;
+  if ((t = e.target.closest("[data-systart]"))) { synStart({ topic: t.getAttribute("data-systart") }, t); return; }
+  if ((t = e.target.closest("[data-syfresh]"))) { synStart({ topic: t.getAttribute("data-syfresh"), fresh: true }, t); return; }
+  if ((t = e.target.closest("[data-syset]"))) { synStart({ set: t.getAttribute("data-syset") }, t); return; }
+  if ((t = e.target.closest("[data-syback]"))) { SY.set = null; SY.res = null; SY.extra = {}; SY.err = ""; renderSyn(); return; }
+  if ((t = e.target.closest("[data-syagain]"))) { synStart(SY.last || { topic: "" }, t); return; }
+  if ((t = e.target.closest("#syMark"))) { synMarkAll(); return; }
+  if ((t = e.target.closest("[data-sysim]"))) {
+    var key = t.getAttribute("data-sysim"), qid = t.getAttribute("data-syqid"), x = SY.extra[key] = { busy: true };
+    synRedrawKeepScroll();
+    synCall("similar", { id: qid, seen: synSeen() }).then(function(q) { x.busy = false; x.q = q; synRedrawKeepScroll(); var el = document.querySelector('[data-syq="' + q.id + '"]'); if (el) { el.scrollIntoView({ block: "center" }); el.focus(); } })
+      .catch(function(er) { x.busy = false; x.err = er.message; synRedrawKeepScroll(); });
+    return;
+  }
+  if ((t = e.target.closest("[data-symark1]"))) {
+    var k2 = t.getAttribute("data-symark1"), xx = SY.extra[k2]; if (!xx || !xx.q) return;
+    var ta = document.querySelector('[data-syq="' + xx.q.id + '"]'); xx.ans = ta ? ta.value : xx.ans;
+    if (!String(xx.ans || "").trim()) { xx.err = "Write your sentence first."; synRedrawKeepScroll(); return; }
+    xx.busy = true; xx.err = ""; synRedrawKeepScroll();
+    synCall("mark", { questions: [xx.q], answers: (function() { var o = {}; o[xx.q.id] = xx.ans; return o; })(), label: "Similar question" }).then(function(r) { xx.busy = false; xx.res = r.results[0]; synMarkSeen([xx.q.id]); synRedrawKeepScroll(); })
+      .catch(function(er) { xx.busy = false; xx.err = er.message; synRedrawKeepScroll(); });
+    return;
+  }
+});
+document.addEventListener("input", function(e) {
+  var el = e.target; if (!el || !el.classList || !el.classList.contains("sy-ans")) return;
+  synGrow(el);
+  var id = el.getAttribute("data-syq");
+  if (/^syA_/.test(el.id)) { SY.answers[id] = el.value; if (SY.confirm) { SY.confirm = ""; var b = $("syMark"); if (b) b.textContent = "✅ Mark my answers"; var n = $("syNote"); if (n) n.textContent = "Check spelling, capital letters and the full stop before you mark."; } }
+  else { Object.keys(SY.extra).forEach(function(k) { var x = SY.extra[k]; if (x.q && x.q.id === id) x.ans = el.value; }); }
+});
+
+// ---------------- 🧠 Maths Buddy (Math Assistant): any P1–P6 question, CPA, key questions and hints, never the answer straight away ----------------
+var MB = { q: "", level: "", photo: null, plan: null, stage: "in", si: 0, tries: 0, fb: null, hint: false, done: false, busy: false, status: "", chat: [], asking: false, log: [], checking: false, finalSay: "", req: null, mine: null };
+/** Reads a number the way pupils write it: 60, 1,250, $4.50, 3/4, 1 1/2, 12 cm. */
+function mbNum(v) {
+  var raw = String(v == null ? "" : v).trim(), mx = raw.match(/^(\d+)\s+(\d+)\s*\/\s*(\d+)/);
+  if (mx && Number(mx[3])) return Number(mx[1]) + Number(mx[2]) / Number(mx[3]);
+  var s = raw.replace(/[,$\s]/g, "").replace(/(cm²|cm2|m²|cm³|cm|m|km|kg|g|ml|l|min|h|s|°|%|units?)+$/i, "");
+  var m = s.match(/^(-?\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)$/); if (m && Number(m[2])) return Number(m[1]) / Number(m[2]);
+  if (s !== "" && isFinite(Number(s))) return Number(s);
+  // words around the number ("180 marbles", "Ali has $45", "It is 3/4 of the cake"): use it if there is exactly one number
+  var all = raw.match(/\d+\s+\d+\s*\/\s*\d+|\d[\d,]*(?:\.\d+)?(?:\s*\/\s*\d+)?/g);
+  if (all && all.length === 1 && all[0] !== raw) return mbNum(all[0].replace(/\s*\/\s*/, "/"));
+  return null;
+}
+function mbSame(a, b) { return a != null && b != null && Math.abs(a - b) <= 1e-6 * Math.max(1, Math.abs(b)); }
+/** 🔊 Read it aloud (the device's own voice). */
+function mbSay(text) {
+  try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(String(text || "")); u.lang = "en-GB"; u.rate = .9;
+    var v = (speechSynthesis.getVoices() || []).filter(function(x) { return /^en-(GB|SG)/i.test(x.lang); })[0]; if (v) u.voice = v; speechSynthesis.speak(u); } catch (e) { flash("Sound isn’t available on this device.", true); }
+}
+var MB_REC = null;
+function mbCanListen() { return !!(window.SpeechRecognition || window.webkitSpeechRecognition); }
+/** 🎤 Speak instead of typing: the words go into the box with this id. */
+function mbListen(id, btn) {
+  var R = window.SpeechRecognition || window.webkitSpeechRecognition, box = $(id);
+  if (!R || !box) { flash("Tap the microphone on your keyboard to speak.", true); return; }
+  if (MB_REC) { try { MB_REC.stop(); } catch (e) {} return; }
+  var rec = new R(); MB_REC = rec; rec.lang = "en-SG"; rec.interimResults = true; rec.maxAlternatives = 1;
+  var start = box.value ? box.value.replace(/\s*$/, " ") : "";
+  btn.classList.add("on"); btn.setAttribute("aria-pressed", "true"); var lab = btn.querySelector(".t"); if (lab) lab.textContent = "Listening…";
+  rec.onresult = function(ev) { var t = ""; for (var i = 0; i < ev.results.length; i++) t += ev.results[i][0].transcript; box.value = start + t; box.dispatchEvent(new Event("input", { bubbles: true })); };
+  rec.onerror = function(ev) { if (ev.error === "not-allowed" || ev.error === "service-not-allowed") flash("Allow the microphone for this page, or tap the microphone on your keyboard.", true); };
+  rec.onend = function() { MB_REC = null; btn.classList.remove("on"); btn.setAttribute("aria-pressed", "false"); if (lab) lab.textContent = "Speak"; };
+  try { rec.start(); } catch (e) { MB_REC = null; btn.classList.remove("on"); }
+}
+function mbMic(id) { return mbCanListen() ? '<button class="mb-mic" data-mbmic="' + id + '" aria-pressed="false" aria-label="Speak instead of typing"><span>🎤</span><span class="t">Speak</span></button>' : ''; }
+function mbSpeak(text) { return 'speechSynthesis' in window ? '<button class="mb-say" data-mbsay="' + esc(text) + '" aria-label="Read it aloud">🔊</button>' : ''; }
+function mbStageBar(st) {
+  var L = [["c", "🧱", "Imagine"], ["p", "🖼️", "Draw"], ["s", "🔢", "Work it out"], ["d", "✅", "Answer"]], order = { c: 0, p: 1, s: 2, d: 3 }, cur = MB.done ? 3 : order[st];
+  return '<div class="mb-stages">' + L.map(function(x, i) { return '<span class="' + (i < cur ? 'done' : i === cur ? 'on' : '') + '">' + x[1] + ' ' + x[2] + '</span>'; }).join('<i>›</i>') + '</div>';
+}
+function mbBuddy(html, say) { return '<div class="mb-bub"><span class="mb-av" aria-hidden="true">🦉</span><div class="mb-bt">' + html + (say ? ' ' + mbSpeak(say) : '') + '</div></div>'; }
+function maBuddyView() {
+  if (!MB.level) MB.level = store("malevel") || (/^P\d/.test(S.home.className || "") ? S.home.className.slice(0, 2) : "P5");
+  if (!MB.plan) return mbInputView();
+  var P = MB.plan, out = '<div class="cw-card mb-q"><div class="mb-qh"><span class="ma-tag">' + esc(P.level) + (P.topic ? ' · ' + esc(P.topic) : '') + '</span>' + mbSpeak(P.question) + '<button class="btn soft" data-mbnew style="margin-left:auto">✏️ New question</button></div>' +
+    '<div class="mb-qt">' + esc(P.question) + '</div></div>';
+  if (!P.isMaths) return out + mbBuddy("Hmm, that doesn’t look like a maths question I can help with. Try a clearer photo, or type or say the question.") ;
+  out += mbStageBar(MB.stage);
+  // 🧱 Concrete
+  out += '<div class="cw-card mb-stage"><div class="cw-h">🧱 Imagine it</div>' + mbBuddy(esc(P.concrete || "Picture the story in your head. Who is in it, and what happens?"), P.concrete) +
+    (MB.stage === "c" ? '<button class="btn primary big" data-mbnext="p" style="margin-top:10px;width:100%">Next: draw it 🖼️</button>' : '') + '</div>';
+  if (MB.stage === "c") return out + mbAskBox();
+  // 🖼️ Pictorial
+  var pm = P.pictorial || {};
+  out += '<div class="cw-card mb-stage"><div class="cw-h">🖼️ Draw it</div>' + mbBuddy(esc(pm.say || "Draw a picture or a model of the story before you work it out."), pm.say) +
+    (pm.models && pm.models.length ? '<div class="ma-svg" style="margin-top:10px">' + maSvg({ models: pm.models }) + '</div>' : '<p class="cw-tip">✏️ Draw it on paper first.</p>') +
+    (MB.stage === "p" ? '<button class="btn primary big" data-mbnext="s" style="margin-top:10px;width:100%">Next: let’s work it out 🔢</button>' : '') + '</div>';
+  if (MB.stage === "p") return out + mbAskBox();
+  // 🔢 key questions, one at a time
+  var steps = P.steps.concat(P.final ? [P.final] : []);
+  out += '<div class="cw-card mb-stage"><div class="cw-h">🔢 Work it out</div>';
+  MB.log.forEach(function(l, i) { var st = steps[i]; out += '<div class="mb-done"><b>' + esc(st.ask) + '</b><span>' + (l.shown ? '👀 ' : '✅ ') + esc(l.ans) + (st.unit && String(l.ans).toLowerCase().indexOf(st.unit.toLowerCase()) < 0 ? ' ' + esc(st.unit) : '') + '</span>' + (l.say ? '<em>' + esc(l.say) + '</em>' : '') + '</div>'; });
+  if (!MB.done) {
+    var st = steps[MB.si], isFinal = P.final && MB.si === steps.length - 1;
+    out += mbBuddy('<span class="mb-n">' + (isFinal ? '🏁 Last question' : 'Question ' + (MB.si + 1) + ' of ' + steps.length) + '</span>' + esc(st.ask), st.ask);
+    if (st.kind === "choice") out += '<div class="mb-ch">' + st.choices.map(function(c, i) { return '<button class="ma-gb' + (MB.fb && MB.fb.pick === i ? ' no' : '') + '" data-mbpick="' + i + '">' + esc(c) + '</button>'; }).join("") + '</div>';
+    else out += '<div class="mb-ans"><input id="mbA" ' + (st.kind === "number" ? 'inputmode="decimal" placeholder="Your answer"' : 'placeholder="Tell Buddy what you think"') + ' autocomplete="off">' + (st.unit ? '<span class="mb-unit">' + esc(st.unit) + '</span>' : '') + mbMic("mbA") +
+      '<button class="btn primary" data-mbcheck' + (MB.checking ? ' disabled' : '') + '>' + (MB.checking ? '…' : st.kind === "number" ? 'Check' : 'Done') + '</button></div>';
+    if (MB.fb && !MB.fb.ok) out += '<p class="ma-gf no">🤔 Not quite. ' + esc(st.hint || "Read the question again and look at your model.") + '</p>' + (MB.tries >= 2 && !isFinal ? '<button class="btn soft" data-mbshow>👀 Show me this step</button>' : '') +
+      (MB.tries >= 2 && isFinal ? '<p class="cw-tip">Buddy won’t give the final answer. Look back at your model and the steps above, or ask ' + esc(S.home.teacher || 'your teacher') + '.</p>' : '');
+    else if (MB.hint) out += '<p class="ma-gf no">💡 ' + esc(st.hint || "Look at your model. What do you know already?") + '</p>';
+    else out += '<button class="btn soft" data-mbhint style="margin-top:8px">💡 Give me a hint</button>';
+    out += mbReqHtml(isFinal && MB.tries >= 2) + '</div>' + mbAskBox();
+    return out;
+  }
+  out += '</div>';
+  // ✅ solved by the pupil: now the full worked solution
+  out += '<div class="cw-card mb-win"><div class="cw-h">🎉 ' + (MB.log.some(function(l) { return l.shown; }) ? 'You got there!' : 'You solved it yourself!') + '</div>' +
+    (MB.finalSay ? '<div class="ma-ans">✅ ' + esc(MB.finalSay) + '</div>' : '') +
+    '<p class="cw-tip">Now write the working neatly in your book, the way your teacher shows you, and check your answer makes sense.</p>' +
+    '<div class="sy-btns" style="margin-top:12px"><button class="btn primary big" data-mbnew>✏️ Ask another question</button><button class="btn soft big" data-mbagain>↻ Try this one again</button></div></div>';
+  return out + mbAskBox();
+}
+function mbInputView() {
+  var lv = ["P1", "P2", "P3", "P4", "P5", "P6"];
+  return '<div class="cheer-hero"><span class="hand">Stuck on a sum?</span><h1>Maths Buddy</h1><p>Show me your question. I won’t just tell you the answer: I’ll help you think it through, one step at a time.</p></div>' +
+    '<div class="cw-card"><div class="cw-step"><b>1</b>Your level</div><div class="mb-lv">' + lv.map(function(l) { return '<button class="' + (l === MB.level ? 'on' : '') + '" data-mblv="' + l + '">' + l + '</button>'; }).join("") + '</div>' +
+    '<div class="cw-step" style="margin-top:14px"><b>2</b>Your question</div>' +
+    (MB.photo ? '<div class="ma-photo"><img src="' + (MB.photo.thumb || '') + '" alt="Your question photo"><button class="x" data-mbphoto="x" aria-label="Remove the photo">✕</button></div>'
+      : '<div class="cw-add"><label class="btn primary big" for="mbCam">📷 Take a photo</label><label class="btn soft big" for="mbPick">🖼️ Choose a photo</label></div>') +
+    '<input type="file" id="mbCam" accept="image/*" capture="environment" class="hidden" data-mbfile><input type="file" id="mbPick" accept="image/*,.heic,.heif" class="hidden" data-mbfile>' +
+    '<label for="mbQ" style="display:block;font-weight:700;margin:12px 0 6px">' + (MB.photo ? 'Anything to add? (optional)' : 'Or type or say your question') + '</label>' +
+    '<div class="mb-qbox"><textarea class="cw-q" id="mbQ" rows="3" placeholder="e.g. Ali has 3 times as many marbles as Ben. They have 240 marbles altogether. How many marbles does Ali have?">' + esc(MB.q) + '</textarea>' + mbMic("mbQ") + '</div>' +
+    '<button class="btn primary big" id="mbGo" style="width:100%;margin-top:12px"' + (MB.busy ? ' disabled' : '') + '>' + (MB.busy ? 'Reading your question…' : '🦉 Help me solve it') + '</button>' +
+    (MB.status ? '<p class="cw-tip" style="margin-top:10px">' + esc(MB.status) + '</p>' : '') +
+    (mbCanListen() ? '' : '<p class="cw-tip">To speak instead of typing, tap the microphone on your keyboard.</p>') + '</div>' + mbMineHtml();
+}
+/** 🙋 Ask the teacher for the answer, with a reason (they decide whether to send it). */
+function mbReqHtml(open) {
+  var T = esc(S.home.teacher || 'your teacher'), q = MB.req || {};
+  if (q.sent) return '<p class="ma-gf ok" style="margin-top:10px">📨 ' + esc(q.sent) + '</p>';
+  if (!open && !q.open) return '<button class="mb-link" data-mbreq>🙋 Still stuck? Ask ' + T + ' for the answer</button>';
+  return '<div class="mb-req"><b>🙋 Ask ' + T + ' for the answer</b><p class="cw-tip" style="margin:2px 0 6px">Tell ' + T + ' why you need it. ' + T + ' will decide and reply here.</p>' +
+    '<div class="mb-qbox"><textarea class="cw-q" id="mbWhy" rows="2" placeholder="e.g. I tried the hints but I don’t understand how to find 1 unit.">' + esc(q.why || '') + '</textarea>' + mbMic("mbWhy") + '</div>' +
+    (q.err ? '<p class="ma-gf no">' + esc(q.err) + '</p>' : '') + '<button class="btn primary" data-mbreqsend style="margin-top:8px"' + (q.busy ? ' disabled' : '') + '>' + (q.busy ? 'Sending…' : '📨 Send to ' + T) + '</button></div>';
+}
+function mbMineHtml() {
+  if (MB.mine === null) { MB.mine = []; call("mathMine").then(function(l) { MB.mine = l || []; if (S.tab === "math" && MA.sec === "buddy" && !MB.plan && MB.mine.length) mbRender(true); }).catch(function() {}); return ''; }
+  if (!MB.mine.length) return '';
+  var T = esc(S.home.teacher || 'your teacher');
+  return '<div class="cw-h" style="margin:18px 2px 8px">📬 Your questions to ' + T + '</div>' + MB.mine.map(function(x) {
+    return '<div class="cw-card mb-mine"><div class="mb-qh"><span class="ma-tag">' + (x.status === "Waiting" ? '⏳ Waiting for ' + T : x.status === "Sent" ? '✅ ' + T + ' sent the answer' : '💬 ' + T + ' replied') + '</span></div>' +
+      '<div class="mb-qt">' + esc(x.question) + '</div>' + (x.note ? mbBuddy('<b>' + T + ':</b> ' + esc(x.note)) : '') +
+      (x.status === "Sent" ? (x.answer ? '<div class="ma-ans" style="margin-top:8px">✅ ' + esc(x.answer) + '</div>' : '') + (x.solution && x.solution.length ? '<ol class="ma-steps">' + x.solution.map(function(l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol>' : '') + (x.check ? '<p class="cw-tip">🔍 ' + esc(x.check) + '</p>' : '') : '') + '</div>';
+  }).join('');
+}
+/** 🙋 Ask Buddy anything while working. */
+function mbAskBox() {
+  var out = '<div class="cw-card mb-askc"><div class="cw-h">🙋 Ask Buddy</div><p class="cw-tip" style="margin:0 0 8px">Stuck on a word or a step? Ask me. I’ll explain, but I won’t give away the answer.</p>';
+  MB.chat.forEach(function(c) { out += c.me ? '<div class="mb-me">' + esc(c.t) + '</div>' : mbBuddy(esc(c.t), c.t); });
+  return out + '<div class="mb-ans"><input id="mbAsk" placeholder="e.g. What does ‘altogether’ mean?" autocomplete="off">' + mbMic("mbAsk") + '<button class="btn soft" data-mbask' + (MB.asking ? ' disabled' : '') + '>' + (MB.asking ? '…' : 'Ask') + '</button></div></div>';
+}
+function mbRender(keepY) { var y = window.scrollY; renderMath(); if (keepY) window.scrollTo(0, y); }
+function mbSolve() {
+  var q = ($("mbQ") || {}).value || ""; MB.q = q; store("malevel", MB.level);
+  if (!MB.photo && !q.trim()) { MB.status = "Take a photo of the question, or type or say it first."; mbRender(true); return; }
+  MB.busy = true; MB.status = "Buddy is reading your question… (about 20 seconds)"; mbRender(true);
+  call("mathSolve", { question: q, level: MB.level, image: MB.photo ? { mime: MB.photo.mime, data: MB.photo.data } : null }).then(function(r) {
+    MB.busy = false; MB.status = ""; MB.plan = r; MB.stage = "c"; MB.si = 0; MB.tries = 0; MB.fb = null; MB.hint = false; MB.done = false; MB.log = []; MB.chat = []; MB.finalSay = ""; MB.req = null;
+    if (S.tab === "math") { renderMath(); window.scrollTo(0, 0); }
+  }).catch(function(e) { MB.busy = false; MB.status = e.message || String(e); if (S.tab === "math") mbRender(true); });
+}
+function mbSteps() { var P = MB.plan; return P.steps.concat(P.final ? [P.final] : []); }
+function mbAdvance(ans, shown, say) {
+  var steps = mbSteps(); MB.log.push({ ans: ans, shown: !!shown, say: say || "" }); MB.si++; MB.tries = 0; MB.fb = null; MB.hint = false;
+  if (MB.si >= steps.length) MB.done = true;
+  mbRender(true); var c = document.querySelector(MB.done ? ".mb-win" : "#mbA, .mb-ch"); if (c && c.scrollIntoView) c.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+function mbCheck(pick) {
+  var st = mbSteps()[MB.si]; if (!st || MB.checking) return;
+  var v = st.kind === "choice" ? st.choices[pick] : (($("mbA") || {}).value || "");
+  if (st.kind !== "choice" && !v.trim()) { flash(st.kind === "number" ? "Type or say your answer first." : "Tell Buddy what you think first.", true); return; }
+  if (st.kind === "number" && mbNum(v) == null) { flash("Write your answer as a number, like 60 or 3/4.", true); return; }
+  MB.checking = true; MB.typed = v; mbRender(true);
+  call("mathCheck", { id: MB.plan.id, si: MB.si, answer: v }).then(function(r) {
+    MB.checking = false;
+    if (r.ok) { if (r.done) MB.finalSay = r.say || ""; return mbAdvance(String(v).trim(), false, r.say); }
+    MB.tries++; MB.fb = { ok: false, pick: st.kind === "choice" ? pick : null }; mbRender(true); var a = $("mbA"); if (a) { a.value = MB.typed || ""; a.focus(); }
+  }).catch(function(e) { MB.checking = false; flash(e.message || String(e), true); mbRender(true); });
+}
+function mbAsk() {
+  var q = ($("mbAsk") || {}).value || ""; if (!q.trim() || MB.asking) return;
+  var P = MB.plan || {}, st = P.steps ? mbSteps()[MB.si] : null;
+  MB.chat.push({ me: true, t: q.trim() }); MB.asking = true; mbRender(true);
+  call("mathAsk", { ask: q.trim(), context: { question: P.question || MB.q, level: (P.level || MB.level), step: st ? st.ask : (MB.stage === "c" ? "imagining the story" : "drawing the model") } }).then(function(r) {
+    MB.asking = false; MB.chat.push({ t: r.reply }); if (S.tab === "math") { mbRender(true); var b = document.querySelectorAll(".mb-askc .mb-bub"); if (b.length) b[b.length - 1].scrollIntoView({ block: "center" }); }
+  }).catch(function(e) { MB.asking = false; MB.chat.push({ t: e.message || "Sorry, I couldn’t answer just now. Try again in a moment." }); if (S.tab === "math") mbRender(true); });
+}
+document.addEventListener("click", function(e) {
+  if (S.tab !== "math" || MA.sec !== "buddy") return;
+  var t;
+  if ((t = e.target.closest("[data-mbmic]"))) { mbListen(t.getAttribute("data-mbmic"), t); return; }
+  if ((t = e.target.closest("[data-mbsay]"))) { mbSay(t.getAttribute("data-mbsay")); return; }
+  if ((t = e.target.closest("[data-mblv]"))) { MB.q = ($("mbQ") || {}).value || MB.q; MB.level = t.getAttribute("data-mblv"); mbRender(true); return; }
+  if ((t = e.target.closest("#mbGo"))) { mbSolve(); return; }
+  if ((t = e.target.closest("[data-mbphoto]"))) { MB.q = ($("mbQ") || {}).value || MB.q; MB.photo = null; mbRender(true); return; }
+  if ((t = e.target.closest("[data-mbnext]"))) { MB.stage = t.getAttribute("data-mbnext"); mbRender(true); var cs = document.querySelectorAll(".mb-stage"); if (cs.length) cs[cs.length - 1].scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+  if ((t = e.target.closest("[data-mbhint]"))) { MB.hint = true; mbRender(true); return; }
+  if ((t = e.target.closest("[data-mbpick]"))) { mbCheck(Number(t.getAttribute("data-mbpick"))); return; }
+  if ((t = e.target.closest("[data-mbcheck]"))) { mbCheck(); return; }
+  if ((t = e.target.closest("[data-mbshow]"))) { t.disabled = true; call("mathCheck", { id: MB.plan.id, si: MB.si, show: true }).then(function(r) { mbAdvance(r.ans, true, r.say); }).catch(function(er) { flash(er.message || String(er), true); t.disabled = false; }); return; }
+  if ((t = e.target.closest("[data-mbreq]"))) { MB.req = { open: true }; mbRender(true); var w = $("mbWhy"); if (w) w.focus(); return; }
+  if ((t = e.target.closest("[data-mbreqsend]"))) {
+    var R = MB.req = MB.req || { open: true }; R.why = ($("mbWhy") || {}).value || ""; R.err = "";
+    if (R.why.trim().length < 8) { R.err = "Tell " + (S.home.teacher || "your teacher") + " why you need the answer (a sentence or two)."; mbRender(true); return; }
+    R.busy = true; mbRender(true);
+    call("mathRequest", { id: MB.plan.id, reason: R.why }).then(function(x) { R.busy = false; R.sent = x.msg; MB.mine = null; mbRender(true); }).catch(function(er) { R.busy = false; R.err = er.message || String(er); mbRender(true); });
+    return;
+  }
+  if ((t = e.target.closest("[data-mbask]"))) { mbAsk(); return; }
+  if ((t = e.target.closest("[data-mbnew]"))) { MB.plan = null; MB.photo = null; MB.q = ""; MB.chat = []; MB.status = ""; renderMath(); window.scrollTo(0, 0); return; }
+  if ((t = e.target.closest("[data-mbagain]"))) { MB.stage = "c"; MB.si = 0; MB.tries = 0; MB.fb = null; MB.hint = false; MB.done = false; MB.log = []; MB.finalSay = ""; MB.req = null; renderMath(); window.scrollTo(0, 0); return; }
+});
+document.addEventListener("keydown", function(e) {
+  if (e.key !== "Enter" || S.tab !== "math" || MA.sec !== "buddy" || !e.target) return;
+  if (e.target.id === "mbA") { e.preventDefault(); mbCheck(); } else if (e.target.id === "mbAsk") { e.preventDefault(); mbAsk(); }
+});
+document.addEventListener("input", function(e) { if (e.target && e.target.id === "mbQ") MB.q = e.target.value; });
+document.addEventListener("change", function(e) {
+  if (!e.target || !e.target.hasAttribute || !e.target.hasAttribute("data-mbfile")) return;
+  var f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f) return;
+  MB.q = ($("mbQ") || {}).value || MB.q;
+  cwPrepare(f).then(function(p) { MB.photo = p; MB.status = ""; if (S.tab === "math") mbRender(true); }).catch(function(err) { MB.status = err.message; if (S.tab === "math") mbRender(true); });
+});
+
 // ---------------- 🧮 Math Assistant (sections: 📊 Model drawing; add more to MA_SECTIONS) ----------------
-var MA_SECTIONS = [{ k: "model", t: "📊 Model drawing" }];
-var MA = { sec: "model", model: null, shown: 1, photo: null, q: "", level: "", busy: false, status: "", revealed: false };
+var MA_SECTIONS = [{ k: "buddy", t: '<span class="i">🦉</span> <span>Maths Buddy</span>' }, { k: "model", t: '<span class="i">📊</span> <span>Model drawing</span>' }, { k: "koobits", t: '<span class="i">🎮</span> <span>KooBits</span>' }];
+var KOOBITS_URL = "https://member.koobits.com/";
+var MA = { sec: "buddy", model: null, shown: 1, photo: null, q: "", level: "", busy: false, status: "", revealed: false, g: 0, tries: 0, fb: null };
 var MA_SAMPLE = { sample: true, question: "Ali had 3 times as many stickers as Ben. Together they had 240 stickers. How many stickers did Ali have?", heuristic: "Part-whole (units)",
-  models: [{ title: "", bars: [{ name: "Ali", parts: [{ value: 3, divisions: 3, label: "", kind: "known" }], right: "" }, { name: "Ben", parts: [{ value: 1, divisions: 1, label: "", kind: "known" }], right: "" }], total: { label: "240", from: 0, to: 1 } }],
-  steps: ["Ali has 3 times as many as Ben, so draw 1 unit for Ben and 3 equal units for Ali.", "Together they have 240, so put a bracket around both bars: 4 units = 240.", "1 unit = 240 ÷ 4 = 60.", "Ali has 3 units: 3 × 60 = 180."],
+  models: [{ title: "", bars: [{ name: "Ali", parts: [{ value: 3, divisions: 3, label: "", kind: "known" }], right: "?" }, { name: "Ben", parts: [{ value: 1, divisions: 1, label: "", kind: "known" }], right: "" }], total: { label: "240", from: 0, to: 1 } }],
+  guide: [
+    { ask: "Who are the bars about?", choices: ["Ali and Ben", "Ali and the stickers", "Ben only"], correct: 0, hint: "Look for the people in the story. Each person gets a bar.", why: "Ali and Ben each get a bar." },
+    { ask: "How do the bars compare?", choices: ["Ben's bar is 3 times as long as Ali's", "Ali's bar is 3 times as long as Ben's", "They are the same length"], correct: 1, hint: "Read again: who has 3 times as many?", why: "Ali has 3 times as many, so Ali has 3 units and Ben has 1." },
+    { ask: "Where does 240 go?", choices: ["On Ben's bar", "On Ali's bar", "Around both bars together"], correct: 2, hint: "240 is how many they had together.", why: "240 is the total, so it goes on a bracket around both bars." },
+    { ask: "What do we need to find?", choices: ["How many stickers Ben had", "How many stickers Ali had", "How many stickers they had together"], correct: 1, hint: "Read the question sentence at the end.", why: "The question asks for Ali's stickers, so the ? goes on Ali's bar." }],
+  steps: ["Count the units. How many units are there altogether?", "All the units together stand for 240. How can you find what 1 unit stands for?", "Ali has 3 units. How can you use 1 unit to find Ali's stickers?"],
   answer: "Ali had 180 stickers." };
 function renderMath() {
   $("topTitle").textContent = "Math Assistant";
-  if (!MA.model) { try { MA.model = JSON.parse(store("mamodel") || "null"); } catch (e) {} if (!MA.model) MA.model = MA_SAMPLE; MA.shown = 1; }
+  if (!MA.model) { try { MA.model = JSON.parse(store("mamodel") || "null"); } catch (e) {} if (!MA.model) MA.model = MA_SAMPLE; MA.shown = 0; MA.g = 0; MA.tries = 0; MA.fb = null; }
   if (!MA.level) MA.level = store("malevel") || (/^P\d/.test(S.home.className || "") ? S.home.className.slice(0, 2) : "P5");
-  var sw = MA_SECTIONS.length > 1 ? '<div class="en-sw" role="tablist" aria-label="Math Assistant">' + MA_SECTIONS.map(function(x) { return '<button role="tab" aria-selected="' + (MA.sec === x.k) + '" class="' + (MA.sec === x.k ? 'on' : '') + '" data-masec="' + x.k + '">' + x.t + '</button>'; }).join("") + '</div>' : '';
+  var sw = MA_SECTIONS.length > 1 ? '<div class="en-sw' + (MA_SECTIONS.length >= 3 ? ' n3' : '') + '" role="tablist" aria-label="Math Assistant">' + MA_SECTIONS.map(function(x) { return '<button role="tab" aria-selected="' + (MA.sec === x.k) + '" class="' + (MA.sec === x.k ? 'on' : '') + '" data-masec="' + x.k + '">' + x.t + '</button>'; }).join("") + '</div>' : '';
+  if (MA.sec === "buddy") { $("app").innerHTML = sw + maBuddyView() + '<div style="height:24px"></div>'; return; }
+  if (MA.sec === "koobits") { $("app").innerHTML = sw + maKoobitsView(); maKbFit(); return; }
   $("app").innerHTML = sw + maModelView() + '<div style="height:24px"></div>';
 }
 function maModelView() {
   var m = MA.model, lv = ["P1", "P2", "P3", "P4", "P5", "P6"];
-  var steps = m.steps || [], done = MA.shown >= steps.length;
+  var steps = m.steps || [], done = MA.shown >= steps.length, guide = m.guide || [], lvl = guide.length === 4 ? MA.g : 4, built = lvl >= 4;
   return '<div class="cheer-hero"><span class="hand">Draw the model</span><h1>Model drawing</h1><p>Take a photo of a word problem, or type it. I’ll draw the bar model, then show you how to use it one step at a time.</p></div>' +
     '<div class="ma-cols"><div class="cw-card ma-in"><div class="cw-step"><b>1</b>Your question</div>' +
     (MA.photo ? '<div class="ma-photo"><img src="' + (MA.photo.thumb || '') + '" alt="Your question photo"><button class="x" data-maphoto="x" aria-label="Remove the photo">✕</button></div>'
@@ -2126,46 +2731,96 @@ function maModelView() {
     (MA.status ? '<p class="cw-tip" style="margin-top:10px">' + esc(MA.status) + '</p>' : '') + '</div>' +
     '<div class="cw-card ma-out" id="maOut"><div class="cw-step"><b>2</b>' + (m.sample ? 'Here’s an example' : 'The model') + '</div>' +
     '<div class="ma-qtext"><b>Question:</b> ' + esc(m.question || '') + (m.heuristic ? ' <span class="ma-tag">' + esc(m.heuristic) + '</span>' : '') + '</div>' +
-    (m.models && m.models.length ? '<div class="ma-svg">' + maSvg(m) + '</div>' : '<div class="msg err">That doesn’t look like a maths word problem. Try a clearer photo, or type the question.</div>') +
-    (steps.length ? '<div class="cw-h" style="margin-top:12px">💭 Think it through</div><ol class="ma-steps">' + steps.slice(0, MA.shown).map(function(x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ol>' : '') +
-    '<div class="ma-row" style="margin-top:12px">' + (done ? '' : '<button class="btn primary" id="maNext">👣 Show next step</button>') +
-    (m.answer ? (MA.revealed ? '<div class="ma-ans">✅ ' + esc(m.answer) + '</div>' : '<button class="btn soft" id="maAns">Show answer</button>') : '') + '</div>' +
+    (m.models && m.models.length ? '<div class="ma-svg">' + (lvl > 0 ? maSvg(m, lvl) : '<div class="ma-empty">✏️ Answer the questions below to build the model, one piece at a time.</div>') + '</div>' + maGuideHtml(m, lvl)
+      : '<div class="msg err">That doesn’t look like a maths word problem. Try a clearer photo, or type the question.</div>') +
+    (built && m.models && m.models.length ? (steps.length ? '<div class="cw-h" style="margin-top:12px">💡 Hints</div><p class="cw-tip" style="margin-top:0">Work it out on paper. Open a hint only when you need it.</p>' +
+        (MA.shown ? '<ol class="ma-steps">' + steps.slice(0, MA.shown).map(function(x) { return '<li>' + esc(x) + '</li>'; }).join("") + '</ol>' : '') : '') +
+      '<div class="ma-row" style="margin-top:12px">' + (done ? '' : '<button class="btn primary" id="maNext">💡 ' + (MA.shown ? 'Next hint' : 'Show a hint') + '</button>') +
+      (m.answer && done ? (MA.revealed ? '<div class="ma-ans">✅ ' + esc(m.answer) + '</div>' : '<button class="btn soft" id="maAns">Check my answer</button>') : '') + '</div>' : '') +
     '<p class="cw-tip">Check the model matches the question. If something looks wrong, draw it your way and ask ' + esc(S.home.teacher || 'your teacher') + '.</p></div></div>';
 }
+/** 🎮 KooBits: the KooBits student login, shown inside the Hub. If KooBits doesn't allow that (or the phone blocks signing in inside it), Open KooBits opens it on its own. */
+function maKoobitsView() {
+  return '<div class="kb-bar"><div><b>KooBits</b><span>Log in with your KooBits ID and password.</span></div><a class="btn primary" href="' + KOOBITS_URL + '" target="_blank" rel="noopener">↗ Open KooBits</a></div>' +
+    '<iframe class="kb-frame" id="kbFrame" src="' + KOOBITS_URL + '" title="KooBits" allow="fullscreen; autoplay; clipboard-write" referrerpolicy="strict-origin-when-cross-origin"></iframe>' +
+    '<p class="cw-tip">If the box above stays blank or won’t let you log in, tap <b>Open KooBits</b>. Forgot your login? Ask ' + esc(S.home.teacher || 'your teacher') + '.</p>';
+}
+function maKbFit() {
+  var f = $("kbFrame"); if (!f) return;
+  var top = f.getBoundingClientRect().top, bottom = 0, t = $("tabs");
+  if (t && !t.classList.contains("hidden")) { var r = t.getBoundingClientRect(); if (r.height && r.top > window.innerHeight / 2) bottom = window.innerHeight - r.top; }
+  f.style.height = Math.max(420, Math.round(window.innerHeight - Math.max(0, top) - bottom - 54)) + "px";
+}
+window.addEventListener("resize", function() { if (S.tab === "math" && MA.sec === "koobits") maKbFit(); });
+/** "Build the model with me": one question at a time; each right answer draws more of the model. */
+function maGuideHtml(m, lvl) {
+  var g = (m.guide || [])[lvl];
+  if (!g) return (m.guide || []).length === 4 && (m.guide[3] || {}).why ? '<div class="ma-guide"><p class="ma-gf ok">✅ ' + esc(m.guide[3].why) + '</p><b>🎉 You built the model! Now use it to solve the problem.</b></div>' : '';
+  var h = '<div class="ma-guide"><div class="ma-gq"><span class="ma-gn">' + (lvl + 1) + ' of 4</span>' + esc(g.ask) + '</div><div class="ma-gc">';
+  h += g.choices.map(function(c, i) { return '<button class="ma-gb' + (MA.fb && MA.fb.pick === i ? (MA.fb.ok ? ' ok' : ' no') : '') + '" data-mag="' + i + '">' + esc(c) + '</button>'; }).join('');
+  h += '</div>';
+  if (MA.fb && !MA.fb.ok) h += '<p class="ma-gf no">🤔 ' + esc(g.hint || 'Not quite. Read the question again.') + '</p>' + (MA.tries >= 2 ? '<button class="btn soft" id="maShow">Show me</button>' : '');
+  if (lvl > 0 && !MA.fb && (m.guide[lvl - 1] || {}).why) h += '<p class="ma-gf ok">✅ ' + esc(m.guide[lvl - 1].why) + '</p>';
+  return h + '</div>';
+}
+function maGuideNext(m) { MA.g++; MA.tries = 0; MA.fb = null; renderMath(); }
 /** The bar model as a picture (same layout as Model & Disc Math Studio). */
-function maSvg(m) {
-  var FILLS = ["#DCD3FB", "#FFE0C7", "#D6F2DF"], INK = "#1E1735", MUTED = "#6B6489", ACC = "#4B2FC4";
+function maSvg(m, lvl) {
+  if (lvl == null) lvl = 4;
+  var FILLS = ["#DCD3FB", "#FFE0C7", "#D6F2DF"], INK = "#1E1735", MUTED = "#6B6489", ACC = "#4B2FC4", OFF = "#C2410C", ADD = "#1D7743";
   var narrow = window.innerWidth < 600, VW = narrow ? 420 : 640;            // phones: a narrower drawing so the labels stay readable
   var y = 10, out = "", LX = narrow ? 62 : 86, W = narrow ? 250 : 430, BH = 34, GAP = 26;
-  (m.models || []).forEach(function(mod) {
-    if (mod.title) { out += '<text x="0" y="' + (y + 14) + '" font-weight="800" font-size="14" fill="' + MUTED + '">' + esc(mod.title) + '</text>'; y += 26; }
-    var maxT = Math.max.apply(null, [1].concat(mod.bars.map(function(b) { return b.parts.reduce(function(a, p) { return a + (+p.value || 0); }, 0); })));
-    var sc = W / maxT, ys = [];
+  var mods = m.models || [], staged = mods.length > 1;
+  // one scale for every stage, so an amount that doesn't change is drawn the same length before and after
+  var maxT = 1;
+  mods.forEach(function(mod) { mod.bars.forEach(function(b) { maxT = Math.max(maxT, b.parts.reduce(function(a, p) { return a + (+p.value || 0); }, 0)); }); });
+  var sc = W / maxT;
+  mods.forEach(function(mod, mi) {
+    if (mi > 0 && staged && lvl >= 1) {   // arrow from one stage to the next
+      out += '<line x1="0" y1="' + (y - 4) + '" x2="' + VW + '" y2="' + (y - 4) + '" stroke="#DDD6F3" stroke-width="1.5" stroke-dasharray="4 5"/>';
+      out += '<path d="M' + (VW / 2) + ' ' + (y - 16) + ' v18 m-7 -7 l7 7 l7 -7" fill="none" stroke="' + ACC + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+      y += 14;
+    }
+    if (mod.title) {
+      var tw = Math.min(VW, 22 + mod.title.length * 8.2);
+      out += '<rect x="0" y="' + y + '" width="' + tw + '" height="26" rx="13" fill="' + (staged ? (mi === 0 ? "#ECE9FB" : "#FFF0DC") : "#ECE9FB") + '"/>';
+      out += '<text x="' + (tw / 2) + '" y="' + (y + 18) + '" text-anchor="middle" font-weight="800" font-size="14" fill="' + (staged && mi > 0 ? "#8A4B00" : ACC) + '">' + esc(mod.title) + '</text>';
+      var nx = tw + 10, ny = y + 18;
+      if (mod.note && nx + mod.note.length * 7 > VW) { nx = 0; ny = y + 46; y += 24; }   // long note: on its own line
+      if (mod.note && lvl >= 3) out += '<text x="' + nx + '" y="' + ny + '" font-size="13" font-weight="700" fill="' + MUTED + '">' + esc(mod.note) + '</text>';
+      y += 38;
+    } else if (mod.note && lvl >= 3) { out += '<text x="0" y="' + (y + 14) + '" font-size="13" font-weight="700" fill="' + MUTED + '">' + esc(mod.note) + '</text>'; y += 26; }
+    var ys = [];
     mod.bars.forEach(function(b, bi) {
       ys.push(y);
       out += '<text x="' + (LX - 10) + '" y="' + (y + BH / 2 + 5) + '" text-anchor="end" font-weight="800" font-size="15" fill="' + INK + '">' + esc(b.name) + '</text>';
       var x = LX;
       b.parts.forEach(function(p) {
-        var w = (+p.value || 0) * sc, kind = p.kind || "known", fill = kind === "unknown" ? "#fff" : FILLS[bi % 3];
-        out += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + BH + '" fill="' + (kind === "difference" ? "none" : fill) + '" stroke="' + INK + '" stroke-width="2"' + (kind === "difference" ? ' stroke-dasharray="6 4"' : '') + ' rx="2"/>';
+        var w = (+p.value || 0) * sc, kind = p.kind || "known";
+        if (lvl < 2) { x += w; return; }
+        var fill = kind === "unknown" || kind === "removed" ? "#fff" : kind === "added" ? "#E3F5EA" : kind === "difference" ? "none" : FILLS[bi % 3];
+        var stroke = kind === "removed" ? OFF : kind === "added" ? ADD : INK, dash = kind === "difference" || kind === "removed" || kind === "added" ? ' stroke-dasharray="6 4"' : '';
+        out += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + BH + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="2"' + dash + ' rx="2"/>';
         var n = Math.max(1, Math.min(20, +p.divisions || 1));
-        for (var k = 1; k < n; k++) out += '<line x1="' + (x + w * k / n) + '" y1="' + y + '" x2="' + (x + w * k / n) + '" y2="' + (y + BH) + '" stroke="' + INK + '" stroke-width="1.5"/>';
-        if (p.label) {
-          out += '<path d="M' + (x + 2) + ' ' + (y + BH + 4) + ' q0 6 6 6 H' + (x + w / 2 - 5) + ' l5 6 l5 -6 H' + (x + w - 8) + ' q6 0 6 -6" fill="none" stroke="' + MUTED + '" stroke-width="1.5"/>';
-          out += '<text x="' + (x + w / 2) + '" y="' + (y + BH + 30) + '" text-anchor="middle" font-size="13" font-weight="700" fill="' + INK + '">' + esc(p.label) + '</text>';
+        for (var k = 1; k < n; k++) out += '<line x1="' + (x + w * k / n) + '" y1="' + y + '" x2="' + (x + w * k / n) + '" y2="' + (y + BH) + '" stroke="' + stroke + '" stroke-width="1.5"' + dash + '/>';
+        if (kind === "removed") out += '<path d="M' + (x + 4) + ' ' + (y + 4) + ' L' + (x + w - 4) + ' ' + (y + BH - 4) + ' M' + (x + w - 4) + ' ' + (y + 4) + ' L' + (x + 4) + ' ' + (y + BH - 4) + '" stroke="' + OFF + '" stroke-width="2" stroke-linecap="round"/>';
+        if (p.label && lvl >= (kind === "unknown" || /\?/.test(p.label) ? 4 : 3)) {
+          var lc = kind === "removed" ? OFF : kind === "added" ? ADD : INK;
+          out += '<path d="M' + (x + 2) + ' ' + (y + BH + 4) + ' q0 6 6 6 H' + (x + w / 2 - 5) + ' l5 6 l5 -6 H' + (x + w - 8) + ' q6 0 6 -6" fill="none" stroke="' + (kind === "removed" || kind === "added" ? lc : MUTED) + '" stroke-width="1.5"/>';
+          out += '<text x="' + (x + w / 2) + '" y="' + (y + BH + 30) + '" text-anchor="middle" font-size="13" font-weight="700" fill="' + lc + '">' + esc(p.label) + '</text>';
         }
         x += w;
       });
-      if (b.right) out += '<text x="' + (x + 8) + '" y="' + (y + BH / 2 + 5) + '" font-size="14" font-weight="800" fill="' + ACC + '">' + esc(b.right) + '</text>';
+      if (b.right && lvl >= 4) out += '<text x="' + (x + 8) + '" y="' + (y + BH / 2 + 5) + '" font-size="14" font-weight="800" fill="' + ACC + '">' + esc(b.right) + '</text>';
       y += BH + (b.parts.some(function(p) { return p.label; }) ? 40 : GAP);
     });
-    if (mod.total && mod.total.label && ys.length) {
+    if (mod.total && mod.total.label && ys.length && lvl >= (/\?/.test(mod.total.label) ? 4 : 3)) {
       var f = Math.max(0, Math.min(ys.length - 1, mod.total.from || 0)), t = Math.max(0, Math.min(ys.length - 1, mod.total.to == null ? ys.length - 1 : mod.total.to));
       var y1 = ys[f], y2 = ys[t] + BH, bx = LX + W + (narrow ? 40 : 52);
       out += '<path d="M' + (bx - 10) + ' ' + y1 + ' q8 0 8 8 V' + ((y1 + y2) / 2 - 6) + ' l8 6 l-8 6 V' + (y2 - 8) + ' q0 8 -8 8" fill="none" stroke="' + MUTED + '" stroke-width="2"/>';
       out += '<text x="' + (bx + 12) + '" y="' + ((y1 + y2) / 2 + 5) + '" font-size="15" font-weight="800" fill="' + INK + '">' + esc(mod.total.label) + '</text>';
     }
-    y += 12;
+    y += staged ? 22 : 12;
   });
   return '<svg viewBox="0 0 ' + VW + ' ' + Math.max(80, y) + '" width="100%" role="img" aria-label="Bar model" style="font-family:inherit">' + out + '</svg>';
 }
@@ -2175,7 +2830,7 @@ function maDraw(btn) {
   if (!MA.photo && !q.trim()) { MA.status = "Take a photo of the question, or type it, first."; renderMath(); return; }
   MA.busy = true; MA.status = "Reading the question and drawing the model… (about 20 seconds)"; renderMath();
   call("mathModel", { question: q, level: MA.level, image: MA.photo ? { mime: MA.photo.mime, data: MA.photo.data } : null }).then(function(r) {
-    MA.busy = false; MA.model = r; MA.shown = 1; MA.revealed = false;
+    MA.busy = false; MA.model = r; MA.shown = 0; MA.revealed = false; MA.g = 0; MA.tries = 0; MA.fb = null;
     MA.status = r.models && r.models.length ? "Model drawn. Check it matches the question, then step through it." : "";
     try { store("mamodel", JSON.stringify(r)); } catch (e) {}
     if (S.tab === "math") { renderMath(); var o = $("maOut"); if (o && o.scrollIntoView) o.scrollIntoView({ behavior: "smooth", block: "start" }); }
@@ -2186,6 +2841,14 @@ document.addEventListener("click", function(e) {
   var t;
   if ((t = e.target.closest("#maGo"))) { maDraw(t); return; }
   if ((t = e.target.closest("#maNext"))) { MA.shown++; renderMath(); return; }
+  if ((t = e.target.closest("[data-mag]"))) {
+    var gm = MA.model, gq = gm && (gm.guide || [])[MA.g]; if (!gq) return;
+    var pick = Number(t.getAttribute("data-mag"));
+    if (pick === gq.correct) { maGuideNext(gm); var sv = document.querySelector(".ma-svg"); if (sv && sv.scrollIntoView) sv.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
+    else { MA.tries++; MA.fb = { pick: pick, ok: false }; renderMath(); }
+    return;
+  }
+  if ((t = e.target.closest("#maShow"))) { maGuideNext(MA.model); return; }
   if ((t = e.target.closest("#maAns"))) { MA.revealed = true; renderMath(); return; }
   if ((t = e.target.closest("[data-maphoto]"))) { MA.q = ($("maQ") || {}).value || MA.q; MA.photo = null; renderMath(); return; }
   if ((t = e.target.closest("[data-masec]"))) { MA.sec = t.getAttribute("data-masec"); renderMath(); return; }
