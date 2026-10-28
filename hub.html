@@ -510,9 +510,11 @@
   .sy-f { text-decoration:none; color:#B4232F; font-family:var(--head); font-weight:800; font-size:.9em; background:#FDECEE; border-radius:5px; padding:0 5px; margin-left:3px; }
   .sy-errs { list-style:none; margin:10px 0 0; padding:0; display:grid; gap:8px; }
   .sy-errs li { display:flex; gap:8px; align-items:flex-start; font-size:14.5px; line-height:1.45; } .sy-errs s { color:var(--muted); }
+  .pr-tests { font-size:12px; font-weight:800; color:var(--muted); background:var(--violet-1,#F1EEFB); border-radius:999px; padding:3px 9px; margin-left:auto; }
   .sy-type { flex:none; font-size:11.5px; font-weight:800; border-radius:999px; padding:3px 8px; background:#EEE; color:#333; margin-top:1px; }
   .sy-type.t-spelling { background:#E4EDFC; color:#1C5FB8; } .sy-type.t-grammar { background:#F1E8FD; color:#6D3FC0; } .sy-type.t-punctuation { background:#FFF0D6; color:#8A4B00; }
-  .sy-type.t-structure, .sy-type.t-meaning, .sy-type.t-givenword { background:var(--danger-soft); color:var(--danger); }
+  .sy-type.t-structure, .sy-type.t-meaning, .sy-type.t-givenword, .sy-type.t-tense, .sy-type.t-wordform, .sy-type.t-missingword { background:var(--danger-soft); color:var(--danger); }
+  .sy-major { margin:8px 0 0; padding:8px 10px; border-radius:10px; background:var(--danger-soft); color:var(--danger); font-weight:700; font-size:13.5px; line-height:1.4; }
   .sy-rule { color:var(--muted); font-size:13.5px; }
   .sy-fb { margin:10px 0 0; font-size:15px; line-height:1.5; }
   .sy-ok { margin-top:10px; background:var(--ok-soft); border-radius:12px; padding:10px 12px; font-family:'Literata',Georgia,serif; font-size:16px; line-height:1.55; }
@@ -542,9 +544,6 @@
   .ma-steps li::marker { color:var(--violet-2); font-weight:800; }
   .ma-ans { background:var(--ok-soft); color:var(--ok); font-weight:800; border-radius:12px; padding:10px 14px; }
   /* 🦉 Maths Buddy */
-  .mb-lv { display:grid; grid-template-columns:repeat(6,1fr); gap:6px; }
-  .mb-lv button { min-height:46px; border-radius:12px; border:2px solid var(--line); background:#fff; font:800 16px/1 var(--head); color:var(--muted); cursor:pointer; }
-  .mb-lv button.on { background:var(--violet-2); border-color:var(--violet-2); color:#fff; }
   .mb-qbox { display:grid; gap:8px; } .mb-qbox .mb-mic { justify-self:start; }
   .mb-mic { display:inline-flex; align-items:center; gap:6px; min-height:46px; padding:0 14px; border-radius:999px; border:2px solid #CBBEF6; background:#F4F1FF; color:var(--violet-2); font:800 15px/1 var(--head); cursor:pointer; flex:none; }
   .mb-mic.on { background:#E8453C; border-color:#E8453C; color:#fff; animation:mbpulse 1.2s infinite; }
@@ -2289,7 +2288,7 @@ function prPassageView(kind) {
   out += '<div class="cw-h" style="margin:16px 2px 6px">🔍 Every answer</div>' + res.results.map(function(r) {
     var it = p.items.filter(function(x) { return x.n === r.n; })[0] || {};
     return '<div class="cw-card pr-x ' + (r.ok ? 'ok' : 'no') + '" id="prx' + r.n + '"><div class="sy-qh"><span class="sy-qn">' + r.n + '</span><span class="sy-chip ' + (r.ok ? 'full' : 'zero') + '">' + (r.ok ? '1 / 1' : '0 / 1') + '</span>' +
-      (!r.ok && r.type ? '<span class="sy-type t-' + esc(r.type) + '">' + esc({ spelling: 'Spelling', grammar: 'Grammar', meaning: 'Meaning', blank: 'Blank' }[r.type] || r.type) + '</span>' : '') + '</div>' +
+      (r.c ? '<span class="pr-tests">Tests: ' + esc(r.c) + '</span>' : '') + (!r.ok && r.type ? '<span class="sy-type t-' + esc(r.type) + '">' + esc({ spelling: 'Spelling', grammar: 'Grammar', meaning: 'Meaning', blank: 'Blank' }[r.type] || r.type) + '</span>' : '') + '</div>' +
       '<div class="pr-line">' + (kind === "edit" ? 'Underlined: <s>' + esc(it.wrong || r.wrong) + '</s> · ' : '') + 'You wrote: ' + (r.ans ? (r.ok ? '<b class="g">' + esc(r.ans) + '</b>' : '<s class="r">' + esc(r.ans) + '</s>') : '<i>nothing</i>') +
       (r.ok ? '' : ' → <b class="g">' + esc(r.key) + '</b>') + (r.also && r.also.length ? ' <span class="pr-also">(also right: ' + esc(r.also.join(', ')) + ')</span>' : '') + (r.alt ? ' <span class="pr-also">(not in the answer key, but correct)</span>' : '') + '</div>' +
       (r.why ? '<p class="sy-fb" style="margin-top:6px">' + esc(r.why) + '</p>' : '') + '</div>';
@@ -2358,7 +2357,8 @@ function synAnno(text, marks) {
     });
   return h + esc(text.slice(cur));
 }
-var SY_TYPE = { spelling: "Spelling", grammar: "Grammar", punctuation: "Punctuation", structure: "Structure", meaning: "Meaning", "given word": "Given word" };
+var SY_TYPE = { spelling: "Spelling", grammar: "Grammar", punctuation: "Punctuation", structure: "Structure", meaning: "Meaning", "given word": "Given word", tense: "Tense", "word form": "Word form", "missing word": "Missing word" };
+var SY_MAJOR = { tense: "a tense error", "word form": "a word form error", "missing word": "a missing key word", meaning: "a change in meaning", "given word": "the given word not used correctly", structure: "a wrong sentence structure" };
 function renderSyn() {
   window.scrollTo(0, 0);
   var top = '<div id="enSwWrap">' + enSwitch() + '</div>';
@@ -2413,6 +2413,7 @@ function synResOne(q, r, i, ans, extraKey) {
   if (r.marks && r.marks.length) out += '<ul class="sy-errs">' + r.marks.map(function(m) {
     return '<li><span class="sy-type t-' + esc(m.type.replace(/\s/g, "")) + '">' + esc(SY_TYPE[m.type] || m.type) + '</span><span><s>' + esc(m.wrong) + '</s> → <b>' + esc(m.fix) + '</b>' + (m.rule ? '<br><span class="sy-rule">' + esc(m.rule) + '</span>' : '') + '</span></li>';
   }).join("") + '</ul>';
+  if (r.major && r.major.length && String(ans || "").trim()) out += '<div class="sy-major">❗ Major error: ' + esc(r.major.map(function(x) { return SY_MAJOR[x] || x; }).join(", ")) + '. A major error means 0 marks, even if the rest is right.</div>';
   if (r.feedback) out += '<p class="sy-fb">' + esc(r.feedback) + '</p>';
   if (r.awarded < 2) {
     if (r.corrected) out += '<div class="sy-ok"><b>✅ ' + (r.awarded === 1 ? 'Your sentence, corrected' : 'A correct answer') + '</b>' + esc(r.corrected) + '</div>';
@@ -2499,7 +2500,7 @@ document.addEventListener("input", function(e) {
 });
 
 // ---------------- 🧠 Maths Buddy (Math Assistant): any P1–P6 question, CPA, key questions and hints, never the answer straight away ----------------
-var MB = { q: "", level: "", photo: null, plan: null, stage: "in", si: 0, tries: 0, fb: null, hint: false, done: false, busy: false, status: "", chat: [], asking: false, log: [], checking: false, finalSay: "", req: null, mine: null };
+var MB = { q: "", photo: null, plan: null, stage: "in", si: 0, tries: 0, fb: null, hint: false, done: false, busy: false, status: "", chat: [], asking: false, log: [], checking: false, finalSay: "", req: null, mine: null };
 /** Reads a number the way pupils write it: 60, 1,250, $4.50, 3/4, 1 1/2, 12 cm. */
 function mbNum(v) {
   var raw = String(v == null ? "" : v).trim(), mx = raw.match(/^(\d+)\s+(\d+)\s*\/\s*(\d+)/);
@@ -2541,7 +2542,6 @@ function mbStageBar(st) {
 }
 function mbBuddy(html, say) { return '<div class="mb-bub"><span class="mb-av" aria-hidden="true">🦉</span><div class="mb-bt">' + html + (say ? ' ' + mbSpeak(say) : '') + '</div></div>'; }
 function maBuddyView() {
-  if (!MB.level) MB.level = store("malevel") || (/^P\d/.test(S.home.className || "") ? S.home.className.slice(0, 2) : "P5");
   if (!MB.plan) return mbInputView();
   var P = MB.plan, out = '<div class="cw-card mb-q"><div class="mb-qh"><span class="ma-tag">' + esc(P.level) + (P.topic ? ' · ' + esc(P.topic) : '') + '</span>' + mbSpeak(P.question) + '<button class="btn soft" data-mbnew style="margin-left:auto">✏️ New question</button></div>' +
     '<div class="mb-qt">' + esc(P.question) + '</div></div>';
@@ -2583,10 +2583,8 @@ function maBuddyView() {
   return out + mbAskBox();
 }
 function mbInputView() {
-  var lv = ["P1", "P2", "P3", "P4", "P5", "P6"];
   return '<div class="cheer-hero"><span class="hand">Stuck on a sum?</span><h1>Maths Buddy</h1><p>Show me your question. I won’t just tell you the answer: I’ll help you think it through, one step at a time.</p></div>' +
-    '<div class="cw-card"><div class="cw-step"><b>1</b>Your level</div><div class="mb-lv">' + lv.map(function(l) { return '<button class="' + (l === MB.level ? 'on' : '') + '" data-mblv="' + l + '">' + l + '</button>'; }).join("") + '</div>' +
-    '<div class="cw-step" style="margin-top:14px"><b>2</b>Your question</div>' +
+    '<div class="cw-card"><div class="cw-step"><b>1</b>Your question</div>' +
     (MB.photo ? '<div class="ma-photo"><img src="' + (MB.photo.thumb || '') + '" alt="Your question photo"><button class="x" data-mbphoto="x" aria-label="Remove the photo">✕</button></div>'
       : '<div class="cw-add"><label class="btn primary big" for="mbCam">📷 Take a photo</label><label class="btn soft big" for="mbPick">🖼️ Choose a photo</label></div>') +
     '<input type="file" id="mbCam" accept="image/*" capture="environment" class="hidden" data-mbfile><input type="file" id="mbPick" accept="image/*,.heic,.heif" class="hidden" data-mbfile>' +
@@ -2623,10 +2621,10 @@ function mbAskBox() {
 }
 function mbRender(keepY) { var y = window.scrollY; renderMath(); if (keepY) window.scrollTo(0, y); }
 function mbSolve() {
-  var q = ($("mbQ") || {}).value || ""; MB.q = q; store("malevel", MB.level);
+  var q = ($("mbQ") || {}).value || ""; MB.q = q;
   if (!MB.photo && !q.trim()) { MB.status = "Take a photo of the question, or type or say it first."; mbRender(true); return; }
   MB.busy = true; MB.status = "Buddy is reading your question… (about 20 seconds)"; mbRender(true);
-  call("mathSolve", { question: q, level: MB.level, image: MB.photo ? { mime: MB.photo.mime, data: MB.photo.data } : null }).then(function(r) {
+  call("mathSolve", { question: q, image: MB.photo ? { mime: MB.photo.mime, data: MB.photo.data } : null }).then(function(r) {
     MB.busy = false; MB.status = ""; MB.plan = r; MB.stage = "c"; MB.si = 0; MB.tries = 0; MB.fb = null; MB.hint = false; MB.done = false; MB.log = []; MB.chat = []; MB.finalSay = ""; MB.req = null;
     if (S.tab === "math") { renderMath(); window.scrollTo(0, 0); }
   }).catch(function(e) { MB.busy = false; MB.status = e.message || String(e); if (S.tab === "math") mbRender(true); });
@@ -2653,7 +2651,7 @@ function mbAsk() {
   var q = ($("mbAsk") || {}).value || ""; if (!q.trim() || MB.asking) return;
   var P = MB.plan || {}, st = P.steps ? mbSteps()[MB.si] : null;
   MB.chat.push({ me: true, t: q.trim() }); MB.asking = true; mbRender(true);
-  call("mathAsk", { ask: q.trim(), context: { question: P.question || MB.q, level: (P.level || MB.level), step: st ? st.ask : (MB.stage === "c" ? "imagining the story" : "drawing the model") } }).then(function(r) {
+  call("mathAsk", { ask: q.trim(), context: { question: P.question || MB.q, level: P.level, step: st ? st.ask : (MB.stage === "c" ? "imagining the story" : "drawing the model") } }).then(function(r) {
     MB.asking = false; MB.chat.push({ t: r.reply }); if (S.tab === "math") { mbRender(true); var b = document.querySelectorAll(".mb-askc .mb-bub"); if (b.length) b[b.length - 1].scrollIntoView({ block: "center" }); }
   }).catch(function(e) { MB.asking = false; MB.chat.push({ t: e.message || "Sorry, I couldn’t answer just now. Try again in a moment." }); if (S.tab === "math") mbRender(true); });
 }
@@ -2662,7 +2660,6 @@ document.addEventListener("click", function(e) {
   var t;
   if ((t = e.target.closest("[data-mbmic]"))) { mbListen(t.getAttribute("data-mbmic"), t); return; }
   if ((t = e.target.closest("[data-mbsay]"))) { mbSay(t.getAttribute("data-mbsay")); return; }
-  if ((t = e.target.closest("[data-mblv]"))) { MB.q = ($("mbQ") || {}).value || MB.q; MB.level = t.getAttribute("data-mblv"); mbRender(true); return; }
   if ((t = e.target.closest("#mbGo"))) { mbSolve(); return; }
   if ((t = e.target.closest("[data-mbphoto]"))) { MB.q = ($("mbQ") || {}).value || MB.q; MB.photo = null; mbRender(true); return; }
   if ((t = e.target.closest("[data-mbnext]"))) { MB.stage = t.getAttribute("data-mbnext"); mbRender(true); var cs = document.querySelectorAll(".mb-stage"); if (cs.length) cs[cs.length - 1].scrollIntoView({ behavior: "smooth", block: "start" }); return; }
