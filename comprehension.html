@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<!-- Comprehension: the teacher page (?page=comp) and the pupil screens the Class Hub shows in English → Comprehension. Built from the Comprehension Marker. -->
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
+<style>
+/* Layout: sticky app bar; reading view splits into passage (left, sticky) and booklet questions (right); stacks into tabs on phones. */
+:root{
+  --paper:#F4F1FD; --surface:#ffffff; --sunk:#EFEBFA; --ink:#1E1735; --muted:#5C5578; --line:#DDD6F3; --line-soft:#ECE7F8;
+  --pen:#4B2FC4; --pen-soft:#ECE9FB; --on-pen:#ffffff;
+  --clue:#0d7a6e; --clue-bg:#c6eee5;
+  --hl-y:#fde98a; --hl-g:#c3eeb5; --hl-p:#f8c8e5; --ul:#7445c2;
+  --good:#1d7743; --good-bg:#dcf2e4; --part:#965f00; --part-bg:#fbeed3; --zero:#536079; --zero-bg:#e7ecf3;
+  --f-display:"Bricolage Grotesque","Atkinson Hyperlegible",system-ui,sans-serif;
+  --f-ui:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-read:"Literata",Georgia,"Times New Roman",serif;
+  --hdr:58px; --r:10px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.5 var(--f-ui);-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.3rem;font-weight:800}
+h3{font-size:1.05rem;font-weight:600}
+p{margin:0}
+:focus-visible{outline:3px solid var(--pen);outline-offset:2px;border-radius:4px}
+[hidden]{display:none!important}
+
+/* App bar */
+.bar{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line);height:var(--hdr);
+  display:flex;align-items:center;gap:12px;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:1.05rem;white-space:nowrap}
+.brand .nib{width:28px;height:28px;border-radius:7px;background:var(--pen);display:grid;place-items:center;color:var(--on-pen);font-size:.8rem;font-family:var(--f-ui);font-weight:700}
+.bar .sp{flex:1}
+.who{font-size:.85rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:40vw}
+
+main{max-width:1280px;margin:0 auto;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));padding-block:24px 64px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.between{justify-content:space-between}
+.muted{color:var(--muted)}
+.small{font-size:.875rem}
+.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);cursor:pointer;font-weight:700;font-size:.92rem;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--sunk)}
+.btn.primary{background:var(--pen);border-color:var(--pen);color:var(--on-pen)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.small{min-height:32px;padding:0 10px;font-size:.84rem}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.warn{color:var(--part)}
+.link{background:none;border:0;padding:0;color:var(--pen);font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* Fields */
+label.f{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:.9rem;min-width:0}
+input[type=text],input[type=number],input[type=password],select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:9px 11px;min-height:42px}
+textarea{resize:vertical;line-height:1.5}
+input[type=number]{width:84px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg label{display:flex}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{padding:7px 14px;cursor:pointer;font-weight:700;font-size:.9rem}
+.seg input:checked+span{background:var(--pen);color:var(--on-pen)}
+.seg input:focus-visible+span{outline:3px solid var(--pen);outline-offset:-3px}
+
+/* Panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:.75rem;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--sunk);color:var(--muted);white-space:nowrap}
+.pill.pen{background:var(--pen-soft);color:var(--pen)}
+.pill.good{background:var(--good-bg);color:var(--good)}
+.pill.part{background:var(--part-bg);color:var(--part)}
+.pill.zero{background:var(--zero-bg);color:var(--zero)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chipbtn{min-height:34px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:.86rem;cursor:pointer}
+.chipbtn[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.asg{display:grid;grid-template-columns:minmax(110px,1fr) minmax(190px,1.4fr) auto auto;gap:8px;align-items:center}
+.asg input[type=datetime-local]{width:100%;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:8px 10px;min-height:42px}
+@media (max-width:620px){.asg{grid-template-columns:minmax(0,1fr) auto auto}.asg input[type=datetime-local]{grid-column:1 / -1;grid-row:2}}
+.missing{display:flex;flex-wrap:wrap;gap:6px}
+.missing span{background:var(--sunk);border-radius:6px;padding:4px 9px;font-size:.88rem}
+.banner{border-radius:12px;padding:12px 14px;background:var(--part-bg);color:var(--part);font-weight:700}
+.banner.calm{background:var(--sunk);color:var(--muted)}
+
+/* Lists */
+.list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;border-top:1px solid var(--line-soft)}
+.item:first-child{border-top:0}
+.item h3{margin-bottom:3px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.85rem;color:var(--muted);align-items:center}
+.score{font-family:var(--f-display);font-weight:800;font-size:1.25rem;font-variant-numeric:tabular-nums}
+@media (max-width:620px){.item{grid-template-columns:minmax(0,1fr)}}
+
+.empty{padding:28px 18px;text-align:center;color:var(--muted)}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line-soft);display:flex;justify-content:center;font-size:.88rem}
+.foot .link{color:var(--muted)}
+
+/* Reading workspace */
+.work{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:24px;align-items:start}
+.pane-passage{position:sticky;top:calc(var(--hdr) + 12px);max-height:calc(100dvh - var(--hdr) - 24px);overflow:auto;
+  background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.tabs{display:none}
+@media (max-width:860px){
+  .work{grid-template-columns:minmax(0,1fr);gap:0}
+  .pane-passage{position:static;max-height:none;overflow:visible}
+  .tabs{display:flex;position:sticky;top:var(--hdr);z-index:15;background:var(--paper);padding-block:10px;gap:8px}
+  .tabs .btn{flex:1}
+  .tabs .btn[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .work[data-tab=passage] .pane-q{display:none}
+  .work[data-tab=questions] .pane-passage{display:none}
+}
+
+.annobar{position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line-soft);padding:10px 14px;display:flex;flex-direction:column;gap:8px}
+.annobar .tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sw{min-height:34px;padding:0 11px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-weight:700;font-size:.82rem;display:inline-flex;align-items:center;gap:6px}
+.sw i{width:14px;height:14px;border-radius:3px;display:inline-block}
+.sw-y i{background:var(--hl-y)} .sw-g i{background:var(--hl-g)} .sw-p i{background:var(--hl-p)}
+.sw-u i{background:none;border-bottom:3px solid var(--ul);border-radius:0;height:10px}
+.sw-n i{background:none;border:2px solid var(--ul);border-radius:50%}
+.selhint{font-size:.8rem;color:var(--muted);min-height:1.2em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.selhint b{color:var(--ink)}
+.tgl{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--pen);margin-left:auto;cursor:pointer}
+.tgl input{accent-color:var(--pen);width:16px;height:16px}
+
+.passage{padding:18px 20px 28px;font-family:var(--f-read);font-size:1.06rem;line-height:1.8}
+.passage .p-head{margin-bottom:14px;font-family:var(--f-ui)}
+.passage .p-head h2{font-size:1.45rem;margin-top:4px}
+.para{display:grid;grid-template-columns:28px minmax(0,1fr);gap:6px;margin-bottom:14px}
+.pn{font-family:var(--f-ui);font-size:.75rem;color:var(--muted);font-weight:700;padding-top:.45em;text-align:right;font-variant-numeric:tabular-nums}
+.para p{-webkit-user-select:text;user-select:text}
+
+.mk{border-radius:3px;cursor:pointer}
+.mk.hl-y{background:var(--hl-y)} .mk.hl-g{background:var(--hl-g)} .mk.hl-p{background:var(--hl-p)}
+.mk.hl-u,.mk.hl-n{text-decoration:underline;text-decoration-color:var(--ul);text-decoration-thickness:2px;text-underline-offset:4px}
+.mk.ai{text-decoration:underline wavy;text-decoration-color:var(--pen);text-decoration-thickness:1.5px;text-underline-offset:5px;color:var(--pen)}
+.mk.clue{background:var(--clue-bg);box-shadow:0 0 0 2px var(--clue-bg);color:var(--ink)}
+.mk.clue.flash{animation:flash 1.4s ease-out 2}
+@keyframes flash{50%{box-shadow:0 0 0 6px var(--clue-bg)}}
+@media (prefers-reduced-motion:reduce){.mk.clue.flash{animation:none}}
+.mk.ne-ai::after,.mk.ne-u::after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:2px;vertical-align:super}
+.mk.ne-ai::after{background:var(--pen)}
+.mk.ne-u::after{background:var(--ul)}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--f-ui);font-size:.78rem;color:var(--muted);padding:0 20px 16px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:18px;height:10px;border-radius:2px}
+
+.sheet{position:sticky;bottom:0;z-index:6;margin:0 12px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;
+  box-shadow:0 10px 30px rgba(10,20,40,.18);display:flex;flex-direction:column;gap:8px;font-family:var(--f-ui)}
+.sheet .q{font-family:var(--f-read);font-style:italic;color:var(--muted);font-size:.92rem}
+.sheet .note{color:var(--pen);font-weight:700}
+.sheet.u .note{color:var(--ul)}
+@media (max-width:860px){
+  .sheet{position:fixed;left:0;right:0;bottom:0;margin:0;border-radius:16px 16px 0 0;z-index:30;
+    padding:14px max(16px,env(safe-area-inset-right,0px)) calc(14px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+}
+
+/* Booklet questions */
+.booklet{display:flex;flex-direction:column;gap:14px}
+.sec{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:6px 2px 0;border-bottom:2px solid var(--ink)}
+.sec h2{font-size:1.1rem}
+.qc{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.qh{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:start}
+.qn{font-family:var(--f-display);font-weight:800;font-size:1rem;min-width:30px}
+.qp{font-weight:700}
+.qm{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:700;white-space:nowrap}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:10px;align-items:start;padding:9px 11px;border:1px solid var(--line-soft);border-radius:9px;cursor:pointer}
+.opt input{margin-top:4px;accent-color:var(--pen);width:18px;height:18px}
+.opt b{font-variant-numeric:tabular-nums}
+.opt.sel{border-color:var(--pen);background:var(--pen-soft)}
+.opt.key{border-color:var(--good);background:var(--good-bg)}
+textarea.lined{border:0;border-radius:0;background:transparent;padding:0 2px;min-height:auto;
+  background-image:linear-gradient(to bottom,transparent calc(2em - 1px),var(--line) calc(2em - 1px));background-size:100% 2em;line-height:2em;
+  background-attachment:local}
+textarea.lined:focus{outline:none;background-color:var(--pen-soft)}
+.parts{display:flex;flex-direction:column;gap:10px}
+.part{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px}
+.part .pl{font-weight:700;color:var(--muted)}
+.tbl{width:100%;border-collapse:collapse;font-size:.95rem}
+.tblwrap{overflow-x:auto}
+.tbl th,.tbl td{border:1px solid var(--line);padding:8px;vertical-align:top;text-align:left}
+.tbl th{background:var(--sunk);font-size:.82rem}
+.tfseg{display:flex;gap:6px;flex-wrap:wrap}
+.tfseg label{display:flex}
+.tfseg input{position:absolute;opacity:0}
+.tfseg span{padding:5px 12px;border:1px solid var(--line);border-radius:999px;font-weight:700;font-size:.85rem;cursor:pointer}
+.tfseg input:checked+span{background:var(--pen);border-color:var(--pen);color:var(--on-pen)}
+.tfseg input:focus-visible+span{outline:3px solid var(--pen)}
+select.ord{width:72px}
+
+.ans{background:var(--sunk);border-radius:8px;padding:9px 11px;white-space:pre-wrap;font-family:var(--f-read)}
+.ans.blank{color:var(--muted);font-style:italic;font-family:var(--f-ui)}
+.ans s.gw{color:#B4232F;text-decoration-thickness:2px}
+.ans ins.gf{text-decoration:none;color:#B4232F;font-family:var(--f-ui);font-weight:700;font-size:.9em;background:#FDECEE;border-radius:4px;padding:0 4px;margin-left:3px}
+.gram{background:#FFF8E6;border-radius:8px;padding:8px 11px;font-size:.9rem}
+.gram-h{font-weight:800;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.gram-h span{font-size:.75rem;font-weight:700;background:var(--good-bg);color:var(--good);border-radius:999px;padding:1px 8px}
+.gram ul{margin:4px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+.gram s{color:var(--muted)}
+.gram .gr{display:block;color:var(--muted);font-size:.85rem}
+.res{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line);padding-top:10px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-variant-numeric:tabular-nums;padding:3px 10px;border-radius:999px;font-size:.88rem}
+.v-full{background:var(--good-bg);color:var(--good)} .v-part{background:var(--part-bg);color:var(--part)} .v-zero{background:var(--zero-bg);color:var(--zero)}
+.fb{color:var(--pen)}
+.key{font-size:.92rem;background:var(--good-bg);border-radius:8px;padding:8px 11px;white-space:pre-wrap}
+.key b{color:var(--good)}
+.teach{border-top:1px dashed var(--line);padding-top:12px;display:flex;flex-direction:column;gap:10px}
+.teach.sub{border-top:0;padding-top:4px;gap:8px}
+.teach.total{margin-top:4px}
+.teach-h{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.teach-h b{font-family:var(--f-display);font-weight:600;font-size:1rem}
+.teach.sub .teach-h b{font-size:.92rem}
+.find{background:color-mix(in srgb,var(--clue-bg) 45%,var(--surface));border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.find-h{font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;font-weight:700;color:var(--clue)}
+.quote{display:flex;flex-direction:column;gap:4px;text-align:left;background:var(--surface);color:var(--ink);border:0;border-left:3px solid var(--clue);border-radius:4px;padding:8px 11px;
+  font-family:var(--f-read);font-style:italic;font-size:.98rem;line-height:1.55;cursor:pointer;width:100%}
+.quote span{font-family:var(--f-ui);font-style:normal;font-size:.78rem;font-weight:700;color:var(--clue)}
+.quote:hover{background:var(--sunk)}
+.think{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:5px}
+.think li::marker{color:var(--clue);font-weight:700}
+.tip{font-size:.92rem;background:var(--pen-soft);border-radius:8px;padding:8px 11px}
+.tip b{color:var(--pen)}
+.clue-btn{display:inline-flex;align-items:center;gap:6px;background:var(--clue-bg);color:var(--clue);border:0;border-radius:999px;padding:5px 12px;font-weight:700;font-size:.84rem;cursor:pointer}
+.clue-btn:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--clue)}
+
+/* Results header */
+.scorecard{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:center}
+.big{font-family:var(--f-display);font-weight:800;font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums}
+.big small{font-size:1.1rem;color:var(--muted)}
+
+/* Teacher stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat .v{font-family:var(--f-display);font-weight:800;font-size:1.6rem;font-variant-numeric:tabular-nums}
+.stat .l{font-size:.8rem;color:var(--muted);font-weight:700}
+.bars{display:flex;flex-direction:column;gap:8px}
+.br{display:grid;grid-template-columns:minmax(90px,170px) minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:.88rem}
+.br .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.br .track{height:14px;background:var(--sunk);border-radius:4px;position:relative;overflow:hidden;
+  background-image:repeating-linear-gradient(to right,transparent 0 calc(25% - 1px),var(--line) calc(25% - 1px) 25%)}
+.br .fill{height:100%;border-radius:4px;background:var(--pen)}
+.br .fill.lo{background:var(--part)}
+.br .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.axis{display:grid;grid-template-columns:minmax(90px,170px) minmax(0,1fr) 64px;gap:10px;font-size:.72rem;color:var(--muted)}
+.axis div:nth-child(2){display:flex;justify-content:space-between}
+@media (max-width:620px){
+  .br,.axis{grid-template-columns:6.5rem minmax(0,1fr) 2.8rem;gap:8px}
+  .who{display:none}
+}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.table{width:100%;border-collapse:collapse;font-size:.92rem}
+.table th,.table td{padding:10px 12px;border-top:1px solid var(--line-soft);text-align:left;white-space:nowrap}
+.table th{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border-top:0}
+.table tr.click{cursor:pointer}
+.table tr.click:hover td{background:var(--sunk)}
+.num{text-align:right!important;font-variant-numeric:tabular-nums}
+.ai-box{border-left:4px solid var(--pen);background:var(--pen-soft);border-radius:0 12px 12px 0;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.ai-box h3{color:var(--pen)}
+.ai-box ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+
+/* Editor */
+.qe{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.qe .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.sub{border:1px dashed var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.found{font-size:.78rem;font-weight:700}
+.found.ok{color:var(--good)} .found.no{color:var(--part)}
+.flag{background:var(--part-bg);color:var(--part);border-radius:8px;padding:6px 10px;font-size:.85rem;font-weight:700}
+
+/* Overlays */
+#busy{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--paper) 82%,transparent);display:grid;place-items:center;padding:16px}
+.busy-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;width:min(440px,100%);display:flex;flex-direction:column;gap:12px;box-shadow:0 20px 60px rgba(10,20,40,.2)}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.steps li{display:flex;gap:10px;align-items:center;color:var(--muted)}
+.steps li:before{content:"";width:12px;height:12px;border-radius:50%;border:2px solid var(--line);flex:none}
+.steps li.on{color:var(--ink);font-weight:700}
+.steps li.on:before{border-color:var(--pen);border-top-color:transparent;animation:spin 1s linear infinite}
+.steps li.done:before{background:var(--good);border-color:var(--good)}
+@keyframes spin{to{transform:rotate(360deg)}}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;background:var(--ink);color:var(--paper);
+  padding:10px 16px;border-radius:999px;font-weight:700;font-size:.9rem;max-width:calc(100% - 32px)}
+.hero{display:flex;flex-direction:column;gap:6px;margin-bottom:6px}
+.err{background:var(--part-bg);color:var(--part);border-radius:10px;padding:10px 14px;font-weight:700}
+/* Inside the Class Hub: the Hub has its own top bar */
+body.embed{--hdr:0px;background:transparent}
+body.embed .bar{display:none}
+body.embed main{padding-block:10px 40px}
+.ai-warn{background:var(--part-bg);color:var(--part);border-radius:12px;padding:12px 14px;font-weight:700}
+
+/* ===== Pupil look (27 Oct): friendly, colourful, still calm for reading ===== */
+:root{--sun:#FFB020;--sun-soft:#FFF3D6;--mint:#14A37F;--mint-soft:#DDF6EE;--rose:#E0457B;--rose-soft:#FDE4EE;--sky:#2F7BE5;--sky-soft:#E1EDFD;
+  --sh:0 1px 2px rgba(40,20,110,.06),0 6px 20px rgba(40,20,110,.08);--sh-lg:0 2px 4px rgba(40,20,110,.08),0 14px 34px rgba(40,20,110,.14)}
+.kid{display:flex;flex-direction:column;gap:18px}
+.khero{position:relative;overflow:hidden;border-radius:22px;padding:22px 22px 20px;color:#fff;
+  background:radial-gradient(120% 140% at 100% 0%,#8B5CF6 0%,rgba(139,92,246,0) 55%),linear-gradient(135deg,#4B2FC4 0%,#6D3FE0 55%,#B44AD8 100%);box-shadow:var(--sh-lg);
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center}
+.khero .khi{font-weight:700;opacity:.92;font-size:.95rem}
+.khero h1{color:#fff;font-size:clamp(1.6rem,5vw,2.2rem);margin:2px 0 6px}
+.khero p{opacity:.92;max-width:46ch}
+.ksteps{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
+.ksteps span{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:4px 11px;font-weight:700;font-size:.86rem;white-space:nowrap}
+.ksteps i{font-style:normal;opacity:.7}
+.khero-art{width:120px;height:104px}
+.khero::after{content:"";position:absolute;right:-40px;bottom:-60px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.07)}
+@media (max-width:520px){.khero p{font-size:.94rem}.ksteps i{display:none}.khero{grid-template-columns:minmax(0,1fr);padding:18px}.khero-art{position:absolute;right:10px;top:10px;width:78px;height:68px;opacity:.9}.khero h1{padding-right:70px}}
+.kstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.kstats div{background:var(--surface);border-radius:16px;padding:12px 12px 10px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:2px;border-top:4px solid var(--c)}
+.kstats b{font-family:var(--f-display);font-weight:800;font-size:1.55rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.kstats span{font-size:.8rem;font-weight:700;color:var(--muted)}
+.ksec{display:flex;align-items:center;gap:8px;font-size:1.2rem;margin-top:4px}
+.kcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.kcard{background:var(--surface);border-radius:20px;overflow:hidden;box-shadow:var(--sh);display:flex;flex-direction:column;transition:transform .15s ease,box-shadow .15s ease}
+.kcard:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}
+.kcover{position:relative;height:92px;display:flex;align-items:flex-end;justify-content:space-between;padding:10px 14px;color:#fff;background:var(--g)}
+.kcover .kemo{font-size:2.6rem;line-height:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,.18))}
+.kcover .klevel{background:rgba(255,255,255,.22);border-radius:999px;padding:3px 10px;font-weight:700;font-size:.78rem;backdrop-filter:blur(2px)}
+.kcover::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 20%,rgba(255,255,255,.28) 0 18px,transparent 19px),radial-gradient(circle at 70% 70%,rgba(255,255,255,.14) 0 30px,transparent 31px)}
+.kbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.kbody h3{font-size:1.12rem}
+.kbody .meta{gap:6px 10px}
+.kact{display:flex;gap:8px;margin-top:auto;padding-top:6px;flex-wrap:wrap}
+.kact .btn{flex:1}
+.btn.go{background:linear-gradient(135deg,#4B2FC4,#7B4BEA);border:0;color:#fff;min-height:44px;font-size:.98rem;box-shadow:0 4px 12px rgba(75,47,196,.28)}
+.btn.go:hover{filter:brightness(1.07)}
+.kempty{background:var(--surface);border-radius:20px;box-shadow:var(--sh);padding:28px 18px;text-align:center;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:6px}
+.kempty .e{font-size:2.4rem}
+.kres{display:flex;flex-direction:column;gap:10px}
+.kr{background:var(--surface);border-radius:16px;box-shadow:var(--sh);padding:12px 14px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center}
+.kr h3{font-size:1rem}
+.ring{--p:0;--rc:var(--pen);width:54px;height:54px;border-radius:50%;display:grid;place-items:center;flex:none;
+  background:conic-gradient(var(--rc) calc(var(--p)*1%),var(--sunk) 0)}
+.ring span{width:42px;height:42px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-weight:800;font-size:.82rem;font-variant-numeric:tabular-nums}
+.ring.big{width:120px;height:120px}
+.ring.big span{width:96px;height:96px;flex-direction:column;font-family:var(--f-display);font-size:2rem;line-height:1}
+.ring.big span small{font-family:var(--f-ui);font-size:.85rem;color:var(--muted);font-weight:700}
+
+/* attempt */
+.kback{align-self:flex-start;background:var(--surface);box-shadow:var(--sh);border:0}
+.ktitle{display:flex;align-items:center;gap:10px;min-width:0}
+.ktitle .kemo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.5rem;background:var(--g);flex:none}
+.ktitle h1{font-size:clamp(1.2rem,3.6vw,1.6rem)}
+.banner{display:flex;gap:10px;align-items:flex-start;border-radius:14px}
+.banner:before{content:"⏰";font-size:1rem;line-height:1.4}
+.kid .banner{font-size:.9rem;padding:9px 13px}
+.kid .p-head{display:none}
+.kid .passage{padding-top:16px}
+body.wopen main{padding-bottom:60vh}
+.tabs{gap:6px!important;padding:6px!important;background:var(--surface)!important;border-radius:999px;box-shadow:var(--sh);margin-block:4px}
+.tabs .btn{border:0;min-height:42px}
+.tabs .btn[aria-pressed=true]{background:linear-gradient(135deg,#4B2FC4,#7B4BEA)!important;color:#fff!important}
+@media (max-width:860px){.tabs{top:calc(var(--hdr) + 4px)}}
+.pane-passage{border:0;box-shadow:var(--sh);border-radius:20px;background:#FFFDF8}
+.annobar{background:#FFFDF8;border-radius:20px 20px 0 0;border-bottom:1px solid #F0EAE0}
+.sw{border-radius:999px;border-color:#EAE3D6;background:#fff}
+.sw.sw-m{background:var(--sun-soft);border-color:#F5DA9C}
+.selhint{white-space:normal;line-height:1.35}
+.passage{padding:20px 22px 24px}
+.passage .p-head{padding-bottom:12px;border-bottom:2px dashed #EFE6D4}
+.passage .p-head h2{font-size:1.6rem}
+.p-head + .para p::first-letter{font-family:var(--f-display);font-weight:800;font-size:1.9em;line-height:1;color:var(--pen)}
+.pn{color:#B4A98F}
+@media (hover:none){.passage p[data-p]{cursor:pointer;-webkit-tap-highlight-color:transparent}}
+.mk.wq{background:#FFE08A;box-shadow:0 0 0 3px #FFE08A;border-radius:4px}
+.legend{padding:0 22px 18px}
+.wlist{margin:0 16px 16px;padding:12px 14px;background:var(--sun-soft);border-radius:14px;display:flex;flex-direction:column;gap:8px;font-family:var(--f-ui)}
+.wlist b{font-size:.88rem}
+.wlist .chips button{min-height:32px;padding:0 12px;border-radius:999px;border:1px solid #F1D48A;background:#fff;font-weight:700;font-size:.86rem;cursor:pointer}
+/* the sheet stays at the bottom of the passage box while it scrolls (laptop) */
+@media (min-width:861px){#sheetSlot{position:sticky;bottom:0;z-index:6}#sheetSlot .sheet{position:relative}}
+/* editor: boxes that grow with their text, one box per paragraph */
+textarea.grow{resize:none;overflow:hidden;min-height:42px;line-height:1.45}
+.pbox{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;align-items:start}
+.pbox .pn{padding-top:11px}
+.pbox textarea{font-family:var(--f-read);font-size:1rem}
+.pbox .ptools{grid-column:2;display:flex;gap:4px;flex-wrap:wrap;margin-top:-4px}
+.pbox .ptools .btn{min-height:28px;font-size:.78rem;padding:0 8px}
+.qtype-sel{width:auto;min-height:32px;padding:4px 8px;font-size:.84rem;font-weight:700;border-radius:999px}
+.optrow{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;gap:8px;align-items:start}
+.optrow input[type=radio]{margin-top:12px}
+.optrow b{padding-top:10px}
+.checkbar{border-radius:14px;padding:12px 14px;background:var(--sun-soft);color:#6B4A00;font-weight:700;display:flex;gap:10px;align-items:flex-start}
+/* word sheet */
+.wsheet{border:0;box-shadow:0 14px 40px rgba(40,20,110,.25);border-top:5px solid var(--sun);gap:10px}
+.wtop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.wtop .ww{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.wword{font-family:var(--f-display);font-weight:800;font-size:1.5rem;line-height:1.1}
+.wpos{background:var(--sky-soft);color:var(--sky);border-radius:999px;padding:2px 9px;font-weight:700;font-size:.76rem}
+.wbtn{width:38px;height:38px;border-radius:50%;border:0;background:var(--sunk);cursor:pointer;font-size:1.05rem;display:grid;place-items:center;flex:none}
+.wbase{font-size:.85rem;color:var(--muted)}
+.wmean{font-size:1.08rem;font-weight:700;line-height:1.4}
+.wphr{background:var(--mint-soft);color:#0B6B53;border-radius:10px;padding:7px 10px;font-size:.92rem}
+.wex{background:var(--sunk);border-radius:10px;padding:7px 10px;font-family:var(--f-read);font-style:italic}
+.wex b{font-family:var(--f-ui);font-style:normal;color:var(--muted);font-size:.78rem;display:block}
+.wsim{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.85rem;color:var(--muted);font-weight:700}
+.wsim span{background:var(--pen-soft);color:var(--pen);border-radius:999px;padding:2px 10px}
+.wnote{border-left:3px solid var(--pen);padding:4px 10px;color:var(--pen);font-size:.92rem}
+.wload{display:flex;align-items:center;gap:6px;color:var(--muted);font-weight:700}
+.wload i{width:8px;height:8px;border-radius:50%;background:var(--sun);animation:wb 1s infinite ease-in-out}
+.wload i:nth-child(2){animation-delay:.15s}.wload i:nth-child(3){animation-delay:.3s}
+@keyframes wb{0%,80%,100%{transform:scale(.6);opacity:.5}40%{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.wload i{animation:none}.kcard{transition:none}}
+
+/* questions */
+.booklet .sec{border-bottom:0;padding:4px 2px}
+.booklet .sec h2{font-size:1.15rem}
+.booklet > p.muted{background:var(--surface);border-radius:14px;padding:10px 14px;box-shadow:var(--sh)}
+.qc{border:0;border-radius:18px;box-shadow:var(--sh);padding:16px 16px 18px;border-left:6px solid var(--line)}
+.qc:nth-of-type(4n+1){border-left-color:#8B6CF0}.qc:nth-of-type(4n+2){border-left-color:#3FB8A0}.qc:nth-of-type(4n+3){border-left-color:#F2A93B}.qc:nth-of-type(4n){border-left-color:#E86A9A}
+.qh{grid-template-columns:auto minmax(0,1fr) auto}
+.qn{display:grid;place-items:center;min-width:42px;height:34px;padding:0 8px;border-radius:12px;background:var(--pen-soft);color:var(--pen);font-size:.95rem}
+.qc.done .qn{background:var(--mint);color:#fff}
+.qn{white-space:nowrap}
+.qc.done .qn:after{content:"\00a0✓"}
+.qm{background:var(--sunk);border-radius:999px;padding:2px 9px;font-size:.82rem}
+.qtype{display:block;font-weight:700;font-size:.74rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+label.opt{position:relative;grid-template-columns:auto minmax(0,1fr);align-items:center;padding:11px 12px;border:2px solid var(--line-soft);border-radius:14px;background:#fff;transition:border-color .12s,background .12s}
+label.opt input{position:absolute;opacity:0;pointer-events:none}
+label.opt:hover{border-color:#CFC3F5}
+label.opt:has(input:focus-visible){outline:3px solid var(--pen);outline-offset:2px}
+.opt b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--sunk);font-size:.9rem}
+.opt > span:empty{display:none}
+div.opt{grid-template-columns:auto minmax(0,1fr);align-items:center;border-radius:14px}
+.opt.sel{border-color:var(--pen);background:var(--pen-soft)}
+.opt.sel b{background:var(--pen);color:#fff}
+.opt.key b{background:var(--good);color:#fff}
+textarea.lined{background-color:#FFFDF8;border-radius:10px;padding:0 10px;border:1px solid #EFE6D4}
+textarea.lined:focus{background-color:#fff;border-color:var(--pen);box-shadow:0 0 0 3px var(--pen-soft)}
+.qc input[type=text]{border-radius:10px}
+.tfseg span{padding:7px 16px;min-height:36px;display:inline-flex;align-items:center}
+.tbl{border-radius:12px;overflow:hidden}
+.kdone{background:linear-gradient(135deg,#FFF6DD,#FFE9F1);border:0;border-radius:20px;box-shadow:var(--sh);text-align:center;align-items:center}
+.kdone .e{font-size:2.2rem}
+.kdone .btn.go{min-width:220px}
+.kdone .row{justify-content:center}
+
+/* results */
+.kscore{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:center;border:0;border-radius:22px;box-shadow:var(--sh-lg);
+  background:linear-gradient(135deg,#fff 0%,#F6F2FF 100%)}
+.kscore .cheer{font-family:var(--f-display);font-weight:800;font-size:1.35rem}
+.kstars{font-size:1.2rem;letter-spacing:2px}
+@media (max-width:460px){.kscore{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}.kscore .row{justify-content:center}}
+.find{border-radius:14px}
+.tip{border-radius:12px}
+.key{border-radius:12px}
+.teach{border-top:2px dashed var(--line-soft)}
+.gf.add{text-decoration:none;font-weight:800;}
+/* ===== ✨ Pupil look (body.stu): bright, friendly, modern. The teacher page is unchanged. ===== */
+body.stu{
+  --v1:#6C47FF; --v2:#9B5CFF; --pinkx:#FF6FAE; --mintx:#22C59B; --sunx:#FFB627; --skyx:#3BA7FF; --coral:#FF6B6B;
+  --ink:#1B1433; --muted:#5E5780; --line:#E3DCF7; --pen:#6C47FF; --pen-soft:#EFEAFF;
+  background:#F7F4FF radial-gradient(1200px 600px at -10% -10%, #E6DEFF 0%, transparent 60%) no-repeat,
+    radial-gradient(900px 520px at 110% 0%, #DFF7EF 0%, transparent 60%) no-repeat,
+    radial-gradient(900px 700px at 50% 120%, #FFE7F1 0%, transparent 65%) no-repeat;
+  background-attachment:fixed;
+}
+body.stu h1, body.stu h2, body.stu h3{letter-spacing:-.015em}
+body.stu .btn{border-radius:999px;font-weight:800;transition:transform .12s ease, box-shadow .12s ease, background .12s}
+body.stu .btn:active{transform:translateY(2px)}
+body.stu .btn.go, body.stu .btn.primary{background:linear-gradient(135deg,var(--v1),var(--v2));color:#fff;border:0;box-shadow:0 5px 0 #4A2DC2, 0 10px 22px -8px rgba(108,71,255,.55)}
+body.stu .btn.go:hover, body.stu .btn.primary:hover{filter:brightness(1.06)}
+body.stu .btn.go:active, body.stu .btn.primary:active{box-shadow:0 2px 0 #4A2DC2, 0 6px 14px -8px rgba(108,71,255,.55)}
+body.stu .btn.small{box-shadow:0 2px 0 var(--line)}
+body.stu .pill{border-radius:999px;font-weight:800}
+
+/* --- home --- */
+body.stu .khero{border-radius:30px;background:linear-gradient(125deg,#5B3BFF 0%,#8E54FF 45%,#FF6FAE 100%);box-shadow:0 22px 40px -22px rgba(91,59,255,.75);overflow:hidden;position:relative}
+body.stu .khero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 120%,rgba(255,255,255,.22) 0 22%,transparent 23%),radial-gradient(circle at 92% -10%,rgba(255,255,255,.18) 0 18%,transparent 19%);pointer-events:none}
+body.stu .khero .khi{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:4px 12px;border-radius:999px;backdrop-filter:blur(6px)}
+body.stu .khero h1{font-size:clamp(1.9rem,6vw,2.6rem);text-shadow:0 2px 0 rgba(0,0,0,.08)}
+body.stu .ksteps{counter-reset:ks}
+body.stu .ksteps span{background:#fff;color:var(--v1);border:0;box-shadow:0 3px 0 rgba(0,0,0,.12);font-weight:800}
+body.stu .ksteps i{opacity:.8}
+body.stu .khero-art{animation:kfloat 4s ease-in-out infinite;filter:drop-shadow(0 10px 14px rgba(0,0,0,.18))}
+@keyframes kfloat{50%{transform:translateY(-6px) rotate(-2deg)}}
+body.stu .kstats div{border-radius:22px;border:0;background:#fff;box-shadow:0 1px 0 var(--line),0 14px 26px -18px rgba(27,20,51,.35);position:relative;overflow:hidden;padding-top:14px}
+body.stu .kstats div::before{position:absolute;right:10px;top:8px;font-size:24px;opacity:.9}
+body.stu .kstats div:nth-child(1)::before{content:"📝"} body.stu .kstats div:nth-child(2)::before{content:"✅"} body.stu .kstats div:nth-child(3)::before{content:"🏅"}
+body.stu .kstats div::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--c)}
+body.stu .kstats b{font-size:2rem;background:linear-gradient(135deg,var(--ink),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+body.stu .ksec{font-size:1.35rem;display:flex;align-items:center;gap:8px}
+body.stu .kcard{border-radius:26px;border:0;overflow:hidden;background:#fff;box-shadow:0 1px 0 var(--line),0 18px 34px -22px rgba(27,20,51,.45);transition:transform .18s ease, box-shadow .18s ease}
+body.stu .kcard:hover{transform:translateY(-3px) rotate(-.2deg);box-shadow:0 1px 0 var(--line),0 26px 40px -22px rgba(27,20,51,.5)}
+body.stu .kcover{min-height:118px;background:var(--g);position:relative}
+body.stu .kcover::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.28) 1.5px,transparent 1.6px);background-size:16px 16px;mask-image:linear-gradient(90deg,transparent 30%,#000)}
+body.stu .kcover .kemo{background:#fff;border-radius:22px;width:66px;height:66px;display:grid;place-items:center;font-size:36px;box-shadow:0 8px 18px -6px rgba(0,0,0,.35);transform:rotate(-8deg);position:relative;z-index:1}
+body.stu .kcover .klevel{background:rgba(255,255,255,.92);color:var(--ink);border-radius:999px;font-weight:800;z-index:1}
+body.stu .kbody h3{font-size:1.25rem}
+body.stu .kempty{border-radius:24px;border:2px dashed #D6CCF6;background:rgba(255,255,255,.7)}
+body.stu .kr{border-radius:22px;border:0;background:#fff;box-shadow:0 1px 0 var(--line),0 12px 24px -18px rgba(27,20,51,.35)}
+body.stu .ring{background:conic-gradient(var(--rc) calc(var(--p)*1%), #EEE9FB 0)}
+
+/* --- reading and answering --- */
+body.stu .kback{background:#fff}
+body.stu .ktitle .kemo{border-radius:20px;box-shadow:0 8px 16px -8px rgba(0,0,0,.35);transform:rotate(-6deg)}
+body.stu .tabs{position:sticky;top:8px;z-index:30;background:rgba(255,255,255,.78);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 26px -16px rgba(27,20,51,.45)}
+body.stu .tabs .btn[aria-pressed=true]{background:linear-gradient(135deg,var(--v1),var(--v2));box-shadow:0 4px 0 #4A2DC2}
+body.stu .annobar{border-radius:22px 22px 0 0;background:#FFFDF6}
+body.stu .annobar .tools{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px;mask-image:linear-gradient(90deg,#000 88%,transparent)}
+body.stu .annobar .tools::-webkit-scrollbar{display:none}
+body.stu .sw{flex:none;border-radius:999px;box-shadow:0 2px 0 var(--line);font-weight:800}
+body.stu .passage{border-radius:0 0 26px 26px;box-shadow:0 18px 34px -24px rgba(27,20,51,.45)}
+body.stu .para p{font-size:1.1rem;line-height:1.95}
+body.stu .pn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:50%;background:#F1ECFF;color:var(--v1);font:800 12px/1 var(--f-ui)}
+body.stu .p-head + .para p::first-letter{background:linear-gradient(135deg,var(--v1),var(--pinkx));-webkit-background-clip:text;background-clip:text;color:transparent}
+body.stu .mk.wq, body.stu .passage [data-p] span:hover{transition:background .15s}
+body.stu .qc{border-radius:26px;border:0;background:#fff;box-shadow:0 1px 0 var(--line),0 16px 30px -22px rgba(27,20,51,.45)}
+body.stu .qn{border-radius:14px;background:linear-gradient(135deg,var(--v1),var(--v2));color:#fff;box-shadow:0 3px 0 #4A2DC2}
+body.stu .qc.done .qn{background:linear-gradient(135deg,#16B386,#3FD3A5);box-shadow:0 3px 0 #0E8A66}
+body.stu .qm{border-radius:999px;background:#FFF3D6;color:#8A5A00;font-weight:800}
+body.stu label.opt, body.stu div.opt{border-radius:18px;border:2px solid var(--line);transition:border-color .15s, background .15s, transform .1s}
+body.stu label.opt:hover{border-color:#C9BBFF;background:#FBF9FF}
+body.stu label.opt:active{transform:scale(.99)}
+body.stu .opt.sel{border-color:var(--v1);background:#F3EFFF;box-shadow:0 0 0 4px rgba(108,71,255,.12)}
+body.stu .opt.sel b{background:var(--v1);color:#fff}
+body.stu textarea.lined, body.stu .qc input[type=text]{border-radius:16px;border:2px solid var(--line);background-color:#fff;font-size:1.05rem;transition:border-color .15s, box-shadow .15s}
+body.stu textarea.lined{background-image:repeating-linear-gradient(transparent 0 calc(1.7em - 1px), #EDE8FA calc(1.7em - 1px) 1.7em);background-attachment:local;line-height:1.7em;padding-top:.35em}
+body.stu textarea.lined:focus, body.stu .qc input[type=text]:focus{outline:none;border-color:var(--v1);box-shadow:0 0 0 4px rgba(108,71,255,.15)}
+body.stu .checkbar{border-radius:24px;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 14px 30px -18px rgba(27,20,51,.5)}
+body.stu .wsheet{border-radius:26px 26px 0 0;box-shadow:0 -14px 40px -10px rgba(27,20,51,.35)}
+body.stu .wword{background:linear-gradient(135deg,var(--v1),var(--pinkx));-webkit-background-clip:text;background-clip:text;color:transparent}
+body.stu .wlist .chips button{border-radius:999px}
+
+/* --- marks --- */
+body.stu .kdone, body.stu .kscore{border-radius:28px}
+body.stu .tip{border-radius:16px}
+body.stu .key{border-radius:16px}
+body.stu .teach{border-radius:18px}
+
+/* --- 🎉 confetti for a good score --- */
+.kconf{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9999}
+.kconf i{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;opacity:.95;animation:kfall 2.4s cubic-bezier(.2,.6,.4,1) forwards}
+@keyframes kfall{to{transform:translate3d(var(--dx),105vh,0) rotate(var(--r));opacity:.9}}
+@media (prefers-reduced-motion:reduce){ body.stu .khero-art{animation:none} .kconf{display:none} body.stu .kcard:hover{transform:none} }
+@media (max-width:520px){ body.stu .kcover{min-height:100px} body.stu .para p{font-size:1.05rem} }
+body.stu .qc.done .qn{position:relative;overflow:visible}
+body.stu .qc.done .qn:after{content:"✓";position:absolute;inset:-7px -7px auto auto;width:20px;height:20px;margin:0;border-radius:50%;background:#fff;color:#0E8A66;display:grid;place-items:center;font:900 12px/1 var(--f-ui);box-shadow:0 2px 6px rgba(0,0,0,.18);transform:none;border:0}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="brand"><span class="nib">EL</span><span>Comprehension</span></div>
+  <span class="sp"></span>
+  <span class="who" id="who"></span>
+  <span id="barActions" class="row"></span>
+</header>
+<main id="app"><p class="muted">Loading…</p></main>
+<div id="busy" hidden></div>
+<div id="toast" hidden></div>
+
+<script>var BOOT = <?!= boot ?>;</script>
+<script>
+(function(){
+'use strict';
+
+/* ---------- utilities ---------- */
+var $ = function(s, r){ return (r||document).querySelector(s); };
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+var LS = {
+  get:function(k,d){ try{ var v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(e){ return d; } },
+  set:function(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
+  del:function(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+function slug(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+function fmtMarks(n){ n=Number(n)||0; return (Math.round(n*2)/2).toString().replace('.5','½').replace(/^0½/,'½'); }
+function pct(a,b){ return b ? Math.round(100*a/b) : 0; }
+function when(t){ if(!t) return ''; var d=new Date(t); return d.toLocaleDateString('en-SG',{day:'numeric',month:'short'})+' '+d.toLocaleTimeString('en-SG',{hour:'numeric',minute:'2-digit'}); }
+function deepCopy(o){ return JSON.parse(JSON.stringify(o)); }
+function normCls(c){ return String(c||'').trim().toLowerCase().replace(/\s+/g,''); }
+function fmtDue(ms){ var d=new Date(ms); return d.toLocaleDateString('en-SG',{weekday:'short',day:'numeric',month:'short'})+', '+d.toLocaleTimeString('en-SG',{hour:'numeric',minute:'2-digit'}); }
+function toLocalInput(ms){ if(!ms) return ''; var d=new Date(ms); var z=function(n){ return (n<10?'0':'')+n; }; return d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate())+'T'+z(d.getHours())+':'+z(d.getMinutes()); }
+function defaultDue(){ var d=new Date(); d.setDate(d.getDate()+7); d.setHours(23,59,0,0); return d.getTime(); }
+/* Due-date pill for a pupil: closed / overdue / due soon / due later */
+function duePill(info){
+  if(!info || !info.due) return '';
+  var now=Date.now(), left=info.due-now;
+  if(left<=0) return info.lock ? '<span class="pill zero">Closed · was due '+esc(fmtDue(info.due))+'</span>' : '<span class="pill part">Overdue · was due '+esc(fmtDue(info.due))+'</span>';
+  if(left<36e5) return '<span class="pill part">Due in '+Math.max(1,Math.round(left/6e4))+' min</span>';
+  if(left<24*36e5) return '<span class="pill part">Due in '+Math.round(left/36e5)+' h · '+esc(new Date(info.due).toLocaleTimeString('en-SG',{hour:'numeric',minute:'2-digit'}))+'</span>';
+  return '<span class="pill">Due '+esc(fmtDue(info.due))+'</span>';
+}
+var TYPE_LABEL = {mcq:'Multiple choice', short:'Short answer', open:'Open-ended', sequence:'Sequencing', referent:'Referent', vocab:'Vocabulary', truefalse:'True / False with reason', structured:'Structured'};
+var SKILLS = ['Literal','Inferential','Vocabulary','Referencing','Sequencing','Evidence','Evaluative'];
+
+function call(action, payload){
+  return new Promise(function(resolve, reject){
+    var done=function(r){ var o; try{ o=JSON.parse(r); }catch(e){ return reject(new Error('Unexpected reply from the server.')); } o.ok ? resolve(o.data) : reject(new Error(o.error)); };
+    var fail=function(e){ reject(new Error(e && e.message ? e.message : String(e))); };
+    if(BOOT.bridge){ var br=null; try{ br=(window.parent!==window && window.parent.cmBridge) || (window.top!==window && window.top.cmBridge) || null; }catch(e){} if(!br){ fail(new Error('Comprehension couldn’t reach your Class Hub. Open your Class Hub, sign in, then tap English → 📖 Comprehension.')); return; } try{ br(action, JSON.stringify(payload||{})).then(done, fail); }catch(e){ fail(new Error('Comprehension couldn’t reach your Class Hub. Close it and tap English → 📖 Comprehension again.')); } return; }
+    if(!window.google || !google.script || !google.script.run) return reject(new Error('Open this page from your Dashboard.'));
+    google.script.run.withSuccessHandler(done).withFailureHandler(fail).cmTeacher(action, JSON.stringify(payload||{}), BOOT.cred);
+  });
+}
+
+var toastTimer;
+function toast(msg){ var t=$('#toast'); t.textContent=msg; t.hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(function(){ t.hidden=true; }, 3200); }
+
+var busyTimer;
+function busy(title, steps, note){
+  var el=$('#busy'); var start=Date.now(); var cur=0;
+  function draw(){
+    el.innerHTML='<div class="busy-card" role="status" aria-live="polite"><h2>'+esc(title)+'</h2>'+
+      '<ol class="steps">'+steps.map(function(s,i){ return '<li class="'+(i<cur?'done':i===cur?'on':'')+'">'+esc(s)+'</li>'; }).join('')+'</ol>'+
+      '<p class="muted small">'+esc(note||'This usually takes under a minute.')+' <span id="busySec"></span></p></div>';
+  }
+  draw(); el.hidden=false;
+  clearInterval(busyTimer);
+  busyTimer=setInterval(function(){ var s=$('#busySec'); if(s) s.textContent=Math.round((Date.now()-start)/1000)+'s'; },1000);
+  return { step:function(i){ cur=i; draw(); }, done:function(){ clearInterval(busyTimer); el.hidden=true; el.innerHTML=''; } };
+}
+
+/* ---------- state ---------- */
+/* 🌿 Calm feedback: inside the Class Hub the pupil's results use the Hub's calm look (CF) and quick lessons. */
+var PCF = (function(){ try { return window.parent !== window && window.parent.CF && window.parent.LESSONS ? window.parent.CF : null; } catch(e){ return null; } })();
+var PLES = PCF ? window.parent.LESSONS : {}, PCM = PCF ? window.parent.CF_CM : {};
+if(PCF){ try { PCF.inject(document); } catch(e){} document.addEventListener('click', function(e){ PCF.tap(e.target); }); }
+function calmOn(){ return !!PCF && S.view==='student' && S.route.name==='attempt'; }
+function skillId(q){ return PCM[String(q.skill||'').toLowerCase()] || (q.type==='vocab'?'cs-vocab':q.type==='referent'?'cs-ref':q.type==='truefalse'?'cs-tf':q.type==='sequence'?'cs-seq':''); }
+function calmAns(text, gl){
+  var marks=(gl||[]).filter(function(g){ return g && g.wrong; }).map(function(g){ return {wrong:g.wrong, fix:g.fix, type:'grammar'}; });
+  return '<div class="cf"><div class="cf-sent" style="font-size:17.5px">'+PCF.anno(text, marks, function(){ return ''; })+'</div></div>'+(marks.length?'<div class="muted small" style="margin-top:2px">✏️ Grammar fixes shown in orange: no marks taken off.</div>':'');
+}
+var S = {
+  view: BOOT.view,
+  pin: '',
+  student: BOOT.student || {name:'',cls:''},
+  route: {name:'home'},
+  list:null, results:null, loadErr:'', classes:null,
+  dash:null,
+  attempt:null,
+  editor:null,
+  subs:null, review:null,
+  confirm:null
+};
+
+/* ---------- clue + annotation geometry ---------- */
+function norm(s){ return String(s).replace(/[‘’`]/g,"'").replace(/[“”]/g,'"').replace(/[–—]/g,'-').toLowerCase(); }
+function findClue(paras, quote){
+  if(!quote || !paras) return null;
+  var q=norm(quote).trim().replace(/^["'.,;:…\s]+|["'.,;:…\s]+$/g,'');
+  var chunks=q.split(/\s*(?:\.\.\.|…)\s*/).filter(Boolean).sort(function(a,b){ return b.length-a.length; });
+  for(var c=0;c<chunks.length;c++){
+    if(chunks[c].length<3) continue;
+    for(var i=0;i<paras.length;i++){
+      var j=norm(paras[i]).indexOf(chunks[c]);
+      if(j>=0) return {p:i,start:j,end:j+chunks[c].length};
+    }
+  }
+  var words={}; (q.match(/[a-z']+/g)||[]).forEach(function(w){ if(w.length>2) words[w]=1; });
+  var n=Object.keys(words).length; if(!n) return null;
+  var best=null, bs=0;
+  paras.forEach(function(t,i){
+    var re=/[^.!?]+[.!?]*["']?\s*/g, m;
+    while((m=re.exec(t))){
+      var sw=norm(m[0]).match(/[a-z']+/g)||[]; var hit=0, seen={};
+      sw.forEach(function(w){ if(words[w] && !seen[w]){ hit++; seen[w]=1; } });
+      var sc=hit/Math.max(4,n);
+      if(sc>bs){ bs=sc; best={p:i,start:m.index,end:m.index+m[0].replace(/\s+$/,'').length}; }
+    }
+  });
+  return bs>=0.3 ? best : null;
+}
+
+function paraHTML(text, ranges){
+  var pts={0:1}; pts[text.length]=1;
+  ranges.forEach(function(r){ pts[Math.max(0,Math.min(text.length,r.start))]=1; pts[Math.max(0,Math.min(text.length,r.end))]=1; });
+  var arr=Object.keys(pts).map(Number).sort(function(a,b){ return a-b; });
+  var out='';
+  for(var i=0;i<arr.length-1;i++){
+    var a=arr[i], b=arr[i+1]; if(b<=a) continue;
+    var seg=esc(text.slice(a,b));
+    var cov=ranges.filter(function(r){ return r.start<=a && r.end>=b; });
+    if(!cov.length){ out+=seg; continue; }
+    var cls=[], ids=[];
+    cov.forEach(function(r){ cls.push(r.cls); ids.push(r.id); if(r.end===b && r.marker) cls.push(r.marker); });
+    out+='<span class="mk '+cls.join(' ')+'" data-mk="'+esc(ids.join(' '))+'">'+seg+'</span>';
+  }
+  return out;
+}
+
+function passageHTML(p, o){
+  o=o||{};
+  var per=p.paragraphs.map(function(){ return []; });
+  if(o.showAi){
+    (p.aiNotes||[]).forEach(function(n,i){
+      var loc=findClue(p.paragraphs, n.quote); if(!loc) return;
+      per[loc.p].push({start:loc.start,end:loc.end,cls:'ai',id:'a:'+i,marker:'ne-ai'});
+    });
+  }
+  (o.annos||[]).forEach(function(a){
+    if(!per[a.p]) return;
+    per[a.p].push({start:a.start,end:a.end,cls:'hl-'+a.style,id:'u:'+a.id,marker:a.note?'ne-u':''});
+  });
+  if(o.word && per[o.word.p]) per[o.word.p].push({start:o.word.start,end:o.word.end,cls:'wq',id:'w:0'});
+  if(o.clue && per[o.clue.p]) per[o.clue.p].push({start:o.clue.start,end:o.clue.end,cls:'clue'+(o.flash?' flash':''),id:'c:0'});
+  return '<article class="passage" id="passage">'+
+    '<div class="p-head"><span class="eyebrow">'+esc(p.level)+' · '+esc(p.genre||'Comprehension')+'</span><h2>'+esc(p.title)+'</h2></div>'+
+    p.paragraphs.map(function(t,i){ return '<div class="para"><span class="pn">'+(i+1)+'</span><p data-p="'+i+'">'+paraHTML(t, per[i])+'</p></div>'; }).join('')+
+    '</article>'+
+    '<div class="legend"><span><i style="background:none;border-bottom:2px solid var(--pen)"></i>AI pen notes</span><span><i style="background:var(--clue-bg)"></i>Clue for an answer</span><span><i style="background:var(--hl-y)"></i>Your highlights</span><span><i style="background:#FFE08A"></i>Tap a word for its meaning</span></div>';
+}
+
+/* ---------- answers rendering ---------- */
+function numbering(qs){
+  var n=0, map={};
+  qs.forEach(function(q){ map[q.id]=++n; });
+  return map;
+}
+/* The pupil's answer with grammar, spelling and punctuation corrections marked on it. gl: [{wrong, fix, rule}] */
+function gramAns(text, gl){
+  text=String(text||''); gl=(gl||[]).filter(function(g){ return g && g.wrong; });
+  var h='', cur=0, low=text.toLowerCase(), used=[];
+  gl.map(function(g){ var at=low.indexOf(String(g.wrong).toLowerCase()); return {g:g, at:at}; }).filter(function(x){ return x.at>=0; })
+    .sort(function(a,b){ return a.at-b.at; }).forEach(function(x){
+      if(x.at<cur) return;
+      var orig=text.substr(x.at,x.g.wrong.length), fx=String(x.g.fix||''), w=String(x.g.wrong);
+      if(fx.length>w.length && fx.toLowerCase().indexOf(w.toLowerCase())===0) h+=esc(text.slice(cur,x.at))+esc(orig)+'<ins class="gf add">'+esc(fx.slice(w.length).replace(/^\s+/,' '))+'</ins>';
+      else if(fx.length>w.length && fx.toLowerCase().slice(-w.length)===w.toLowerCase()) h+=esc(text.slice(cur,x.at))+'<ins class="gf add">'+esc(fx.slice(0,fx.length-w.length))+'</ins>'+esc(orig);
+      else h+=esc(text.slice(cur,x.at))+'<s class="gw">'+esc(orig)+'</s><ins class="gf">'+esc(fx)+'</ins>';
+      cur=x.at+x.g.wrong.length; used.push(x.g);
+    });
+  h+=esc(text.slice(cur));
+  return {html:h, notes:gl};
+}
+function gramBox(text, gl, prefix){
+  var r=gramAns(text, gl);
+  var out='<div class="ans">'+(prefix||'')+r.html+'</div>';
+  if(r.notes.length) out+='<div class="gram"><div class="gram-h">✏️ Grammar check <span>No marks taken off</span></div><ul>'+r.notes.map(function(g){
+    var f=String(g.fix||''), w=String(g.wrong), pre=f.length>w.length && f.toLowerCase().indexOf(w.toLowerCase())===0, post=f.length>w.length && f.toLowerCase().slice(-w.length)===w.toLowerCase();
+    return '<li>'+(pre||post ? 'Add <b>“'+esc(pre?f.slice(w.length).trim():f.slice(0,f.length-w.length).trim())+'”</b> '+(pre?'after':'before')+' “'+esc(w)+'”' : '<s>'+esc(g.wrong)+'</s> → <b>'+esc(f)+'</b>')+(g.rule?'<span class="gr">'+esc(g.rule)+'</span>':'')+'</li>'; }).join('')+'</ul></div>';
+  return out;
+}
+function verdict(aw,max){ return aw>=max ? 'v-full' : aw>0 ? 'v-part' : 'v-zero'; }
+
+function answerView(q, a){
+  function box(t){ return t ? '<div class="ans">'+esc(t)+'</div>' : '<div class="ans blank">No answer</div>'; }
+  if(q.type==='mcq'){
+    return '<div class="opts">'+(q.options||[]).map(function(o,i){
+      var cls = (a!==undefined && a!=='' && Number(a)===i) ? ' sel' : '';
+      if(q.answer!==undefined && Number(q.answer)===i) cls+=' key';
+      return '<div class="opt'+cls+'"><span></span><b>('+(i+1)+')</b><span>'+esc(o)+'</span></div>';
+    }).join('')+'</div>';
+  }
+  if(q.type==='sequence'){
+    return '<div class="tblwrap"><table class="tbl"><tr><th>Event</th><th>Your order</th>'+(q.events[0] && q.events[0].order!==undefined?'<th>Correct</th>':'')+'</tr>'+
+      (q.events||[]).map(function(ev,i){ return '<tr><td>'+esc(ev.text)+'</td><td>'+esc((a||{})[i]||'—')+'</td>'+(ev.order!==undefined?'<td>'+ev.order+'</td>':'')+'</tr>'; }).join('')+'</table></div>';
+  }
+  return '';
+}
+
+/* ---------- teaching feedback under a marked answer ---------- */
+function teachTitle(m, blank){
+  if(m.awarded>=m.max) return 'Why this is correct';
+  if(blank) return 'What was needed';
+  if(m.awarded>0) return 'What you got, and what was missing';
+  return 'Why this is not correct';
+}
+/* o: {m, qid, part, answer, blank, steps (bool), tip (bool), sub (bool: a part inside a question), chip (bool), extra} */
+function teachHTML(o){
+  var m=o.m; if(!m) return '';
+  if(calmOn()){
+    var full=m.awarded>=m.max, c='<div class="cf" style="margin-top:6px">';
+    if(o.chip!==false && !o.sub) c+='<div class="cf-qh" style="margin:0"><span class="cf-chip '+PCF.lvl(m.awarded,m.max)+'">'+fmtMarks(m.awarded)+' / '+fmtMarks(m.max)+'</span>'+(full?'<span class="cf-tag2">✓ Correct</span>':'')+'</div>';
+    else if(o.sub) c+='<span class="cf-chip '+PCF.lvl(m.awarded,m.max)+'">'+fmtMarks(m.awarded)+' / '+fmtMarks(m.max)+'</span>';
+    if(!full){
+      c+=PCF.pts(m.got, m.missing);
+      if(o.answer) c+=PCF.ok(o.answer, 'Answer');
+      if(!(m.got||[]).length && !(m.missing||[]).length && m.feedback) c+='<p class="cf-fb">💡 '+esc(m.feedback)+'</p>';
+      if(m.clue) c+='<button class="quote" data-act="clue" data-q="'+o.qid+'"'+(o.part!=null?' data-part="'+o.part+'"':'')+' style="margin-top:8px">🔍 “'+esc(m.clue)+'”<span>'+(m.para?'Paragraph '+m.para+' · ':'')+'Tap to see it in the passage</span></button>';
+      if(o.steps!==false && m.steps && m.steps.length) c+='<details class="cf-more" style="box-shadow:none;border:2px solid #E4DEF6"><summary>🧠 How to work it out</summary><ol class="think">'+m.steps.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ol></details>';
+    }
+    if(o.extra) c+=o.extra;
+    return c+'</div>';
+  }
+  var h='<div class="teach'+(o.sub?' sub':'')+'">';
+  h+='<div class="teach-h">'+(o.chip!==false?'<span class="chip '+verdict(m.awarded,m.max)+'">'+fmtMarks(m.awarded)+' / '+fmtMarks(m.max)+'</span>':'')+'<b>'+teachTitle(m,o.blank)+'</b></div>';
+  if(m.feedback) h+='<p>'+esc(m.feedback)+'</p>';
+  if(o.answer) h+='<div class="key"><b>Correct answer</b>\n'+esc(o.answer)+'</div>';
+  if(m.clue){
+    h+='<div class="find"><div class="find-h">🔍 How to find it'+(m.para?' · Paragraph '+m.para:'')+'</div>'+
+      '<button class="quote" data-act="clue" data-q="'+o.qid+'"'+(o.part!=null?' data-part="'+o.part+'"':'')+'>“'+esc(m.clue)+'”<span>Tap to see it in the passage</span></button>';
+    if(o.steps!==false && m.steps && m.steps.length) h+='<ol class="think">'+m.steps.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ol>';
+    h+='</div>';
+  }
+  if(o.tip!==false && m.tip) h+='<p class="tip"><b>💡 Remember:</b> '+esc(m.tip)+'</p>';
+  if(o.extra) h+=o.extra;
+  return h+'</div>';
+}
+/* correct answer text for the teacher, straight from the passage's key */
+function teacherKey(q, pid){
+  if(q.type==='mcq') return '('+(Number(q.answer)+1)+') '+((q.options||[])[q.answer]||'');
+  if(q.type==='sequence') return (q.events||[]).slice().sort(function(a,b){ return a.order-b.order; }).map(function(e){ return e.order+'. '+e.text; }).join('\n');
+  if(pid!=null && q.parts){ var pt=q.parts.filter(function(x){ return x.id===pid; })[0]; return pt?pt.model:''; }
+  if(pid!=null && q.statements){ var st=q.statements[Number(String(pid).slice(1))]; return st?st.answer+'. '+st.reason:''; }
+  return q.model||'';
+}
+function keyFor(ctx, q, pid){
+  if(ctx.reviewKey) return teacherKey(q, pid);
+  if(pid!=null) return ((ctx.keyParts||{})[q.id]||{})[pid]||'';
+  return (ctx.keys||{})[q.id]||'';
+}
+function isBlank(v){ return v===undefined || v===null || v==='' || (typeof v==='object' && !Object.keys(v).some(function(k){ var x=v[k]; return x && (typeof x!=='object' || x.tf || x.reason); })); }
+
+function qCard(q, num, ctx){
+  var mode=ctx.mode, ans=ctx.answers||{}, a=ans[q.id], m=ctx.marks?ctx.marks[q.id]:null;
+  var ro = mode!=='answer';
+  var h='<section class="qc" id="q-'+q.id+'"><div class="qh"><span class="qn">Q'+num+'</span><div class="qp">'+esc(q.prompt)+(mode==='answer'&&TYPE_LABEL[q.type]?'<span class="qtype">'+esc(TYPE_LABEL[q.type])+'</span>':'')+'</div><span class="qm">['+fmtMarks(q.marks)+']</span></div>';
+
+  if(q.type==='mcq'){
+    if(ro){ h+=answerView(ctx.reviewKey?q:{type:'mcq',options:q.options}, a); }
+    else h+='<div class="opts" role="radiogroup">'+(q.options||[]).map(function(o,i){
+      var on = a!==undefined && a!=='' && Number(a)===i;
+      return '<label class="opt'+(on?' sel':'')+'"><input type="radio" name="r-'+q.id+'" value="'+i+'" data-bind="'+q.id+'"'+(on?' checked':'')+'><b>('+(i+1)+')</b><span>'+esc(o)+'</span></label>';
+    }).join('')+'</div>';
+  }
+  else if(q.type==='sequence'){
+    if(ro) h+=answerView(ctx.reviewKey?q:{type:'sequence',events:(q.events||[]).map(function(e){return {text:e.text};})}, a);
+    else {
+      var n=(q.events||[]).length;
+      h+='<div class="tblwrap"><table class="tbl"><tr><th>Event</th><th>Order</th></tr>'+(q.events||[]).map(function(ev,i){
+        var v=(a||{})[i]||'';
+        var opts='<option value="">–</option>'; for(var k=1;k<=n;k++) opts+='<option'+(String(v)===String(k)?' selected':'')+'>'+k+'</option>';
+        return '<tr><td>'+esc(ev.text)+'</td><td><select class="ord" data-bind="'+q.id+'|'+i+'" aria-label="Order for event '+(i+1)+'">'+opts+'</select></td></tr>';
+      }).join('')+'</table></div>';
+    }
+  }
+  else if(q.parts && q.parts.length){
+    h+='<div class="parts">'+q.parts.map(function(pt){
+      var v=(a||{})[pt.id]||'';
+      var pm = m && m.parts ? m.parts[pt.id] : null;
+      var body = ro ? (v?(calmOn()?calmAns(v, pm && pm.grammar):gramBox(v, pm && pm.grammar)):'<div class="ans blank">No answer</div>')
+        : (q.type==='structured'
+            ? '<textarea class="lined" rows="2" data-bind="'+q.id+'|'+pt.id+'" aria-label="Part '+pt.id+'">'+esc(v)+'</textarea>'
+            : '<input type="text" data-bind="'+q.id+'|'+pt.id+'" value="'+esc(v)+'" aria-label="Part '+pt.id+'">');
+      var extra='';
+      if(ro && pm) extra=teachHTML({m:pm, qid:q.id, part:pt.id, answer:keyFor(ctx,q,pt.id), blank:!v, tip:false, sub:true});
+      else if(ro && ctx.reviewKey && pt.model) extra='<div class="key"><b>Correct answer</b>\n'+esc(pt.model)+'</div>';
+      return '<div class="part"><span class="pl">('+esc(pt.id)+')</span><div class="stack" style="gap:6px"><div>'+esc(pt.label||'')+' <span class="qm small">['+fmtMarks(pt.marks)+']</span></div>'+body+extra+'</div></div>';
+    }).join('')+'</div>';
+  }
+  else if(q.statements && q.statements.length){
+    h+='<div class="parts">'+q.statements.map(function(st,i){
+      var v=(a||{})[i]||{};
+      var pm = m && m.parts ? m.parts['s'+i] : null;
+      var body;
+      if(ro){
+        body= v.tf ? (calmOn()?'<div><b>'+esc(v.tf)+'</b></div>'+calmAns(v.reason||'(no reason)', pm && pm.grammar):gramBox(v.reason||'(no reason)', pm && pm.grammar, '<b>'+esc(v.tf)+'</b> — ')) : '<div class="ans blank">No answer</div>';
+        if(pm) body+=teachHTML({m:pm, qid:q.id, part:'s'+i, answer:keyFor(ctx,q,'s'+i), blank:!v.tf, tip:false, sub:true});
+        else if(ctx.reviewKey && st.answer) body+='<div class="key"><b>Correct answer</b>\n'+esc(st.answer)+'. '+esc(st.reason||'')+'</div>';
+      } else {
+        body='<div class="tfseg">'+['True','False'].map(function(t){
+          return '<label><input type="radio" name="tf-'+q.id+'-'+i+'" value="'+t+'" data-bind="'+q.id+'|'+i+'|tf"'+(v.tf===t?' checked':'')+'><span>'+t+'</span></label>';
+        }).join('')+'</div><input type="text" placeholder="Reason" data-bind="'+q.id+'|'+i+'|reason" value="'+esc(v.reason||'')+'" aria-label="Reason for statement '+(i+1)+'">';
+      }
+      return '<div class="part"><span class="pl">'+(i+1)+'.</span><div class="stack" style="gap:6px"><div>'+esc(st.text)+' <span class="qm small">['+fmtMarks(st.marks||1)+']</span></div>'+body+'</div></div>';
+    }).join('')+'</div>';
+  }
+  else {
+    var rows = q.marks>=3 ? 5 : q.marks>=2 ? 4 : 2;
+    h+= ro ? (a?(calmOn()?calmAns(a, m && m.grammar):gramBox(a, m && m.grammar)):'<div class="ans blank">No answer</div>')
+           : '<textarea class="lined" rows="'+rows+'" data-bind="'+q.id+'" aria-label="Answer for question '+num+'">'+esc(a||'')+'</textarea>';
+  }
+
+  if(ro && m){
+    var multi=!!(q.parts||q.statements);
+    var review = mode==='review' ? '<label class="row small" style="gap:6px;font-weight:700">Teacher mark <input type="number" min="0" max="'+q.marks+'" step="0.5" value="'+m.awarded+'" data-ovr="'+q.id+'"></label>' : '';
+    if(multi && calmOn()){
+      h+='<div class="cf" style="margin-top:8px"><div class="cf-qh"><span class="cf-chip '+PCF.lvl(m.awarded,m.max)+'">'+fmtMarks(m.awarded)+' / '+fmtMarks(m.max)+' marks</span><b style="font-size:14px">Question total</b></div></div>';
+    } else if(multi){
+      // the parts carry their own lessons; show the total, the overall comment and the strategy tip
+      h+='<div class="teach total"><div class="row between"><div class="teach-h"><span class="chip '+verdict(m.awarded,m.max)+'">'+fmtMarks(m.awarded)+' / '+fmtMarks(m.max)+' marks</span><b>Question total</b></div>'+review+'</div>'+
+        (m.feedback?'<p>'+esc(m.feedback)+'</p>':'')+(m.tip?'<p class="tip"><b>Remember:</b> '+esc(m.tip)+'</p>':'')+'</div>';
+    } else {
+      var ms = (mode==='review' && q.markScheme) ? '<div class="key"><b>Mark scheme</b>\n'+esc(q.markScheme)+'</div>' : '';
+      if(review) ms+='<div class="row" style="justify-content:flex-end">'+review+'</div>';
+      h+=teachHTML({m:m, qid:q.id, answer:keyFor(ctx,q), blank:isBlank(a), extra:ms});
+    }
+  } else if(ro && !m && mode!=='answer'){
+    h+='<p class="muted small">Not marked yet.</p>';
+  }
+  return h+'</section>';
+}
+
+function calmLessons(p, ctx){
+  if(!calmOn() || ctx.mode!=='result' || !ctx.marks) return '';
+  var items=[];
+  p.questions.forEach(function(q){ var m=ctx.marks[q.id]; if(!m || m.awarded>=m.max) return; var id=skillId(q), L=PLES[id]; if(!L) return; items.push({id:id, lesson:{t:L.t, r:m.tip||L.r, x:L.x, k:L.k}}); });
+  return PCF.lessons(items, 'Quick lessons');
+}
+function bookletHTML(p, ctx){
+  var nums=numbering(p.questions);
+  var Q=p.questions;
+  var sum=function(l){ return l.reduce(function(s,q){ return s+(Number(q.marks)||0); },0); };
+  var h='<div class="booklet">';
+  if(Q.length) h+='<div class="sec"><h2>Questions</h2><span class="qm">'+fmtMarks(sum(Q))+' marks</span></div>'+
+    '<p class="muted small">Read the passage and answer the questions. For multiple-choice questions, choose the correct answer. Write in complete sentences where needed.</p>'+Q.map(function(q){ return qCard(q, nums[q.id], ctx); }).join('');
+  var A=[], B=[];
+  if(A.length) h+='<div class="sec"><h2>Booklet A · Multiple choice</h2><span class="qm">'+fmtMarks(sum(A))+' marks</span></div>'+
+    '<p class="muted small">Choose the correct answer and shade its number.</p>'+A.map(function(q){ return qCard(q, nums[q.id], ctx); }).join('');
+  if(B.length) h+='<div class="sec"><h2>Booklet B · Open-ended</h2><span class="qm">'+fmtMarks(sum(B))+' marks</span></div>'+
+    '<p class="muted small">Read the passage and answer the questions. Write in complete sentences where needed.</p>'+B.map(function(q){ return qCard(q, nums[q.id], ctx); }).join('');
+  h+=calmLessons(p, ctx);
+  return h+'</div>';
+}
+
+/* ---------- header ---------- */
+function drawBar(){
+  var who=$('#who'), act=$('#barActions');
+  if(S.view==='teacher'){
+    who.textContent = S.dash ? 'Teacher' : '';
+    act.innerHTML = BOOT.dashUrl ? '<a class="btn small ghost" href="'+esc(BOOT.dashUrl)+'" target="_top">‹ Dashboard</a>' : '';
+  } else {
+    who.textContent = S.student.name ? S.student.name+(S.student.cls?' · '+S.student.cls:'') : '';
+    act.innerHTML = '';
+  }
+}
+
+/* ---------- main render ---------- */
+/** 🎉 Confetti when a pupil's marks come back at 60% or more (once per result). */
+var KCHEER = {};
+function kCheer(){
+  var at=S.attempt, r=at&&at.result; if(S.view!=='student' || S.route.name!=='attempt' || !r || r.status==='pending' || !r.max || KCHEER[r.id]) return;
+  KCHEER[r.id]=1; if(r.total/r.max<0.6) return;
+  try{ if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch(e){}
+  var box=document.createElement('div'), C=['#6C47FF','#FF6FAE','#22C59B','#FFB627','#3BA7FF','#FF6B6B']; box.className='kconf'; box.setAttribute('aria-hidden','true');
+  for(var i=0;i<70;i++){ var c=document.createElement('i'); c.style.left=(Math.random()*100)+'%'; c.style.background=C[i%C.length]; c.style.animationDelay=(Math.random()*0.6)+'s'; c.style.setProperty('--dx',(Math.random()*160-80)+'px'); c.style.setProperty('--r',(Math.random()*900-450)+'deg'); box.appendChild(c); }
+  document.body.appendChild(box); setTimeout(function(){ if(box.parentNode) box.parentNode.removeChild(box); }, 3400);
+}
+function render(){
+  document.body.classList.toggle('stu', S.view==='student');
+  drawBar();
+  var app=$('#app'), r=S.route.name, html='';
+  if(S.view==='teacher'){
+    if(!S.dash) html=viewTeacherLoading();
+    else if(r==='create') html=viewCreate();
+    else if(r==='upload') html=viewUpload();
+    else if(r==='editor') html=viewEditor();
+    else if(r==='results') html=viewResults();
+    else if(r==='review') html=viewReview();
+    else if(r==='settings') html=viewSettings();
+    else if(r==='attempt') html=viewAttempt();
+    else html=viewTeacherHome();
+  } else {
+    if(r==='attempt') html=viewAttempt();
+    else html=viewStudentHome();
+  }
+  app.innerHTML=html;
+  if(r==='attempt' || r==='review') afterWorkRender();
+  if(r==='editor') growAll();
+  if(BOOT.bridge){ try{ window.parent.cmRoute(r); }catch(e){} }
+  kCheer();
+}
+
+/* ================= STUDENT ================= */
+/* covers: one colour per passage, picked from its title */
+var COVERS=['linear-gradient(135deg,#6D3FE0,#B44AD8)','linear-gradient(135deg,#1FA389,#46C6A0)','linear-gradient(135deg,#F08A24,#F6B740)','linear-gradient(135deg,#E0457B,#F07AA3)','linear-gradient(135deg,#2F7BE5,#5FA8F5)','linear-gradient(135deg,#7C4DDB,#4BA3E3)'];
+function coverOf(p){ var t=String((p&&(p.title||p.passageTitle))||''), h=0; for(var i=0;i<t.length;i++) h=(h*31+t.charCodeAt(i))>>>0; return COVERS[h%COVERS.length]; }
+function emojiOf(p){
+  var g=String((p&&p.genre)||'')+' '+String((p&&p.title)||'');
+  if(/letter|email/i.test(g)) return '✉️'; if(/report|news|article|information|factual|expos/i.test(g)) return '📰';
+  if(/poem|poetry/i.test(g)) return '🎵'; if(/diary|journal|recount/i.test(g)) return '📔'; if(/science|animal|nature/i.test(g)) return '🔬';
+  if(/kite|fly|sky/i.test(g)) return '🪁'; if(/sea|beach|boat/i.test(g)) return '🌊'; if(/food|cook|hawker/i.test(g)) return '🍜';
+  return '📖';
+}
+function ringHTML(total, max, big){
+  var pc=pct(total,max), c=pc>=75?'var(--mint)':pc>=50?'var(--sun)':'var(--rose)';
+  return '<div class="ring'+(big?' big':'')+'" style="--p:'+pc+';--rc:'+c+'"><span>'+(big?fmtMarks(total)+'<small>/ '+fmtMarks(max)+'</small>':pc+'%')+'</span></div>';
+}
+var HERO_ART='<svg class="khero-art" viewBox="0 0 120 104" aria-hidden="true"><path d="M60 26C46 16 26 14 10 18v66c16-4 36-2 50 8z" fill="#fff" opacity=".95"/><path d="M60 26c14-10 34-12 50-8v66c-16-4-36-2-50 8z" fill="#EDE7FF"/>'+
+  '<path d="M60 26v66" stroke="#C9BDF7" stroke-width="2"/><g stroke="#C9BDF7" stroke-width="3" stroke-linecap="round"><path d="M20 34h28M20 44h30M20 54h24M20 64h28M72 34h28M70 44h30M72 54h22M70 64h28"/></g>'+
+  '<g fill="#FFD166"><path d="M98 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><path d="M16 0l2 4 4 2-4 2-2 4-2-4-4-2 4-2z" opacity=".85"/><circle cx="112" cy="40" r="3"/></g></svg>';
+function viewStudentHome(){
+  var s=S.student, first=s.name?esc(s.name.split(' ')[0]):'';
+  var h='<div class="kid">';
+  h+='<section class="khero"><div><div class="khi">👋 Hi'+(first?', '+first:'')+'!</div><h1>Ready to read?</h1>'+
+     '<p>Read the passage, answer the questions, then learn from your marks. Stuck on a word? Tap it to see what it means.</p>'+
+     '<div class="ksteps"><span>📖 Read</span><i>→</i><span>✏️ Answer</span><i>→</i><span>💡 Learn</span></div></div>'+HERO_ART+'</section>';
+
+  if(S.loadErr) h+='<div class="err">'+esc(S.loadErr)+'</div>';
+  if(!s.name) return h+'</div>';
+
+  var res=S.results||[], done={}, best=null;
+  res.forEach(function(r){ done[r.passageId]=1; if(r.status!=='pending' && r.max){ var pc=pct(r.total,r.max); if(best===null || pc>best) best=pc; } });
+  var todo=(S.list||[]).filter(function(p){ return !p.closed && !done[p.id]; }).length;
+  if(S.list) h+='<div class="kstats"><div style="--c:#8B6CF0"><b>'+todo+'</b><span>To do</span></div><div style="--c:#3FB8A0"><b>'+Object.keys(done).length+'</b><span>Handed in</span></div>'+
+     '<div style="--c:#F2A93B"><b>'+(best===null?'–':best+'%')+'</b><span>Best score</span></div></div>';
+
+  h+='<h2 class="ksec">📚 Your comprehensions</h2>';
+  if(!S.list) h+='<div class="kempty"><span class="e">⏳</span>Loading passages…</div>';
+  else if(!S.list.length) h+='<div class="kempty"><span class="e">🌈</span><b>Nothing set right now.</b>When your teacher sets a comprehension, it will be here.</div>';
+  else {
+    h+='<div class="kcards">'+S.list.map(function(p){
+      var mine=res.filter(function(r){ return r.passageId===p.id; })[0];
+      var draft=LS.get(draftKey(p.id),null);
+      var status = mine ? (mine.status==='pending'?'<span class="pill part">Waiting for teacher</span>':'<span class="pill good">✓ Handed in · '+fmtMarks(mine.total)+' / '+fmtMarks(mine.max)+'</span>')
+        : draft ? '<span class="pill pen">✏️ In progress</span>' : '<span class="pill" style="background:var(--sun-soft);color:#8A5A00">✨ New</span>';
+      var btn = p.closed ? '' : '<button class="btn '+(mine?'':'go')+'" data-act="start" data-id="'+p.id+'">'+(mine?'↻ Try again':draft?'▶ Continue':'▶ Start reading')+'</button>';
+      return '<article class="kcard"><div class="kcover" style="--g:'+coverOf(p)+'"><span class="kemo">'+emojiOf(p)+'</span><span class="klevel">'+esc(p.level)+(p.genre?' · '+esc(p.genre):'')+'</span></div>'+
+        '<div class="kbody"><h3>'+esc(p.title)+'</h3><div class="meta"><span>'+p.questions+' questions · '+p.marks+' marks</span></div><div class="meta">'+duePill(p)+status+'</div>'+
+        '<div class="kact">'+(mine?'<button class="btn go" data-act="openResult" data-id="'+mine.id+'">🏆 See marks</button>':'')+btn+
+        (p.closed && !mine?'<span class="muted small">Closed. Speak to your teacher.</span>':'')+'</div></div></article>';
+    }).join('')+'</div>';
+  }
+
+  if(res.length){
+    h+='<h2 class="ksec">🏆 My results</h2><div class="kres">'+res.map(function(r){
+      return '<div class="kr">'+(r.status==='pending'?'<div class="ring"><span>⏳</span></div>':ringHTML(r.total,r.max))+
+        '<div><h3>'+esc(r.passageTitle)+'</h3><div class="meta"><span>Attempt '+(r.attempt||1)+'</span><span>'+when(r.submittedAt)+'</span>'+
+        (r.status==='pending'?'<span class="pill part">Waiting for teacher</span>':'<span>'+fmtMarks(r.total)+' / '+fmtMarks(r.max)+'</span>')+(r.markedBy==='teacher'?'<span class="pill pen">Checked by teacher</span>':'')+'</div></div>'+
+        '<button class="btn small" data-act="openResult" data-id="'+r.id+'">Review</button></div>';
+    }).join('')+'</div>';
+  }
+  return h+'</div>';
+}
+
+function pickerHTML(){
+  var s=S.student;
+  if(!S.classes) return '<div class="panel muted">Loading your class list…</div>';
+  if(!S.classes.length) return '<div class="panel"><b>No class lists yet.</b><p class="muted small">Your teacher needs to add your class to the app first.</p></div>';
+  var cur=S.classes.filter(function(c){ return normCls(c.cls)===normCls(S.pickCls!=null?S.pickCls:s.cls); })[0];
+  var nameOpts=cur ? cur.names.map(function(n){ return '<option'+(n===s.name && cur && normCls(cur.cls)===normCls(s.cls)?' selected':'')+'>'+esc(n)+'</option>'; }).join('') : '';
+  if(s.name && !S.picking){
+    return '<div class="panel row between"><div class="stack" style="gap:2px;min-width:0"><span class="eyebrow">Signed in as</span><b>'+esc(s.name)+' · '+esc(s.cls)+'</b></div>'+
+      '<button class="btn small" data-act="changeMe">Not you? Change</button></div>';
+  }
+  return '<form class="panel row" data-form="student" style="align-items:flex-end">'+
+    '<label class="f" style="flex:1 1 120px">Class<select id="sCls" required><option value="">Choose…</option>'+
+      S.classes.map(function(c){ return '<option'+(cur && c.cls===cur.cls?' selected':'')+'>'+esc(c.cls)+'</option>'; }).join('')+'</select></label>'+
+    '<label class="f" style="flex:2 1 200px">Your name<select id="sName" required'+(cur?'':' disabled')+'><option value="">'+(cur?'Choose your name…':'Choose your class first')+'</option>'+nameOpts+'</select></label>'+
+    '<button class="btn primary" type="submit">Continue</button></form>';
+}
+
+function draftKey(pid){ return 'cpm.draft.'+pid+'.'+slug(S.student.cls+'-'+S.student.name); }
+
+function loadStudent(){ S.loadErr=''; loadAssigned(); }
+function loadStudentOld(){
+  S.loadErr='';
+  call('listClasses').then(function(c){
+    S.classes=c;
+    var s=S.student;
+    if(s.name){
+      var cur=c.filter(function(x){ return normCls(x.cls)===normCls(s.cls); })[0];
+      if(!cur || cur.names.indexOf(s.name)<0){ S.student={name:'',cls:''}; LS.set('cpm.student',S.student); }
+    }
+    if(S.route.name==='home') render();
+    if(S.student.name) loadAssigned();
+  }).catch(function(e){ S.classes=[]; S.loadErr=e.message; render(); });
+}
+function loadAssigned(){
+  var s=S.student;
+  call('listPublished',{cls:s.cls}).then(function(l){ S.list=l; if(S.route.name==='home') render();
+    if(BOOT.pid && !loadStudent.opened){ loadStudent.opened=true; startAttempt(BOOT.pid); }
+  }).catch(function(e){ S.list=[]; S.loadErr=e.message; render(); });
+  call('myResults',{student:s.name, cls:s.cls}).then(function(r){ S.results=r; if(S.route.name==='home') render(); }).catch(function(){});
+}
+
+function startAttempt(pid, preview){
+  if(!preview && !S.student.name){ toast('Choose your class and name first.'); var n=$('#sCls'); if(n) n.focus(); return; }
+  var get = preview ? Promise.resolve(preview) : call('getPassage',{id:pid, cls:S.student.cls});
+  var b=busy('Opening passage',['Fetching the passage'],' ');
+  get.then(function(p){
+    b.done();
+    var d = preview ? null : LS.get(draftKey(p.id),null);
+    S.attempt = { passage:p, answers:(d&&d.answers)||{}, annos:(d&&d.annos)||[], words:(d&&d.words)||[], tab:'passage', showAi:true, result:null, preview:!!preview, clue:null, sel:null, sheet:null };
+    S.route={name:'attempt'};
+    render(); window.scrollTo(0,0);
+  }).catch(function(e){ b.done(); toast(e.message); });
+}
+
+function openResult(id){
+  var r=(S.results||[]).filter(function(x){ return x.id===id; })[0]; if(!r || !r.passage) return toast('That result is no longer available.');
+  S.attempt={ passage:r.passage, answers:r.answers||{}, annos:r.annos||[], words:[], tab:'questions', showAi:true, result:r, preview:false, clue:null, sel:null, sheet:null };
+  S.route={name:'attempt'}; render(); window.scrollTo(0,0);
+}
+
+var draftTimer;
+function saveDraft(){
+  var at=S.attempt; if(!at || at.preview || at.result) return;
+  clearTimeout(draftTimer);
+  draftTimer=setTimeout(function(){ LS.set(draftKey(at.passage.id), {answers:at.answers, annos:at.annos, words:(at.words||[]).slice(0,30), at:Date.now()}); }, 400);
+}
+
+/* ---------- attempt workspace (student answering + results; teacher preview) ---------- */
+function viewAttempt(){
+  var at=S.attempt, p=at.passage, res=at.result;
+  var h='<div class="stack kid" style="gap:12px">';
+  h+='<div class="row between"><button class="btn small kback" data-act="back">← '+(S.view==='teacher'?'Back to editor':'All passages')+'</button>'+
+     (at.preview?'<span class="pill part">Preview: nothing is saved</span>':'')+'</div>';
+  h+='<div class="ktitle"><span class="kemo" style="--g:'+coverOf(p)+'">'+emojiOf(p)+'</span><div style="min-width:0"><span class="eyebrow">'+esc(p.level)+(p.genre?' · '+esc(p.genre):'')+'</span><h1>'+esc(p.title)+'</h1></div></div>';
+  if(res) h+=resultHeader(res);
+  else if(p.due){
+    var left=p.due-Date.now();
+    h+= left>0 ? '<div class="banner'+(left>24*36e5?' calm':'')+'"><span>Hand in by '+esc(fmtDue(p.due))+'.'+(p.lock?' After that it locks and you cannot hand in.':'')+'</span></div>'
+               : '<div class="banner"><span>The due date ('+esc(fmtDue(p.due))+') has passed. Your teacher will see this as a late hand-in.</span></div>';
+  }
+  h+='<div class="tabs" role="group" aria-label="Switch view"><button class="btn" data-act="tab" data-tab="passage" aria-pressed="'+(at.tab==='passage')+'">📖 Passage</button>'+
+     '<button class="btn" id="tabQ" data-act="tab" data-tab="questions" aria-pressed="'+(at.tab==='questions')+'">'+(res?'🏆 Marks':'✏️ Questions')+'</button></div>';
+  h+='<div class="work" data-tab="'+at.tab+'">';
+  h+='<div class="pane-passage" id="pPane">'+annoBar()+'<div id="pBody">'+passageHTML(p,{showAi:at.showAi, annos:at.annos, clue:at.clue, flash:true, word:at.wordMark})+'</div><div id="wSlot"></div><div id="sheetSlot"></div></div>';
+  h+='<div class="pane-q" id="qPane">';
+  if(res){
+    h+=bookletHTML(p,{mode:'result', answers:at.answers, marks:res.marks||{}, keys:res.keys, keyParts:res.keyParts});
+  } else {
+    h+=bookletHTML(p,{mode:'answer', answers:at.answers});
+    h+='<div class="panel stack kdone" style="margin-top:14px"><span class="e">🚀</span><h2>Finished?</h2><p class="muted small">Read your answers once more, then hand in. You\'ll get your marks and tips straight away.</p>'+
+       (at.err?'<div class="err">'+esc(at.err)+'</div>':'')+'<div id="submitNote" class="muted small"></div><div class="row">'+
+       '<button class="btn go" data-act="submit"'+(at.preview?' disabled':'')+'>'+(at.confirming?'Tap again to hand in':'Hand in for marking')+'</button></div>'+
+       (at.preview?'<span class="muted small">Pupils hand in from the student link.</span>':'<span class="muted small">💾 Your answers save on this device as you type.</span>')+'</div>';
+  }
+  h+='</div></div></div>';
+  return h;
+}
+
+function resultHeader(res){
+  if(calmOn() && res.status!=='pending' && S.attempt && S.attempt.passage){
+    var qs=S.attempt.passage.questions, M=res.marks||{}, n=0, rows=[];
+    var lights=qs.map(function(q){ n++; var m=M[q.id]; if(!m) return {c:'n',t:n}; rows.push({id:skillId(q), ok:m.awarded>=m.max}); return {c:PCF.lvl(m.awarded,m.max), t:n}; });
+    var sa=PCF.starAim(rows);
+    return PCF.sum({got:res.total, max:res.max, lights:lights, star:sa.star||(res.total>=res.max?'Full marks!':''), aim:sa.aim})+
+      (res.teacherComment?'<div class="panel" style="margin-top:4px"><b>💬 Teacher:</b> '+esc(res.teacherComment)+'</div>':'')+
+      '<div class="row" style="gap:6px;margin:2px 0 0">'+(res.markedBy==='teacher'?'<span class="pill pen">Checked by your teacher</span>':'<span class="pill">Marked by AI</span>')+'<span class="muted small">Tap a quote to see it in the passage.</span></div>';
+  }
+  if(res.status==='pending'){
+    return '<div class="panel kscore"><div class="ring big"><span>⏳</span></div><div class="stack" style="gap:6px"><div class="cheer">Handed in!</div><p class="muted">Your answers are saved. Your teacher will mark them and you will see your marks here.</p></div></div>';
+  }
+  var pc=pct(res.total,res.max);
+  var cheer = pc>=85?'🌟 Superstar reading!':pc>=70?'🎉 Great work!':pc>=50?'👍 Good effort!':'💪 Keep going, you\'re learning!';
+  var stars = pc>=85?3:pc>=60?2:pc>=35?1:0;
+  return '<div class="panel scorecard kscore">'+ringHTML(res.total,res.max,true)+
+    '<div class="stack" style="gap:6px"><div class="cheer">'+cheer+'</div><div class="kstars" aria-label="'+stars+' of 3 stars">'+'⭐⭐⭐'.slice(0,stars*1)+'<span style="opacity:.25">'+'☆☆☆'.slice(0,3-stars)+'</span></div>'+
+    '<div class="row"><span class="chip '+(pc>=75?'v-full':pc>=50?'v-part':'v-zero')+'">'+pc+'%</span>'+
+    (res.markedBy==='teacher'?'<span class="pill pen">Checked by your teacher</span>':'<span class="pill">Marked by AI</span>')+'</div>'+
+    (res.summary?'<p>'+esc(res.summary)+'</p>':'')+
+    (res.teacherComment?'<p><b>💬 Teacher:</b> '+esc(res.teacherComment)+'</p>':'')+
+    '<p class="muted small">Under each question, read why your answer is right or wrong and how to find the answer. Tap a quote to see it in the passage.</p></div></div>';
+}
+
+var SEL_HINT='💡 Tap any word to see what it means. To highlight, select words, then pick a colour.';
+function annoBar(){
+  var at=S.attempt||S.review;
+  var canAnno = S.route.name==='attempt' && !(at.result);
+  var h='<div class="annobar">';
+  if(canAnno){
+    h+='<div class="tools">'+
+      '<button class="sw sw-y" data-act="hl" data-style="y"><i></i>Yellow</button>'+
+      '<button class="sw sw-g" data-act="hl" data-style="g"><i></i>Green</button>'+
+      '<button class="sw sw-p" data-act="hl" data-style="p"><i></i>Pink</button>'+
+      '<button class="sw sw-u" data-act="hl" data-style="u"><i></i>Underline</button>'+
+      '<button class="sw sw-n" data-act="noteNew"><i></i>Note</button>'+
+      '<button class="sw sw-m" data-act="wSel">📖 Meaning</button>'+
+      '<label class="tgl"><input type="checkbox" id="showAi"'+(at.showAi?' checked':'')+'> AI notes</label></div>'+
+      '<div class="selhint" id="selhint">'+SEL_HINT+'</div>';
+  } else {
+    h+='<div class="tools"><span class="small muted">💡 Tap any word to see what it means. Highlights are shown as they were handed in.</span><label class="tgl"><input type="checkbox" id="showAi"'+(at.showAi?' checked':'')+'> AI notes</label></div>';
+  }
+  return h+'</div>';
+}
+
+/* ---------- tap a word: its meaning in this sentence ---------- */
+function wordRange(pEl, start, end){
+  var r=document.createRange(), pos=0, w=document.createTreeWalker(pEl, NodeFilter.SHOW_TEXT), n, set=false;
+  while((n=w.nextNode())){
+    var L=n.nodeValue.length;
+    if(!set && start<=pos+L){ r.setStart(n, start-pos); set=true; }
+    if(set && end<=pos+L){ r.setEnd(n, end-pos); return r; }
+    pos+=L;
+  }
+  return null;
+}
+function wordAt(e, at){
+  var pEl=e.target.closest && e.target.closest('#passage p[data-p]'); if(!pEl) return null;
+  var node=null, off=0;
+  if(document.caretPositionFromPoint){ var cp=document.caretPositionFromPoint(e.clientX,e.clientY); if(cp){ node=cp.offsetNode; off=cp.offset; } }
+  else if(document.caretRangeFromPoint){ var cr=document.caretRangeFromPoint(e.clientX,e.clientY); if(cr){ node=cr.startContainer; off=cr.startOffset; } }
+  if(!node || node.nodeType!==3 || !pEl.contains(node)) return null;
+  var pi=Number(pEl.dataset.p), text=at.passage.paragraphs[pi]||'', i=offsetIn(pEl,node,off);
+  var isL=function(c){ return !!c && /[A-Za-zÀ-ɏ0-9]/.test(c); }, isJ=function(c){ return !!c && /['’-]/.test(c); };
+  if(!isL(text[i]) && isL(text[i-1])) i--;
+  if(!isL(text[i])) return null;
+  var s=i, en=i+1;
+  while(s>0 && (isL(text[s-1]) || (isJ(text[s-1]) && isL(text[s-2])))) s--;
+  while(en<text.length && (isL(text[en]) || (isJ(text[en]) && isL(text[en+1])))) en++;
+  var word=text.slice(s,en).replace(/['’]s$/,'');
+  if(!/[A-Za-z]/.test(word)) return null;
+  en=s+word.length;
+  var rg=wordRange(pEl,s,en);
+  if(rg){ var hit=[].some.call(rg.getClientRects(), function(b){ return e.clientX>=b.left-4 && e.clientX<=b.right+4 && e.clientY>=b.top-4 && e.clientY<=b.bottom+4; }); if(!hit) return null; }
+  return {p:pi, start:s, end:en, word:word};
+}
+function sentenceOf(text, s, e){
+  var a=s, b=e; while(a>0 && !/[.!?]/.test(text[a-1])) a--; while(b<text.length && !/[.!?]/.test(text[b])) b++;
+  return text.slice(a, Math.min(text.length,b+1)).trim();
+}
+function wKey(w){ return w.p+':'+w.start+':'+String(w.word).toLowerCase(); }
+function curAt(){ return S.route.name==='review' ? S.review : S.attempt; }
+function openWord(at, w, marks){
+  at.defs=at.defs||{}; at.wordMark=w;
+  at.sheet={kind:'word', w:w, u:marks&&marks.u, a:marks&&marks.a, key:wKey(w)};
+  redrawPassage(false); drawSheet();
+  if(at.defs[at.sheet.key]) return;
+  lookUp(at, w);
+}
+function lookUp(at, w){
+  var k=wKey(w), text=at.passage.paragraphs[w.p]||'';
+  at.sheet.err=null; drawSheet();
+  call('define',{pid:at.passage.id, p:w.p, start:w.start, end:w.end, text:w.word, sentence:sentenceOf(text,w.start,w.end), title:at.passage.title}).then(function(d){
+    at.defs[k]=d;
+    if(!at.preview && !at.result && S.attempt===at){
+      at.words=(at.words||[]).filter(function(x){ return String(x.w.word).toLowerCase()!==String(w.word).toLowerCase(); });
+      at.words.unshift({w:w, d:d}); at.words=at.words.slice(0,30); saveDraft();
+    } else if(at.result || at.preview){
+      at.words=(at.words||[]).filter(function(x){ return String(x.w.word).toLowerCase()!==String(w.word).toLowerCase(); }); at.words.unshift({w:w,d:d}); at.words=at.words.slice(0,30);
+    }
+    if(at.sheet && at.sheet.key===k) drawSheet();
+    drawWords();
+  }).catch(function(e){ if(at.sheet && at.sheet.key===k){ at.sheet.err=e.message; drawSheet(); } });
+}
+function wordSheet(sh){
+  var at=curAt(), d=(at.defs||{})[sh.key], w=sh.w;
+  var canSay = 'speechSynthesis' in window;
+  var h='<div class="sheet wsheet" role="dialog" aria-label="Meaning of '+esc(w.word)+'"><div class="wtop"><div class="ww"><span class="wword">'+esc(w.word)+'</span>'+
+    (d && d.pos?'<span class="wpos">'+esc(d.pos)+'</span>':'')+'</div><div class="row" style="gap:6px;flex-wrap:nowrap">'+
+    (canSay?'<button class="wbtn" data-act="wSay" aria-label="Say it">🔊</button>':'')+'<button class="wbtn" data-act="wClose" aria-label="Close">✕</button></div></div>';
+  if(sh.err) h+='<div class="err">'+esc(sh.err)+'</div><div class="row"><button class="btn small" data-act="wRetry">Try again</button></div>';
+  else if(!d) h+='<div class="wload"><i></i><i></i><i></i> Looking it up…</div>';
+  else {
+    if(d.base) h+='<div class="wbase">from “'+esc(d.base)+'”</div>';
+    h+='<div class="wmean">'+esc(d.meaning)+'</div>';
+    if(d.phrase) h+='<div class="wphr">🧩 '+esc(d.phrase)+'</div>';
+    if(d.example) h+='<div class="wex"><b>Example</b>'+esc(d.example)+'</div>';
+    if(d.similar && d.similar.length) h+='<div class="wsim">Words like it: '+d.similar.map(function(x){ return '<span>'+esc(x)+'</span>'; }).join('')+'</div>';
+  }
+  if(sh.a!=null && at.showAi && (at.passage.aiNotes||[])[sh.a]) h+='<div class="wnote">✒️ '+esc(at.passage.aiNotes[sh.a].note)+'</div>';
+  if(sh.u) h+='<div class="row"><button class="btn small" data-act="wMark">🖍️ My highlight and note</button></div>';
+  return h+'</div>';
+}
+function drawWords(){
+  var slot=$('#wSlot'), at=curAt(); if(!slot || !at) return;
+  var l=at.words||[];
+  slot.innerHTML = l.length ? '<div class="wlist"><b>📒 Words I looked up</b><div class="chips">'+l.map(function(x,i){ return '<button data-act="wOpen" data-i="'+i+'">'+esc(x.w.word)+'</button>'; }).join('')+'</div></div>' : '';
+}
+function sayWord(t){
+  try{ speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(t); u.lang='en-GB'; u.rate=.85;
+    var v=(speechSynthesis.getVoices()||[]).filter(function(x){ return /^en-(GB|SG)/i.test(x.lang); })[0]; if(v) u.voice=v; speechSynthesis.speak(u); }
+  catch(e){ toast('Sound isn\'t available on this device.'); }
+}
+/* on a phone the meaning sheet sits at the bottom of the screen: keep the tapped word above it */
+function keepWordVisible(){
+  var el=$('.mk.wq'), sh=$('.wsheet'); if(!el || !sh) return;
+  if(getComputedStyle(sh).position!=='fixed'){   // laptop: bring the whole passage box into view so its bottom (and the sheet) shows
+    var pane=$('#pPane'); if(pane){ var pr=pane.getBoundingClientRect(); if(pr.bottom>window.innerHeight+2) window.scrollBy(0, Math.min(pr.bottom-window.innerHeight+8, pr.top-12)); }
+    var r2=el.getBoundingClientRect(), t2=sh.getBoundingClientRect().top, pn=$('#pPane'); if(pn && r2.bottom>t2-12) pn.scrollTop+=r2.bottom-t2+40;
+    return;
+  }
+  var r=el.getBoundingClientRect(), top=sh.getBoundingClientRect().top;
+  if(r.bottom>top-16) window.scrollBy(0, r.bottom-top+70); else if(r.top<60) window.scrollBy(0, r.top-80);
+}
+/* answered count on the Questions tab, and a tick on each answered question */
+function updateProg(){
+  var at=S.attempt; if(!at || at.result || S.route.name!=='attempt') return;
+  var qs=at.passage.questions, n=0;
+  qs.forEach(function(q){ var ok=!isBlank(at.answers[q.id]); if(ok) n++; var el=document.getElementById('q-'+q.id); if(el) el.classList.toggle('done', ok); });
+  var t=$('#tabQ'); if(t) t.textContent='✏️ Questions · '+n+'/'+qs.length;
+}
+
+function redrawPassage(scrollClue){
+  var at=S.route.name==='review' ? S.review : S.attempt;
+  var body=$('#pBody'); if(!body) return;
+  body.innerHTML=passageHTML(at.passage,{showAi:at.showAi, annos:at.annos, clue:at.clue, flash:!!scrollClue, word:at.wordMark});
+  if(scrollClue){
+    var el=$('.mk.clue', body);
+    if(el) el.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth', block:'center'});
+  }
+}
+
+function drawSheet(){
+  var at=S.route.name==='review' ? S.review : S.attempt;
+  var slot=$('#sheetSlot'); if(!slot) return;
+  var sh=at.sheet; if(!sh){ slot.innerHTML=''; document.body.classList.remove('wopen'); return; }
+  var p=at.passage, h='';
+  if(sh.kind==='ai'){
+    var n=p.aiNotes[sh.idx];
+    h='<div class="sheet"><div class="q">“'+esc(n.quote)+'”</div><div class="note">'+esc(n.note)+'</div><div class="row"><button class="btn small" data-act="sheetClose">Close</button></div></div>';
+  } else if(sh.kind==='anno'){
+    var a=at.annos.filter(function(x){ return x.id===sh.id; })[0]; if(!a){ slot.innerHTML=''; return; }
+    var txt=p.paragraphs[a.p].slice(a.start,a.end);
+    var editable = S.route.name==='attempt' && !at.result;
+    h='<div class="sheet u"><div class="q">“'+esc(txt)+'”</div>'+
+      (editable?'<textarea id="noteText" rows="2" placeholder="Add a note to yourself">'+esc(a.note||'')+'</textarea>'+
+        '<div class="row"><button class="btn primary small" data-act="noteSave" data-id="'+a.id+'">Save note</button><button class="btn small" data-act="annoDel" data-id="'+a.id+'">Remove mark</button><button class="btn small ghost" data-act="sheetClose">Close</button></div>'
+       :(a.note?'<div class="note">'+esc(a.note)+'</div>':'')+'<div class="row"><button class="btn small" data-act="sheetClose">Close</button></div>')+'</div>';
+  } else if(sh.kind==='new'){
+    var t2=p.paragraphs[sh.sel.p].slice(sh.sel.start,sh.sel.end);
+    h='<div class="sheet u"><div class="q">“'+esc(t2)+'”</div><textarea id="noteText" rows="2" placeholder="Write your note"></textarea>'+
+      '<div class="row"><button class="btn primary small" data-act="noteCreate">Add note</button><button class="btn small ghost" data-act="sheetClose">Cancel</button></div></div>';
+  }
+  if(sh.kind==='word') h=wordSheet(sh);
+  slot.innerHTML=h;
+  document.body.classList.toggle('wopen', sh.kind==='word');
+  if(sh.kind==='word') keepWordVisible();
+  var ta=$('#noteText'); if(ta && sh.kind==='new') ta.focus();
+}
+
+function afterWorkRender(){ drawSheet(); drawWords(); updateProg(); }
+
+/* selection tracking */
+function paraOf(node){ while(node && node.nodeType!==1) node=node.parentNode; return node ? node.closest('p[data-p]') : null; }
+function offsetIn(pEl, node, off){ var r=document.createRange(); r.selectNodeContents(pEl); r.setEnd(node,off); return r.toString().length; }
+document.addEventListener('selectionchange', function(){
+  if(S.route.name!=='attempt' || !S.attempt || S.attempt.result) return;
+  var sel=getSelection(); if(!sel || !sel.rangeCount || sel.isCollapsed) return;
+  var rg=sel.getRangeAt(0);
+  var pa=paraOf(rg.startContainer); if(!pa) return;
+  var pi=Number(pa.dataset.p);
+  var start=offsetIn(pa, rg.startContainer, rg.startOffset);
+  var pb=paraOf(rg.endContainer);
+  var end = (pb===pa) ? offsetIn(pa, rg.endContainer, rg.endOffset) : S.attempt.passage.paragraphs[pi].length;
+  var text=S.attempt.passage.paragraphs[pi];
+  while(start<end && /\s/.test(text[start])) start++;
+  while(end>start && /\s/.test(text[end-1])) end--;
+  if(end<=start) return;
+  S.attempt.sel={p:pi,start:start,end:end,at:Date.now()};
+  var hint=$('#selhint'); if(hint){ var t=text.slice(start,end); hint.innerHTML='Selected: <b>“'+esc(t.length>60?t.slice(0,57)+'…':t)+'”</b> — now pick a colour.'; }
+});
+function takeSel(){
+  var s=S.attempt && S.attempt.sel;
+  if(!s || Date.now()-s.at>60000){ toast('Select some words in the passage first.'); return null; }
+  return s;
+}
+function clearSel(){ S.attempt.sel=null; try{ getSelection().removeAllRanges(); }catch(e){} var hint=$('#selhint'); if(hint) hint.textContent=SEL_HINT; }
+
+/* ---------- submit ---------- */
+function submitAttempt(){
+  var at=S.attempt, p=at.passage;
+  var blank=p.questions.filter(function(q){ var a=at.answers[q.id]; if(a===undefined||a===''||a===null) return true; if(typeof a==='object') return !Object.keys(a).length; return false; }).length;
+  if(!at.confirming){
+    at.confirming=true; render();
+    var n=$('#submitNote'); if(n) n.innerHTML = blank ? '<b>'+blank+' question'+(blank>1?'s are':' is')+' still blank.</b> Check your work, then tap again to hand in.' : 'All questions answered. Tap again to hand in.';
+    var btn=document.querySelector('[data-act=submit]'); if(btn) btn.scrollIntoView({block:'center'});
+    return;
+  }
+  at.confirming=false;
+  var b=busy('Marking your answers',['Handing in','Checking each answer against the answer key','Finding the clues in the passage'],'Your teacher\'s AI marker is reading your work.');
+  setTimeout(function(){ b.step(1); }, 1200);
+  setTimeout(function(){ b.step(2); }, 12000);
+  call('submit',{passageId:p.id, student:S.student.name, cls:S.student.cls, answers:at.answers, annos:at.annos}).then(function(r){
+    b.done();
+    LS.del(draftKey(p.id));
+    S.results=[r].concat((S.results||[]).filter(function(x){ return x.id!==r.id; }));
+    at.passage=r.passage||at.passage; at.result=r; at.tab='questions'; at.clue=null;
+    render(); window.scrollTo(0,0);
+  }).catch(function(e){ b.done(); at.err=e.message; render(); var el=$('.err'); if(el) el.scrollIntoView({block:'center'}); });
+}
+
+function showClue(qid, part){
+  var at=S.route.name==='review' ? S.review : S.attempt;
+  var m=(at.result||at.sub||{}).marks||{}; var mq=m[qid]||{};
+  var quote = part!=null ? ((mq.parts||{})[part]||{}).clue : mq.clue;
+  if(!quote){
+    var q=at.passage.questions.filter(function(x){ return x.id===qid; })[0];
+    if(q){ if(part!=null && q.parts){ var pt=q.parts.filter(function(x){ return x.id===part; })[0]; quote=pt&&pt.clue; }
+           else if(part!=null && q.statements){ var st=q.statements[Number(String(part).slice(1))]; quote=st&&st.clue; }
+           if(!quote) quote=q.clue; }
+  }
+  var loc=findClue(at.passage.paragraphs, quote);
+  if(!loc){ toast('The clue could not be found in the passage.'); return; }
+  at.clue=loc;
+  if(at.tab!=='passage' && matchMedia('(max-width:860px)').matches){
+    at.tab='passage';
+    var w=$('.work'); if(w) w.dataset.tab='passage';
+    document.querySelectorAll('.tabs .btn').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.tab==='passage')); });
+  }
+  redrawPassage(true);
+  var hint=$('#selhint'); if(hint) hint.innerHTML='Clue for question shown in <b style="color:var(--clue)">green-blue</b>. Switch back to keep reading your marks.';
+}
+
+/* ================= TEACHER ================= */
+function viewTeacherLoading(){
+  return S.loadErr ? '<div class="stack" style="max-width:520px;margin:6vh auto 0"><div class="err">'+esc(S.loadErr)+'</div><button class="btn" data-act="reloadDash">Try again</button></div>'
+    : '<div class="empty">Loading your comprehensions…</div>';
+}
+function viewLogin(){
+  return '<div class="stack" style="max-width:420px;margin:6vh auto 0"><div class="hero"><span class="eyebrow">Teacher</span><h1>Sign in to your classroom</h1>'+
+    '<p class="muted">Enter the teacher PIN from your Apps Script setup log.</p></div>'+
+    '<form class="panel stack" data-form="login"><label class="f">Teacher PIN<input type="password" id="pin" inputmode="numeric" autocomplete="current-password" value=""></label>'+
+    '<button class="btn primary" type="submit">Sign in</button>'+(S.loadErr?'<div class="err">'+esc(S.loadErr)+'</div>':'')+'</form>'+
+    '<p class="small muted">Tip: bookmark this page with <b>?view=teacher</b> at the end of the web app link to come straight here. '+
+    '<button class="link" data-act="toStudent">Back to the pupil page</button></p></div>';
+}
+
+function login(pin){
+  S.pin=pin; S.loadErr='';
+  call('dashboard').then(function(d){ S.dash=d; LS.set('cpm.pin',pin); S.route={name:'home'}; render(); })
+    .catch(function(e){ S.dash=null; S.loadErr=e.message; if(/PIN/.test(e.message)){ S.pin=''; LS.del('cpm.pin'); } render(); });
+}
+function refreshDash(){ return call('dashboard').then(function(d){ S.dash=d; S.loadErr=''; if(S.route.name==='home') render(); }).catch(function(e){ if(!S.dash){ S.loadErr=e.message; render(); } else toast(e.message); }); }
+
+function studentLink(){ return (S.dash && S.dash.hubUrl) || BOOT.hubUrl || ''; }
+
+function viewTeacherHome(){
+  var d=S.dash, ps=d.passages||[];
+  var h='<div class="stack">';
+  h+='<div class="row between"><div class="hero"><span class="eyebrow">Teacher dashboard</span><h1>Comprehension passages</h1>'+
+     '<p class="muted">Set PSLE-format passages, check AI marking, and see how your class did. Pupils do them in the Class Hub: <b>English → 📖 Comprehension</b>.</p></div></div>';
+  if(d.ai===false) h+='<div class="ai-warn">AI isn’t set up yet: add GEMINI_API_KEY in Script properties (a Claude key works as backup). Pupils can’t see the Comprehension section until then.</div>';
+  if(d.cmOn===false) h+='<div class="ai-warn">Comprehension is switched off for pupils. Turn it on in the Dashboard: Hub → 📖 Comprehension.</div>';
+  h+='<div class="row"><button class="btn primary" data-act="go" data-r="create">Create with AI</button><button class="btn" data-act="go" data-r="upload">Upload a passage</button>'+
+     '<button class="btn" data-act="newBlank">Write my own</button><button class="btn ghost" data-act="go" data-r="settings">Marking rules</button></div>';
+  h+='<div class="panel row between"><div class="stack" style="gap:2px;min-width:0"><b>Class Hub link</b><span class="small muted" style="overflow-wrap:anywhere">'+esc(studentLink())+'</span><span class="small muted">Pupils sign in to the Class Hub as usual, then tap English → Comprehension.</span></div><button class="btn small" data-act="copy" data-text="'+esc(studentLink())+'">Copy link</button></div>';
+  var cls=d.classes||[];
+  h+='<div class="panel row between"><div class="stack" style="gap:4px;min-width:0"><b>Your class</b>'+
+     (cls.length?'<span class="small muted">'+cls.map(function(c){ return esc(c.cls)+' ('+c.names.length+')'; }).join(' · ')+'</span>':'<span class="small muted">No classes yet.</span>')+
+     '<span class="small muted">Your Class Hub class list. Add or remove pupils as you do for the rest of the app.</span></div>'+
+     '<div class="row">'+(d.settings && d.settings.sheetUrl?'<a class="btn small" href="'+esc(d.settings.sheetUrl)+'" target="_blank" rel="noopener">Open Google Sheet</a>':'')+
+     '<button class="btn small ghost" data-act="reloadDash">Reload</button></div></div>';
+  if(!ps.length) h+='<div class="list"><div class="empty">No passages yet. Create one with AI or upload your own.</div></div>';
+  else h+='<div class="list">'+ps.slice().sort(function(a,b){ return (b.updated||0)-(a.updated||0); }).map(function(p){
+    var st=p.stats||{}; var marks=p.questions.reduce(function(s,q){ return s+(Number(q.marks)||0); },0);
+    return '<div class="item"><div><h3>'+esc(p.title)+'</h3><div class="meta"><span class="pill">'+esc(p.level)+'</span><span>'+esc(p.genre||'')+'</span><span>'+marks+' marks</span>'+
+      (p.published?'<span class="pill good">Published</span>':'<span class="pill">Draft</span>')+(p.source==='sample'?'<span class="pill pen">Sample</span>':'')+
+      '<span>'+(st.students||0)+(st.assigned?' / '+st.assigned:'')+' handed in'+(st.avg!=null?' · average '+Math.round(st.avg*100)+'%':'')+'</span>'+(st.pending?'<span class="pill part">'+st.pending+' to mark</span>':'')+'</div>'+
+      (p.published?'<div class="meta" style="margin-top:4px">'+((p.assignments||[]).length?(p.assignments||[]).map(function(a){
+          var closed=a.due && a.lock && a.due<Date.now();
+          return '<span class="pill '+(closed?'zero':'pen')+'">'+esc(a.cls)+(a.due?(closed?' · closed ':' · due ')+esc(fmtDue(a.due)):' · no due date')+'</span>';
+        }).join(''):'<span class="pill">Open · no due date</span>')+'</div>':'')+'</div>'+
+      '<div class="row"><button class="btn small" data-act="edit" data-id="'+p.id+'">Edit</button><button class="btn small primary" data-act="results" data-id="'+p.id+'">Results</button>'+
+      '</div></div>';
+  }).join('')+'</div>';
+  return h+'</div>';
+}
+
+/* --- create with AI --- */
+function viewCreate(){
+  return '<div class="stack" style="max-width:720px"><button class="btn ghost small" data-act="go" data-r="home" style="align-self:flex-start">← Dashboard</button>'+
+    '<div class="hero"><span class="eyebrow">Create with AI</span><h1>Set a new comprehension</h1><p class="muted">AI writes an original passage and a full PSLE Paper 2 question set with answer keys. You can edit everything before publishing.</p></div>'+
+    '<form class="panel stack" data-form="create">'+
+    '<div class="row"><span class="f" style="font-weight:700">Level</span><div class="seg"><label><input type="radio" name="lvl" value="P5"><span>P5</span></label><label><input type="radio" name="lvl" value="P6" checked><span>P6</span></label></div></div>'+
+    '<div class="row" style="align-items:flex-end"><label class="f" style="flex:1 1 200px">Text type<select id="cGenre"><option>Narrative</option><option>Personal recount</option><option>Diary entry</option><option>Letter</option><option>Information report</option><option>News report</option><option>Biography</option></select></label>'+
+    '<label class="f" style="flex:1 1 200px">Difficulty<select id="cDiff"><option value="standard PSLE">Standard PSLE</option><option value="challenging, close to the hardest PSLE passages">Challenging</option><option value="gentler, for building confidence">Gentler</option></select></label></div>'+
+    '<label class="f">Theme or topic<input type="text" id="cTheme" placeholder="e.g. a hawker family, a lost pet, kindness to a new classmate, Pulau Ubin"></label>'+
+    '<label class="row small" style="font-weight:700"><input type="checkbox" id="cMcq" checked style="width:18px;height:18px;accent-color:var(--pen)"> Include 4 multiple-choice questions (Booklet A)</label>'+
+    '<p class="muted small">Booklet B is set to 20 marks: sequencing, referents, vocabulary, true/false with reason, retrieval, inferential and an open-ended question.</p>'+
+    '<div class="row"><button class="btn primary" type="submit">Create passage</button></div></form></div>';
+}
+
+function createWithAI(opts){
+  var b=busy('Setting your comprehension',['Writing the passage','Setting Booklet A and early Booklet B questions','Setting inferential and open-ended questions','Writing blue-pen notes'],'Each step takes about 20 to 40 seconds.');
+  var p;
+  call('genPassage',opts).then(function(r){
+    p={title:r.title, level:r.level||opts.level, genre:r.genre||opts.genre, paragraphs:r.paragraphs||[], questions:[], aiNotes:[], source:'ai', published:false, settings:{showAiNotes:true, showModel:true}};
+    b.step(1); return call('genQuestions',{passage:p, mcq:opts.mcq, part:1});
+  }).then(function(qs1){
+    p.questions=qs1; b.step(2);
+    return call('genQuestions',{passage:p, part:2, existing:qs1});
+  }).then(function(qs2){
+    p.questions=renumber(p.questions.concat(qs2)); b.step(3);
+    return call('annotate',{passage:p}).catch(function(){ return []; });
+  }).then(function(notes){
+    p.aiNotes=notes||[]; b.done();
+    openEditor(p,true);
+    toast('Draft ready. Check it, then save and publish.');
+  }).catch(function(e){ b.done(); if(p && p.paragraphs.length){ openEditor(p,true); } toast(e.message); });
+}
+
+function renumber(qs){
+  var a=0,b=0;
+  qs.forEach(function(q){ if(q.type==='mcq'){ q.section='A'; q.id='m'+(++a); } else { q.section='B'; q.id='q'+(++b); } });
+  return qs;
+}
+
+/* --- upload --- */
+function viewUpload(){
+  return '<div class="stack" style="max-width:760px"><button class="btn ghost small" data-act="go" data-r="home" style="align-self:flex-start">← Dashboard</button>'+
+    '<div class="hero"><span class="eyebrow">Upload</span><h1>Bring in your own passage</h1><p class="muted">Paste the passage, questions and your answer key, or attach photos or a PDF of the worksheet. AI sorts it into the booklet format and drafts any missing answers for you to check.</p></div>'+
+    '<form class="panel stack" data-form="upload">'+
+    '<label class="f">Level<select id="uLvl"><option value="">Let AI decide</option><option>P5</option><option>P6</option></select></label>'+
+    '<label class="f">Paste text (passage, questions, answer key)<textarea id="uText" rows="12" placeholder="Paste here…"></textarea></label>'+
+    '<label class="f">Or attach files (photos, PDF or .txt, up to 5)<input type="file" id="uFiles" multiple accept="image/png,image/jpeg,image/webp,application/pdf,.txt"></label>'+
+    '<div class="row"><button class="btn primary" type="submit">Read and organise</button></div></form></div>';
+}
+
+function readFile(f){
+  return new Promise(function(res,rej){
+    var r=new FileReader();
+    r.onerror=function(){ rej(new Error('Could not read '+f.name)); };
+    if(/\.txt$/i.test(f.name) || f.type==='text/plain'){ r.onload=function(){ res({text:r.result}); }; r.readAsText(f); }
+    else { r.onload=function(){ res({mime:f.type, data:String(r.result).split(',')[1]}); }; r.readAsDataURL(f); }
+  });
+}
+
+function doUpload(){
+  var text=$('#uText').value.trim(), files=[].slice.call($('#uFiles').files||[]).slice(0,5), lvl=$('#uLvl').value;
+  if(!text && !files.length) return toast('Paste some text or attach a file.');
+  var big=files.filter(function(f){ return f.size>12*1024*1024; });
+  if(big.length) return toast(big[0].name+' is over 12 MB. Use a smaller file.');
+  var b=busy('Reading your material',['Reading the files','Organising passage, questions and answers','Writing blue-pen notes']);
+  Promise.all(files.map(readFile)).then(function(parts){
+    var extra=parts.filter(function(x){ return x.text; }).map(function(x){ return x.text; }).join('\n\n');
+    b.step(1);
+    return call('importPassage',{text:[text,extra].filter(Boolean).join('\n\n'), files:parts.filter(function(x){ return x.data; }), level:lvl});
+  }).then(function(p){
+    b.step(2);
+    return call('annotate',{passage:p}).then(function(n){ p.aiNotes=n; return p; }).catch(function(){ return p; });
+  }).then(function(p){ b.done(); openEditor(p,true); S.editor.fromUpload=true; render(); toast('Check anything marked “AI-drafted” before publishing.'); })
+    .catch(function(e){ b.done(); toast(e.message); });
+}
+
+/* --- editor --- */
+function openEditor(p, dirty){
+  p=deepCopy(p);
+  p.questions=p.questions||[]; p.aiNotes=p.aiNotes||[]; p.paragraphs=p.paragraphs||[];
+  p.settings=Object.assign({showAiNotes:true, showModel:true}, p.settings||{});
+  p.assignments=p.assignments||[];
+  S.editor={p:p, dirty:!!dirty, leaving:false};
+  S.route={name:'editor'}; render(); window.scrollTo(0,0);
+}
+
+function totalOf(p){ return p.questions.reduce(function(s,q){ return s+qMarks(q); },0); }
+function qMarks(q){
+  if(q.parts && q.parts.length) return q.parts.reduce(function(s,x){ return s+(Number(x.marks)||0); },0);
+  if(q.statements && q.statements.length) return q.statements.reduce(function(s,x){ return s+(Number(x.marks)||1); },0);
+  return Number(q.marks)||0;
+}
+
+function clueStatus(p, quote){
+  if(!quote) return '<span class="found no">No clue set</span>';
+  var hit=findClue(p.paragraphs, quote);
+  return hit ? '<span class="found ok">Found in paragraph '+(hit.p+1)+'</span>' : '<span class="found no">Not found in the passage</span>';
+}
+
+function viewEditor(){
+  var E=S.editor, p=E.p;
+  var h='<div class="stack">';
+  h+='<div class="row between"><button class="btn ghost small" data-act="edBack">'+(E.leaving?'Leave without saving?':'← Dashboard')+'</button>'+
+     '<div class="row">'+(E.dirty?'<span class="pill part">Unsaved changes</span>':'<span class="pill good">Saved</span>')+
+     '<button class="btn small" data-act="edPreview">Preview as pupil</button><button class="btn primary small" data-act="edSave">Save</button></div></div>';
+  h+='<div class="panel stack"><div class="row" style="align-items:flex-end">'+
+     '<label class="f" style="flex:3 1 260px">Title<input type="text" data-e="title" value="'+esc(p.title||'')+'"></label>'+
+     '<label class="f" style="flex:1 1 90px">Level<select data-e="level"><option'+(p.level==='P5'?' selected':'')+'>P5</option><option'+(p.level!=='P5'?' selected':'')+'>P6</option></select></label>'+
+     '<label class="f" style="flex:1 1 160px">Text type<input type="text" data-e="genre" value="'+esc(p.genre||'')+'"></label></div>'+
+     '<div class="row small" style="gap:18px;font-weight:700">'+
+     '<label class="row" style="gap:6px"><input type="checkbox" data-e="published" data-bool'+(p.published?' checked':'')+' style="width:18px;height:18px;accent-color:var(--pen)"> Published to pupils</label>'+
+     '<label class="row" style="gap:6px"><input type="checkbox" data-e="settings.showAiNotes" data-bool'+(p.settings.showAiNotes?' checked':'')+' style="width:18px;height:18px;accent-color:var(--pen)"> Show AI notes to pupils</label>'+
+     '<label class="row" style="gap:6px"><input type="checkbox" data-e="settings.showModel" data-bool'+(p.settings.showModel?' checked':'')+' style="width:18px;height:18px;accent-color:var(--pen)"> Show answer key after marking</label></div></div>';
+  if(E.fromUpload) h+='<div class="checkbar">✏️ <span>The AI has read your worksheet. Every box below can be changed: check the passage, questions, options and answers against your copy, then tap <b>Save</b>.</span></div>';
+  h+=assignHTML(p);
+
+  h+='<div class="grid2">';
+  h+='<div class="panel stack"><div class="row between"><h2>Passage</h2><span class="muted small">'+p.paragraphs.join(' ').split(/\s+/).filter(Boolean).length+' words · '+p.paragraphs.length+' paragraphs</span></div>'+
+     '<p class="muted small">One box per paragraph. Press Enter twice inside a box to split it into two paragraphs.</p>'+
+     '<div class="stack" style="gap:10px" id="edParaList">'+(p.paragraphs.length?p.paragraphs:['']).map(function(t,i,all){
+        return '<div class="pbox"><span class="pn">'+(i+1)+'</span><textarea class="grow" rows="3" data-para="'+i+'" aria-label="Paragraph '+(i+1)+'">'+esc(t)+'</textarea>'+
+          '<div class="ptools">'+(i>0?'<button class="btn ghost" data-act="edParaJoin" data-i="'+i+'">↑ Join with paragraph '+i+'</button>':'')+
+          '<button class="btn ghost" data-act="edParaAdd" data-i="'+i+'">＋ Paragraph below</button>'+(all.length>1?'<button class="btn ghost" data-act="edParaDel" data-i="'+i+'">Remove</button>':'')+'</div></div>';
+      }).join('')+'</div>'+
+     '<div class="row between"><h3>AI pen notes</h3><button class="btn small" data-act="edAnnotate">'+(p.aiNotes.length?'Rewrite notes':'Write notes')+'</button></div>'+
+     (p.aiNotes.length?'<div class="stack" style="gap:8px">'+p.aiNotes.map(function(n,i){
+        return '<div class="sub"><div class="row between"><b class="small">Words in the passage</b><button class="btn small ghost" data-act="edNoteDel" data-i="'+i+'">Remove</button></div>'+
+          '<textarea class="grow" rows="1" data-e="aiNotes.'+i+'.quote" aria-label="Words in the passage" style="font-family:var(--f-read)">'+esc(n.quote)+'</textarea><b class="small">Note</b>'+
+          '<textarea class="grow" rows="1" data-e="aiNotes.'+i+'.note" aria-label="Note">'+esc(n.note)+'</textarea>'+clueStatus(p,n.quote)+'</div>';
+      }).join('')+'</div>':'<p class="muted small">No notes yet.</p>')+
+     '</div>';
+
+  h+='<div class="stack"><div class="row between"><h2>Questions</h2><span class="pill pen">'+fmtMarks(totalOf(p))+' marks</span></div>';
+  h+=p.questions.map(function(q,i){ return qEditor(p,q,i); }).join('');
+  h+='<div class="panel row"><label class="f" style="flex:1 1 200px">Add a question<select id="addType">'+Object.keys(TYPE_LABEL).map(function(k){ return '<option value="'+k+'">'+TYPE_LABEL[k]+'</option>'; }).join('')+'</select></label><button class="btn" data-act="edAdd" style="align-self:flex-end">Add</button></div>';
+  h+='</div></div>';
+  if(p.id) h+='<div class="row"><button class="btn small warn" data-act="edDelete">'+(E.delConfirm?'Tap again to delete this passage':'Delete passage')+'</button></div>';
+  return h+'</div>';
+}
+
+function assignHTML(p){
+  var A=p.assignments||[], classes=(S.dash.classes||[]);
+  var h='<div class="panel stack"><div class="row between"><h2>Assign to the class</h2>'+
+    (p.published?'<span class="pill good">Published</span>':'<span class="pill">Draft: tick “Published to pupils” to send it out</span>')+'</div>';
+  if(!classes.length) h+='<p class="muted small">No class lists yet. Add your classes in the <b>Classes</b> tab of the Google Sheet, then come back.</p>';
+  if(!A.length) h+='<p class="muted small">No due date set. While it isn’t assigned, a published passage is open to the class with no due date.</p>';
+  h+=A.map(function(a,i){
+    var known=classes.some(function(c){ return normCls(c.cls)===normCls(a.cls); });
+    var opts=classes.map(function(c){ return '<option'+(normCls(c.cls)===normCls(a.cls)?' selected':'')+'>'+esc(c.cls)+'</option>'; }).join('');
+    if(!known) opts='<option value="'+esc(a.cls)+'" selected>'+esc(a.cls)+' (not in sheet)</option>'+opts;
+    var size=(classes.filter(function(c){ return normCls(c.cls)===normCls(a.cls); })[0]||{names:[]}).names.length;
+    return '<div class="asg"><select data-asg="'+i+'" data-f="cls" aria-label="Class">'+opts+'</select>'+
+      '<input type="datetime-local" data-asg="'+i+'" data-f="due" value="'+toLocalInput(a.due)+'" aria-label="Due date and time for '+esc(a.cls)+'">'+
+      '<label class="row small" style="gap:6px;font-weight:700;flex-wrap:nowrap"><input type="checkbox" data-asg="'+i+'" data-f="lock"'+(a.lock!==false?' checked':'')+' style="width:18px;height:18px;accent-color:var(--pen)"> Lock after due</label>'+
+      '<button class="btn small ghost" data-act="asgDel" data-i="'+i+'" aria-label="Remove '+esc(a.cls)+'">Remove</button></div>'+
+      '<p class="muted small" style="margin-top:-6px">'+size+' pupils · '+(a.due?(a.due<Date.now()?'Due date has passed':'Due '+esc(fmtDue(a.due))):'No due date')+(a.due && a.lock!==false?' · locks at the due time':a.due?' · late hand-ins allowed and flagged':'')+'</p>';
+  }).join('');
+  var free=classes.filter(function(c){ return !A.some(function(a){ return normCls(a.cls)===normCls(c.cls); }); });
+  if(free.length) h+='<div class="row"><select id="asgNew" aria-label="Class to add" style="width:auto;min-width:140px">'+free.map(function(c){ return '<option>'+esc(c.cls)+'</option>'; }).join('')+'</select>'+
+    '<button class="btn small" data-act="asgAdd">Assign to this class</button>'+(free.length>1?'<button class="btn small ghost" data-act="asgAll">Assign to all '+free.length+'</button>':'')+'</div>';
+  h+='<p class="muted small">Times are Singapore time. Remember to <b>Save</b> after changing assignments.</p>';
+  return h+'</div>';
+}
+
+function qEditor(p,q,i){
+  var base='questions.'+i+'.';
+  var qnum=numbering(p.questions)[q.id];
+  var h='<div class="qe"><div class="row between"><div class="row"><span class="qn">'+'Q'+qnum+'</span><select class="qtype-sel" data-qtype="'+i+'" aria-label="Question type">'+Object.keys(TYPE_LABEL).map(function(k){ return '<option value="'+k+'"'+(k===q.type?' selected':'')+'>'+TYPE_LABEL[k]+'</option>'; }).join('')+'</select><span class="pill pen">'+fmtMarks(qMarks(q))+' m</span></div>'+
+    '<div class="row"><button class="btn small ghost" data-act="edMove" data-i="'+i+'" data-d="-1" aria-label="Move up">↑</button><button class="btn small ghost" data-act="edMove" data-i="'+i+'" data-d="1" aria-label="Move down">↓</button><button class="btn small ghost" data-act="edQDel" data-i="'+i+'">Remove</button></div></div>';
+  if(S.editor.typeUndo && S.editor.typeUndo.i===i) h+='<div class="flag">Type changed. Check the boxes below. <button class="link" data-act="edTypeUndo" data-i="'+i+'">Undo</button></div>';
+  if(q.aiDrafted) h+='<div class="flag">AI-drafted answer. Check it before publishing. <button class="link" data-act="edUnflag" data-i="'+i+'">Mark as checked</button></div>';
+  h+='<label class="f">Question<textarea class="grow" rows="2" data-e="'+base+'prompt">'+esc(q.prompt||'')+'</textarea></label>';
+  h+='<div class="grid"><label class="f">Skill<select data-e="'+base+'skill">'+SKILLS.map(function(s){ return '<option'+(q.skill===s?' selected':'')+'>'+s+'</option>'; }).join('')+'</select></label>';
+  if(!(q.parts||q.statements)) h+='<label class="f">Marks<input type="number" min="0.5" step="0.5" data-e="'+base+'marks" data-num value="'+(q.marks||1)+'"></label>';
+  h+='</div>';
+
+  if(q.type==='mcq'){
+    h+='<div class="stack" style="gap:6px">'+(q.options||['','','','']).map(function(o,j){
+      return '<div class="optrow"><input type="radio" name="ans-'+i+'" data-e="'+base+'answer" data-num value="'+j+'"'+(Number(q.answer)===j?' checked':'')+' aria-label="Correct option '+(j+1)+'" style="width:18px;height:18px;accent-color:var(--good)"><b>('+(j+1)+')</b><textarea class="grow" rows="1" data-e="'+base+'options.'+j+'" aria-label="Option '+(j+1)+'">'+esc(o)+'</textarea>'+
+        ((q.options||[]).length>2?'<button class="btn small ghost" data-act="edSubDel" data-i="'+i+'" data-k="options" data-j="'+j+'" aria-label="Remove option '+(j+1)+'">✕</button>':'<span></span>')+'</div>';
+    }).join('')+'<div class="row">'+((q.options||[]).length<6?'<button class="btn small" data-act="edSubAdd" data-i="'+i+'" data-k="options">Add option</button>':'')+'<span class="muted small">Tick the correct option.</span></div></div>';
+  } else if(q.type==='sequence'){
+    h+='<div class="stack" style="gap:6px">'+(q.events||[]).map(function(ev,j){
+      return '<div class="row" style="flex-wrap:nowrap"><textarea class="grow" rows="1" data-e="'+base+'events.'+j+'.text" aria-label="Event '+(j+1)+'">'+esc(ev.text)+'</textarea><input type="number" min="1" max="6" data-e="'+base+'events.'+j+'.order" data-num value="'+(ev.order||'')+'" aria-label="Correct position"><button class="btn small ghost" data-act="edSubDel" data-i="'+i+'" data-k="events" data-j="'+j+'">✕</button></div>';
+    }).join('')+'<button class="btn small" data-act="edSubAdd" data-i="'+i+'" data-k="events" style="align-self:flex-start">Add event</button><span class="muted small">Number = correct position. List events out of order.</span></div>';
+  } else if(q.parts){
+    h+=(q.parts||[]).map(function(pt,j){
+      var pb=base+'parts.'+j+'.';
+      return '<div class="sub"><div class="row between"><label class="row" style="gap:6px;font-weight:700;flex-wrap:nowrap">Part <input type="text" data-e="'+pb+'id" value="'+esc(pt.id)+'" maxlength="6" aria-label="Part letter or number" style="width:70px;min-height:34px;padding:4px 8px;text-align:center"></label><button class="btn small ghost" data-act="edSubDel" data-i="'+i+'" data-k="parts" data-j="'+j+'">Remove</button></div>'+
+        '<label class="f">Label<textarea class="grow" rows="1" data-e="'+pb+'label">'+esc(pt.label||'')+'</textarea></label>'+
+        '<div class="row" style="align-items:flex-end;flex-wrap:nowrap"><label class="f" style="flex:1">Answer key<textarea class="grow" rows="1" data-e="'+pb+'model">'+esc(pt.model||'')+'</textarea></label><label class="f">Marks<input type="number" min="0.5" step="0.5" data-e="'+pb+'marks" data-num value="'+(pt.marks||1)+'"></label></div>'+
+        '<label class="f">Clue (exact words from the passage)<textarea class="grow" rows="1" data-e="'+pb+'clue">'+esc(pt.clue||'')+'</textarea></label>'+clueStatus(p,pt.clue)+'</div>';
+    }).join('')+'<button class="btn small" data-act="edSubAdd" data-i="'+i+'" data-k="parts" style="align-self:flex-start">Add part</button>';
+  } else if(q.statements){
+    h+=(q.statements||[]).map(function(st,j){
+      var sb=base+'statements.'+j+'.';
+      return '<div class="sub"><div class="row between"><b>Statement '+(j+1)+'</b><button class="btn small ghost" data-act="edSubDel" data-i="'+i+'" data-k="statements" data-j="'+j+'">Remove</button></div>'+
+        '<textarea class="grow" rows="1" data-e="'+sb+'text" aria-label="Statement '+(j+1)+'">'+esc(st.text||'')+'</textarea>'+
+        '<div class="row" style="align-items:flex-end"><label class="f">Answer<select data-e="'+sb+'answer"><option'+(st.answer==='True'?' selected':'')+'>True</option><option'+(st.answer==='False'?' selected':'')+'>False</option></select></label>'+
+        '<label class="f" style="flex:1 1 200px">Reason key<textarea class="grow" rows="1" data-e="'+sb+'reason">'+esc(st.reason||'')+'</textarea></label><label class="f">Marks<input type="number" min="0.5" step="0.5" data-e="'+sb+'marks" data-num value="'+(st.marks||1)+'"></label></div>'+
+        '<label class="f">Clue<textarea class="grow" rows="1" data-e="'+sb+'clue">'+esc(st.clue||'')+'</textarea></label>'+clueStatus(p,st.clue)+'</div>';
+    }).join('')+'<button class="btn small" data-act="edSubAdd" data-i="'+i+'" data-k="statements" style="align-self:flex-start">Add statement</button>';
+  } else {
+    h+='<label class="f">Answer key<textarea class="grow" rows="2" data-e="'+base+'model">'+esc(q.model||'')+'</textarea></label>';
+    h+='<label class="f">Mark scheme (how marks split)<textarea class="grow" rows="2" data-e="'+base+'markScheme">'+esc(q.markScheme||'')+'</textarea></label>';
+  }
+  if(!(q.parts||q.statements)) h+='<label class="f">Clue (exact words from the passage)<textarea class="grow" rows="1" data-e="'+base+'clue">'+esc(q.clue||'')+'</textarea></label>'+clueStatus(p,q.clue);
+  return h+'</div>';
+}
+
+function setPath(obj, path, val){
+  var ks=path.split('.'), o=obj;
+  for(var i=0;i<ks.length-1;i++){ var k=ks[i]; if(o[k]==null) o[k]= /^\d+$/.test(ks[i+1]) ? [] : {}; o=o[k]; }
+  o[ks[ks.length-1]]=val;
+}
+
+function blankQuestion(type, p){
+  var q={type:type, prompt:'', skill:'Literal', clue:'', section: type==='mcq'?'A':'B'};
+  if(type==='mcq'){ q.options=['','','','']; q.answer=0; q.marks=1; q.skill='Inferential'; }
+  else if(type==='sequence'){ q.events=[{text:'',order:1},{text:'',order:2},{text:'',order:3},{text:'',order:4}]; q.marks=1; q.skill='Sequencing'; q.prompt='The events below are not in order. Number them 1 to 4 in the order they happened.'; }
+  else if(type==='referent'){ q.parts=[{id:'a',label:'',model:'',marks:1,clue:''},{id:'b',label:'',model:'',marks:1,clue:''}]; q.skill='Referencing'; q.prompt='What do the following words refer to?'; }
+  else if(type==='vocab'){ q.parts=[{id:'a',label:'',model:'',marks:1,clue:''},{id:'b',label:'',model:'',marks:1,clue:''}]; q.skill='Vocabulary'; q.prompt='Find words or phrases from the passage that mean the same as the following.'; }
+  else if(type==='structured'){ q.parts=[{id:'a',label:'',model:'',marks:1,clue:''},{id:'b',label:'',model:'',marks:1,clue:''}]; }
+  else if(type==='truefalse'){ q.statements=[{text:'',answer:'True',reason:'',marks:1,clue:''},{text:'',answer:'False',reason:'',marks:1,clue:''},{text:'',answer:'True',reason:'',marks:1,clue:''}]; q.skill='Evidence'; q.prompt='Based on the passage, state whether each statement is true or false. Then give one reason for your answer.'; }
+  else { q.model=''; q.markScheme=''; q.marks=type==='open'?3:2; q.skill= type==='open'?'Evaluative':'Inferential'; }
+  return q;
+}
+
+function syncParas(){
+  if(!S.editor) return;
+  var boxes=document.querySelectorAll('textarea[data-para]'); if(!boxes.length) return;
+  var out=[]; [].forEach.call(boxes, function(b){ b.value.split(/\n\s*\n/).forEach(function(s){ s=s.replace(/\s*\n\s*/g,' ').trim(); if(s) out.push(s); }); });
+  S.editor.p.paragraphs=out;
+}
+function grow(el){ el.style.height='auto'; el.style.height=(el.scrollHeight+2)+'px'; }
+function growAll(){ document.querySelectorAll('textarea.grow').forEach(grow); }
+/* change a question's type, keeping what still fits */
+function convertQ(old, type){
+  var q=blankQuestion(type), deflt=q.prompt;
+  q.prompt=old.prompt||deflt; q.clue=old.clue||''; q.skill=old.skill||q.skill; if(old.aiDrafted) q.aiDrafted=true;
+  var model=old.model || (old.parts||[]).map(function(pt){ return pt.model; }).filter(Boolean).join('; ');
+  if(q.options && old.options) { q.options=old.options.slice(); q.answer=old.answer||0; }
+  if(q.parts){ if(old.parts) q.parts=deepCopy(old.parts); else if(model) q.parts[0].model=model; }
+  if(q.statements && old.statements) q.statements=deepCopy(old.statements);
+  if(q.events && old.events) q.events=deepCopy(old.events);
+  if('model' in q){ q.model=model||''; q.markScheme=old.markScheme||''; if(!(old.parts||old.statements)) q.marks=old.marks||q.marks; }
+  return q;
+}
+
+function saveEditor(){
+  syncParas();
+  var p=S.editor.p;
+  if(!p.paragraphs.length) return toast('Add the passage text first.');
+  p.questions.forEach(function(q){ var seen={}; (q.parts||[]).forEach(function(pt,j){ var v=String(pt.id==null?'':pt.id).replace(/[()\s]/g,'').slice(0,6);
+    if(!v || seen[v.toLowerCase()]) v=String.fromCharCode(97+j); seen[v.toLowerCase()]=1; pt.id=v; }); });
+  p.questions=renumber(p.questions);
+  var b=busy('Saving',['Saving passage'],' ');
+  call('savePassage',{passage:p}).then(function(saved){
+    b.done(); S.editor.p=saved; S.editor.dirty=false; render(); toast(saved.published?'Saved and published.':'Saved as draft.');
+    refreshDash();
+  }).catch(function(e){ b.done(); toast(e.message); });
+}
+
+/* --- settings --- */
+function viewSettings(){
+  var s=S.dash.settings||{};
+  return '<div class="stack" style="max-width:760px"><button class="btn ghost small" data-act="go" data-r="home" style="align-self:flex-start">← Dashboard</button>'+
+    '<div class="hero"><span class="eyebrow">Marking rules</span><h1>How the AI should mark</h1><p class="muted">These rules go to the AI marker with every script, on top of each question\'s answer key and mark scheme. Write them the way you would brief a relief teacher.</p></div>'+
+    '<form class="panel stack" data-form="settings"><textarea id="setNotes" rows="10">'+esc(s.markingNotes||'')+'</textarea><div class="row"><button class="btn primary" type="submit">Save rules</button></div></form></div>';
+}
+
+/* --- results --- */
+function openResults(id){
+  var p=(S.dash.passages||[]).filter(function(x){ return x.id===id; })[0]; if(!p) return;
+  var keep=S.subs && S.subs.pid===id ? S.subs.cls : '';
+  S.subs={pid:id, list:null, cls:keep};
+  S.route={name:'results', id:id}; render(); window.scrollTo(0,0);
+  call('getSubs',{id:id}).then(function(l){ S.subs={pid:id, list:l, cls:keep}; if(S.route.name==='results') render(); }).catch(function(e){ S.subs={pid:id,list:[],err:e.message,cls:keep}; render(); });
+}
+
+function latest(list){
+  var m={}; list.forEach(function(s){ var k=(s.cls||'').toLowerCase()+'|'+s.student.toLowerCase().trim(); if(!m[k]||m[k].submittedAt<s.submittedAt) m[k]=s; });
+  return Object.keys(m).map(function(k){ return m[k]; });
+}
+
+function curPassage(){ var id=S.route.id; return (S.dash.passages||[]).filter(function(x){ return x.id===id; })[0]; }
+
+function viewResults(){
+  var p=curPassage(); if(!p) return '<p>Passage not found.</p>';
+  var h='<div class="stack"><div class="row between"><button class="btn ghost small" data-act="go" data-r="home">← Dashboard</button>'+
+    '<div class="row"><button class="btn small" data-act="results" data-id="'+p.id+'">Refresh</button><button class="btn small" data-act="edit" data-id="'+p.id+'">Edit passage</button></div></div>'+
+    '<div class="hero"><span class="eyebrow">'+esc(p.level)+' · Results</span><h1>'+esc(p.title)+'</h1></div>';
+  if(!S.subs || !S.subs.list) return h+'<div class="list"><div class="empty">Loading submissions…</div></div></div>';
+  if(S.subs.err) h+='<div class="err">'+esc(S.subs.err)+'</div>';
+  var F=S.subs.cls||'';
+  var roster=S.dash.classes||[];
+  var asg=(p.assignments||[]);
+  // classes to offer as filters: assigned ones, plus any class that has handed in
+  var fl=asg.map(function(a){ return a.cls; });
+  S.subs.list.forEach(function(s){ if(s.cls && !fl.some(function(c){ return normCls(c)===normCls(s.cls); })) fl.push(s.cls); });
+  if(fl.length>1 || F){
+    h+='<div class="chips" role="group" aria-label="Filter by class"><button class="chipbtn" data-act="flt" data-cls="" aria-pressed="'+(!F)+'">All classes</button>'+
+      fl.map(function(c){ return '<button class="chipbtn" data-act="flt" data-cls="'+esc(c)+'" aria-pressed="'+(normCls(F)===normCls(c))+'">'+esc(c)+'</button>'; }).join('')+'</div>';
+  }
+  var all=S.subs.list.filter(function(s){ return !F || normCls(s.cls)===normCls(F); });
+  var lat=latest(all), marked=lat.filter(function(s){ return s.status!=='pending'; });
+  var max=p.questions.reduce(function(s,q){ return s+(Number(q.marks)||0); },0);
+
+  // who has not handed in, per assigned class
+  var showCls=asg.filter(function(a){ return !F || normCls(a.cls)===normCls(F); });
+  if(showCls.length){
+    h+='<div class="panel stack"><h3>Not handed in yet</h3>'+showCls.map(function(a){
+      var c=roster.filter(function(x){ return normCls(x.cls)===normCls(a.cls); })[0];
+      if(!c) return '<p class="small muted"><b>'+esc(a.cls)+'</b>: this class is not in the Classes sheet.</p>';
+      var done={}; latest(S.subs.list).forEach(function(s){ if(normCls(s.cls)===normCls(a.cls)) done[s.student.toLowerCase()]=1; });
+      var miss=c.names.filter(function(n){ return !done[n.toLowerCase()]; });
+      var closed=a.due && a.lock && a.due<Date.now();
+      var dueTxt=a.due?(closed?'Closed '+fmtDue(a.due):a.due<Date.now()?'Overdue since '+fmtDue(a.due):'Due '+fmtDue(a.due)):'No due date';
+      return '<div class="stack" style="gap:6px"><div class="row between"><b>'+esc(a.cls)+' <span class="muted small">'+(c.names.length-miss.length)+' / '+c.names.length+' handed in</span></b><span class="pill '+(closed?'zero':a.due&&a.due<Date.now()?'part':'')+'">'+esc(dueTxt)+'</span></div>'+
+        (miss.length?'<div class="missing">'+miss.map(function(n){ return '<span>'+esc(n)+'</span>'; }).join('')+'</div>':'<p class="small" style="color:var(--good);font-weight:700">Everyone has handed in.</p>')+'</div>';
+    }).join('')+'</div>';
+  }
+  if(!all.length) return h+'<div class="list"><div class="empty">No pupil'+(F?' from '+esc(F):'')+' has handed in this passage yet.</div></div></div>';
+
+  var scores=marked.map(function(s){ return s.total; });
+  var avg=scores.length?scores.reduce(function(a,b){ return a+b; },0)/scores.length:0;
+  h+='<div class="stats">'+
+    stat(lat.length,'Pupils handed in')+stat(scores.length?fmtMarks(Math.round(avg*2)/2)+'<span class="muted small"> / '+max+'</span>':'–','Class average')+
+    stat(scores.length?pct(avg,max)+'%':'–','Average %')+stat(scores.length?fmtMarks(Math.max.apply(null,scores)):'–','Highest')+stat(scores.length?fmtMarks(Math.min.apply(null,scores)):'–','Lowest')+
+    stat(lat.length-marked.length+lat.filter(function(s){ return s.status==='review'; }).length,'Need checking')+'</div>';
+
+  // per question
+  var nums=numbering(p.questions);
+  var qrows=p.questions.map(function(q){
+    var tot=0; marked.forEach(function(s){ tot+=((s.marks||{})[q.id]||{}).awarded||0; });
+    var a=marked.length?tot/marked.length:0; return {q:q, avg:a, pc:q.marks?a/q.marks:0};
+  });
+  var skills={}; qrows.forEach(function(r){ var k=r.q.skill||TYPE_LABEL[r.q.type]; skills[k]=skills[k]||{got:0,max:0}; skills[k].got+=r.avg; skills[k].max+=Number(r.q.marks)||0; });
+
+  h+='<div class="grid2"><div class="panel stack"><h3>Item analysis</h3><p class="muted small">Average share of marks won on each question. Amber bars are below 50%.</p><div class="bars">'+
+    qrows.map(function(r){
+      return '<div class="br"><span class="lab" title="'+esc(r.q.prompt)+'">'+'Q'+nums[r.q.id]+' · '+esc(r.q.skill||TYPE_LABEL[r.q.type])+'</span><div class="track"><div class="fill'+(r.pc<0.5?' lo':'')+'" style="width:'+Math.round(r.pc*100)+'%"></div></div><span class="val">'+Math.round(r.pc*100)+'%</span></div>';
+    }).join('')+'</div><div class="axis"><div></div><div><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div><div></div></div></div>';
+  h+='<div class="panel stack"><h3>By skill</h3><div class="bars">'+Object.keys(skills).map(function(k){
+      var pc2=skills[k].max?skills[k].got/skills[k].max:0;
+      return '<div class="br"><span class="lab">'+esc(k)+'</span><div class="track"><div class="fill'+(pc2<0.5?' lo':'')+'" style="width:'+Math.round(pc2*100)+'%"></div></div><span class="val">'+Math.round(pc2*100)+'%</span></div>';
+    }).join('')+'</div><div class="axis"><div></div><div><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div><div></div></div></div></div>';
+
+  // AI analysis
+  var an=(p.analyses||{})[F?normCls(F):'all'] || (!F && p.analysis);
+  h+='<div class="ai-box"><div class="row between"><h3>AI analysis of the class</h3><button class="btn small primary" data-act="analyse" data-id="'+p.id+'" data-cls="'+esc(F)+'">'+(an?'Update analysis':'Analyse with AI')+'</button></div>';
+  if(an){
+    h+='<p><b>'+esc(an.headline||'')+'</b></p><p class="muted small">Based on '+an.n+' pupils · '+when(an.at)+'</p>';
+    if(an.strengths&&an.strengths.length) h+='<div><b>Strengths</b><ul>'+an.strengths.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ul></div>';
+    if(an.gaps&&an.gaps.length) h+='<div><b>Where marks were lost</b><ul>'+an.gaps.map(function(g){ return '<li><b>'+esc(nums[g.item]?'Q'+nums[g.item]:g.item)+':</b> '+esc(g.issue)+(g.evidence?' <span class="muted">e.g. “'+esc(g.evidence)+'”</span>':'')+'</li>'; }).join('')+'</ul></div>';
+    if(an.misconceptions&&an.misconceptions.length) h+='<div><b>Common misconceptions</b><ul>'+an.misconceptions.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ul></div>';
+    if(an.nextSteps&&an.nextSteps.length) h+='<div><b>Next steps for teaching</b><ul>'+an.nextSteps.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ul></div>';
+    if(an.watch&&an.watch.length) h+='<div><b>Pupils to follow up</b><ul>'+an.watch.map(function(w){ return '<li><b>'+esc(w.student)+'</b> — '+esc(w.reason)+'</li>'; }).join('')+'</ul></div>';
+  } else h+='<p class="small">Get a summary of strengths, the questions the class found hardest, typical wrong answers, and what to reteach.</p>';
+  h+='</div>';
+
+  // table
+  h+='<div class="panel" style="padding:0;overflow-x:auto"><table class="table"><thead><tr><th>Pupil</th><th>Class</th><th class="num">Score</th><th class="num">%</th><th>Attempt</th><th>Handed in</th><th>Status</th></tr></thead><tbody>'+
+    all.map(function(s){
+      var st = s.status==='pending'?'<span class="pill part">Not marked</span>': s.status==='review'?'<span class="pill part">Check</span>': s.markedBy==='teacher'?'<span class="pill pen">Teacher checked</span>':'<span class="pill">AI marked</span>';
+      return '<tr class="click" data-act="review" data-id="'+s.id+'" tabindex="0"><td><b>'+esc(s.student)+'</b></td><td>'+esc(s.cls||'')+'</td><td class="num">'+fmtMarks(s.total)+' / '+fmtMarks(s.max)+'</td><td class="num">'+pct(s.total,s.max)+'%</td><td>'+(s.attempt||1)+'</td><td>'+when(s.submittedAt)+(s.late?' <span class="pill part">Late</span>':'')+'</td><td>'+st+'</td></tr>';
+    }).join('')+'</tbody></table></div>';
+  return h+'</div>';
+}
+function stat(v,l){ return '<div class="stat"><div class="v">'+v+'</div><div class="l">'+esc(l)+'</div></div>'; }
+
+/* --- teacher review of one pupil --- */
+function openReview(id){
+  var s=(S.subs.list||[]).filter(function(x){ return x.id===id; })[0]; var p=curPassage(); if(!s||!p) return;
+  S.review={ sub:deepCopy(s), passage:p, annos:s.annos||[], answers:s.answers||{}, showAi:true, clue:null, tab:'questions', sheet:null };
+  S.route={name:'review', id:p.id}; render(); window.scrollTo(0,0);
+}
+
+function viewReview(){
+  var R=S.review, s=R.sub, p=R.passage;
+  var h='<div class="stack" style="gap:12px"><div class="row between"><button class="btn ghost small" data-act="results" data-id="'+p.id+'">← Results</button>'+
+    '<div class="row"><button class="btn small" data-act="remark">Re-mark with AI</button><button class="btn small warn" data-act="subDel">'+(R.delConfirm?'Tap again to delete':'Delete')+'</button></div></div>';
+  h+='<div class="panel scorecard"><div class="big">'+fmtMarks(s.total)+'<small> / '+fmtMarks(s.max)+'</small></div><div class="stack" style="gap:6px">'+
+    '<h2>'+esc(s.student)+(s.cls?' <span class="muted small">'+esc(s.cls)+'</span>':'')+'</h2><div class="meta"><span>Attempt '+(s.attempt||1)+'</span><span>'+when(s.submittedAt)+'</span></div>'+
+    (s.markError?'<div class="err">AI could not mark this: '+esc(s.markError)+'</div>':'')+
+    (s.teacherNote?'<p><b>AI note for you:</b> '+esc(s.teacherNote)+'</p>':'')+
+    (s.summary?'<p class="muted small"><b>Pupil saw:</b> '+esc(s.summary)+'</p>':'')+'</div></div>';
+  h+='<div class="tabs" role="group" aria-label="Switch view"><button class="btn" data-act="tab" data-tab="passage" aria-pressed="'+(R.tab==='passage')+'">Passage</button><button class="btn" data-act="tab" data-tab="questions" aria-pressed="'+(R.tab==='questions')+'">Answers</button></div>';
+  h+='<div class="work" data-tab="'+R.tab+'"><div class="pane-passage">'+annoBar()+'<div id="pBody">'+passageHTML(p,{showAi:R.showAi, annos:R.annos, clue:R.clue})+'</div><div id="sheetSlot"></div></div>';
+  h+='<div class="pane-q">'+bookletHTML(p,{mode:'review', answers:s.answers, marks:s.marks||{}, reviewKey:true});
+  h+='<div class="panel stack" style="margin-top:14px"><label class="f">Comment to the pupil<textarea id="tComment" rows="3">'+esc(s.teacherComment||'')+'</textarea></label>'+
+     '<div class="row"><button class="btn primary" data-act="saveReview">Save marks and comment</button><span class="muted small">Your changes replace the AI marks for this pupil.</span></div></div>';
+  h+='</div></div></div>';
+  return h;
+}
+
+/* ================= events ================= */
+document.addEventListener('submit', function(e){
+  var f=e.target.closest('form[data-form]'); if(!f) return; e.preventDefault();
+  var k=f.dataset.form;
+  if(k==='student'){
+    var c=$('#sCls').value, n=$('#sName').value;
+    if(!c) return toast('Choose your class.');
+    if(!n) return toast('Choose your name.');
+    S.student={name:n, cls:c}; S.picking=false; S.pickCls=null; LS.set('cpm.student',S.student);
+    S.results=null; S.list=null; render(); loadAssigned();
+  } else if(k==='login'){ login($('#pin').value.trim()); }
+  else if(k==='create'){
+    var lvl=(f.querySelector('input[name=lvl]:checked')||{}).value||'P6';
+    createWithAI({level:lvl, genre:$('#cGenre').value, difficulty:$('#cDiff').value, theme:$('#cTheme').value.trim(), mcq:$('#cMcq').checked});
+  } else if(k==='upload'){ doUpload(); }
+  else if(k==='settings'){
+    var b=busy('Saving',['Saving marking rules'],' ');
+    call('saveSettings',{markingNotes:$('#setNotes').value}).then(function(s){ b.done(); S.dash.settings=s; toast('Marking rules saved.'); }).catch(function(er){ b.done(); toast(er.message); });
+  }
+});
+
+document.addEventListener('input', onField);
+document.addEventListener('change', onField);
+function onField(e){
+  var el=e.target;
+  if(el.classList && el.classList.contains('grow') && e.type==='input') grow(el);
+  if(el.id==='sCls' && e.type==='change'){ S.pickCls=el.value; render(); var nm=$('#sName'); if(nm && !nm.disabled) nm.focus(); return; }
+  if(el.id==='fltCls'){ return; }
+  if(el.dataset.asg!=null && S.editor){
+    var A=S.editor.p.assignments, idx=Number(el.dataset.asg), f=el.dataset.f;
+    if(f==='cls') A[idx].cls=el.value;
+    if(f==='due') A[idx].due=el.value ? new Date(el.value).getTime() : null;
+    if(f==='lock') A[idx].lock=el.checked;
+    markDirty();
+    if(e.type==='change'){ syncParas(); render(); }
+    return;
+  }
+  if(el.id==='showAi'){ var at=S.route.name==='review'?S.review:S.attempt; at.showAi=el.checked; at.sheet=null; redrawPassage(false); drawSheet(); return; }
+  if(el.dataset.bind && S.attempt && !S.attempt.result){
+    var parts=el.dataset.bind.split('|'), qid=parts[0], k=parts[1], f=parts[2], A=S.attempt.answers;
+    var q=S.attempt.passage.questions.filter(function(x){ return x.id===qid; })[0];
+    if(q && q.type==='mcq'){ A[qid]=Number(el.value); el.closest('.opts').querySelectorAll('.opt').forEach(function(o){ o.classList.toggle('sel', o.contains(el)); }); }
+    else if(k==null) A[qid]=el.value;
+    else { A[qid]=A[qid]&&typeof A[qid]==='object'?A[qid]:{}; if(f){ A[qid][k]=A[qid][k]||{}; A[qid][k][f]=el.value; } else A[qid][k]=el.value; }
+    if(S.attempt.confirming){ S.attempt.confirming=false; var sb=document.querySelector('[data-act=submit]'); if(sb) sb.textContent='Hand in for marking'; var sn=$('#submitNote'); if(sn) sn.textContent=''; }
+    saveDraft(); updateProg(); return;
+  }
+  if(el.dataset.e && S.editor){
+    var v = el.dataset.bool!==undefined ? el.checked : el.dataset.num!==undefined ? Number(el.value) : el.value;
+    if(el.type==='radio' && !el.checked) return;
+    setPath(S.editor.p, el.dataset.e, v);
+    markDirty(); return;
+  }
+  if(el.id==='edParas'){ markDirty(); if(e.type==='change'){ syncParas(); render(); } }
+  if(el.dataset.para!=null && S.editor){ markDirty(); if(e.type==='change' && (/\n\s*\n/.test(el.value) || !el.value.trim())){ syncParas(); render(); } }
+  if(el.dataset.qtype!=null && S.editor && e.type==='change'){
+    syncParas(); var qi=Number(el.dataset.qtype), oq=S.editor.p.questions[qi];
+    S.editor.p.questions[qi]=convertQ(oq, el.value); S.editor.p.questions=renumber(S.editor.p.questions);
+    S.editor.typeUndo={i:qi, q:oq}; markDirty(); render(); }
+}
+function markDirty(){ if(!S.editor.dirty){ S.editor.dirty=true; var pill=document.querySelector('.pill.good'); if(pill && S.route.name==='editor'){ pill.className='pill part'; pill.textContent='Unsaved changes'; } } }
+
+document.addEventListener('pointerdown', function(e){ if(e.target.closest('.annobar .sw')) e.preventDefault(); });
+
+document.addEventListener('click', function(e){
+  // a tap on a word in the passage: its meaning
+  if(e.target.closest && e.target.closest('#passage p[data-p]') && !e.target.closest('[data-act]')){
+    var atw=curAt();
+    if(atw){
+      var sl=getSelection();
+      if(!(sl && !sl.isCollapsed && S.route.name==='attempt')){
+        var w=wordAt(e, atw);
+        if(w){
+          var mkw=e.target.closest('.mk'), idsw=mkw?mkw.dataset.mk.split(' '):[];
+          var uw=idsw.filter(function(x){ return x.indexOf('u:')===0; }).pop(), aw=idsw.filter(function(x){ return x.indexOf('a:')===0; }).pop();
+          openWord(atw, w, {u:uw?uw.slice(2):null, a:aw?Number(aw.slice(2)):null}); return;
+        }
+      }
+    }
+  }
+  // passage marks
+  var mk=e.target.closest('.mk');
+  if(mk && !e.target.closest('[data-act]')){
+    var at=S.route.name==='review'?S.review:S.attempt;
+    if(at){
+      var sel=getSelection(); if(sel && !sel.isCollapsed && S.route.name==='attempt') return;
+      var ids=mk.dataset.mk.split(' ');
+      var u=ids.filter(function(x){ return x.indexOf('u:')===0; }).pop(), a=ids.filter(function(x){ return x.indexOf('a:')===0; }).pop();
+      if(u) at.sheet={kind:'anno', id:u.slice(2)}; else if(a) at.sheet={kind:'ai', idx:Number(a.slice(2))}; else return;
+      drawSheet(); return;
+    }
+  }
+  var t=e.target.closest('[data-act]'); if(!t) return;
+  var act=t.dataset.act, id=t.dataset.id;
+  var AT=S.attempt;
+  switch(act){
+    case 'start': startAttempt(id); break;
+    case 'wClose': var atc=curAt(); if(atc){ atc.sheet=null; atc.wordMark=null; redrawPassage(false); drawSheet(); } break;
+    case 'wSay': var ats=curAt(); if(ats && ats.sheet && ats.sheet.w) sayWord(ats.sheet.w.word); break;
+    case 'wRetry': var atr=curAt(); if(atr && atr.sheet && atr.sheet.w) lookUp(atr, atr.sheet.w); break;
+    case 'wMark': var atm=curAt(); if(atm && atm.sheet && atm.sheet.u){ atm.sheet={kind:'anno', id:atm.sheet.u}; atm.wordMark=null; redrawPassage(false); drawSheet(); } break;
+    case 'wOpen': var ato=curAt(), it=ato && (ato.words||[])[Number(t.dataset.i)];
+      if(it){ ato.defs=ato.defs||{}; ato.defs[wKey(it.w)]=it.d;
+        if(ato.tab!=='passage' && matchMedia('(max-width:860px)').matches){ ato.tab='passage'; var wk=$('.work'); if(wk) wk.dataset.tab='passage'; document.querySelectorAll('.tabs .btn').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.tab==='passage')); }); }
+        openWord(ato, it.w); var mkq=$('.mk.wq'); if(mkq) mkq.scrollIntoView({block:'center'}); }
+      break;
+    case 'wSel':
+      var atl=S.attempt, sw=takeSel(); if(!atl || !sw) break;
+      var tx=atl.passage.paragraphs[sw.p].slice(sw.start,sw.end);
+      if(tx.length>60 || tx.split(/\s+/).length>6){ toast('Choose one word, or up to 6 words.'); break; }
+      clearSel(); openWord(atl, {p:sw.p,start:sw.start,end:sw.end,word:tx}); break;
+    case 'toTeacher':
+      break;
+      window.scrollTo(0,0); break;
+    case 'toStudent':
+      S.view='student'; S.loadErr=''; S.route={name:'home'}; render(); loadStudent(); window.scrollTo(0,0); break;
+    case 'reloadDash': refreshDash().then(function(){ if(S.dash) toast('Reloaded.'); }); break;
+    case 'changeMe': S.picking=true; S.pickCls=S.student.cls; render(); break;
+    case 'asgAdd':
+      syncParas(); S.editor.p.assignments.push({cls:$('#asgNew').value, due:defaultDue(), lock:true}); markDirty(); render(); break;
+    case 'asgAll':
+      syncParas();
+      [].slice.call($('#asgNew').options).forEach(function(o){ S.editor.p.assignments.push({cls:o.value, due:defaultDue(), lock:true}); });
+      markDirty(); render(); break;
+    case 'asgDel': syncParas(); S.editor.p.assignments.splice(Number(t.dataset.i),1); markDirty(); render(); break;
+    case 'flt': S.subs.cls=t.dataset.cls||''; render(); break;
+    case 'openResult': openResult(id); break;
+    case 'back':
+      if(S.view==='teacher'){ S.attempt=null; S.route={name:'editor'}; render(); }
+      else { S.attempt=null; S.route={name:'home'}; render(); loadStudent(); }
+      window.scrollTo(0,0); break;
+    case 'tab':
+      var obj=S.route.name==='review'?S.review:AT; obj.tab=t.dataset.tab;
+      var w=$('.work'); if(w) w.dataset.tab=obj.tab;
+      document.querySelectorAll('.tabs .btn').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.tab===obj.tab)); });
+      window.scrollTo(0, Math.min(window.scrollY, (w?w.offsetTop-120:0))); break;
+    case 'hl':
+      var s=takeSel(); if(!s) break;
+      AT.annos.push({id:Math.random().toString(36).slice(2,8), p:s.p, start:s.start, end:s.end, style:t.dataset.style, note:''});
+      clearSel(); AT.sheet=null; redrawPassage(false); drawSheet(); saveDraft(); break;
+    case 'noteNew':
+      var s2=takeSel(); if(!s2) break;
+      AT.sheet={kind:'new', sel:s2}; drawSheet(); break;
+    case 'noteCreate':
+      var sh=AT.sheet; var txt=$('#noteText').value.trim();
+      AT.annos.push({id:Math.random().toString(36).slice(2,8), p:sh.sel.p, start:sh.sel.start, end:sh.sel.end, style:'n', note:txt});
+      clearSel(); AT.sheet=null; redrawPassage(false); drawSheet(); saveDraft(); break;
+    case 'noteSave':
+      AT.annos.forEach(function(x){ if(x.id===id) x.note=$('#noteText').value.trim(); });
+      AT.sheet=null; redrawPassage(false); drawSheet(); saveDraft(); toast('Note saved.'); break;
+    case 'annoDel':
+      AT.annos=AT.annos.filter(function(x){ return x.id!==id; }); AT.sheet=null; redrawPassage(false); drawSheet(); saveDraft(); break;
+    case 'sheetClose':
+      (S.route.name==='review'?S.review:AT).sheet=null; drawSheet(); break;
+    case 'submit': submitAttempt(); break;
+    case 'clue': showClue(t.dataset.q, t.dataset.part); break;
+
+    // teacher
+    case 'logout': break;
+    case 'go': S.route={name:t.dataset.r}; render(); window.scrollTo(0,0); break;
+    case 'copy':
+      var text=t.dataset.text;
+      var done=function(){ toast('Link copied.'); };
+      if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text); });
+      else fallbackCopy(text);
+      break;
+    case 'newBlank': openEditor({title:'', level:'P6', genre:'Narrative', paragraphs:[], questions:[], aiNotes:[], published:false},true); break;
+    case 'edit':
+      var p0=(S.dash.passages||[]).filter(function(x){ return x.id===id; })[0]; if(p0){ var c=deepCopy(p0); delete c.stats; openEditor(c,false); } break;
+    case 'edBack':
+      if(S.editor.dirty && !S.editor.leaving){ S.editor.leaving=true; render(); break; }
+      S.editor=null; S.route={name:'home'}; render(); refreshDash(); break;
+    case 'edSave': saveEditor(); break;
+    case 'edPreview':
+      syncParas(); var pv=deepCopy(S.editor.p); pv.questions=renumber(pv.questions);
+      var san=deepCopy(pv); san.questions.forEach(function(q){ delete q.answer; delete q.model; (q.events||[]).forEach(function(ev){ delete ev.order; }); });
+      if(!pv.settings.showAiNotes) san.aiNotes=[];
+      startAttempt(null, san); break;
+    case 'edAnnotate':
+      syncParas();
+      var b1=busy('Writing blue-pen notes',['Reading the passage and questions']);
+      call('annotate',{passage:S.editor.p}).then(function(n){ b1.done(); S.editor.p.aiNotes=n; markDirty(); render(); }).catch(function(er){ b1.done(); toast(er.message); });
+      break;
+    case 'edNoteDel': syncParas(); S.editor.p.aiNotes.splice(Number(t.dataset.i),1); markDirty(); render(); break;
+    case 'edAdd':
+      syncParas(); var ty=$('#addType').value; S.editor.p.questions.push(blankQuestion(ty)); S.editor.p.questions=renumber(S.editor.p.questions); markDirty(); render(); break;
+    case 'edQDel': syncParas(); S.editor.p.questions.splice(Number(t.dataset.i),1); S.editor.p.questions=renumber(S.editor.p.questions); markDirty(); render(); break;
+    case 'edMove':
+      syncParas(); var i=Number(t.dataset.i), d=Number(t.dataset.d), qs=S.editor.p.questions;
+      if(qs[i+d]){ var tmp=qs[i]; qs[i]=qs[i+d]; qs[i+d]=tmp; S.editor.p.questions=renumber(qs); markDirty(); render(); }
+      break;
+    case 'edParaAdd': syncParas(); S.editor.p.paragraphs.splice(Number(t.dataset.i)+1,0,''); markDirty(); render();
+      var nb=document.querySelector('textarea[data-para="'+(Number(t.dataset.i)+1)+'"]'); if(nb) nb.focus(); break;
+    case 'edParaJoin': syncParas(); var pj=Number(t.dataset.i), PP=S.editor.p.paragraphs; if(pj>0 && PP[pj]!=null){ PP[pj-1]=(PP[pj-1]+' '+PP[pj]).trim(); PP.splice(pj,1); markDirty(); render(); } break;
+    case 'edParaDel': syncParas(); S.editor.p.paragraphs.splice(Number(t.dataset.i),1); markDirty(); render(); break;
+    case 'edTypeUndo': var tu=S.editor.typeUndo; if(tu){ S.editor.p.questions[tu.i]=tu.q; S.editor.p.questions=renumber(S.editor.p.questions); S.editor.typeUndo=null; markDirty(); render(); } break;
+    case 'edUnflag': S.editor.p.questions[Number(t.dataset.i)].aiDrafted=false; markDirty(); render(); break;
+    case 'edSubAdd':
+      syncParas(); var q=S.editor.p.questions[Number(t.dataset.i)], key=t.dataset.k;
+      if(key==='events') q.events.push({text:'',order:q.events.length+1});
+      if(key==='options'){ q.options=q.options||[]; q.options.push(''); }
+      if(key==='parts') q.parts.push({id:String.fromCharCode(97+q.parts.length),label:'',model:'',marks:1,clue:''});
+      if(key==='statements') q.statements.push({text:'',answer:'True',reason:'',marks:1,clue:''});
+      markDirty(); render(); break;
+    case 'edSubDel':
+      syncParas(); var q2=S.editor.p.questions[Number(t.dataset.i)]; q2[t.dataset.k].splice(Number(t.dataset.j),1);
+      if(t.dataset.k==='parts') q2.parts.forEach(function(pt,j){ pt.id=String.fromCharCode(97+j); });
+      if(t.dataset.k==='options'){ var dj=Number(t.dataset.j), an=Number(q2.answer)||0; q2.answer = an===dj ? 0 : an>dj ? an-1 : an; }
+      markDirty(); render(); break;
+    case 'edDelete':
+      if(!S.editor.delConfirm){ S.editor.delConfirm=true; render(); break; }
+      call('deletePassage',{id:S.editor.p.id}).then(function(){ S.editor=null; S.route={name:'home'}; toast('Passage deleted.'); refreshDash().then(render); }).catch(function(er){ toast(er.message); });
+      break;
+    case 'results': openResults(id); break;
+    case 'review': openReview(id); break;
+    case 'analyse':
+      var b2=busy('Analysing the class',['Reading every pupil\'s answers','Looking for patterns and misconceptions']);
+      setTimeout(function(){ b2.step(1); }, 6000);
+      var fc=t.dataset.cls||'';
+      call('analyse',{id:id, cls:fc}).then(function(an){ b2.done(); var p1=curPassage(); if(p1){ p1.analyses=p1.analyses||{}; p1.analyses[fc?normCls(fc):'all']=an; } render(); }).catch(function(er){ b2.done(); toast(er.message); });
+      break;
+    case 'saveReview':
+      var aw={}; document.querySelectorAll('[data-ovr]').forEach(function(inp){ aw[inp.dataset.ovr]=Number(inp.value); });
+      var b3=busy('Saving',['Saving marks'],' ');
+      call('saveReview',{id:S.review.sub.id, awarded:aw, comment:$('#tComment').value}).then(function(s3){
+        b3.done(); S.review.sub=s3; S.subs.list=S.subs.list.map(function(x){ return x.id===s3.id?s3:x; }); render(); toast('Marks saved. The pupil will see them.');
+      }).catch(function(er){ b3.done(); toast(er.message); });
+      break;
+    case 'remark':
+      var b4=busy('Re-marking with AI',['Checking each answer against the answer key']);
+      call('remark',{id:S.review.sub.id}).then(function(s4){ b4.done(); S.review.sub=s4; S.subs.list=S.subs.list.map(function(x){ return x.id===s4.id?s4:x; }); render(); }).catch(function(er){ b4.done(); toast(er.message); });
+      break;
+    case 'subDel':
+      if(!S.review.delConfirm){ S.review.delConfirm=true; render(); break; }
+      call('deleteSub',{id:S.review.sub.id}).then(function(){ toast('Submission deleted.'); openResults(S.review.passage.id); }).catch(function(er){ toast(er.message); });
+      break;
+  }
+});
+document.addEventListener('keydown', function(e){ if(e.key==='Enter'){ var tr=e.target.closest && e.target.closest('tr[data-act]'); if(tr) tr.click(); } });
+
+function fallbackCopy(text){
+  var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select();
+  var ok=false; try{ ok=document.execCommand('copy'); }catch(e){} ta.remove();
+  toast(ok?'Link copied.':'Copy this link: '+text);
+}
+
+/* ---------- boot ---------- */
+if(BOOT.embed) document.body.classList.add('embed');
+if(S.view==='teacher'){
+  render(); refreshDash();
+} else {
+  render(); loadStudent();
+}
+})();
+</script>
+</body>
+</html>

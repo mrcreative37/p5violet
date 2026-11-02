@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<base target="_top">
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1028,7 +1028,7 @@
   <svg class="logo" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="lr" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/></defs>
     <circle cx="100" cy="100" r="94" fill="none" stroke="#fff" stroke-width="8" opacity=".9"/><circle cx="100" cy="100" r="54" fill="none" stroke="#fff" stroke-width="4" opacity=".5"/>
     <path fill="#F2AE00" d="M100 62l11 22.4 24.7 3.6-17.9 17.4 4.2 24.6L100 118.4l-22 11.6 4.2-24.6L64.3 88l24.7-3.6z"/></svg>
-  <div class="ttl"><small id="clsName"></small><b id="topTitle">Class Hub</b></div>
+  <div class="ttl"><small id="clsName"><?= className ?></small><b id="topTitle">Class Hub</b></div>
   <button class="mepill hidden" id="meBtn" aria-label="Sign out"></button>
 </div><div id="workBar" class="wbar hidden"></div></header>
 <main class="wrap" id="app"><div class="spin"><i></i><i></i><i></i></div></main>
@@ -1046,43 +1046,9 @@
 <input type="file" id="filePick" accept="image/*" class="hidden">
 
 <script>
-/* Student page address: this page talks to the class script in the background with NO Google
-   sign-in (credentials: "omit"), so it works on any phone, however many Google accounts it has. */
-(function() {
-  var API = "https://script.google.com/macros/s/AKfycby9Sq43RK3aB35fzOLYD9ZC8zbDZPN-VbF0tG_79UZpm9u9rCGtRyDOf1H9FojHE1Gb/exec";
-  var useGet = false;                       // set if this browser refuses the normal (POST) request
-  function call(fn, args, ok, fail, tries) {
-    var body = JSON.stringify({ fn: fn, args: args }), viaGet = useGet && body.length < 1800;
-    (viaGet ? fetch(API + "?api=1&q=" + encodeURIComponent(body), { credentials: "omit", redirect: "follow", cache: "no-store" })
-            : fetch(API + "?api=1", { method: "POST", body: body, credentials: "omit", redirect: "follow", cache: "no-store" }))
-      .then(function(r) { return r.text(); })
-      .then(function(t) {
-        var d; try { d = JSON.parse(t); } catch (e) { throw new Error("The class server is busy. Please try again in a moment."); }
-        if (d.ok) ok(d.result); else fail(new Error(d.error || "Something went wrong. Please try again."));
-      })
-      .catch(function(e) {
-        if ((tries || 0) < 1 && /fetch|network|load failed/i.test(String(e && e.message))) { useGet = true; return setTimeout(function() { call(fn, args, ok, fail, 1); }, 600); }
-        fail(e && /class server|try again/i.test(e.message) ? e : new Error("Can't reach the class server. Check the internet connection and try again."));
-      });
-  }
-  function runner() {
-    var ok = function() {}, fail = function(e) { console.error(e); }, p;
-    p = new Proxy({}, { get: function(t, k) {
-      if (k === "withSuccessHandler") return function(f) { ok = f; return p; };
-      if (k === "withFailureHandler") return function(f) { fail = f; return p; };
-      if (k === "withUserObject") return function() { return p; };
-      return function() { call(String(k), Array.prototype.slice.call(arguments), ok, fail); };
-    } });
-    return p;
-  }
-  window.google = { script: { get run() { return runner(); } } };
-  window.urlParam = function(n) { var m = new RegExp("[?&]" + n + "=([^&#]*)").exec(location.search); return m ? decodeURIComponent(m[1].replace(/\+/g, " ")).replace(/[^A-Za-z0-9]/g, "") : ""; };
-})();
-</script>
-<script>
-var MODE = "hub", HUB_KEY = urlParam("k"), DASH_KEY = "", CLASS_NAME = "";
-var PREVIEW = urlParam("pv");          // the teacher's "see it as students do" link
-var OPEN_AT = (function() { var m = /[?&]open=([^&#]*)/.exec(location.search); return m ? decodeURIComponent(m[1]).replace(/[^A-Za-z0-9:_-]/g, "") : ""; })();        // open one piece of work straight away (the Dashboard's 👀 Preview), e.g. "oral:or_123"
+var MODE = "<?= mode ?>", HUB_KEY = "<?= hubKey ?>", DASH_KEY = "<?= dashKey ?>", CLASS_NAME = "<?= className ?>";
+var PREVIEW = "<?= pv ?>";          // the teacher's "see it as students do" link
+var OPEN_AT = "<?= open ?>";        // open one piece of work straight away (the Dashboard's 👀 Preview), e.g. "oral:or_123"
 var S = { token: "", me: "", short: "", home: null, tab: "wall", boardId: "", wall: null, imgs: {}, msgVer: "", msgs: [], albums: null, album: null, roster: [], pin: "", picked: "", pendingPhoto: null, askPhoto: null, timers: [] };
 var STORE = "hub_" + (HUB_KEY || "x").substring(0, 8);
 var SPIN = '<div class="spin" role="status" aria-label="Loading"><i></i><i></i><i></i></div>';
@@ -1393,6 +1359,8 @@ function gotHome(h, refresh, fromCache) {
     S.timers.push(setInterval(ping, 60000));
     S.timers.push(setInterval(function() { if (S.tab === "ask" && !document.hidden) loadMsgs(true); }, 15000));
     go(S.tab || "wall");
+    if (OPEN_AT === "comp" && h.english && h.english.comp) { OPEN_AT = ""; EN.sec = "comp"; go("compo"); }
+    if (window.SITE_COMP) { try { localStorage.setItem("cm_hub_url", location.href.split("#")[0].replace(/[?&]open=[^&#]*/, "")); } catch (e) {} }
     if (OPEN_AT && /^oral:/.test(OPEN_AT) && h.english && h.english.oral) { var oid = OPEN_AT.slice(5); OPEN_AT = ""; EN.sec = "oral"; OR.openId = oid; OR.home = null; OR.view = "home"; go("compo"); }
     ldDot(); ldNews();
     if (!fromCache && h.popup && (h.planner || (h.work && h.work.todo)) && !S.popShown) { S.popShown = true; showTodayPopup(h.planner || {}); }   // the moment they come in: homework due and important news
@@ -3838,16 +3806,20 @@ function enSwitch() {
   return AI_NOTE + '<div class="en-sw' + (n >= 3 ? ' n3' : '') + '" role="tablist" aria-label="English Assistant">' + (e.compo ? b("compo", '<span class="i">✍️</span> <span>Compo</span>') : '') + (e.comp ? b("comp", '<span class="i">📖</span> <span>Comprehension</span>') : '') + (e.syn ? b("syn", '<span class="i">🔁</span> <span>Synthesis</span>') : '') + (e.cloze ? b("cloze", '<span class="i">🧩</span> <span>Cloze</span>') : '') + (e.edit ? b("edit", '<span class="i">✏️</span> <span>Spelling &amp; Grammar</span>') : '') + (e.gram ? b("gram", '<span class="i">🔤</span> <span>Grammar</span>') : '') + (e.vocab ? b("vocab", '<span class="i">📖</span> <span>Vocabulary</span>') : '') + (e.vt ? b("vt", '<span class="i">🖼️</span> <span>Visual Text</span>') : '') + (e.oral ? b("oral", '<span class="i">🎤</span> <span>Oral</span>') : '') + (e.exam ? b("exam", '<span class="i">📝</span> <span>Mock Exam</span>') : '') + '</div>';
 }
 /** 📖 Comprehension: the comprehension screens (the same page the teacher uses) in a frame, signed in as this pupil. */
+var CMX_V = "20261102";
 function renderComp() {
   window.scrollTo(0, 0);
   $("app").innerHTML = '<div id="enSwWrap">' + enSwitch() + '</div><div class="cm-wrap">' + SPIN + '</div>';
-  (CMX.html ? Promise.resolve(CMX.html) : call("cmModule").then(function(h) { CMX.html = h; return h; })).then(function(h) {
+  (window.SITE_COMP && !CMX.noFile ? Promise.resolve("file") : CMX.html ? Promise.resolve(CMX.html) : call("cmModule").then(function(h) { CMX.html = h; return h; })).then(function(h) {
     if (S.tab !== "compo" || enSec() !== "comp") return;
     var boot = { view: "student", bridge: true, embed: true, student: { name: S.home.preview ? "Teacher preview" : S.home.me, cls: S.home.className || "" } };
     if (CMX.openPid) { boot.pid = CMX.openPid; CMX.openPid = ""; }
     var f = document.createElement("iframe");
     f.className = "cm-frame"; f.id = "cmFrame"; f.title = "Comprehension";
-    f.srcdoc = String(h).replace("<" + "?!= boot ?" + ">", JSON.stringify(boot).replace(/</g, "\\u003c"));
+    if (h === "file") {
+      f.src = "comprehension.html?v=" + CMX_V + "#" + encodeURIComponent(JSON.stringify(boot));
+      f.onload = function() { var okf = false; try { okf = !!(f.contentWindow && f.contentWindow.BOOT); } catch (e) {} if (!okf) { CMX.noFile = true; CMX.html = null; renderComp(); } };
+    } else f.srcdoc = String(h).replace("<" + "?!= boot ?" + ">", JSON.stringify(boot).replace(/</g, "\\u003c"));
     var w = document.querySelector(".cm-wrap"); if (!w) return;
     w.innerHTML = ""; w.appendChild(f); CMX.route = "home"; cmFit();
   }).catch(function(e) { var w = document.querySelector(".cm-wrap"); if (w) w.innerHTML = '<div class="msg err">' + esc(e.message || String(e)) + '</div>'; });
