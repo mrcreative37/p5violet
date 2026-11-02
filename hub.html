@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Instrument+Sans:wght@400..700&family=Nothing+You+Could+Do&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Manrope:wght@400..800&display=swap" rel="stylesheet">
 <style>
   /* ===== Our class scrapbook: violet paper, sticker colours, washi tape, the class stamp ===== */
   :root {
@@ -1021,6 +1021,122 @@
   .vb-sim span { display:inline-block; background:#E9F7F0; color:#12684A; border-radius:999px; padding:3px 10px; margin:4px 4px 0 0; font-size:14px; font-weight:700; }
   .vb-load { color:var(--muted); padding:10px 0; } .vb-load i { display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--violet-2); margin-right:4px; animation:vbd 1s infinite ease-in-out; } .vb-load i:nth-child(2) { animation-delay:.15s; } .vb-load i:nth-child(3) { animation-delay:.3s; }
   @keyframes vbd { 0%, 80%, 100% { opacity:.25; } 40% { opacity:1; } }
+  /* =================== 🎨 Classroom Studio look (from the P5 Violet Classroom Studio design) ===================
+     Warm paper and lilac canvas, deep plum, butter yellow and coral, ink outlines with sticker shadows,
+     Cal Sans for big headings and Manrope for everything else. Only the look changes. */
+  :root {
+    --st-ink:#1E1A32; --st-paper:#FDFAF3; --st-canvas:#F7F5FA; --st-plum:#5D1E56; --st-plum-2:#873F7E; --st-coral:#F19A9D; --st-yellow:#FFE995;
+    --st-sky:#91D6F7; --st-gold:#DB962F; --st-muted:#615D73; --st-line:#D3CEDB; --st-nav:#ECE9F2; --st-ok:#227149; --st-danger:#BA2A31;
+    --st-display:'Cal Sans','Arial Rounded MT Bold',system-ui,sans-serif; --st-body:'Manrope','Avenir Next',system-ui,sans-serif;
+    --st-sticker:4px 5px 0 var(--st-ink); --st-soft:0 18px 45px rgba(30,26,50,.08);
+    --paper:var(--st-canvas); --dot:transparent; --card:var(--st-paper); --ink:var(--st-ink); --muted:var(--st-muted); --line:#E2DDE8;
+    --violet:var(--st-plum); --violet-2:var(--st-plum); --lilac:#F3E8F0; --gold:var(--st-gold); --gold-ink:#6E4A00;
+    --ok:var(--st-ok); --danger:var(--st-danger);
+    --head:var(--st-body); --hand:var(--st-body);
+  }
+  html, body { font-family:var(--st-body); }
+  body { background:var(--st-canvas); color:var(--st-ink); }
+  ::selection { background:var(--st-yellow); color:var(--st-ink); }
+  :focus-visible { outline:3px solid var(--st-plum-2); outline-offset:3px; }
+  h1, h2, .cheer-hero h1, .sy-top h1 { font-family:var(--st-display); font-weight:400; letter-spacing:-.03em; }
+  h3, h4 { font-family:var(--st-body); font-weight:800; letter-spacing:-.01em; }
+
+  /* ---- header: a floating paper bar ---- */
+  .top { background:transparent; box-shadow:none; color:var(--st-ink); padding:10px 12px 0; }
+  .top::before { content:""; position:absolute; inset:0 0 auto 0; height:100%; background:linear-gradient(var(--st-canvas) 55%, rgba(247,245,250,0)); z-index:-1; pointer-events:none; }
+  .top-in { background:rgba(253,250,243,.92); border:1px solid rgba(30,26,50,.1); border-radius:24px; box-shadow:0 10px 30px rgba(30,26,50,.07); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); padding:9px 10px 9px 14px; }
+  .top small { color:var(--st-muted); font-size:10px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+  .top b { font-family:var(--st-display); font-weight:400; font-size:21px; letter-spacing:-.02em; }
+  .top .logo circle { stroke:var(--st-plum); }
+  .top .logo path { fill:var(--st-plum); }
+  .mepill { background:transparent; border:1px solid var(--st-line); color:var(--st-ink); }
+  .mepill .so { background:var(--st-ink); color:var(--st-paper); }
+  .av { background:var(--st-coral) !important; border:2px solid var(--st-ink); box-shadow:none; color:var(--st-ink); font-family:var(--st-display); font-weight:400; font-size:15px; }
+  .a11y-btn { background:transparent; border:1px solid var(--st-line); color:var(--st-ink); }
+  .wbar { padding:8px 12px 10px; }
+  .wbar-l { color:var(--st-muted); font-family:var(--st-body); font-weight:800; font-size:11px; letter-spacing:.08em; text-transform:uppercase; opacity:1; }
+  .wbar-tabs { background:rgba(236,233,242,.85); border-radius:18px; padding:4px; }
+  .wbar-tabs button { background:transparent; color:var(--st-ink); font-family:var(--st-body); font-weight:700; font-size:13px; border-radius:14px; }
+  .wbar-tabs button:hover { background:var(--st-paper); }
+  .wbar-tabs button.on { background:var(--st-plum); color:var(--st-paper); box-shadow:none; }
+  .wbar-x { background:var(--st-nav); color:var(--st-ink); border-radius:50%; }
+
+  /* ---- navigation: floating paper dock (phone) and side menu (computer) ---- */
+  .tabs { background:rgba(253,250,243,.94); border:1px solid rgba(30,26,50,.16); border-radius:22px; box-shadow:0 12px 35px rgba(30,26,50,.2); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); }
+  .tabs button { color:var(--st-ink); font-family:var(--st-body); font-weight:800; border-radius:16px; }
+  .tabs button.on { background:var(--st-plum); color:var(--st-paper); box-shadow:none; }
+  .tabs button:hover:not(.on) { background:var(--st-nav); color:var(--st-ink); }
+  .tabs .dot { background:var(--st-gold); box-shadow:0 0 0 2px var(--st-paper); }
+
+  /* ---- page headings: eyebrow + big display title ---- */
+  .cheer-hero { padding:26px 2px 10px; }
+  .hand { font-family:var(--st-display) !important; font-weight:400; letter-spacing:-.01em; }
+  .cheer-hero .hand, .hello .hand { font-family:var(--st-body) !important; font-size:11px !important; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--st-muted) !important; transform:none !important; }
+  .empty .hand { display:block; font-size:26px !important; color:var(--st-ink) !important; margin:4px 0 2px; }
+  .from .hand, .sl-from .hand { font-family:var(--st-body) !important; font-weight:800; color:var(--st-plum) !important; font-size:inherit !important; }
+  .pinwrap .hand, .pop-hi .hand { font-size:30px !important; color:var(--st-ink) !important; }
+  .cheer-hero h1 { font-size:clamp(40px, 9vw, 64px); line-height:.98; margin-top:6px; }
+  .cheer-hero p { color:var(--st-muted); font-size:15.5px; line-height:1.55; }
+  .bsec, .cw-h, .cf-lab, .sec-h { font-family:var(--st-body); }
+  .bsec { font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--st-muted); }
+
+  /* ---- cards: paper tiles; My work is the butter-yellow sticker tile ---- */
+  .card, .cw-card, .or-card, .mw-row, .sy-set, .cf-card, .mq-q { background:var(--st-paper); border:1px solid rgba(30,26,50,.1); box-shadow:none; }
+  .card, .cw-card { border-radius:28px; }
+  .cf-card { border-radius:24px; }
+  .mw-card { background:var(--st-yellow); border:2px solid var(--st-ink); border-radius:30px; box-shadow:none; padding:18px; }
+  .mw-card .bsec { color:var(--st-ink); }
+  .mw-row { border:1px solid rgba(30,26,50,.16); border-radius:16px; }
+  .mw-st { background:var(--st-nav); color:var(--st-plum); }
+  .mw-st.late { background:#FBE3E4; color:var(--st-danger); } .mw-st.done { background:#DDF1E5; color:var(--st-ok); }
+
+  /* ---- buttons: plum pills; the big "go" buttons are yellow stickers ---- */
+  .btn { border-radius:999px; font-family:var(--st-body); font-weight:800; transition:transform .18s ease, box-shadow .18s ease, background .18s ease; }
+  .btn:hover:not(:disabled) { transform:translateY(-2px); }
+  .btn:active:not(:disabled) { transform:translateY(0) scale(.98); }
+  .btn.primary { background:var(--st-plum); color:var(--st-paper); border:2px solid var(--st-plum); box-shadow:none; }
+  .btn.primary:hover:not(:disabled) { background:var(--st-plum-2); box-shadow:0 8px 20px rgba(93,30,86,.2); }
+  .btn.soft { background:transparent; color:var(--st-ink); border:2px solid rgba(30,26,50,.28); box-shadow:none; }
+  .btn.soft:hover:not(:disabled) { background:var(--st-paper); border-color:var(--st-ink); }
+  .mw-go, .btn.big.primary, .sy-go .btn.primary { background:var(--st-yellow) !important; color:var(--st-ink) !important; border:2px solid var(--st-ink) !important; box-shadow:3px 4px 0 var(--st-ink) !important; }
+  .mw-go:hover:not(:disabled), .btn.big.primary:hover:not(:disabled), .sy-go .btn.primary:hover:not(:disabled) { box-shadow:1px 2px 0 var(--st-ink) !important; background:var(--st-yellow) !important; }
+  .mw-card .btn.soft { background:var(--st-paper); }
+
+  /* ---- section switchers (English and Maths) ---- */
+  .en-sw, .ma-sw, .or-sw { background:rgba(236,233,242,.7) !important; border:0 !important; border-radius:20px !important; box-shadow:none !important; padding:4px !important; }
+  .en-sw button, .ma-sw button, .or-sw button { font-family:var(--st-body) !important; font-weight:800 !important; color:var(--st-ink) !important; border-radius:15px !important; background:transparent; }
+  .en-sw button:hover:not(.on), .ma-sw button:hover:not(.on) { background:var(--st-paper) !important; }
+  .en-sw button.on, .ma-sw button.on, .or-sw button.on { background:var(--st-plum) !important; color:var(--st-paper) !important; box-shadow:none !important; }
+
+  /* ---- choices, chips, inputs ---- */
+  .mq-opt { background:var(--st-paper); border:2px solid var(--st-line); border-radius:16px; }
+  .mq-opt:hover { border-color:var(--st-ink); }
+  .mq-opt.on { border-color:var(--st-plum); background:#F6EAF2; box-shadow:0 0 0 3px rgba(93,30,86,.12); }
+  .mq-opt.on b { color:var(--st-plum); }
+  .sy-qn, .sy-qn { background:var(--st-ink); color:var(--st-paper); font-family:var(--st-display); font-weight:400; }
+  input.ex-in, .ex-ta, textarea.cw-q, .input, .wk-ed { border-color:var(--st-line); background:var(--st-paper); }
+  input.ex-in:focus, .ex-ta:focus, textarea.cw-q:focus, .wk-ed:focus-within { border-color:var(--st-plum); box-shadow:0 0 0 3px rgba(93,30,86,.14); outline:none; }
+  .msg { border-radius:16px; }
+  .ai-note { color:var(--st-muted); }
+  .priv-tip { background:#FFF4C9; color:#5A3D00; border:1px solid rgba(30,26,50,.12); }
+
+  /* ---- result cards and stickers ---- */
+  .cf-chip { font-family:var(--st-body); }
+  .sk-head, .vb-look { background:#FFF4C9; }
+  .vb-t { text-decoration-color:var(--st-plum); } .vb-n { color:var(--st-plum); }
+  .pvbar { background:var(--st-yellow) !important; border-bottom:2px solid var(--st-ink) !important; color:var(--st-ink) !important; }
+  .spin i { background:var(--st-plum) !important; }
+
+  @media (max-width:440px) { .top b { font-size:18px; } .top-in { gap:8px; padding:8px 8px 8px 10px; } .top .logo { width:34px; height:34px; } .a11y-btn { min-width:40px; min-height:40px; } }
+  /* ---- computer screens ---- */
+  @media (min-width:1024px) {
+    .top { padding:12px var(--gut) 0; }
+    .top-in { padding:9px 12px 9px 18px; }
+    .cheer-hero h1 { font-size:clamp(52px, 5.5vw, 78px); }
+    .tabs { border-radius:24px; box-shadow:0 10px 30px rgba(30,26,50,.07); border:1px solid rgba(30,26,50,.1); }
+    .tabs button { font-size:14px; }
+  }
+  @media (prefers-reduced-motion:reduce) { .btn, .btn:hover { transition:none; transform:none !important; } }
 </style>
 </head>
 <body>

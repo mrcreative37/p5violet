@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Manrope:wght@400..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
 <style>
 /* Layout: sticky app bar; reading view splits into passage (left, sticky) and booklet questions (right); stacks into tabs on phones. */
 :root{
@@ -545,6 +545,41 @@ body.stu .teach{border-radius:18px}
 @media (max-width:520px){ body.stu .kcover{min-height:100px} body.stu .para p{font-size:1.05rem} }
 body.stu .qc.done .qn{position:relative;overflow:visible}
 body.stu .qc.done .qn:after{content:"✓";position:absolute;inset:-7px -7px auto auto;width:20px;height:20px;margin:0;border-radius:50%;background:#fff;color:#0E8A66;display:grid;place-items:center;font:900 12px/1 var(--f-ui);box-shadow:0 2px 6px rgba(0,0,0,.18);transform:none;border:0}
+/* ===== 🎨 Classroom Studio colours and type (matches the Class Hub) ===== */
+body.stu{
+  --v1:#5D1E56; --v2:#873F7E; --pinkx:#F19A9D; --mintx:#227149; --sunx:#FFE995; --skyx:#91D6F7;
+  --ink:#1E1A32; --muted:#615D73; --line:#E2DDE8; --pen:#5D1E56; --pen-soft:#F3E8F0;
+  --f-display:'Cal Sans','Arial Rounded MT Bold',system-ui,sans-serif; --f-ui:'Manrope','Avenir Next',system-ui,sans-serif;
+  background:#F7F5FA; font-family:var(--f-ui);
+}
+body.stu h1, body.stu h2{font-family:var(--f-display);font-weight:400;letter-spacing:-.03em}
+body.stu .btn.go, body.stu .btn.primary{background:#FFE995;color:#1E1A32;border:2px solid #1E1A32;box-shadow:3px 4px 0 #1E1A32}
+body.stu .btn.go:active, body.stu .btn.primary:active{box-shadow:1px 2px 0 #1E1A32}
+body.stu .khero{background:#5D1E56;border:2px solid #1E1A32;box-shadow:none}
+body.stu .khero::before{display:none}
+body.stu .khero .khi{background:#FFE995;color:#1E1A32;border:2px solid #1E1A32;border-radius:6px;transform:rotate(-2deg);font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:800}
+body.stu .khero h1{font-size:clamp(2.2rem,7vw,3.4rem);line-height:.96}
+body.stu .ksteps span{background:#FDFAF3;color:#1E1A32;box-shadow:none;border:2px solid #1E1A32}
+body.stu .kstats div{background:#FDFAF3;border:1px solid rgba(30,26,50,.1);box-shadow:none;border-radius:26px}
+body.stu .kstats div:nth-child(1){background:#FFE995;border:2px solid #1E1A32} body.stu .kstats div:nth-child(2){background:#F19A9D;border:2px solid #1E1A32}
+body.stu .kstats div::after{display:none}
+body.stu .kstats b{background:none;color:#1E1A32;-webkit-background-clip:initial;background-clip:initial;font-family:var(--f-display);font-weight:400;font-size:2.4rem}
+body.stu .kcard, body.stu .kr, body.stu .qc{background:#FDFAF3;border:1px solid rgba(30,26,50,.1);box-shadow:none;border-radius:28px}
+body.stu .kcard:hover{box-shadow:var(--sk,4px 5px 0 #1E1A32);border-color:#1E1A32}
+body.stu .kcover .kemo{border:2px solid #1E1A32;box-shadow:3px 4px 0 #1E1A32}
+body.stu .kcover .klevel{border:2px solid #1E1A32}
+body.stu .tabs{background:rgba(236,233,242,.85);border:0;box-shadow:none}
+body.stu .tabs .btn[aria-pressed=true]{background:#5D1E56!important;color:#FDFAF3!important;box-shadow:none;border:0}
+body.stu .qn{background:#1E1A32;box-shadow:none;font-family:var(--f-display);font-weight:400}
+body.stu .qc.done .qn{background:#227149;box-shadow:none}
+body.stu .qm{background:#FFE995;color:#1E1A32;border:1.5px solid #1E1A32}
+body.stu .opt.sel{border-color:#5D1E56;background:#F6EAF2;box-shadow:0 0 0 4px rgba(93,30,86,.12)}
+body.stu .opt.sel b{background:#5D1E56}
+body.stu textarea.lined:focus, body.stu .qc input[type=text]:focus{border-color:#5D1E56;box-shadow:0 0 0 4px rgba(93,30,86,.14)}
+body.stu .p-head + .para p::first-letter{background:none;-webkit-background-clip:initial;background-clip:initial;color:#5D1E56}
+body.stu .pn{background:#F3E8F0;color:#5D1E56}
+body.stu .wword{background:none;-webkit-background-clip:initial;background-clip:initial;color:#5D1E56;font-family:var(--f-display);font-weight:400}
+body.stu .annobar{background:#FDFAF3}
 </style>
 </head>
 <body>
