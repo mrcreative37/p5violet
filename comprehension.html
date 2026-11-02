@@ -4,6 +4,7 @@
 <head>
 <base target="_top">
 <meta charset="utf-8">
+<meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
@@ -557,7 +558,7 @@ body.stu .qc.done .qn:after{content:"✓";position:absolute;inset:-7px -7px auto
 <div id="busy" hidden></div>
 <div id="toast" hidden></div>
 
-<script>var BOOT = <?!= boot ?>;</script>
+<script>var BOOT = (function(){ try { var b = JSON.parse(decodeURIComponent(location.hash.slice(1))); b.bridge = true; b.embed = true; b.view = "student"; return b; } catch (e) { return { view: "student", bridge: true, embed: true, student: {} }; } })();</script>
 <script>
 (function(){
 'use strict';
@@ -591,11 +592,19 @@ function duePill(info){
 var TYPE_LABEL = {mcq:'Multiple choice', short:'Short answer', open:'Open-ended', sequence:'Sequencing', referent:'Referent', vocab:'Vocabulary', truefalse:'True / False with reason', structured:'Structured'};
 var SKILLS = ['Literal','Inferential','Vocabulary','Referencing','Sequencing','Evidence','Evaluative'];
 
+var CMB={n:0,w:{}};
+window.addEventListener('message',function(e){ var d=e.data; if(!d||typeof d!=='object'||!d.cmRes||e.source!==window.parent) return; var w=CMB.w[d.cmRes]; if(!w) return; delete CMB.w[d.cmRes]; clearTimeout(w.t); if(d.ok) w.done(d.data); else w.fail(new Error(d.error||'Something went wrong. Please try again.')); });
+function cmPost(action, payload, done, fail){
+  if(window.parent===window){ fail(new Error('Comprehension couldn’t reach your Class Hub. Open your Class Hub, sign in, then tap English → 📖 Comprehension.')); return; }
+  var id='q'+(++CMB.n)+'_'+Date.now();
+  CMB.w[id]={done:done, fail:fail, t:setTimeout(function(){ if(CMB.w[id]){ delete CMB.w[id]; fail(new Error('Your Class Hub didn’t answer. Check the internet connection, then tap English → 📖 Comprehension again.')); } }, 150000)};
+  try{ window.parent.postMessage({cmReq:id, action:String(action), payload:JSON.stringify(payload||{})}, '*'); }catch(e){ delete CMB.w[id]; fail(new Error('Comprehension couldn’t reach your Class Hub. Close it and tap English → 📖 Comprehension again.')); }
+}
 function call(action, payload){
   return new Promise(function(resolve, reject){
     var done=function(r){ var o; try{ o=JSON.parse(r); }catch(e){ return reject(new Error('Unexpected reply from the server.')); } o.ok ? resolve(o.data) : reject(new Error(o.error)); };
     var fail=function(e){ reject(new Error(e && e.message ? e.message : String(e))); };
-    if(BOOT.bridge){ var br=null; try{ br=(window.parent!==window && window.parent.cmBridge) || (window.top!==window && window.top.cmBridge) || null; }catch(e){} if(!br){ fail(new Error('Comprehension couldn’t reach your Class Hub. Open your Class Hub, sign in, then tap English → 📖 Comprehension.')); return; } try{ br(action, JSON.stringify(payload||{})).then(done, fail); }catch(e){ fail(new Error('Comprehension couldn’t reach your Class Hub. Close it and tap English → 📖 Comprehension again.')); } return; }
+    if(BOOT.bridge){ var br=null; try{ br=(window.parent!==window && window.parent.cmBridge) || null; }catch(e){} if(br){ try{ br(action, JSON.stringify(payload||{})).then(done, fail); return; }catch(e){} } cmPost(action, payload, done, fail); return; }
     if(!window.google || !google.script || !google.script.run) return reject(new Error('Open this page from your Dashboard.'));
     google.script.run.withSuccessHandler(done).withFailureHandler(fail).cmTeacher(action, JSON.stringify(payload||{}), BOOT.cred);
   });
@@ -956,7 +965,7 @@ function render(){
   app.innerHTML=html;
   if(r==='attempt' || r==='review') afterWorkRender();
   if(r==='editor') growAll();
-  if(BOOT.bridge){ try{ window.parent.cmRoute(r); }catch(e){} }
+  if(BOOT.bridge){ try{ window.parent.cmRoute(r); }catch(e){ try{ window.parent.postMessage({cmRoute:String(r)}, '*'); }catch(x){} } }
   kCheer();
 }
 
@@ -2081,6 +2090,14 @@ function fallbackCopy(text){
 }
 
 /* ---------- boot ---------- */
+if(window.top===window && !window.cmBridge){
+  var hubUrl=''; try{ hubUrl=localStorage.getItem('cm_hub_url')||''; }catch(e){}
+  if(/^https?:\/\/[^ ]+hub(\.html)?\?/.test(hubUrl) && hubUrl.indexOf(location.host)>-1){ location.replace(hubUrl.replace(/[?&]open=[^&#]*/,'')+(hubUrl.indexOf('?')>-1?'&':'?')+'open=comp'); return; }
+  document.body.classList.add('stu');
+  $('#app').innerHTML='<div class="kid"><section class="khero"><div><div class="khi">📖 Comprehension</div><h1>Open it from your Class Hub</h1><p>Comprehension works inside your Class Hub, so it knows who you are. Scan the QR code on your Class Hub slip (or open your Class Hub link), sign in, then tap <b>English</b> → <b>📖 Comprehension</b>.</p></div></section></div>';
+  try{ document.querySelector('.bar').style.display='none'; }catch(e){}
+  return;
+}
 if(BOOT.embed) document.body.classList.add('embed');
 if(S.view==='teacher'){
   render(); refreshDash();
