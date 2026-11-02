@@ -3819,6 +3819,21 @@ document.addEventListener("click", function(e) {
   if ((t = e.target.closest("[data-sksec]"))) { var sc = t.getAttribute("data-sksec"); closeSheet(); EN.sec = sc; try { store("ensec", sc); } catch (x) {} go("compo"); return; }
 });
 document.addEventListener("input", function(e) { var t = e.target; if (t && t.hasAttribute && t.hasAttribute("data-skin")) { SK.confirm = false; if (t.value.trim()) SK.picks[+t.getAttribute("data-skin")] = t.value.trim(); else delete SK.picks[+t.getAttribute("data-skin")]; } });
+// ---------------- 🧭 Desktop side menu: always starts below the header and any banner (Teacher view, My work) ----------------
+function sideFit() {
+  var t = document.querySelector(".tabs"); if (!t) return;
+  if (window.innerWidth < 1024) { t.style.top = ""; t.style.maxHeight = ""; t.style.overflowY = ""; return; }
+  var b = 0;
+  [".top", "#pvbar", ".mw-bar", "#mwBar"].forEach(function(s) { var e = document.querySelector(s); if (!e) return; var r = e.getBoundingClientRect(); if (r.height && r.top < 260 && r.bottom > 0) b = Math.max(b, r.bottom); });
+  var top = Math.round(Math.max(14, b + 14));
+  t.style.top = top + "px"; t.style.maxHeight = "calc(100vh - " + (top + 14) + "px)"; t.style.overflowY = "auto";
+}
+(function() {
+  var q = false, run = function() { if (q) return; q = true; requestAnimationFrame(function() { q = false; sideFit(); }); };
+  window.addEventListener("resize", run); window.addEventListener("scroll", run, { passive: true });
+  try { var ro = new ResizeObserver(run); var watch = function() { [".top", "#pvbar"].forEach(function(s) { var e = document.querySelector(s); if (e && !e.__sf) { e.__sf = 1; ro.observe(e); } }); }; watch(); new MutationObserver(function() { watch(); run(); }).observe(document.body, { childList: true }); } catch (e) {}
+  setTimeout(run, 0); setTimeout(run, 800);
+})();
 
 // ---------------- ✍️ Compo Marker: photo → read → check → marked with symbols ----------------
 var CW = { st: null, cur: null, pages: [], busy: false, view: null, qimg: {} };
