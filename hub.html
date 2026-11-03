@@ -70,6 +70,9 @@
   .or-w.s-ok { text-decoration:underline; text-decoration-color:#7FCFA3; text-decoration-thickness:2px; text-underline-offset:4px; }
   .or-w.s-diff { background:#FFE7CF; color:#9A4B00; } .or-w.s-miss { color:#C53030; text-decoration:line-through dotted; } .or-w.s-unclear { color:#6B6789; text-decoration:underline wavy #B9B4D3; }
   .or-key { display:flex; flex-wrap:wrap; gap:6px; margin:4px 2px 8px; } .or-key span { font:800 12px/1 var(--head); padding:5px 9px; border-radius:999px; background:#fff; border:1px solid var(--line); }
+  .or-w.s-pron { background:#EAF2FF; color:#1F4E9A; } .or-key .k-pron { color:#1F4E9A; background:#EAF2FF; }
+  .or-check { font-size:13px; line-height:1.45; color:var(--muted); background:var(--card, #fff); border:1px solid var(--line); border-radius:14px; padding:9px 12px; margin:8px 0; }
+  .or-review { background:#FFF4C9 !important; color:#5A3D00 !important; border:1px solid rgba(30,26,50,.12); }
   .or-key .k-ok { color:#1E7A4C; } .or-key .k-diff { color:#9A4B00; background:#FFE7CF; } .or-key .k-miss { color:#C53030; } .or-key .k-unclear { color:#6B6789; }
   .or-wbar { position:sticky; bottom:calc(var(--dock, 80px) + 12px); z-index:6; display:flex; flex-wrap:wrap; align-items:center; gap:8px; background:#fff; border:2px solid var(--violet-2); border-radius:16px; padding:10px 12px; margin-top:10px; box-shadow:0 8px 24px rgba(46,26,120,.18); }
   .or-wbar > b { font:800 20px/1.1 var(--head); color:var(--violet); margin-right:4px; }
@@ -1387,11 +1390,23 @@ function start() {
   if (S.token) return loadHome();
   showLogin();
 }
+/** The sign-in names show at once from this device's last copy, then are checked with the Class Hub quietly.
+ * If the class list changed, the names are redrawn; if the link was changed, the copy is wiped. */
+function rosterApi() {
+  var rk = "ros" + hh(HUB_KEY), c = null; try { c = JSON.parse(store(rk) || "null"); } catch (e) {}
+  var live = api("hubRoster", [HUB_KEY]).then(function(d) {
+    var j = JSON.stringify(d); store(rk, j);
+    if (c && JSON.stringify(c) !== j && !S.token && $("names") && $("q")) { S.roster = d.names || []; $("q").oninput(); }
+    return d;
+  }, function(e) { store(rk, null); if (c && !S.token && $("names")) fatal(e.message); throw e; });
+  if (c && c.names) { live.catch(function() {}); return Promise.resolve(c); }
+  return live;
+}
 function showLogin(note, okNote) {
   stopTimers();
   $("tabs").classList.add("hidden"); document.body.classList.remove("nav"); $("app").removeAttribute("data-view"); $("meBtn").classList.add("hidden"); $("topTitle").textContent = "Class Hub";
   $("app").innerHTML = SPIN;
-  api("hubRoster", [HUB_KEY]).then(function(d) {
+  rosterApi().then(function(d) {
     S.roster = d.names || [];
     if (!CLASS_NAME && d.className) { CLASS_NAME = d.className; $("clsName").textContent = d.className; }   // page opened from the Student page address
     $("app").innerHTML = (note ? '<div class="msg err" role="alert">' + esc(note) + '</div>' : "") + (okNote ? '<div class="msg ok" role="status">' + esc(okNote) + '</div>' : "") +
@@ -2247,42 +2262,232 @@ document.addEventListener("click", function(e) {
 var OR = { home: null, sub: "read", m: null, view: "home", res: null, err: "", busy: false, level: "", rec: null, openId: "", img: {}, sbc: null, word: null };
 function orCall(action, d) { return call("oralApi", action, JSON.stringify(d || {})).then(function(r) { var o = JSON.parse(r); if (!o.ok) throw new Error(o.error); return o.data; }); }
 function orCanListen() { return !!(window.SpeechRecognition || window.webkitSpeechRecognition); }
-function orStopAll() { orRecStop(true); try { speechSynthesis.cancel(); } catch (e) {} OR.speaking = false; }
-window.addEventListener("pagehide", function() { orStopAll(); });
-document.addEventListener("visibilitychange", function() { if (document.hidden) orStopAll(); });
-/** Listens until stopped (restarts itself when the browser pauses). onText(fullText, interim) as words arrive. */
-function orRecStart(onText, onEnd) {
-  var R = window.SpeechRecognition || window.webkitSpeechRecognition;
+/* ⚡ ORAL ACCURACY (Hub): the browser's best guess AND its other guesses are kept for every stretch of speech, and
+   (when the teacher allows it) the microphone is also recorded in memory so Gemini can check the words the browser
+   wasn't sure of. The recording is sent once for checking and never saved, on this device or anywhere else. */
+var OR_AUD_RATE = 12000;
+function orAudOn() {
+  var allow = !(OR.home && OR.home.audioCheck === false) && !(OR.m && OR.m.audioCheck === false);
+  return allow && !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) && !!(window.AudioContext || window.webkitAudioContext);
+}
+/** Records the microphone into memory (12 kHz, mono) for up to cap seconds. prev: carry on from an earlier recording. */
+function orAudStart(cap, prev) {
+  var A = { chunks: prev && !prev.failed ? prev.chunks : [], n: prev && !prev.failed ? prev.n : 0, peak: prev && !prev.failed ? prev.peak : 0, cap: cap * OR_AUD_RATE, on: true };
+  try {
+    var AC = window.AudioContext || window.webkitAudioContext; A.ctx = new AC(); if (A.ctx.resume) A.ctx.resume();
+    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, channelCount: 1 } }).then(function(stream) {
+      if (!A.on) { stream.getTracks().forEach(function(t) { t.stop(); }); return; }
+      A.stream = stream;
+      var src = A.ctx.createMediaStreamSource(stream), proc = A.ctx.createScriptProcessor(4096, 1, 1), ratio = A.ctx.sampleRate / OR_AUD_RATE, acc = 0, cnt = 0, pos = 0;
+      proc.onaudioprocess = function(e) {
+        if (!A.on || A.n >= A.cap) return;
+        var inp = e.inputBuffer.getChannelData(0), out = new Int16Array(Math.ceil(inp.length / ratio) + 2), k = 0;
+        for (var i = 0; i < inp.length; i++) {
+          acc += inp[i]; cnt++; pos++;
+          if (pos >= ratio) { pos -= ratio; var v = acc / cnt, a = v < 0 ? -v : v; acc = 0; cnt = 0; if (a > A.peak) A.peak = a; out[k++] = Math.max(-32768, Math.min(32767, Math.round(v * 32767))); }
+        }
+        if (k) { A.chunks.push(out.subarray(0, k)); A.n += k; }
+      };
+      src.connect(proc); proc.connect(A.ctx.destination); A.src = src; A.proc = proc;
+    }).catch(function() { A.on = false; A.failed = true; });
+  } catch (e) { A.on = false; A.failed = true; }
+  return A;
+}
+function orAudStop(A) {
+  if (!A) return A; A.on = false;
+  try { if (A.proc) { A.proc.onaudioprocess = null; A.proc.disconnect(); } if (A.src) A.src.disconnect(); } catch (e) {}
+  try { if (A.stream) A.stream.getTracks().forEach(function(t) { t.stop(); }); } catch (e) {}
+  try { if (A.ctx && A.ctx.close) A.ctx.close(); } catch (e) {}
+  A.proc = A.src = A.stream = A.ctx = null;
+  return A;
+}
+/** The recording as a WAV file in base64, or null when there's nothing usable (too short, or silent). */
+function orAudWav(A) {
+  if (!A || A.failed || A.n < OR_AUD_RATE || A.peak < 0.01) return null;
+  var n = A.n, buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf), w = function(o, s) { for (var i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+  w(0, "RIFF"); v.setUint32(4, 36 + n * 2, true); w(8, "WAVE"); w(12, "fmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, OR_AUD_RATE, true); v.setUint32(28, OR_AUD_RATE * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, "data"); v.setUint32(40, n * 2, true);
+  var o = 44; A.chunks.forEach(function(c) { for (var i = 0; i < c.length && o < 44 + n * 2; i++, o += 2) v.setInt16(o, c[i], true); });
+  var b = new Uint8Array(buf), s = "";
+  for (var i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000));
+  return { data: btoa(s), secs: Math.round(n / OR_AUD_RATE) };
+}
+/** Listens until stopped (restarts itself when the browser pauses). onText(fullText, interim) as words arrive.
+ *  opts: { audio: record for the word check, cap: seconds, prev: an earlier recording to carry on from }. */
+function orRecStart(onText, onEnd, opts) {
+  var R = window.SpeechRecognition || window.webkitSpeechRecognition; opts = opts || {};
   if (!R) { flash("Speaking isn’t available in this browser. Please use Chrome, or Safari on an iPad or iPhone.", true); return false; }
   orRecStop(true);
-  var st = { on: true, finals: [], low: [], words: 0, last: Date.now(), pauses: 0, started: Date.now(), onText: onText, onEnd: onEnd };
+  var st = { on: true, finals: [], segs: [], low: [], words: 0, last: Date.now(), pauses: 0, started: Date.now(), onText: onText, onEnd: onEnd, aud: null };
+  if (opts.audio && orAudOn()) st.aud = orAudStart(opts.cap || 150, opts.prev);
   var make = function() {
-    var rec = new R(); rec.lang = "en-GB"; rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 1;
+    var rec = new R(); rec.lang = "en-GB"; rec.continuous = true; rec.interimResults = true; rec.maxAlternatives = 5;
     rec.onresult = function(ev) {
-      var now = Date.now(); if (now - st.last > 2500 && st.finals.length) st.pauses++; st.last = now;
+      var now = Date.now(); if (now - st.last > 3500 && st.finals.length) st.pauses++; st.last = now;   // only long stops; a breath or a thinking pause is fine
       var interim = "";
       for (var i = ev.resultIndex; i < ev.results.length; i++) {
         var r = ev.results[i], t = String(r[0].transcript || "").trim();
-        if (r.isFinal) { if (t) { var n = t.split(/\s+/).length, c = Number(r[0].confidence) || 0; if (c > 0 && c < 0.55) for (var k = 0; k < n; k++) st.low.push(st.words + k); st.words += n; st.finals.push(t); } }
-        else interim += " " + t;
+        if (r.isFinal) {
+          if (t) {
+            var n = t.split(/\s+/).length, c = Number(r[0].confidence) || 0, alts = [];
+            for (var a = 1; a < r.length && a < 5; a++) { var at = String(r[a].transcript || "").trim(); if (at && at !== t) alts.push(at); }
+            if (c > 0 && c < 0.55) for (var k = 0; k < n; k++) st.low.push(st.words + k);
+            st.words += n; st.finals.push(t); st.segs.push({ t: t, c: Math.round(c * 100) / 100, a: alts });
+          }
+        } else interim += " " + t;
       }
       if (st.onText) st.onText(st.finals.join(" "), interim.trim());
     };
-    rec.onerror = function(ev) { if (ev.error === "not-allowed" || ev.error === "service-not-allowed") { st.on = false; flash("Please allow the microphone for this page, then try again.", true); } };
+    rec.onerror = function(ev) {
+      if (ev.error === "not-allowed" || ev.error === "service-not-allowed") { st.on = false; flash("Please allow the microphone for this page, then try again.", true); }
+      // some tablets can't share the microphone between listening and recording: keep listening, drop the recording
+      if (ev.error === "audio-capture" && st.aud) { orAudStop(st.aud); st.aud.failed = true; st.aud = null; }
+    };
     rec.onend = function() { if (st.on) { try { st.rec = make(); st.rec.start(); } catch (e) { st.on = false; if (st.onEnd) st.onEnd(); } } else if (st.onEnd) st.onEnd(); };
     return rec;
   };
   st.rec = make(); OR.rec = st;
-  try { st.rec.start(); } catch (e) { OR.rec = null; return false; }
+  try { st.rec.start(); } catch (e) { OR.rec = null; orAudStop(st.aud); return false; }
   return true;
 }
-/** Stops listening. Returns what was heard (text, positions the service was unsure of, seconds, long pauses). */
+/** Stops listening. Returns what was heard: text, the browser's results with their other guesses, unsure positions, seconds, long stops, and the recording. */
 function orRecStop(silent) {
   var st = OR.rec; if (!st) return null;
   OR.rec = null; st.on = false; if (silent) st.onEnd = null;
   try { st.rec.stop(); } catch (e) {}
-  return { text: st.finals.join(" ").replace(/\s+/g, " ").trim(), low: st.low, seconds: Math.round((Date.now() - st.started) / 1000), pauses: st.pauses };
+  orAudStop(st.aud);
+  return { text: st.finals.join(" ").replace(/\s+/g, " ").trim(), segs: st.segs, low: st.low, seconds: Math.round((Date.now() - st.started) / 1000), pauses: st.pauses, aud: st.aud };
 }
+function orPrivText(kind) {
+  if (orAudOn()) return kind === "home" ? "🔒 Your browser turns your voice into words. To check words it wasn’t sure of, your recording is listened to once by the class’s AI checker and then deleted. No recording is ever saved."
+    : "🔒 Your recording is only used to check your words, then deleted. It is never saved.";
+  return kind === "home" ? "🔒 Your browser turns your voice into words. No recording is kept, only the words and your scores." : "🔒 No recording is kept. Only the words your browser heard are checked.";
+}
+function orReadStart() {
+  orStopAll(); OR.word = null;
+  var ok = orRecStart(function(text, interim) { var el = $("orHeard"); if (el) el.textContent = (text + " " + interim).trim().split(/\s+/).slice(-30).join(" "); }, null, { audio: true, cap: 180 });
+  if (!ok) return; renderOral(); orTimer();
+}
+function orReadStop() {
+  var got = orRecStop(true); if (!got) return;
+  var audio = orAudWav(got.aud);
+  OR.busy = audio ? "Checking your reading against your recording…" : true; renderOral();
+  orCall("readMark", { id: OR.m.id, transcript: got.text, lowConf: got.low, seconds: got.seconds, pauses: got.pauses, segs: got.segs, audio: audio }).then(function(r) {
+    OR.busy = false; OR.res = r; OR.res.transcript = got.text; OR.view = "readRes"; if (r.history) OR.m.history = r.history; OR.home = OR.home && Object.assign(OR.home, { stale: true }); if (S.tab === "compo") renderOral(); mwRefresh(true);
+  }).catch(function(e) { OR.busy = false; if (S.tab === "compo") { renderOral(); flash(e.message, true); } });
+}
+/** How each word looks: read, read as another word, say it again, left out, or couldn't be checked. */
+var OR_WCLS = { ok: "ok", near: "ok", alt: "ok", audio: "ok", pron: "pron", omit: "miss", sub: "diff", diff: "diff", miss: "unclear", unclear: "unclear" };
+function orPassageHtml(text, status, heard) {
+  var i = 0, paras = String(text || "").split(/\n{2,}/);
+  return paras.map(function(p) {
+    return '<p>' + p.split(/(\s+)/).map(function(tok) {
+      if (!/[A-Za-z0-9]/.test(tok)) return esc(tok);
+      var k = i++, s = status ? status[k] : "", hd = heard ? heard[k] : "", cls = s ? OR_WCLS[s] || s : "";
+      var tag = s === "sub" && hd ? 'read “' + esc(hd) + '”' : s === "diff" && hd ? 'maybe “' + esc(hd) + '”' : s === "pron" ? 'say it again' : s === "omit" ? 'left out' : s === "miss" ? 'not heard' : s === "unclear" ? 'not clear' : '';
+      return '<button class="or-w' + (cls ? ' s-' + cls : '') + '" data-orw="' + k + '">' + esc(tok) + (tag ? '<small>' + tag + '</small>' : '') + '</button>';
+    }).join("") + '</p>';
+  }).join("");
+}
+function orMissedWords(m, r) {
+  var w = String(m.text).split(/\s+/).filter(function(t) { return /[A-Za-z0-9]/.test(t); }), out = [];
+  (r.status || []).forEach(function(s, i) { if ((s === "omit" || s === "sub" || s === "pron" || s === "diff") && w[i] && out.length < 4) { var x = w[i].replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g, ""); if (x.length > 2 && out.indexOf(x) < 0) out.push(x); } });
+  return out;
+}
+function orReviewNote(why, read) {
+  return '<div class="msg or-review" role="status">👂 <b>Some of this was hard to check</b>' + (why ? ' (' + esc(why) + ')' : '') + '. So this score is only a first guess, and ' + esc((OR.home && OR.home.teacher) || "your teacher") + ' can see that it needs checking. ' +
+    (read ? 'Try reading again somewhere quiet, close to the microphone.' : 'Try again somewhere quiet, close to the microphone.') + '</div>';
+}
+function orReadResult() {
+  var m = OR.m, r = OR.res, sc = r.score, c = sc.counts, f = r.feedback || {}, P = sc.parts;
+  var bars = [{ label: "Words", pct: sc.accuracy, val: sc.accuracy + "%" }, { label: "Smooth", pct: Math.round(100 * P.fluency / 2), val: P.fluency + "/2" }];
+  if (P.pronunciation != null) bars.push({ label: "Sounds", pct: Math.round(100 * P.pronunciation / 2), val: P.pronunciation + "/2" });
+  if (P.expression != null) bars.push({ label: "Feeling", pct: Math.round(100 * P.expression / 2), val: P.expression + "/2" });
+  var out = '<button class="btn soft" data-orback style="margin:0 0 8px">‹ All practice</button>' + (sc.review ? orReviewNote(sc.reviewWhy, true) : '') +
+    CF.sum({ got: sc.score, max: 10, bars: bars, star: CF.short((f.strengths || [])[0] || "", 50), aim: CF.short((f.improve || [])[0] || "", 50) }) +
+    '<p class="or-check">' + (sc.listened ? '✔️ Words the browser wasn’t sure of were checked against your recording. Mistakes made by the speech checker were <b>not</b> counted against you.'
+      : '✔️ Only the words your browser heard were checked' + (sc.audioSent ? ' (your recording couldn’t be checked this time)' : '') + ', so sounds and feeling weren’t scored. Words it didn’t catch were <b>not</b> counted against you.') + '</p>' +
+    '<div class="or-key"><span class="k-ok">✓ read</span><span class="k-diff">read as another word</span>' + (sc.listened ? '<span class="k-pron">say it again</span>' : '') + '<span class="k-miss">left out</span><span class="k-unclear">couldn’t check</span></div>' +
+    '<div class="cw-card or-passage res">' + orPassageHtml(m.text, r.status, r.heard) + '</div>' + orWordBar();
+  var miss = orMissedWords(m, r);
+  if (miss.length) out += '<div class="cf"><div class="cf-ok" style="background:#FFF4DC;color:#7A4B00">🔊 Practise: ' + miss.map(esc).join(" · ") + ' <small style="display:inline;margin-left:4px;color:#9A5B00">tap them in the passage</small></div></div>';
+  if (f.expression) out += '<div class="cf"><div class="cf-ok" style="background:#F7F4FF;color:#2E1A78">🎭 ' + esc(f.expression) + '</div></div>';
+  var ls = []; if (sc.accuracy < 90 && !sc.review) ls.push({ id: "or-words" }); if (P.fluency < 2) ls.push({ id: "or-pace" }, { id: "or-pause" }); if (P.expression != null && P.expression < 2) ls.push({ id: "or-expr" });
+  out += CF.lessons(ls, "Quick tips");
+  out += '<p class="cf-note">Practice score only (not a PSLE grade). Accuracy, smoothness, sounds and feeling are scored separately. Any accent is fine.</p>';
+  if (m.history && m.history.length > 1) out += '<div class="bsec">📈 Your scores for this passage</div><div class="cw-card">' + orBars(m.history) + '</div>';
+  out += '<div class="sy-btns" style="margin-top:12px"><button class="btn primary big" data-oragain>🔁 Read it again</button><button class="btn soft big" data-ormodel>' + (OR.speaking ? '■ Stop' : '🔊 Hear a model reading') + '</button><button class="btn soft big" data-orback>📚 Choose another</button></div>';
+  return out;
+}
+/* ----- 💬 Conversation: spoken answers are checked against the recording ----- */
+function orSbcSave() { var a = $("orAns"), Q = OR.sbc; if (!a) return; if (a.value.replace(/\s+/g, " ").trim() !== String(Q.cur || "").replace(/\s+/g, " ").trim()) Q.typedEdit = true; Q.cur = a.value; }
+function orSbcRec() {
+  orSbcSave(); var Q = OR.sbc, base = Q.cur ? Q.cur.replace(/\s*$/, " ") : "";
+  if (!Q.t0) Q.t0 = Date.now();
+  Q.ver = false;
+  var ok = orRecStart(function(text, interim) { var el = $("orAns"); var v = (base + text + (interim ? " " + interim : "")).trim(); Q.cur = (base + text).trim(); if (el) el.value = v; },
+    function() { }, { audio: !Q.typedEdit, cap: 90, prev: Q.aud });
+  if (!ok) return; renderOral(); orTimer();
+}
+/** Stops any listening for this question and keeps what was heard. */
+function orSbcTake() {
+  var Q = OR.sbc, got = orRecStop(true);
+  if (got) { Q.segs = (Q.segs || []).concat(got.segs || []); if (got.aud) Q.aud = got.aud; }
+  orSbcSave();
+}
+function orSbcTyped(Q) { return !!Q.typedEdit || !(Q.segs && Q.segs.length); }
+function orSbcCheck() {
+  orSbcTake(); var Q = OR.sbc, ans = String(Q.cur || "").trim();
+  if (ans.split(/\s+/).length < 2) { flash("Say or type your answer first.", true); return; }
+  var typed = orSbcTyped(Q), audio = typed ? null : orAudWav(Q.aud);
+  OR.busy = true; renderOral();
+  orCall("coach", { id: OR.m.id, qi: Q.qi, question: Q.qs[Q.qi], answer: ans, round: Q.round, asked: Q.asked, segs: typed ? [] : Q.segs, typed: typed, audio: audio }).then(function(c) {
+    OR.busy = false; Q.coach = c; Q.round++;
+    if (c.verified && c.verified.text) { Q.cur = c.verified.text; Q.segs = [{ t: c.verified.text, c: 1, a: [] }]; Q.ver = true; Q.verInfo = c.verified; }
+    if (S.tab === "compo") renderOral(); var el = document.querySelector(".or-coach"); if (el && el.scrollIntoView) el.scrollIntoView({ block: "center" });
+  }).catch(function(e) { OR.busy = false; if (S.tab === "compo") { renderOral(); flash(e.message, true); } });
+}
+function orSbcKeep() {
+  var Q = OR.sbc; if (!String(Q.cur || "").trim()) return;
+  var typed = orSbcTyped(Q);
+  Q.answers[Q.qi] = { question: Q.qs[Q.qi], answer: Q.cur.trim(), seconds: Q.t0 ? Math.round((Date.now() - Q.t0) / 1000) : 0, typed: typed, segs: typed ? [] : (Q.segs || []), audio: typed || Q.ver ? null : orAudWav(Q.aud) };
+}
+function orSbcFresh(Q) { Q.cur = ""; Q.coach = null; Q.round = 0; Q.model = null; Q.t0 = 0; Q.segs = []; Q.aud = null; Q.ver = false; Q.verInfo = null; Q.typedEdit = false; }
+function orSbcNext() {
+  var Q = OR.sbc; orSbcTake(); orSbcKeep();
+  if (Q.qi >= Q.qs.length - 1 && Q.coach && Q.coach.followup) { Q.qs.push(Q.coach.followup); Q.asked.push(Q.coach.followup); Q.followups++; }
+  Q.qi = Math.min(Q.qi + 1, Q.qs.length - 1); orSbcFresh(Q); renderOral(); window.scrollTo(0, 0);
+}
+function orSbcFinish(btn) {
+  var Q = OR.sbc; orSbcTake(); orSbcKeep();
+  var list = Q.answers.filter(Boolean); if (!list.length) { flash("Answer at least one question first.", true); return; }
+  if (btn) { btn.disabled = true; btn.textContent = list.some(function(a) { return a.audio; }) ? "Checking your answers…" : "Getting your feedback…"; }
+  orCall("sbcFinish", { id: OR.m.id, answers: list }).then(function(r) { OR.res = r; OR.view = "sbcRes"; if (r.history) OR.m.history = r.history; Q.answers.forEach(function(a) { if (a) a.audio = null; }); if (S.tab === "compo") renderOral(); mwRefresh(true); })
+    .catch(function(e) { if (btn) { btn.disabled = false; btn.textContent = "🏁 Finish and get my feedback"; } flash(e.message, true); });
+}
+function orVerNote(v) {
+  if (!v) return '';
+  return '<p class="or-check">✔️ Checked against your recording' + (v.fixed && v.fixed.length ? ': the speech checker misheard ' + v.fixed.length + ' word' + (v.fixed.length === 1 ? '' : 's') + ' (' + v.fixed.slice(0, 3).map(function(f) { return '“' + esc(f.heard) + '” → “' + esc(f.said) + '”'; }).join(", ") + '). That was the app’s mistake, not yours.' : '.') + '</p>' +
+    (v.pron && v.pron.length ? '<p class="or-lang">🗣️ Say clearly: ' + v.pron.map(function(p) { return '<b>' + esc(p.word) + '</b>' + (p.note ? ' (' + esc(p.note) + ')' : ''); }).join(" · ") + '</p>' : '');
+}
+function orSbcResult() {
+  var m = OR.m, r = OR.res, p = r.parts;
+  var out = '<button class="btn soft" data-orback style="margin:0 0 8px">‹ All practice</button>' + (r.review ? orReviewNote(r.reviewWhy, false) : '') +
+    CF.sum({ got: r.score, max: 10, bars: [{ label: "Ideas", pct: Math.round(100 * p.ideas / 3), val: p.ideas + "/3" }, { label: "OREO", pct: Math.round(100 * p.development / 3), val: p.development + "/3" }, { label: "Language", pct: Math.round(100 * p.language / 2), val: p.language + "/2" }, { label: "Smooth", pct: Math.round(100 * p.fluency / 2), val: p.fluency + "/2" }],
+      star: CF.short((r.strengths || [])[0] || "", 50), aim: CF.short((r.improve || [])[0] || "", 50) });
+  if (r.listened) out += '<p class="or-check">✔️ ' + (r.listened === 1 ? 'Your spoken answer was' : r.listened + ' spoken answers were') + ' checked against your recording' + (r.fixed ? ', fixing ' + r.fixed + ' word' + (r.fixed === 1 ? '' : 's') + ' the speech checker misheard (not your mistakes)' : '') + '.' + (r.clarity != null ? ' Clear speaking: ' + r.clarity + '/2.' : '') + ' Any accent is fine.</p>';
+  else out += '<p class="or-check">✔️ Words the speech checker wasn’t sure of were not counted against you. Pauses to think are fine.</p>';
+  if (r.pron && r.pron.length) out += '<p class="or-lang">🗣️ Say clearly: ' + r.pron.map(function(x) { return '<b>' + esc(x.word) + '</b>' + (x.note ? ' (' + esc(x.note) + ')' : ''); }).join(" · ") + '</p>';
+  if (r.oreo) out += '<div class="cf"><div class="cf-ok" style="background:#F7F4FF;color:#2E1A78">🍪 ' + esc(r.oreo) + '</div></div>';
+  var ls = []; if (p.ideas < 2) ls.push({ id: "or-opinion" }); if (p.development < 2) ls.push({ id: "or-reason" }, { id: "or-example" }); else if (p.development < 3) ls.push({ id: "or-example" });
+  out += CF.lessons(ls, "Quick tips") + '<p class="cf-note">Practice score, not an official PSLE grade.</p>';
+  if (m.history && m.history.length > 1) out += '<div class="bsec">📈 Your scores for this one</div><div class="cw-card">' + orBars(m.history) + '</div>';
+  out += '<div class="sy-btns" style="margin-top:12px"><button class="btn primary big" data-oragain>🔁 Try it again</button><button class="btn soft big" data-orback>📚 Choose another</button></div>';
+  return out;
+}
+function orStopAll() { orRecStop(true); try { speechSynthesis.cancel(); } catch (e) {} OR.speaking = false; }
+window.addEventListener("pagehide", function() { orStopAll(); });
+document.addEventListener("visibilitychange", function() { if (document.hidden) orStopAll(); });
 function orSay(text, rate, onWord, onDone) {
   try {
     speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(String(text || "")); u.lang = "en-GB"; u.rate = rate || .9;
@@ -2335,7 +2540,7 @@ function orHomeView() {
     '<button class="btn soft big" data-orfresh style="width:100%;margin-top:10px"' + (OR.busy ? ' disabled' : '') + '>' + (OR.busy ? 'Writing one for you…' : '✨ Make me a new one') + '</button></div>';
   var hist = h.history.filter(function(x) { return x.type === sub; });
   if (hist.length) out += '<div class="bsec">📈 My last scores</div><div class="cw-card">' + orBars(hist) + '<p class="cw-tip" style="margin:6px 0 0">Practice scores out of 10. They are not official PSLE grades.</p></div>';
-  out += '<p class="or-priv">🔒 Your browser turns your voice into words. No recording is kept, only the words and your scores.</p>';
+  out += '<p class="or-priv">' + orPrivText("home") + '</p>';
   return out;
 }
 function orStart(opts, btn) {
@@ -2349,16 +2554,6 @@ function orStart(opts, btn) {
   }).catch(function(e) { OR.busy = false; OR.err = e.message; OR.view = "home"; if (S.tab === "compo" && enSec() === "oral") renderOral(); });
 }
 /* ----- 📖 Reading Aloud ----- */
-function orPassageHtml(text, status, heard) {
-  var i = 0, paras = String(text || "").split(/\n{2,}/);
-  return paras.map(function(p) {
-    return '<p>' + p.split(/(\s+)/).map(function(tok) {
-      if (!/[A-Za-z0-9]/.test(tok)) return esc(tok);
-      var k = i++, s = status ? status[k] : "", hd = heard ? heard[k] : "";
-      return '<button class="or-w' + (s ? ' s-' + s : '') + '" data-orw="' + k + '">' + esc(tok) + (s === "diff" && hd ? '<small>heard “' + esc(hd) + '”</small>' : s === "miss" ? '<small>missed</small>' : s === "unclear" ? '<small>not clear</small>' : '') + '</button>';
-    }).join("") + '</p>';
-  }).join("");
-}
 function orWordAt(k) { var n = 0, w = ""; String(OR.m.text).split(/\s+/).forEach(function(tok) { if (!/[A-Za-z0-9]/.test(tok)) return; if (n++ === k) w = tok; }); return w.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g, ""); }
 function orWordBar() {
   var w = OR.word; if (!w) return '';
@@ -2373,25 +2568,13 @@ function orReadView() {
     '<div class="cw-card or-ctrl">' + (rec
       ? '<div class="or-live"><span class="or-dot"></span><b id="orTimer">0:00</b><span>Listening… read the passage aloud</span></div><div class="or-heard" id="orHeard" aria-live="polite"></div><button class="btn primary big" data-orstop style="width:100%;margin-top:10px">■ Stop and check my reading</button>'
       : '<button class="btn primary big" data-orrec style="width:100%"' + (orCanListen() ? '' : ' disabled') + '>🎤 Start reading</button><button class="btn soft big" data-ormodel style="width:100%;margin-top:8px">' + (OR.speaking ? '■ Stop listening' : '🔊 Listen to a model reading') + '</button>') +
-    (OR.busy ? '<p class="cw-tip" style="margin:10px 0 0">Checking your reading…</p>' : '') + '</div>' +
+    (OR.busy ? '<p class="cw-tip" style="margin:10px 0 0">' + (typeof OR.busy === "string" ? OR.busy : "Checking your reading…") + '</p>' : '') + '</div>' +
     (m.history && m.history.length ? '<div class="bsec">📈 Your scores for this passage</div><div class="cw-card">' + orBars(m.history) + '</div>' : '') +
-    '<p class="or-priv">🔒 No recording is kept. Only the words your browser heard are checked.</p>';
+    '<p class="or-priv">' + orPrivText("read") + '</p>';
 }
 function orTimer() {
   if (!OR.rec) return; var s = Math.round((Date.now() - OR.rec.started) / 1000), el = $("orTimer"); if (el) el.textContent = Math.floor(s / 60) + ":" + ("0" + s % 60).slice(-2);
   setTimeout(orTimer, 500);
-}
-function orReadStart() {
-  orStopAll(); OR.word = null;
-  var ok = orRecStart(function(text, interim) { var el = $("orHeard"); if (el) el.textContent = (text + " " + interim).trim().split(/\s+/).slice(-30).join(" "); }, null);
-  if (!ok) return; renderOral(); orTimer();
-}
-function orReadStop() {
-  var got = orRecStop(true); if (!got) return;
-  OR.busy = true; renderOral();
-  orCall("readMark", { id: OR.m.id, transcript: got.text, lowConf: got.low, seconds: got.seconds, pauses: got.pauses }).then(function(r) {
-    OR.busy = false; OR.res = r; OR.res.transcript = got.text; OR.view = "readRes"; if (r.history) OR.m.history = r.history; OR.home = OR.home && Object.assign(OR.home, { stale: true }); if (S.tab === "compo") renderOral(); mwRefresh(true);
-  }).catch(function(e) { OR.busy = false; if (S.tab === "compo") { renderOral(); flash(e.message, true); } });
 }
 function orMeter(label, val, max, note) { return '<div class="or-meter"><span>' + label + '</span><i><b style="width:' + Math.round(val / max * 100) + '%"></b></i><em>' + val + '/' + max + '</em>' + (note ? '<small>' + note + '</small>' : '') + '</div>'; }
 /* ----- 💬 Stimulus-Based Conversation ----- */
@@ -2422,41 +2605,14 @@ function orSbcView() {
   out += '</div>';
   if (c) {
     out += '<div class="cw-card or-coach"><div class="or-oreo">' + orTiles(c.oreo) + '</div>' + (c.praise ? '<p class="or-praise">⭐ ' + esc(c.praise) + '</p>' : '') +
-      (c.hint ? '<p class="or-hint">💡 ' + esc(c.hint) + '</p>' : '<p class="or-praise">🎉 You used all four parts of OREO!</p>') + (c.language ? '<p class="or-lang">✏️ ' + esc(c.language) + '</p>' : '') + '</div>';
+      (c.hint ? '<p class="or-hint">💡 ' + esc(c.hint) + '</p>' : '<p class="or-praise">🎉 You used all four parts of OREO!</p>') + (c.language ? '<p class="or-lang">✏️ ' + esc(c.language) + '</p>' : '') + orVerNote(Q.verInfo) + '</div>';
     if (Q.model) out += '<div class="cw-card or-model"><div class="cw-h">💡 One way to answer</div><p>' + ['o1', 'r', 'e', 'o2'].map(function(k, i) { return Q.model.parts[k] ? '<span class="or-mp m-' + k + '"><b>' + ['O', 'R', 'E', 'O'][i] + '</b> ' + esc(Q.model.parts[k]) + '</span>' : ''; }).join(" ") + '</p><p class="cw-tip" style="margin:6px 0 0">Use your own ideas and words. Don’t learn this by heart.</p></div>';
     out += '<div class="sy-btns" style="margin-top:8px">' + (!Q.model ? '<button class="btn soft big" data-orshowmodel>💡 Show me a model answer</button>' : '') +
       (Q.qi < Q.qs.length - 1 || (c.followup && Q.followups < 2) ? '<button class="btn primary big" data-ornextq>➡️ ' + (Q.qi < Q.qs.length - 1 ? 'Next question' : 'Answer a follow-up question') + '</button>' : '') +
       '<button class="btn ' + (Q.qi >= Q.qs.length - 1 && !(c.followup && Q.followups < 2) ? 'primary' : 'soft') + ' big" data-orfinish>🏁 Finish and get my feedback</button></div>';
   }
-  out += '<p class="or-priv">🔒 No recording is kept. Only your words are checked.</p>';
+  out += '<p class="or-priv">' + orPrivText("sbc") + '</p>';
   return out;
-}
-function orSbcSave() { var a = $("orAns"); if (a) OR.sbc.cur = a.value; }
-function orSbcRec() {
-  orSbcSave(); var base = OR.sbc.cur ? OR.sbc.cur.replace(/\s*$/, " ") : "";
-  if (!OR.sbc.t0) OR.sbc.t0 = Date.now();
-  var ok = orRecStart(function(text, interim) { var el = $("orAns"); var v = (base + text + (interim ? " " + interim : "")).trim(); OR.sbc.cur = (base + text).trim(); if (el) el.value = v; }, null);
-  if (!ok) return; renderOral(); orTimer();
-}
-function orSbcCheck() {
-  orRecStop(true); orSbcSave(); var Q = OR.sbc, ans = String(Q.cur || "").trim();
-  if (ans.split(/\s+/).length < 2) { flash("Say or type your answer first.", true); return; }
-  OR.busy = true; renderOral();
-  orCall("coach", { id: OR.m.id, qi: Q.qi, question: Q.qs[Q.qi], answer: ans, round: Q.round, asked: Q.asked }).then(function(c) { OR.busy = false; Q.coach = c; Q.round++; if (S.tab === "compo") renderOral(); var el = document.querySelector(".or-coach"); if (el && el.scrollIntoView) el.scrollIntoView({ block: "center" }); })
-    .catch(function(e) { OR.busy = false; if (S.tab === "compo") { renderOral(); flash(e.message, true); } });
-}
-function orSbcKeep() { var Q = OR.sbc; if (String(Q.cur || "").trim()) Q.answers[Q.qi] = { question: Q.qs[Q.qi], answer: Q.cur.trim(), seconds: Q.t0 ? Math.round((Date.now() - Q.t0) / 1000) : 0 }; }
-function orSbcNext() {
-  var Q = OR.sbc; orRecStop(true); orSbcSave(); orSbcKeep();
-  if (Q.qi >= Q.qs.length - 1 && Q.coach && Q.coach.followup) { Q.qs.push(Q.coach.followup); Q.asked.push(Q.coach.followup); Q.followups++; }
-  Q.qi = Math.min(Q.qi + 1, Q.qs.length - 1); Q.cur = ""; Q.coach = null; Q.round = 0; Q.model = null; Q.t0 = 0; renderOral(); window.scrollTo(0, 0);
-}
-function orSbcFinish(btn) {
-  var Q = OR.sbc; orRecStop(true); orSbcSave(); orSbcKeep();
-  var list = Q.answers.filter(Boolean); if (!list.length) { flash("Answer at least one question first.", true); return; }
-  if (btn) { btn.disabled = true; btn.textContent = "Getting your feedback…"; }
-  orCall("sbcFinish", { id: OR.m.id, answers: list }).then(function(r) { OR.res = r; OR.view = "sbcRes"; if (r.history) OR.m.history = r.history; if (S.tab === "compo") renderOral(); mwRefresh(true); })
-    .catch(function(e) { if (btn) { btn.disabled = false; btn.textContent = "🏁 Finish and get my feedback"; } flash(e.message, true); });
 }
 document.addEventListener("click", function(e) {
   if (S.tab !== "compo" || enSec() !== "oral") return;
@@ -2494,7 +2650,7 @@ document.addEventListener("click", function(e) {
   }
   if ((t = e.target.closest("[data-oragain]"))) { orStopAll(); if (OR.m.type === "read") { OR.view = "read"; OR.res = null; } else { OR.view = "sbc"; OR.res = null; OR.sbc = { qi: 0, qs: OR.m.questions.slice(), answers: [], cur: "", coach: null, round: 0, model: null, followups: 0, asked: [], t0: 0 }; } renderOral(); return; }
   if ((t = e.target.closest("[data-orarec]"))) { orSbcRec(); return; }
-  if ((t = e.target.closest("[data-orastop]"))) { orRecStop(true); renderOral(); return; }
+  if ((t = e.target.closest("[data-orastop]"))) { orSbcTake(); renderOral(); return; }
   if ((t = e.target.closest("[data-orcheck]"))) { orSbcCheck(); return; }
   if ((t = e.target.closest("[data-orshowmodel]"))) { var Q = OR.sbc, bb = busy(t, "Thinking…"); orCall("model", { id: OR.m.id, question: Q.qs[Q.qi], answer: Q.cur }).then(function(r) { Q.model = r; renderOral(); }).catch(function(x) { bb(); flash(x.message, true); }); return; }
   if ((t = e.target.closest("[data-ornextq]"))) { orSbcNext(); return; }
@@ -2649,6 +2805,7 @@ var LESSONS = {
   "vt-lang": { t: "Why words and pictures are used", r: "Capital letters, “!”, bold and big words grab attention or show urgency. “You” speaks to the reader directly. Pictures show what to expect.", x: ["The capitals are decoration.", "The capitals make readers act quickly."], k: [["Why write “HURRY! Last few days!”?", ["To create urgency", "To be polite", "To show it is free"], 0, "It pushes the reader to act fast."]] },
   "or-words": { t: "Reading every word clearly", r: "Before you read, tap any word you are unsure of to hear it. Read slowly enough that every word is clear, especially word endings (-ed, -s).", x: ["(Skipping a hard word)", "(Tapping it to hear it, then reading it clearly)"], k: [["What should you do with a long, new word?", ["Skip it", "Tap it, listen, then say it in parts", "Read it very fast"], 1, "Hear it first, then say it in parts."]] },
   "or-pace": { t: "Reading pace", r: "Aim for a steady, natural speed (about 100 to 140 words a minute): slow enough to be clear, fast enough to sound smooth.", x: ["(Rushing through every line)", "(A calm, steady pace)"], k: [["If you keep stumbling, you should…", ["read faster", "slow down a little", "stop reading"], 1, "A slightly slower pace is clearer."]] },
+  "or-expr": { t: "Reading with feeling", r: "Let your voice show the meaning: rise at the end of a question, sound excited at an exclamation mark, and read speech marks the way the character would say it.", x: ["“Can we go?” (flat, like a list)", "“Can we go?” (voice rising at the end)"], k: [["How should you read “Look out!” shouted Ben.?", ["Quietly and flatly", "Loudly, with alarm", "Very slowly"], 1, "An exclamation shows strong feeling."]] },
   "or-pause": { t: "Pausing at punctuation", r: "Pause briefly at commas and a little longer at full stops. Don’t stop in the middle of a phrase.", x: ["“When I got home … I saw … a big box.”", "“When I got home, I saw a big box.”"], k: [["Where should you pause in “After lunch, we went home.”?", ["After “After”", "At the comma", "After “we”"], 1, "Pause at the comma."]] },
   "or-opinion": { t: "Give a clear opinion", r: "Start with what you think in one sentence: “I think…”, “I would…”, “In my opinion…”.", x: ["Hmm, maybe, I don’t know.", "I think joining a CCA is a great idea."], k: [["Which is a clear opinion?", ["Maybe.", "I would like to join because it sounds fun.", "Many people."], 1, "It says clearly what you would do."]] },
   "or-reason": { t: "Give reasons", r: "After your opinion, say WHY with “because…”. One strong reason explained well beats three quick ones.", x: ["I like it.", "I like it because it helps me stay healthy."], k: [["What word helps you add a reason?", ["because", "and then", "um"], 0, "“because” introduces your reason."]] },
@@ -2870,35 +3027,6 @@ function cwResult(v) {
   $("cwHome").onclick = $("cwAgain").onclick = function() { CW.view = null; CW.cur = null; renderCompo(); };
 }
 /* ----- Oral ----- */
-function orMissedWords(m, r) { var w = String(m.text).split(/\s+/).filter(function(t) { return /[A-Za-z0-9]/.test(t); }), out = []; (r.status || []).forEach(function(s, i) { if ((s === "miss" || s === "diff") && w[i] && out.length < 4) { var x = w[i].replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9]+$/g, ""); if (x.length > 2 && out.indexOf(x) < 0) out.push(x); } }); return out; }
-function orReadResult() {
-  var m = OR.m, r = OR.res, sc = r.score, c = sc.counts, f = r.feedback || {}, P = sc.parts;
-  var out = '<button class="btn soft" data-orback style="margin:0 0 8px">‹ All practice</button>' +
-    CF.sum({ got: sc.score, max: 10, bars: [{ label: "Words", pct: sc.accuracy, val: sc.accuracy + "%" }, { label: "Pace", pct: Math.round(100 * P.pace / 2), val: P.pace >= 2 ? "Good" : sc.wpm ? sc.wpm + " wpm" : "—" }, { label: "Smooth", pct: Math.round(100 * P.smooth / 2), val: c.pauses + c.repeats ? (c.pauses + c.repeats) + " stops" : "Good" }],
-      star: CF.short((f.strengths || [])[0] || "", 50), aim: CF.short((f.improve || [])[0] || "", 50) }) +
-    '<div class="or-key"><span class="k-ok">✓ read</span><span class="k-diff">heard differently</span><span class="k-miss">missed</span><span class="k-unclear">not clear</span></div>' +
-    '<div class="cw-card or-passage res">' + orPassageHtml(m.text, r.status, r.heard) + '</div>' + orWordBar();
-  var miss = orMissedWords(m, r);
-  if (miss.length) out += '<div class="cf"><div class="cf-ok" style="background:#FFF4DC;color:#7A4B00">🔊 Practise: ' + miss.map(esc).join(" · ") + ' <small style="display:inline;margin-left:4px;color:#9A5B00">tap them in the passage</small></div></div>';
-  var ls = []; if (sc.accuracy < 90) ls.push({ id: "or-words" }); if (P.pace < 2) ls.push({ id: "or-pace" }); if (P.smooth < 2) ls.push({ id: "or-pause" });
-  out += CF.lessons(ls, "Quick tips");
-  out += '<p class="cf-note">Practice score only: the app checks the words it heard, your pace and pauses. It can’t judge your voice or accent.</p>';
-  if (m.history && m.history.length > 1) out += '<div class="bsec">📈 Your scores for this passage</div><div class="cw-card">' + orBars(m.history) + '</div>';
-  out += '<div class="sy-btns" style="margin-top:12px"><button class="btn primary big" data-oragain>🔁 Read it again</button><button class="btn soft big" data-ormodel>' + (OR.speaking ? '■ Stop' : '🔊 Hear a model reading') + '</button><button class="btn soft big" data-orback>📚 Choose another</button></div>';
-  return out;
-}
-function orSbcResult() {
-  var m = OR.m, r = OR.res, p = r.parts;
-  var out = '<button class="btn soft" data-orback style="margin:0 0 8px">‹ All practice</button>' +
-    CF.sum({ got: r.score, max: 10, bars: [{ label: "Ideas", pct: Math.round(100 * p.ideas / 3), val: p.ideas + "/3" }, { label: "OREO", pct: Math.round(100 * p.development / 3), val: p.development + "/3" }, { label: "Language", pct: Math.round(100 * p.language / 2), val: p.language + "/2" }, { label: "Smooth", pct: Math.round(100 * p.fluency / 2), val: p.fluency + "/2" }],
-      star: CF.short((r.strengths || [])[0] || "", 50), aim: CF.short((r.improve || [])[0] || "", 50) });
-  if (r.oreo) out += '<div class="cf"><div class="cf-ok" style="background:#F7F4FF;color:#2E1A78">🍪 ' + esc(r.oreo) + '</div></div>';
-  var ls = []; if (p.ideas < 2) ls.push({ id: "or-opinion" }); if (p.development < 2) ls.push({ id: "or-reason" }, { id: "or-example" }); else if (p.development < 3) ls.push({ id: "or-example" });
-  out += CF.lessons(ls, "Quick tips") + '<p class="cf-note">Practice score, not an official PSLE grade.</p>';
-  if (m.history && m.history.length > 1) out += '<div class="bsec">📈 Your scores for this one</div><div class="cw-card">' + orBars(m.history) + '</div>';
-  out += '<div class="sy-btns" style="margin-top:12px"><button class="btn primary big" data-oragain>🔁 Try it again</button><button class="btn soft big" data-orback>📚 Choose another</button></div>';
-  return out;
-}
 /* ----- Math tab: sections ----- */
 function maSections() {
   var L = [];
@@ -3765,6 +3893,7 @@ function prefetch() {
   if (en.cloze) job("pr_cloze", function() { return prCall("cloze", "home"); });
   if (en.edit) job("pr_edit", function() { return prCall("edit", "home"); });
   if (en.syn) job("sy", function() { return synCall("home"); });
+  job("cw", function() { return call("compoStart"); });
   jobs.forEach(function(f) { f(); });        // started together, so they travel as one bundle
 }
 function hh(s) { s = String(s || ""); var h = 5381; for (var i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
@@ -4015,11 +4144,12 @@ function renderCompo() {
   if (enSec() === "oral") return renderOral();
   if (enSec() === "gram" || enSec() === "vt" || enSec() === "vocab") return renderMcq(enSec());
   if (enSec() === "exam") return renderExam();
+  if (!CW.st && !(S.home && S.home.preview)) { var cwc = devGet("cw"); if (cwc && cwc.tasks) CW.st = cwc; }   // ⚡ show this device's copy straight away
   if (!CW.st) $("app").innerHTML = SPIN;
   if (CW.busy) return cwWorking(CW.step || 1);
   if (CW.view) return cwResult(CW.view);
   if (CW.review && CW.cur) return cwReview();
-  call("compoStart").then(function(d) { CW.st = d; cwApplyOpen(); if (CW.cur) { var keep = CW.cur.mine; CW.cur = d.tasks.filter(function(t) { return t.id === CW.cur.id; })[0] || null; if (CW.cur && !CW.cur.mine && keep) CW.cur.mine = keep; } if (S.tab === "compo" && !CW.busy && !CW.view) cwRedraw(); })
+  call("compoStart").then(function(d) { if (!(S.home && S.home.preview)) devPut("cw", d); CW.st = d; cwApplyOpen(); if (CW.cur) { var keep = CW.cur.mine; CW.cur = d.tasks.filter(function(t) { return t.id === CW.cur.id; })[0] || null; if (CW.cur && !CW.cur.mine && keep) CW.cur.mine = keep; } if (S.tab === "compo" && !CW.busy && !CW.view) cwRedraw(); })
     .catch(function(e) { if (S.tab === "compo") $("app").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
   if (CW.st) { cwApplyOpen(); cwRedraw(); }
 }
