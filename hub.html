@@ -3,10 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://script.google.com"><link rel="preconnect" href="https://script.googleusercontent.com">
+<script>/* ⚡ The first trip to the class server starts at once, while the rest of the page is still loading. */
+(function() { try {
+  var q = /[?&]k=([^&#]*)/.exec(location.search); if (!q || !window.fetch || /[?&]pv=/.test(location.search)) return;
+  var k = decodeURIComponent(q[1].replace(/\+/g, " ")).replace(/[^A-Za-z0-9]/g, ""), pre = "hub_" + (k || "x").substring(0, 8), tok = localStorage.getItem(pre + "tok") || "", fn, args;
+  if (tok) { fn = "getHubStart"; args = [k, tok, localStorage.getItem(pre + "board") || ""]; } else { fn = "hubRoster"; args = [k]; }
+  var E = window.__EARLY = {};
+  E[fn] = { key: JSON.stringify(args), p: fetch("https://script.google.com/macros/s/AKfycby9Sq43RK3aB35fzOLYD9ZC8zbDZPN-VbF0tG_79UZpm9u9rCGtRyDOf1H9FojHE1Gb/exec?api=1", { method: "POST", body: JSON.stringify({ fn: fn, args: args }), credentials: "omit", redirect: "follow", cache: "no-store" }).then(function(r) { return r.text(); }) };
+} catch (e) {} })();
+</script>
+
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Manrope:wght@400..800&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Manrope:wght@400..800&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Manrope:wght@400..800&display=swap"></noscript><!-- ⚡ fonts load in the background: the page never waits for them -->
 <style>
   /* ===== Our class scrapbook: violet paper, sticker colours, washi tape, the class stamp ===== */
   :root {
@@ -1163,7 +1174,18 @@
   <button data-tab="ask"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span id="askLabel">Ask</span><span class="dot hidden" id="askDot"></span></button>
 </div></nav>
 <input type="file" id="filePick" accept="image/*" class="hidden">
-
+<script>/* ⚡ INSTANT FIRST SCREEN: a pupil signed in on this device sees their last Class wall straight away, while the rest of the page loads.
+   It is replaced by the fresh screen moments later. Nothing is shown once they sign out. */
+(function() { try {
+  var s = JSON.parse(localStorage.getItem("hub_snap") || "null");
+  if (!s || !s.tk || !localStorage.getItem(s.tk) || Date.now() - s.at > 7 * 864e5) return;
+  var g = function(id) { return document.getElementById(id); }, a = g("app"), t = g("tabs"), m = g("meBtn"), wb = g("workBar");
+  a.innerHTML = s.app; a.setAttribute("data-snap", "1"); if (s.view) a.setAttribute("data-view", s.view);
+  t.className = s.tabs; t.innerHTML = s.tabsHtml; document.body.className = s.body;
+  if (s.me) { m.innerHTML = s.me; m.classList.remove("hidden"); } if (s.title) g("topTitle").textContent = s.title; if (s.cls) g("clsName").textContent = s.cls;
+  if (wb && s.wb != null) { wb.className = s.wbc; wb.innerHTML = s.wb; }
+} catch (e) {} })();
+</script>
 <script>
 /* Student page address: this page talks to the class script in the background with NO Google
    sign-in (credentials: "omit"), so it works on any phone, however many Google accounts it has. */
@@ -1404,7 +1426,7 @@ function rosterApi() {
 }
 function showLogin(note, okNote) {
   stopTimers();
-  $("tabs").classList.add("hidden"); document.body.classList.remove("nav"); $("app").removeAttribute("data-view"); $("meBtn").classList.add("hidden"); $("topTitle").textContent = "Class Hub";
+  $("tabs").classList.add("hidden"); document.body.classList.remove("nav"); $("app").removeAttribute("data-view"); $("app").removeAttribute("data-snap"); $("meBtn").classList.add("hidden"); $("topTitle").textContent = "Class Hub";
   $("app").innerHTML = SPIN;
   rosterApi().then(function(d) {
     S.roster = d.names || [];
@@ -1477,6 +1499,7 @@ function saveBoot(h) {
   try { var j = JSON.stringify({ at: Date.now(), h: h }); if (j.length < 350000) store(bootKey(), j); else store(bootKey(), null); } catch (e) {}
 }
 function clearBoots() {
+  try { localStorage.removeItem("hub_snap"); } catch (e) {}
   try { Object.keys(localStorage).forEach(function(k) { if (k.indexOf(STORE + "boot") === 0 || k.indexOf(STORE + "dc_") === 0 || k.indexOf(STORE + "pf") === 0 || k.indexOf(STORE + "ensec") === 0) localStorage.removeItem(k); }); } catch (e) {}
   imgDbClear();
 }
@@ -1505,6 +1528,7 @@ function gotHome(h, refresh, fromCache) {
       else if (h.wall && h.wall.board.id === S.boardId && JSON.stringify(h.wall) !== oldWall) { S.wall = h.wall; renderWall(); }
     }
     if (h.popup && (h.planner || (h.work && h.work.todo)) && !S.popShown && !busyOnScreen()) { S.popShown = true; showTodayPopup(h.planner || {}); }
+    hubSnapLater(1200);
     return;
   }
   (function() {
@@ -1525,7 +1549,7 @@ function gotHome(h, refresh, fromCache) {
     stopTimers();
     S.timers.push(setInterval(ping, 60000));
     S.timers.push(setInterval(function() { if (S.tab === "ask" && !document.hidden) loadMsgs(true); }, 15000));
-    go(S.tab || "wall");
+    $("app").removeAttribute("data-snap"); go(S.tab || "wall"); hubSnapLater(1500);
     if (OPEN_AT === "comp" && h.english && h.english.comp) { OPEN_AT = ""; EN.sec = "comp"; go("compo"); }
     if (window.SITE_COMP) { try { localStorage.setItem("cm_hub_url", location.href.split("#")[0].replace(/[?&]open=[^&#]*/, "")); } catch (e) {} }
     if (OPEN_AT && /^oral:/.test(OPEN_AT) && h.english && h.english.oral) { var oid = OPEN_AT.slice(5); OPEN_AT = ""; EN.sec = "oral"; OR.openId = oid; OR.home = null; OR.view = "home"; go("compo"); }
@@ -1534,6 +1558,20 @@ function gotHome(h, refresh, fromCache) {
     if (h.gallery !== false) setTimeout(function() { if (!S.albums && S.token) call("hubAlbums").then(gotAlbums).catch(function() {}); }, fromCache ? 4000 : 2500);   // photos ready before they're opened (after the wall's pictures)
   })();
 }
+/** ⚡ Keeps a copy of the Class wall screen on this device (photos left out), shown instantly next time. Only while signed in. */
+function hubSnapSave() {
+  try {
+    if (!S.token || !S.home || S.home.preview || MODE !== "hub" || S.tab !== "wall" || $("sheet") || $("app").querySelector(".spin")) return;
+    var a = $("app").cloneNode(true);
+    a.querySelectorAll("img").forEach(function(im) { if (/^(data:|blob:)/.test(im.getAttribute("src") || "")) im.removeAttribute("src"); });
+    a.querySelectorAll("input,textarea").forEach(function(x) { x.removeAttribute("value"); if (x.tagName === "TEXTAREA") x.textContent = ""; });
+    var html = a.innerHTML, wb = $("workBar"); if (html.length > 250000) return;
+    localStorage.setItem("hub_snap", JSON.stringify({ tk: STORE + "tok", at: Date.now(), app: html, view: $("app").getAttribute("data-view") || "", tabs: $("tabs").className, tabsHtml: $("tabs").innerHTML,
+      body: document.body.className.replace(/\bshield\b/g, "").trim(), me: $("meBtn").innerHTML, title: $("topTitle").textContent, cls: $("clsName").textContent, wbc: wb ? wb.className : "", wb: wb ? wb.innerHTML : null }));
+  } catch (e) {}
+}
+function hubSnapLater(ms) { clearTimeout(S.snapT); S.snapT = setTimeout(hubSnapSave, ms); }
+document.addEventListener("visibilitychange", function() { if (document.hidden) hubSnapSave(); });
 /** Faint, repeating "name · date" over big photos, so a screenshot shows who took it. */
 function setWatermark(name) {
   var d = new Date(), txt = (name + " · " + CLASS_NAME + " · " + d.getDate() + "/" + (d.getMonth() + 1)).replace(/[<&>"]/g, "");
@@ -3837,9 +3875,16 @@ function batchable(fn, args) {
   if (BATCH_FN[fn]) return true;
   var i = BATCH_API[fn]; return i != null && String(args[i] || "") === "home";
 }
+/** ⚡ The student site starts the first server trip in the page's <head>, before the rest loads. Use it if it matches. */
+function earlyTake(fn, args) {
+  var E = window.__EARLY, x = E && E[fn]; if (!x) return null; delete E[fn];
+  if (x.key !== JSON.stringify(args)) return null;
+  return x.p.then(function(t) { var d = JSON.parse(t); if (!d.ok) throw new Error(d.error || ""); return d.result; }).catch(function() { return apiDirect(fn, args); });
+}
 function api(fn, args) {
-  var t0 = Date.now(), p;
-  if (batchable(fn, args) && JSON.stringify(args).length < 3000) {
+  var t0 = Date.now(), p, early = earlyTake(fn, args);
+  if (early) p = early;
+  else if (batchable(fn, args) && JSON.stringify(args).length < 3000) {
     p = new Promise(function(resolve, reject) { BQ.q.push({ fn: fn, args: args, res: resolve, rej: reject }); if (!BQ.t) BQ.t = setTimeout(bqFlush, 12); });
   } else p = apiDirect(fn, args);
   var k = apiKey(fn, args); p.then(function() { spdAdd(k, Date.now() - t0); }, function() {});
