@@ -4147,7 +4147,7 @@ function enSwitch() {
   return AI_NOTE + '<div class="en-sw' + (n >= 3 ? ' n3' : '') + '" role="tablist" aria-label="English Assistant">' + (e.compo ? b("compo", '<span class="i">✍️</span> <span>Compo</span>') : '') + (e.comp ? b("comp", '<span class="i">📖</span> <span>Comprehension</span>') : '') + (e.syn ? b("syn", '<span class="i">🔁</span> <span>Synthesis</span>') : '') + (e.cloze ? b("cloze", '<span class="i">🧩</span> <span>Cloze</span>') : '') + (e.edit ? b("edit", '<span class="i">✏️</span> <span>Spelling &amp; Grammar</span>') : '') + (e.gram ? b("gram", '<span class="i">🔤</span> <span>Grammar</span>') : '') + (e.vocab ? b("vocab", '<span class="i">📖</span> <span>Vocabulary</span>') : '') + (e.vt ? b("vt", '<span class="i">🖼️</span> <span>Visual Text</span>') : '') + (e.oral ? b("oral", '<span class="i">🎤</span> <span>Oral</span>') : '') + (e.exam ? b("exam", '<span class="i">📝</span> <span>Mock Exam</span>') : '') + '</div>';
 }
 /** 📖 Comprehension: the comprehension screens (the same page the teacher uses) in a frame, signed in as this pupil. */
-var CMX_V = "20261102";
+var CMX_V = "20261104";   // bump when comprehension.html changes, so no device keeps an old copy
 function renderComp() {
   window.scrollTo(0, 0);
   $("app").innerHTML = '<div id="enSwWrap">' + enSwitch() + '</div><div class="cm-wrap">' + SPIN + '</div>';

@@ -1030,7 +1030,8 @@ function viewStudentHome(){
      '<div class="ksteps"><span>📖 Read</span><i>→</i><span>✏️ Answer</span><i>→</i><span>💡 Learn</span></div></div>'+HERO_ART+'</section>';
 
   if(S.loadErr) h+='<div class="err">'+esc(S.loadErr)+'</div>';
-  if(!s.name) return h+'</div>';
+  else if(!S.list) h+='<div class="empty">Loading your comprehensions…</div>';
+  if(!s.name && !BOOT.bridge && S.view!=='student') return h+'</div>';   // NEVER BLANK: the Class Hub knows who the pupil is, so the list loads even without a name here
 
   var res=S.results||[], done={}, best=null;
   res.forEach(function(r){ done[r.passageId]=1; if(r.status!=='pending' && r.max){ var pc=pct(r.total,r.max); if(best===null || pc>best) best=pc; } });
@@ -1108,7 +1109,7 @@ function loadAssigned(){
 }
 
 function startAttempt(pid, preview){
-  if(!preview && !S.student.name){ toast('Choose your class and name first.'); var n=$('#sCls'); if(n) n.focus(); return; }
+  if(!preview && !S.student.name && !BOOT.bridge){ toast('Choose your class and name first.'); var n=$('#sCls'); if(n) n.focus(); return; }
   var get = preview ? Promise.resolve(preview) : call('getPassage',{id:pid, cls:S.student.cls});
   var b=busy('Opening passage',['Fetching the passage'],' ');
   get.then(function(p){
