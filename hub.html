@@ -8,7 +8,7 @@
 (function() { try {
   var q = /[?&]k=([^&#]*)/.exec(location.search); if (!q || !window.fetch || /[?&]pv=/.test(location.search)) return;
   var k = decodeURIComponent(q[1].replace(/\+/g, " ")).replace(/[^A-Za-z0-9]/g, ""), pre = "hub_" + (k || "x").substring(0, 8), tok = localStorage.getItem(pre + "tok") || "", fn, args;
-  if (tok) { fn = "getHubStart"; args = [k, tok, localStorage.getItem(pre + "board") || ""]; } else { fn = "hubRoster"; args = [k]; }
+  if (tok) { fn = "getHubStart"; args = [k, tok, localStorage.getItem(pre + "board") || ""]; } else { fn = "hubSignInInfo"; args = [k]; }
   var E = window.__EARLY = {};
   E[fn] = { key: JSON.stringify(args), p: fetch("https://script.google.com/macros/s/AKfycby9Sq43RK3aB35fzOLYD9ZC8zbDZPN-VbF0tG_79UZpm9u9rCGtRyDOf1H9FojHE1Gb/exec?api=1", { method: "POST", body: JSON.stringify({ fn: fn, args: args }), credentials: "omit", redirect: "follow", cache: "no-store" }).then(function(r) { return r.text(); }) };
 } catch (e) {} })();
@@ -180,6 +180,7 @@
   .name .av { width:38px; height:38px; font-size:14px; }
   .pinwrap { text-align:center; padding-top:22px; }
   .pinwrap .av { width:84px; height:84px; font-size:30px; margin:0 auto; box-shadow:0 0 0 5px #fff, 0 10px 24px rgba(46,26,120,.2); }
+  .pin-key { font-size:44px; line-height:1; margin-top:6px; }
   .pin-dots { display:flex; justify-content:center; gap:14px; margin:20px 0 6px; }
   .pin-dots i { width:34px; height:34px; display:grid; place-items:center; font-style:normal; font-size:26px; color:var(--dot); transition:transform .15s, color .15s; }
   .pin-dots i:before { content:"★"; }
@@ -1151,6 +1152,7 @@
     .tabs button { font-size:14px; }
   }
   @media (prefers-reduced-motion:reduce) { .btn, .btn:hover { transition:none; transform:none !important; } }
+  .pin-dots i { color:#D3CEDB !important; } .pin-dots i.on { color:#DB962F !important; }   /* the PIN stars show on the light theme */
 </style>
 </head>
 <body>
@@ -1427,34 +1429,28 @@ function rosterApi() {
 function showLogin(note, okNote) {
   stopTimers();
   $("tabs").classList.add("hidden"); document.body.classList.remove("nav"); $("app").removeAttribute("data-view"); $("app").removeAttribute("data-snap"); $("meBtn").classList.add("hidden"); $("topTitle").textContent = "Class Hub";
-  $("app").innerHTML = SPIN;
-  rosterApi().then(function(d) {
-    S.roster = d.names || [];
-    if (!CLASS_NAME && d.className) { CLASS_NAME = d.className; $("clsName").textContent = d.className; }   // page opened from the Student page address
-    $("app").innerHTML = (note ? '<div class="msg err" role="alert">' + esc(note) + '</div>' : "") + (okNote ? '<div class="msg ok" role="status">' + esc(okNote) + '</div>' : "") +
-      '<div class="hello"><span class="hand">Hello, ' + esc(CLASS_NAME) + '!</span><h1>Who’s here today?</h1><p class="muted" style="margin:0">Tap your name, then type the 4-digit PIN from your slip.</p></div>' +
-      '<div class="card" style="padding:14px"><input id="q" class="input" type="search" placeholder="🔍  Find your name" autocomplete="off" aria-label="Find your name">' +
-      '<div class="names" id="names"></div></div>';
-    var draw = function() {
-      var q = $("q").value.trim().toLowerCase();
-      $("names").innerHTML = S.roster.filter(function(n) { return !q || n.toLowerCase().indexOf(q) > -1; })
-        .map(function(n) { return '<button class="name" data-n="' + esc(n) + '">' + avatar(n) + '<span>' + esc(n) + '</span></button>'; }).join("") || '<p class="muted">No name matches.</p>';
-    };
-    $("q").oninput = draw; draw();
-    $("names").onclick = function(e) { var t = e.target.closest("[data-n]"); if (t) showPin(t.getAttribute("data-n")); };
+  // 🔑 PIN-only sign-in: no class list on this screen, and no copy of it kept on the device
+  try { Object.keys(localStorage).forEach(function(k) { if (k.indexOf(STORE + "ros") === 0 || k.indexOf("hub_") === 0 && /ros[a-z0-9]+$/.test(k)) localStorage.removeItem(k); }); } catch (e) {}
+  if (!CLASS_NAME) api("hubSignInInfo", [HUB_KEY]).then(function(d) {   // page opened from the Student page address
+    if (!CLASS_NAME && d.className) { CLASS_NAME = d.className; $("clsName").textContent = d.className; var hi = document.querySelector(".pin-hi"); if (hi) hi.textContent = "Hello, " + d.className + "!"; }
+    S.teacherName = d.teacher || "";
   }).catch(function(e) { fatal(e.message); });
+  showPin(note, okNote);
 }
-function showPin(name, err) {
-  S.picked = name; S.pin = "";
-  $("app").innerHTML = '<div class="pinwrap">' + avatar(name) + '<p class="hand" style="font-size:24px;color:var(--violet-2);margin:16px 0 0">Hi ' + esc(first(name)) + '!</p>' +
-    '<h1 style="margin:2px 0 0;font-size:26px">Type your secret PIN</h1>' +
+function devId() { var d = store("dev"); if (!/^[A-Za-z0-9]{16,40}$/.test(d)) { d = ""; for (var i = 0; i < 24; i++) d += "abcdefghijkmnpqrstuvwxyz23456789".charAt(Math.floor(Math.random() * 32)); store("dev", d); } return d; }
+/** 🔑 Type your PIN: it says who you are. */
+function showPin(err, okNote) {
+  S.picked = ""; S.pin = "";
+  $("app").innerHTML = '<div class="pinwrap">' + (okNote ? '<div class="msg ok" role="status">' + esc(okNote) + '</div>' : '') +
+    '<div class="pin-key" aria-hidden="true">🔑</div><p class="hand pin-hi" style="font-size:24px;color:var(--violet-2);margin:10px 0 0">Hello' + (CLASS_NAME ? ', ' + esc(CLASS_NAME) : '') + '!</p>' +
+    '<h1 style="margin:2px 0 0;font-size:26px">Type your secret PIN</h1><p class="muted" style="margin:4px 0 0">The 4 numbers on your Class Hub slip.</p>' +
     '<div class="pin-dots' + (err ? " shake" : "") + '" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>' +
     '<div id="pinErr" role="alert" style="color:var(--danger);font-weight:700;min-height:22px">' + esc(err || "") + '</div>' +
     '<div class="pad" id="pad">' + [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function(n) { return '<button data-d="' + n + '" aria-label="' + n + '">' + n + '</button>'; }).join("") +
-    '<button class="ghost" data-back>Not me</button><button data-d="0" aria-label="0">0</button><button class="ghost" data-del aria-label="Delete">⌫</button></div></div>';
+    '<button class="ghost" data-help aria-label="Help">?</button><button data-d="0" aria-label="0">0</button><button class="ghost" data-del aria-label="Delete">⌫</button></div></div>';
   $("pad").onclick = function(e) {
     var b = e.target.closest("button"); if (!b || b.disabled) return;
-    if (b.hasAttribute("data-back")) return showLogin();
+    if (b.hasAttribute("data-help")) { $("pinErr").style.color = "var(--muted)"; $("pinErr").textContent = "Your PIN is on your Class Hub slip. Lost it? Ask " + (S.teacherName || "your teacher") + " for it."; return; }
     if (b.hasAttribute("data-del")) S.pin = S.pin.slice(0, -1);
     else if (S.pin.length < 4) S.pin += b.getAttribute("data-d");
     drawDots();
@@ -1467,13 +1463,23 @@ function showPin(name, err) {
   };
 }
 function drawDots() { var d = $("dots"); if (!d) return; Array.prototype.forEach.call(d.children, function(el, i) { el.classList.toggle("on", i < S.pin.length); }); }
+function pinDone(r) { document.onkeydown = null; S.token = r.token; store("tok", r.token); loadHome(); }
 function tryPin() {
   Array.prototype.forEach.call($("pad").querySelectorAll("button"), function(b) { b.disabled = true; });
-  $("pinErr").textContent = "Checking…";
-  api("hubLogin", [HUB_KEY, S.picked, S.pin]).then(function(r) {
-    document.onkeydown = null;
-    S.token = r.token; store("tok", r.token); loadHome();
-  }).catch(function(e) { showPin(S.picked, e.message); });
+  $("pinErr").style.color = ""; $("pinErr").textContent = "Checking…";
+  var pin = S.pin;
+  api("hubLogin", [HUB_KEY, "", pin, devId()]).then(function(r) { if (r && r.choose) return showChoose(r.choose, pin); pinDone(r); })
+    .catch(function(e) { showPin(e.message); });
+}
+/** Two pupils still share this PIN (from before PINs were unique): tap your name. */
+function showChoose(names, pin) {
+  document.onkeydown = null;
+  $("app").innerHTML = '<div class="hello"><h1>Which one are you?</h1><p class="muted" style="margin:0">Two of you have this PIN. Tap your name. (Your teacher can give you your own PIN.)</p></div>' +
+    '<div class="card" style="padding:14px"><div class="names" id="names">' + names.map(function(n) { return '<button class="name" data-n="' + esc(n) + '">' + avatar(n) + '<span>' + esc(n) + '</span></button>'; }).join("") + '</div>' +
+    '<button class="btn soft" id="chooseBack" style="width:100%;margin-top:10px">‹ Back</button></div>';
+  $("chooseBack").onclick = function() { showPin(); };
+  $("names").onclick = function(e) { var t = e.target.closest("[data-n]"); if (!t) return; t.disabled = true;
+    api("hubLogin", [HUB_KEY, t.getAttribute("data-n"), pin, devId()]).then(pinDone).catch(function(er) { showPin(er.message); }); };
 }
 function signOut(expired, okNote) {
   stopTimers(); clearBoots(); store("board", null); S.wallPre = null; store("tok", null); S.token = ""; S.home = null; S.wall = null; S.msgs = []; S.msgVer = ""; S.pingVer = ""; S.albums = null; S.album = null;
