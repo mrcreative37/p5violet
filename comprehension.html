@@ -11,10 +11,10 @@
 <style>
 /* Layout: sticky app bar; reading view splits into passage (left, sticky) and booklet questions (right); stacks into tabs on phones. */
 :root{
-  --paper:#F4F1FD; --surface:#ffffff; --sunk:#EFEBFA; --ink:#1E1735; --muted:#5C5578; --line:#DDD6F3; --line-soft:#ECE7F8;
-  --pen:#4B2FC4; --pen-soft:#ECE9FB; --on-pen:#ffffff;
+  --paper:#F4F1FD; --surface:#ffffff; --sunk:#EFEBFA; --ink:#1E1A32; --muted:#5C5578; --line:#DDD6F3; --line-soft:#ECE7F8;
+  --pen:#5D1E56; --pen-soft:#ECE9FB; --on-pen:#ffffff;
   --clue:#0d7a6e; --clue-bg:#c6eee5;
-  --hl-y:#fde98a; --hl-g:#c3eeb5; --hl-p:#f8c8e5; --ul:#7445c2;
+  --hl-y:#fde98a; --hl-g:#c3eeb5; --hl-p:#f8c8e5; --ul:#5D1E56;
   --good:#1d7743; --good-bg:#dcf2e4; --part:#965f00; --part-bg:#fbeed3; --zero:#536079; --zero-bg:#e7ecf3;
   --f-display:"Bricolage Grotesque","Atkinson Hyperlegible",system-ui,sans-serif;
   --f-ui:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -300,10 +300,10 @@ body.embed main{padding-block:10px 40px}
 
 /* ===== Pupil look (27 Oct): friendly, colourful, still calm for reading ===== */
 :root{--sun:#FFB020;--sun-soft:#FFF3D6;--mint:#14A37F;--mint-soft:#DDF6EE;--rose:#E0457B;--rose-soft:#FDE4EE;--sky:#2F7BE5;--sky-soft:#E1EDFD;
-  --sh:0 1px 2px rgba(40,20,110,.06),0 6px 20px rgba(40,20,110,.08);--sh-lg:0 2px 4px rgba(40,20,110,.08),0 14px 34px rgba(40,20,110,.14)}
+  --sh:0 1px 2px rgba(62,18,57,.06),0 6px 20px rgba(62,18,57,.08);--sh-lg:0 2px 4px rgba(62,18,57,.08),0 14px 34px rgba(62,18,57,.14)}
 .kid{display:flex;flex-direction:column;gap:18px}
 .khero{position:relative;overflow:hidden;border-radius:22px;padding:22px 22px 20px;color:#fff;
-  background:radial-gradient(120% 140% at 100% 0%,#8B5CF6 0%,rgba(139,92,246,0) 55%),linear-gradient(135deg,#4B2FC4 0%,#6D3FE0 55%,#B44AD8 100%);box-shadow:var(--sh-lg);
+  background:radial-gradient(120% 140% at 100% 0%,#873F7E 0%,rgba(135,63,126,0) 55%),linear-gradient(135deg,#5D1E56 0%,#5D1E56 55%,#5D1E56 100%);box-shadow:var(--sh-lg);
   display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center}
 .khero .khi{font-weight:700;opacity:.92;font-size:.95rem}
 .khero h1{color:#fff;font-size:clamp(1.6rem,5vw,2.2rem);margin:2px 0 6px}
@@ -331,7 +331,7 @@ body.embed main{padding-block:10px 40px}
 .kbody .meta{gap:6px 10px}
 .kact{display:flex;gap:8px;margin-top:auto;padding-top:6px;flex-wrap:wrap}
 .kact .btn{flex:1}
-.btn.go{background:linear-gradient(135deg,#4B2FC4,#7B4BEA);border:0;color:#fff;min-height:44px;font-size:.98rem;box-shadow:0 4px 12px rgba(75,47,196,.28)}
+.btn.go{background:linear-gradient(135deg,#5D1E56,#873F7E);border:0;color:#fff;min-height:44px;font-size:.98rem;box-shadow:0 4px 12px rgba(93,30,86,.28)}
 .btn.go:hover{filter:brightness(1.07)}
 .kempty{background:var(--surface);border-radius:20px;box-shadow:var(--sh);padding:28px 18px;text-align:center;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:6px}
 .kempty .e{font-size:2.4rem}
@@ -358,7 +358,7 @@ body.embed main{padding-block:10px 40px}
 body.wopen main{padding-bottom:60vh}
 .tabs{gap:6px!important;padding:6px!important;background:var(--surface)!important;border-radius:999px;box-shadow:var(--sh);margin-block:4px}
 .tabs .btn{border:0;min-height:42px}
-.tabs .btn[aria-pressed=true]{background:linear-gradient(135deg,#4B2FC4,#7B4BEA)!important;color:#fff!important}
+.tabs .btn[aria-pressed=true]{background:linear-gradient(135deg,#5D1E56,#873F7E)!important;color:#fff!important}
 @media (max-width:860px){.tabs{top:calc(var(--hdr) + 4px)}}
 .pane-passage{border:0;box-shadow:var(--sh);border-radius:20px;background:#FFFDF8}
 .annobar{background:#FFFDF8;border-radius:20px 20px 0 0;border-bottom:1px solid #F0EAE0}
@@ -391,7 +391,7 @@ textarea.grow{resize:none;overflow:hidden;min-height:42px;line-height:1.45}
 .optrow b{padding-top:10px}
 .checkbar{border-radius:14px;padding:12px 14px;background:var(--sun-soft);color:#6B4A00;font-weight:700;display:flex;gap:10px;align-items:flex-start}
 /* word sheet */
-.wsheet{border:0;box-shadow:0 14px 40px rgba(40,20,110,.25);border-top:5px solid var(--sun);gap:10px}
+.wsheet{border:0;box-shadow:0 14px 40px rgba(62,18,57,.25);border-top:5px solid var(--sun);gap:10px}
 .wtop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
 .wtop .ww{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
 .wword{font-family:var(--f-display);font-weight:800;font-size:1.5rem;line-height:1.1}
@@ -416,7 +416,7 @@ textarea.grow{resize:none;overflow:hidden;min-height:42px;line-height:1.45}
 .booklet .sec h2{font-size:1.15rem}
 .booklet > p.muted{background:var(--surface);border-radius:14px;padding:10px 14px;box-shadow:var(--sh)}
 .qc{border:0;border-radius:18px;box-shadow:var(--sh);padding:16px 16px 18px;border-left:6px solid var(--line)}
-.qc:nth-of-type(4n+1){border-left-color:#8B6CF0}.qc:nth-of-type(4n+2){border-left-color:#3FB8A0}.qc:nth-of-type(4n+3){border-left-color:#F2A93B}.qc:nth-of-type(4n){border-left-color:#E86A9A}
+.qc:nth-of-type(4n+1){border-left-color:#873F7E}.qc:nth-of-type(4n+2){border-left-color:#3FB8A0}.qc:nth-of-type(4n+3){border-left-color:#F2A93B}.qc:nth-of-type(4n){border-left-color:#E86A9A}
 .qh{grid-template-columns:auto minmax(0,1fr) auto}
 .qn{display:grid;place-items:center;min-width:42px;height:34px;padding:0 8px;border-radius:12px;background:var(--pen-soft);color:var(--pen);font-size:.95rem}
 .qc.done .qn{background:var(--mint);color:#fff}
@@ -457,8 +457,8 @@ textarea.lined:focus{background-color:#fff;border-color:var(--pen);box-shadow:0 
 .gf.add{text-decoration:none;font-weight:800;}
 /* ===== ✨ Pupil look (body.stu): bright, friendly, modern. The teacher page is unchanged. ===== */
 body.stu{
-  --v1:#6C47FF; --v2:#9B5CFF; --pinkx:#FF6FAE; --mintx:#22C59B; --sunx:#FFB627; --skyx:#3BA7FF; --coral:#FF6B6B;
-  --ink:#1B1433; --muted:#5E5780; --line:#E3DCF7; --pen:#6C47FF; --pen-soft:#EFEAFF;
+  --v1:#873F7E; --v2:#873F7E; --pinkx:#FF6FAE; --mintx:#22C59B; --sunx:#FFB627; --skyx:#3BA7FF; --coral:#FF6B6B;
+  --ink:#1E1A32; --muted:#5E5780; --line:#E3DCF7; --pen:#873F7E; --pen-soft:#EFEAFF;
   background:#F7F4FF radial-gradient(1200px 600px at -10% -10%, #E6DEFF 0%, transparent 60%) no-repeat,
     radial-gradient(900px 520px at 110% 0%, #DFF7EF 0%, transparent 60%) no-repeat,
     radial-gradient(900px 700px at 50% 120%, #FFE7F1 0%, transparent 65%) no-repeat;
@@ -467,14 +467,14 @@ body.stu{
 body.stu h1, body.stu h2, body.stu h3{letter-spacing:-.015em}
 body.stu .btn{border-radius:999px;font-weight:800;transition:transform .12s ease, box-shadow .12s ease, background .12s}
 body.stu .btn:active{transform:translateY(2px)}
-body.stu .btn.go, body.stu .btn.primary{background:linear-gradient(135deg,var(--v1),var(--v2));color:#fff;border:0;box-shadow:0 5px 0 #4A2DC2, 0 10px 22px -8px rgba(108,71,255,.55)}
+body.stu .btn.go, body.stu .btn.primary{background:linear-gradient(135deg,var(--v1),var(--v2));color:#fff;border:0;box-shadow:0 5px 0 #5D1E56, 0 10px 22px -8px rgba(135,63,126,.55)}
 body.stu .btn.go:hover, body.stu .btn.primary:hover{filter:brightness(1.06)}
-body.stu .btn.go:active, body.stu .btn.primary:active{box-shadow:0 2px 0 #4A2DC2, 0 6px 14px -8px rgba(108,71,255,.55)}
+body.stu .btn.go:active, body.stu .btn.primary:active{box-shadow:0 2px 0 #5D1E56, 0 6px 14px -8px rgba(135,63,126,.55)}
 body.stu .btn.small{box-shadow:0 2px 0 var(--line)}
 body.stu .pill{border-radius:999px;font-weight:800}
 
 /* --- home --- */
-body.stu .khero{border-radius:30px;background:linear-gradient(125deg,#5B3BFF 0%,#8E54FF 45%,#FF6FAE 100%);box-shadow:0 22px 40px -22px rgba(91,59,255,.75);overflow:hidden;position:relative}
+body.stu .khero{border-radius:30px;background:linear-gradient(125deg,#873F7E 0%,#873F7E 45%,#FF6FAE 100%);box-shadow:0 22px 40px -22px rgba(135,63,126,.75);overflow:hidden;position:relative}
 body.stu .khero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 120%,rgba(255,255,255,.22) 0 22%,transparent 23%),radial-gradient(circle at 92% -10%,rgba(255,255,255,.18) 0 18%,transparent 19%);pointer-events:none}
 body.stu .khero .khi{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:4px 12px;border-radius:999px;backdrop-filter:blur(6px)}
 body.stu .khero h1{font-size:clamp(1.9rem,6vw,2.6rem);text-shadow:0 2px 0 rgba(0,0,0,.08)}
@@ -483,51 +483,51 @@ body.stu .ksteps span{background:#fff;color:var(--v1);border:0;box-shadow:0 3px 
 body.stu .ksteps i{opacity:.8}
 body.stu .khero-art{animation:kfloat 4s ease-in-out infinite;filter:drop-shadow(0 10px 14px rgba(0,0,0,.18))}
 @keyframes kfloat{50%{transform:translateY(-6px) rotate(-2deg)}}
-body.stu .kstats div{border-radius:22px;border:0;background:#fff;box-shadow:0 1px 0 var(--line),0 14px 26px -18px rgba(27,20,51,.35);position:relative;overflow:hidden;padding-top:14px}
+body.stu .kstats div{border-radius:22px;border:0;background:#fff;box-shadow:0 1px 0 var(--line),0 14px 26px -18px rgba(30,26,50,.35);position:relative;overflow:hidden;padding-top:14px}
 body.stu .kstats div::before{position:absolute;right:10px;top:8px;font-size:24px;opacity:.9}
 body.stu .kstats div:nth-child(1)::before{content:"📝"} body.stu .kstats div:nth-child(2)::before{content:"✅"} body.stu .kstats div:nth-child(3)::before{content:"🏅"}
 body.stu .kstats div::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--c)}
 body.stu .kstats b{font-size:2rem;background:linear-gradient(135deg,var(--ink),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
 body.stu .ksec{font-size:1.35rem;display:flex;align-items:center;gap:8px}
-body.stu .kcard{border-radius:26px;border:0;overflow:hidden;background:#fff;box-shadow:0 1px 0 var(--line),0 18px 34px -22px rgba(27,20,51,.45);transition:transform .18s ease, box-shadow .18s ease}
-body.stu .kcard:hover{transform:translateY(-3px) rotate(-.2deg);box-shadow:0 1px 0 var(--line),0 26px 40px -22px rgba(27,20,51,.5)}
+body.stu .kcard{border-radius:26px;border:0;overflow:hidden;background:#fff;box-shadow:0 1px 0 var(--line),0 18px 34px -22px rgba(30,26,50,.45);transition:transform .18s ease, box-shadow .18s ease}
+body.stu .kcard:hover{transform:translateY(-3px) rotate(-.2deg);box-shadow:0 1px 0 var(--line),0 26px 40px -22px rgba(30,26,50,.5)}
 body.stu .kcover{min-height:118px;background:var(--g);position:relative}
 body.stu .kcover::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.28) 1.5px,transparent 1.6px);background-size:16px 16px;mask-image:linear-gradient(90deg,transparent 30%,#000)}
 body.stu .kcover .kemo{background:#fff;border-radius:22px;width:66px;height:66px;display:grid;place-items:center;font-size:36px;box-shadow:0 8px 18px -6px rgba(0,0,0,.35);transform:rotate(-8deg);position:relative;z-index:1}
 body.stu .kcover .klevel{background:rgba(255,255,255,.92);color:var(--ink);border-radius:999px;font-weight:800;z-index:1}
 body.stu .kbody h3{font-size:1.25rem}
 body.stu .kempty{border-radius:24px;border:2px dashed #D6CCF6;background:rgba(255,255,255,.7)}
-body.stu .kr{border-radius:22px;border:0;background:#fff;box-shadow:0 1px 0 var(--line),0 12px 24px -18px rgba(27,20,51,.35)}
+body.stu .kr{border-radius:22px;border:0;background:#fff;box-shadow:0 1px 0 var(--line),0 12px 24px -18px rgba(30,26,50,.35)}
 body.stu .ring{background:conic-gradient(var(--rc) calc(var(--p)*1%), #EEE9FB 0)}
 
 /* --- reading and answering --- */
 body.stu .kback{background:#fff}
 body.stu .ktitle .kemo{border-radius:20px;box-shadow:0 8px 16px -8px rgba(0,0,0,.35);transform:rotate(-6deg)}
-body.stu .tabs{position:sticky;top:8px;z-index:30;background:rgba(255,255,255,.78);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 26px -16px rgba(27,20,51,.45)}
-body.stu .tabs .btn[aria-pressed=true]{background:linear-gradient(135deg,var(--v1),var(--v2));box-shadow:0 4px 0 #4A2DC2}
+body.stu .tabs{position:sticky;top:8px;z-index:30;background:rgba(255,255,255,.78);backdrop-filter:blur(14px) saturate(1.4);-webkit-backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 26px -16px rgba(30,26,50,.45)}
+body.stu .tabs .btn[aria-pressed=true]{background:linear-gradient(135deg,var(--v1),var(--v2));box-shadow:0 4px 0 #5D1E56}
 body.stu .annobar{border-radius:22px 22px 0 0;background:#FFFDF6}
 body.stu .annobar .tools{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px;mask-image:linear-gradient(90deg,#000 88%,transparent)}
 body.stu .annobar .tools::-webkit-scrollbar{display:none}
 body.stu .sw{flex:none;border-radius:999px;box-shadow:0 2px 0 var(--line);font-weight:800}
-body.stu .passage{border-radius:0 0 26px 26px;box-shadow:0 18px 34px -24px rgba(27,20,51,.45)}
+body.stu .passage{border-radius:0 0 26px 26px;box-shadow:0 18px 34px -24px rgba(30,26,50,.45)}
 body.stu .para p{font-size:1.1rem;line-height:1.95}
 body.stu .pn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:50%;background:#F1ECFF;color:var(--v1);font:800 12px/1 var(--f-ui)}
 body.stu .p-head + .para p::first-letter{background:linear-gradient(135deg,var(--v1),var(--pinkx));-webkit-background-clip:text;background-clip:text;color:transparent}
 body.stu .mk.wq, body.stu .passage [data-p] span:hover{transition:background .15s}
-body.stu .qc{border-radius:26px;border:0;background:#fff;box-shadow:0 1px 0 var(--line),0 16px 30px -22px rgba(27,20,51,.45)}
-body.stu .qn{border-radius:14px;background:linear-gradient(135deg,var(--v1),var(--v2));color:#fff;box-shadow:0 3px 0 #4A2DC2}
+body.stu .qc{border-radius:26px;border:0;background:#fff;box-shadow:0 1px 0 var(--line),0 16px 30px -22px rgba(30,26,50,.45)}
+body.stu .qn{border-radius:14px;background:linear-gradient(135deg,var(--v1),var(--v2));color:#fff;box-shadow:0 3px 0 #5D1E56}
 body.stu .qc.done .qn{background:linear-gradient(135deg,#16B386,#3FD3A5);box-shadow:0 3px 0 #0E8A66}
 body.stu .qm{border-radius:999px;background:#FFF3D6;color:#8A5A00;font-weight:800}
 body.stu label.opt, body.stu div.opt{border-radius:18px;border:2px solid var(--line);transition:border-color .15s, background .15s, transform .1s}
 body.stu label.opt:hover{border-color:#C9BBFF;background:#FBF9FF}
 body.stu label.opt:active{transform:scale(.99)}
-body.stu .opt.sel{border-color:var(--v1);background:#F3EFFF;box-shadow:0 0 0 4px rgba(108,71,255,.12)}
+body.stu .opt.sel{border-color:var(--v1);background:#F3EFFF;box-shadow:0 0 0 4px rgba(135,63,126,.12)}
 body.stu .opt.sel b{background:var(--v1);color:#fff}
 body.stu textarea.lined, body.stu .qc input[type=text]{border-radius:16px;border:2px solid var(--line);background-color:#fff;font-size:1.05rem;transition:border-color .15s, box-shadow .15s}
 body.stu textarea.lined{background-image:repeating-linear-gradient(transparent 0 calc(1.7em - 1px), #EDE8FA calc(1.7em - 1px) 1.7em);background-attachment:local;line-height:1.7em;padding-top:.35em}
-body.stu textarea.lined:focus, body.stu .qc input[type=text]:focus{outline:none;border-color:var(--v1);box-shadow:0 0 0 4px rgba(108,71,255,.15)}
-body.stu .checkbar{border-radius:24px;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 14px 30px -18px rgba(27,20,51,.5)}
-body.stu .wsheet{border-radius:26px 26px 0 0;box-shadow:0 -14px 40px -10px rgba(27,20,51,.35)}
+body.stu textarea.lined:focus, body.stu .qc input[type=text]:focus{outline:none;border-color:var(--v1);box-shadow:0 0 0 4px rgba(135,63,126,.15)}
+body.stu .checkbar{border-radius:24px;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 14px 30px -18px rgba(30,26,50,.5)}
+body.stu .wsheet{border-radius:26px 26px 0 0;box-shadow:0 -14px 40px -10px rgba(30,26,50,.35)}
 body.stu .wword{background:linear-gradient(135deg,var(--v1),var(--pinkx));-webkit-background-clip:text;background-clip:text;color:transparent}
 body.stu .wlist .chips button{border-radius:999px}
 
@@ -580,6 +580,90 @@ body.stu .p-head + .para p::first-letter{background:none;-webkit-background-clip
 body.stu .pn{background:#F3E8F0;color:#5D1E56}
 body.stu .wword{background:none;-webkit-background-clip:initial;background-clip:initial;color:#5D1E56;font-family:var(--f-display);font-weight:400}
 body.stu .annobar{background:#FDFAF3}
+/* ===== 🎨 Studio 2 for pupils (8 Nov): sticker cards everywhere ===== */
+body.stu .khero{border-radius:26px;box-shadow:4px 5px 0 #1E1A32}
+body.stu .khero h1{font-size:clamp(2rem,6vw,3rem);line-height:1}
+body.stu .kstats div{border:2px solid #1E1A32;box-shadow:2px 3px 0 #1E1A32;border-radius:18px}
+body.stu .kcard, body.stu .kr, body.stu .qc{border:2px solid #1E1A32;box-shadow:4px 5px 0 #1E1A32;border-radius:22px}
+body.stu .kcard:hover{transform:translateY(-2px);box-shadow:5px 7px 0 #1E1A32}
+body.stu .btn{border:2px solid #1E1A32}
+body.stu .btn:not(.go):not(.primary){background:#fff;color:#1E1A32}
+body.stu .tabs{background:#FDFAF3;border:2px solid #1E1A32;box-shadow:2px 3px 0 #1E1A32;border-radius:999px;padding:4px}
+body.stu .tabs .btn{border:0;box-shadow:none;background:transparent}
+body.stu .pane-passage{border:2px solid #1E1A32;box-shadow:4px 5px 0 #1E1A32;border-radius:22px}
+body.stu .annobar{border-bottom:2px solid #1E1A32}
+body.stu .opt{border:2px solid #D8D1E3;border-radius:16px}
+body.stu .opt.sel{border-color:#1E1A32;background:#FFE995;box-shadow:2px 3px 0 #1E1A32}
+body.stu .opt.sel b{background:#1E1A32}
+body.stu textarea.lined, body.stu .qc input[type=text]{border:2px solid #D8D1E3;border-radius:14px}
+body.stu .pill{border:1.5px solid #1E1A32;color:#1E1A32}
+body.stu .bar{background:#FDFAF3;border-bottom:2px solid #1E1A32}
+/* ===== 🎨 Teacher page, "Studio" look (body.tch): matches the Dashboard and Class Hub. Pupils' screens are unchanged. ===== */
+body.tch{
+  --paper:#F7F5FA; --surface:#FDFAF3; --sunk:#EFEAF5; --ink:#1E1A32; --muted:#5A536E; --line:#D8D1E3; --line-soft:#E9E3F0;
+  --pen:#5D1E56; --pen-soft:#F3E6F1; --on-pen:#ffffff; --butter:#FFE995; --coral:#F19A9D; --stk:4px 5px 0 #1E1A32;
+  --good:#1D6B3E; --good-bg:#CFEBD9; --part:#7A4A00; --part-bg:#FDEBC8; --zero:#454B58; --zero-bg:#E4DEEC;
+  --f-display:"Cal Sans","Manrope",system-ui,sans-serif; --f-ui:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:var(--paper);
+}
+body.tch h1, body.tch h2{font-weight:400;letter-spacing:0}
+body.tch h1{font-size:clamp(1.7rem,3.4vw,2.3rem)}
+body.tch h3{font-family:var(--f-ui);font-weight:800}
+body.tch .bar{background:var(--surface);border-bottom:2px solid var(--ink)}
+body.tch .brand .nib{background:var(--pen);border-radius:9px}
+body.tch .btn{border:2px solid var(--ink);background:#fff;min-height:44px;padding:0 16px;font-weight:800}
+body.tch .btn:hover{background:var(--sunk)}
+body.tch .btn.primary{background:var(--butter);color:var(--ink);border-color:var(--ink);box-shadow:2px 3px 0 var(--ink)}
+body.tch .btn.primary:hover{filter:none;background:#FFE27A}
+body.tch .btn.primary:active{transform:translate(2px,3px);box-shadow:none}
+body.tch .btn.ghost{border-color:transparent;background:transparent}
+body.tch .btn.small{min-height:36px;padding:0 12px}
+body.tch .panel, body.tch .list{background:var(--surface);border:2px solid var(--ink);border-radius:20px;box-shadow:var(--stk)}
+body.tch .item{border-top:1.5px solid var(--line-soft)}
+body.tch input[type=text], body.tch input[type=number], body.tch input[type=password], body.tch select, body.tch textarea, body.tch .asg input[type=datetime-local]{border:2px solid var(--line);border-radius:12px;background:#fff}
+body.tch input:focus, body.tch select:focus, body.tch textarea:focus{outline:none;border-color:var(--pen);box-shadow:0 0 0 3px var(--pen-soft)}
+body.tch .chipbtn{border:2px solid var(--line);background:#fff;min-height:40px}
+body.tch .chipbtn[aria-pressed=true]{background:var(--pen);border-color:var(--pen);color:#fff}
+body.tch .seg{border:2px solid var(--ink)}
+body.tch .seg input:checked+span{background:var(--pen)}
+body.tch .pill{font-size:.78rem;padding:4px 10px;color:var(--ink)}
+body.tch .pill.pen{background:var(--pen-soft);color:var(--pen)}
+body.tch .banner{border:2px solid var(--ink);border-radius:16px}
+body.tch :focus-visible{outline-color:var(--pen)}
+/* home */
+.th-top{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between}
+.th-top .eyebrow{color:var(--muted)}
+.th-make{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.th-tile{text-align:left;background:var(--surface);border:2px solid var(--ink);border-radius:20px;box-shadow:var(--stk);padding:18px 20px;cursor:pointer;display:flex;flex-direction:column;gap:7px;color:var(--ink);font:inherit}
+.th-tile.hot{background:var(--butter)}
+.th-tile b{font-family:var(--f-display);font-weight:400;font-size:1.35rem;line-height:1.1}
+.th-tile span{font-size:.9rem;color:#3A3450}
+.th-tile:active{transform:translate(2px,3px);box-shadow:none}
+.th-needs{background:var(--pen);color:#FDFAF3;border:2px solid var(--ink);border-radius:22px;box-shadow:var(--stk);padding:16px 18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.th-needs h2{font-size:1.35rem;color:#FDFAF3;margin-right:6px}
+.th-needs .btn{border-color:var(--ink);color:var(--ink)}
+.th-needs .c1{background:var(--coral)} .th-needs .c2{background:var(--butter)} .th-needs .c3{background:var(--surface)}
+.th-needs .ok{font-weight:700;opacity:.92}
+.th-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.th-card{background:var(--surface);border:2px solid var(--ink);border-radius:20px;box-shadow:var(--stk);padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.th-card .hd{display:flex;gap:14px;align-items:flex-start}
+.th-ring{flex:none;width:62px;height:62px;border-radius:50%;background:conic-gradient(var(--rc) 0 calc(var(--p)*1%),#E4DEEC calc(var(--p)*1%) 100%);display:grid;place-items:center}
+.th-ring i{width:46px;height:46px;border-radius:50%;background:var(--surface);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:.9rem}
+.th-card h3{font-family:var(--f-display);font-weight:400;font-size:1.25rem;line-height:1.15;margin:0;overflow-wrap:anywhere}
+.th-card .th-sub{font-size:.85rem;color:var(--muted)}
+body.tch a.btn{color:var(--ink)}
+body.tch .bar a.btn{color:var(--pen)}
+.th-card .pills{display:flex;flex-wrap:wrap;gap:6px}
+.th-card .pills .pill.hot{background:var(--coral)}
+.th-bar{display:flex;justify-content:space-between;font-size:.85rem;font-weight:700;margin-bottom:5px}
+.th-track{height:10px;border-radius:999px;background:var(--sunk);border:1.5px solid var(--ink);overflow:hidden}
+.th-track i{display:block;height:100%;background:var(--pen)}
+.th-card .acts{display:flex;gap:8px;margin-top:auto}
+.th-card .acts .btn{flex:1}
+.th-foot{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;font-size:.88rem;color:var(--muted);border-top:2px dashed var(--line);padding-top:14px}
+@media (max-width:760px){.th-make{grid-template-columns:minmax(0,1fr);gap:10px}.th-cards{grid-template-columns:minmax(0,1fr)}
+  .th-tile{flex-direction:row;align-items:center;gap:12px;padding:12px 16px;border-radius:16px}.th-tile b{font-size:1.15rem}.th-tile span{display:none}
+  .th-needs{flex-direction:column;align-items:stretch}.th-needs .btn{white-space:normal;text-align:center;padding:8px 14px}}
 </style>
 </head>
 <body>
@@ -975,12 +1059,13 @@ function kCheer(){
   var at=S.attempt, r=at&&at.result; if(S.view!=='student' || S.route.name!=='attempt' || !r || r.status==='pending' || !r.max || KCHEER[r.id]) return;
   KCHEER[r.id]=1; if(r.total/r.max<0.6) return;
   try{ if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return; }catch(e){}
-  var box=document.createElement('div'), C=['#6C47FF','#FF6FAE','#22C59B','#FFB627','#3BA7FF','#FF6B6B']; box.className='kconf'; box.setAttribute('aria-hidden','true');
+  var box=document.createElement('div'), C=['#873F7E','#FF6FAE','#22C59B','#FFB627','#3BA7FF','#FF6B6B']; box.className='kconf'; box.setAttribute('aria-hidden','true');
   for(var i=0;i<70;i++){ var c=document.createElement('i'); c.style.left=(Math.random()*100)+'%'; c.style.background=C[i%C.length]; c.style.animationDelay=(Math.random()*0.6)+'s'; c.style.setProperty('--dx',(Math.random()*160-80)+'px'); c.style.setProperty('--r',(Math.random()*900-450)+'deg'); box.appendChild(c); }
   document.body.appendChild(box); setTimeout(function(){ if(box.parentNode) box.parentNode.removeChild(box); }, 3400);
 }
 function render(){
   document.body.classList.toggle('stu', S.view==='student');
+  document.body.classList.toggle('tch', S.view==='teacher' && S.route.name!=='attempt');
   drawBar();
   var app=$('#app'), r=S.route.name, html='';
   if(S.view==='teacher'){
@@ -1006,7 +1091,7 @@ function render(){
 
 /* ================= STUDENT ================= */
 /* covers: one colour per passage, picked from its title */
-var COVERS=['linear-gradient(135deg,#6D3FE0,#B44AD8)','linear-gradient(135deg,#1FA389,#46C6A0)','linear-gradient(135deg,#F08A24,#F6B740)','linear-gradient(135deg,#E0457B,#F07AA3)','linear-gradient(135deg,#2F7BE5,#5FA8F5)','linear-gradient(135deg,#7C4DDB,#4BA3E3)'];
+var COVERS=['#FFE995','#F19A9D','#91D6F7','#CFEBD9','#E9D5E6','#FFD8A8'];
 function coverOf(p){ var t=String((p&&(p.title||p.passageTitle))||''), h=0; for(var i=0;i<t.length;i++) h=(h*31+t.charCodeAt(i))>>>0; return COVERS[h%COVERS.length]; }
 function emojiOf(p){
   var g=String((p&&p.genre)||'')+' '+String((p&&p.title)||'');
@@ -1036,7 +1121,7 @@ function viewStudentHome(){
   var res=S.results||[], done={}, best=null;
   res.forEach(function(r){ done[r.passageId]=1; if(r.status!=='pending' && r.max){ var pc=pct(r.total,r.max); if(best===null || pc>best) best=pc; } });
   var todo=(S.list||[]).filter(function(p){ return !p.closed && !done[p.id]; }).length;
-  if(S.list) h+='<div class="kstats"><div style="--c:#8B6CF0"><b>'+todo+'</b><span>To do</span></div><div style="--c:#3FB8A0"><b>'+Object.keys(done).length+'</b><span>Handed in</span></div>'+
+  if(S.list) h+='<div class="kstats"><div style="--c:#873F7E"><b>'+todo+'</b><span>To do</span></div><div style="--c:#3FB8A0"><b>'+Object.keys(done).length+'</b><span>Handed in</span></div>'+
      '<div style="--c:#F2A93B"><b>'+(best===null?'–':best+'%')+'</b><span>Best score</span></div></div>';
 
   h+='<h2 class="ksec">📚 Your comprehensions</h2>';
@@ -1113,8 +1198,14 @@ function startAttempt(pid, preview){
   var get = preview ? Promise.resolve(preview) : call('getPassage',{id:pid, cls:S.student.cls});
   var b=busy('Opening passage',['Fetching the passage'],' ');
   get.then(function(p){
+    // 💾 the newest saved answers: this device's, or the ones saved online (e.g. on another device)
+    if(preview) return [p,null];
+    return call('draftGet',{id:p.id}).then(function(sv){ return [p, sv&&sv.data]; }, function(){ return [p,null]; });
+  }).then(function(pd){
+    var p=pd[0], sv=pd[1];
     b.done();
     var d = preview ? null : LS.get(draftKey(p.id),null);
+    if(sv && sv.answers && (!d || (sv.at||0)>(d.at||0))){ d=sv; LS.set(draftKey(p.id), sv); }
     S.attempt = { passage:p, answers:(d&&d.answers)||{}, annos:(d&&d.annos)||[], words:(d&&d.words)||[], tab:'passage', showAi:true, result:null, preview:!!preview, clue:null, sel:null, sheet:null };
     S.route={name:'attempt'};
     render(); window.scrollTo(0,0);
@@ -1127,12 +1218,34 @@ function openResult(id){
   S.route={name:'attempt'}; render(); window.scrollTo(0,0);
 }
 
+/* 🔊 Read the passage aloud with the device's own voice, one paragraph at a time (nothing is sent anywhere). */
+var LISTEN={on:false};
+function compListen(btn){
+  try{ speechSynthesis.cancel(); }catch(e){}
+  if(LISTEN.on){ LISTEN.on=false; btn.textContent='🔊 Listen to the passage'; return; }
+  var at=S.attempt, paras=((at&&at.passage&&at.passage.paragraphs)||[]).slice(); if(!paras.length) return;
+  LISTEN.on=true; btn.textContent='⏹ Stop';
+  var v=(speechSynthesis.getVoices()||[]).filter(function(x){ return /^en-(GB|SG)/i.test(x.lang); })[0], i=0;
+  (function next(){
+    if(!LISTEN.on || i>=paras.length){ LISTEN.on=false; var b=$('#lstBtn'); if(b) b.textContent='🔊 Listen to the passage'; return; }
+    var u=new SpeechSynthesisUtterance(String(paras[i++])); u.lang='en-GB'; u.rate=.9; if(v) u.voice=v; u.onend=next; u.onerror=function(){ LISTEN.on=false; };
+    speechSynthesis.speak(u);
+  })();
+}
+document.addEventListener('visibilitychange',function(){ if(document.hidden && LISTEN.on){ LISTEN.on=false; try{ speechSynthesis.cancel(); }catch(e){} } });
 var draftTimer;
 function saveDraft(){
   var at=S.attempt; if(!at || at.preview || at.result) return;
   clearTimeout(draftTimer);
-  draftTimer=setTimeout(function(){ LS.set(draftKey(at.passage.id), {answers:at.answers, annos:at.annos, words:(at.words||[]).slice(0,30), at:Date.now()}); }, 400);
+  draftTimer=setTimeout(function(){
+    var dd={answers:at.answers, annos:at.annos, words:(at.words||[]).slice(0,30), at:Date.now(), label:at.passage.title||'Comprehension'};
+    LS.set(draftKey(at.passage.id), dd);
+    clearTimeout(srvDraftTimer); srvDraft={id:at.passage.id, data:dd}; srvDraftTimer=setTimeout(draftOnline, 2500);
+  }, 400);
 }
+var srvDraft=null, srvDraftTimer;
+function draftOnline(){ clearTimeout(srvDraftTimer); var x=srvDraft; srvDraft=null; if(!x) return; call('draftPut',x).catch(function(){ if(!srvDraft) srvDraft=x; srvDraftTimer=setTimeout(draftOnline, 20000); }); }
+document.addEventListener('visibilitychange', function(){ if(document.hidden) draftOnline(); });
 
 /* ---------- attempt workspace (student answering + results; teacher preview) ---------- */
 function viewAttempt(){
@@ -1150,7 +1263,7 @@ function viewAttempt(){
   h+='<div class="tabs" role="group" aria-label="Switch view"><button class="btn" data-act="tab" data-tab="passage" aria-pressed="'+(at.tab==='passage')+'">📖 Passage</button>'+
      '<button class="btn" id="tabQ" data-act="tab" data-tab="questions" aria-pressed="'+(at.tab==='questions')+'">'+(res?'🏆 Marks':'✏️ Questions')+'</button></div>';
   h+='<div class="work" data-tab="'+at.tab+'">';
-  h+='<div class="pane-passage" id="pPane">'+annoBar()+'<div id="pBody">'+passageHTML(p,{showAi:at.showAi, annos:at.annos, clue:at.clue, flash:true, word:at.wordMark})+'</div><div id="wSlot"></div><div id="sheetSlot"></div></div>';
+  h+='<div class="pane-passage" id="pPane">'+annoBar()+(('speechSynthesis' in window)?'<div style="padding:8px 14px 0"><button class="btn small" data-act="listen" id="lstBtn">🔊 Listen to the passage</button></div>':'')+'<div id="pBody">'+passageHTML(p,{showAi:at.showAi, annos:at.annos, clue:at.clue, flash:true, word:at.wordMark})+'</div><div id="wSlot"></div><div id="sheetSlot"></div></div>';
   h+='<div class="pane-q" id="qPane">';
   if(res){
     h+=bookletHTML(p,{mode:'result', answers:at.answers, marks:res.marks||{}, keys:res.keys, keyParts:res.keyParts});
@@ -1399,7 +1512,7 @@ function submitAttempt(){
   setTimeout(function(){ b.step(2); }, 12000);
   call('submit',{passageId:p.id, student:S.student.name, cls:S.student.cls, answers:at.answers, annos:at.annos}).then(function(r){
     b.done();
-    LS.del(draftKey(p.id));
+    LS.del(draftKey(p.id)); srvDraft=null; clearTimeout(srvDraftTimer); call('draftDel',{id:p.id}).catch(function(){});
     S.results=[r].concat((S.results||[]).filter(function(x){ return x.id!==r.id; }));
     at.passage=r.passage||at.passage; at.result=r; at.tab='questions'; at.clue=null;
     render(); window.scrollTo(0,0);
@@ -1451,35 +1564,69 @@ function refreshDash(){ return call('dashboard').then(function(d){ S.dash=d; S.l
 
 function studentLink(){ return (S.dash && S.dash.hubUrl) || BOOT.hubUrl || ''; }
 
+var TH_ICON={
+  ai:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>',
+  up:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>',
+  pen:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg>'
+};
+/** Where a passage stands: 'live' (set, open), 'closed' (set, past a locked due date), 'draft'. */
+function thState(p){
+  if(!p.published) return 'draft';
+  var as=p.assignments||[], now=Date.now();
+  if(as.length && as.every(function(a){ return a.due && a.lock && a.due<now; })) return 'closed';
+  return 'live';
+}
 function viewTeacherHome(){
-  var d=S.dash, ps=d.passages||[];
-  var h='<div class="stack">';
-  h+='<div class="row between"><div class="hero"><span class="eyebrow">Teacher dashboard</span><h1>Comprehension passages</h1>'+
-     '<p class="muted">Set PSLE-format passages, check AI marking, and see how your class did. Pupils do them in the Class Hub: <b>English → 📖 Comprehension</b>.</p></div></div>';
+  var d=S.dash, ps=(d.passages||[]).slice().sort(function(a,b){ return (b.updated||0)-(a.updated||0); });
+  var cls=d.classes||[], size=cls.reduce(function(s,c){ return s+c.names.length; },0), now=Date.now(), F=S.homeF||'all';
+  var h='<div class="stack" style="gap:22px">';
+  h+='<div class="th-top"><div><span class="eyebrow">'+esc(cls.map(function(c){ return c.cls; }).join(' · ')||'Your class')+' · Teacher</span><h1>Comprehension</h1>'+
+     '<p class="muted" style="margin-top:4px">Set PSLE-format passages, check the AI marking, and see how your class did.</p></div>'+
+     '<div class="row"><button class="btn" data-act="go" data-r="settings">Marking rules</button><button class="btn" data-act="copy" data-text="'+esc(studentLink())+'">Copy Class Hub link</button></div></div>';
   if(d.ai===false) h+='<div class="ai-warn">AI isn’t set up yet: add GEMINI_API_KEY in Script properties (a Claude key works as backup). Pupils can’t see the Comprehension section until then.</div>';
   if(d.cmOn===false) h+='<div class="ai-warn">Comprehension is switched off for pupils. Turn it on in the Dashboard: Hub → 📖 Comprehension.</div>';
-  h+='<div class="row"><button class="btn primary" data-act="go" data-r="create">Create with AI</button><button class="btn" data-act="go" data-r="upload">Upload a passage</button>'+
-     '<button class="btn" data-act="newBlank">Write my own</button><button class="btn ghost" data-act="go" data-r="settings">Marking rules</button></div>';
-  h+='<div class="panel row between"><div class="stack" style="gap:2px;min-width:0"><b>Class Hub link</b><span class="small muted" style="overflow-wrap:anywhere">'+esc(studentLink())+'</span><span class="small muted">Pupils sign in to the Class Hub as usual, then tap English → Comprehension.</span></div><button class="btn small" data-act="copy" data-text="'+esc(studentLink())+'">Copy link</button></div>';
-  var cls=d.classes||[];
-  h+='<div class="panel row between"><div class="stack" style="gap:4px;min-width:0"><b>Your class</b>'+
-     (cls.length?'<span class="small muted">'+cls.map(function(c){ return esc(c.cls)+' ('+c.names.length+')'; }).join(' · ')+'</span>':'<span class="small muted">No classes yet.</span>')+
-     '<span class="small muted">Your Class Hub class list. Add or remove pupils as you do for the rest of the app.</span></div>'+
-     '<div class="row">'+(d.settings && d.settings.sheetUrl?'<a class="btn small" href="'+esc(d.settings.sheetUrl)+'" target="_blank" rel="noopener">Open Google Sheet</a>':'')+
-     '<button class="btn small ghost" data-act="reloadDash">Reload</button></div></div>';
-  if(!ps.length) h+='<div class="list"><div class="empty">No passages yet. Create one with AI or upload your own.</div></div>';
-  else h+='<div class="list">'+ps.slice().sort(function(a,b){ return (b.updated||0)-(a.updated||0); }).map(function(p){
-    var st=p.stats||{}; var marks=p.questions.reduce(function(s,q){ return s+(Number(q.marks)||0); },0);
-    return '<div class="item"><div><h3>'+esc(p.title)+'</h3><div class="meta"><span class="pill">'+esc(p.level)+'</span><span>'+esc(p.genre||'')+'</span><span>'+marks+' marks</span>'+
-      (p.published?'<span class="pill good">Published</span>':'<span class="pill">Draft</span>')+(p.source==='sample'?'<span class="pill pen">Sample</span>':'')+
-      '<span>'+(st.students||0)+(st.assigned?' / '+st.assigned:'')+' handed in'+(st.avg!=null?' · average '+Math.round(st.avg*100)+'%':'')+'</span>'+(st.pending?'<span class="pill part">'+st.pending+' to mark</span>':'')+'</div>'+
-      (p.published?'<div class="meta" style="margin-top:4px">'+((p.assignments||[]).length?(p.assignments||[]).map(function(a){
-          var closed=a.due && a.lock && a.due<Date.now();
-          return '<span class="pill '+(closed?'zero':'pen')+'">'+esc(a.cls)+(a.due?(closed?' · closed ':' · due ')+esc(fmtDue(a.due)):' · no due date')+'</span>';
-        }).join(''):'<span class="pill">Open · no due date</span>')+'</div>':'')+'</div>'+
-      '<div class="row"><button class="btn small" data-act="edit" data-id="'+p.id+'">Edit</button><button class="btn small primary" data-act="results" data-id="'+p.id+'">Results</button>'+
-      '</div></div>';
+  h+='<div class="th-make">'+
+     '<button class="th-tile hot" data-act="go" data-r="create">'+TH_ICON.ai+'<b>Create with AI</b><span>Pick the level, text type and theme. You get the passage, Booklet A and B, and the answer keys.</span></button>'+
+     '<button class="th-tile" data-act="go" data-r="upload">'+TH_ICON.up+'<b>Upload a worksheet</b><span>Photos or a PDF with its answer key. Missing answers are drafted and flagged for you to check.</span></button>'+
+     '<button class="th-tile" data-act="newBlank">'+TH_ICON.pen+'<b>Write my own</b><span>Start from a blank passage and add every question yourself.</span></button></div>';
+  // Needs you
+  var need=[], toMark=0, markP=null, soon=null, drafted=0, draftedP=null;
+  ps.forEach(function(p){
+    var st=p.stats||{};
+    if(st.pending){ toMark+=st.pending; if(!markP) markP=p; }
+    if(!p.published){ var n=p.questions.filter(function(q){ return q.aiDrafted; }).length; if(n){ drafted+=n; if(!draftedP) draftedP=p; } }
+    if(p.published) (p.assignments||[]).forEach(function(a){
+      if(a.due && a.due>now && a.due-now<48*36e5){ var left=Math.max(0,(st.assigned||size)-(st.students||0)); if(left && (!soon || a.due<soon.due)) soon={p:p, due:a.due, left:left}; }
+    });
+  });
+  if(toMark) need.push('<button class="btn c1" data-act="results" data-id="'+markP.id+'">'+toMark+' script'+(toMark===1?'':'s')+' waiting to be marked</button>');
+  if(soon) need.push('<button class="btn c2" data-act="results" data-id="'+soon.p.id+'">“'+esc(soon.p.title)+'” closes '+esc(fmtDue(soon.due))+' · '+soon.left+' not handed in</button>');
+  if(drafted) need.push('<button class="btn c3" data-act="edit" data-id="'+draftedP.id+'">'+drafted+' AI-drafted answer'+(drafted===1?'':'s')+' to check</button>');
+  h+='<section class="th-needs" aria-label="Needs you"><h2>Needs you</h2>'+(need.length?need.join(''):'<span class="ok">All caught up. Nothing to mark or check.</span>')+'</section>';
+  // passages
+  var cnt={all:ps.length, live:0, draft:0, closed:0}; ps.forEach(function(p){ cnt[thState(p)]++; });
+  var shown=ps.filter(function(p){ return F==='all' || thState(p)===F; });
+  var chip=function(k,label){ return '<button class="chipbtn" data-act="homeF" data-f="'+k+'" aria-pressed="'+(F===k)+'">'+label+' · '+cnt[k]+'</button>'; };
+  h+='<section class="stack" style="gap:12px"><div class="row between"><h2 style="font-size:1.75rem">Your passages</h2><div class="chips" role="group" aria-label="Show">'+
+     chip('all','All')+chip('live','Set for the class')+chip('draft','Drafts')+(cnt.closed?chip('closed','Closed'):'')+'</div></div>';
+  if(!ps.length) h+='<div class="panel empty">No passages yet. Create one with AI, upload a worksheet, or write your own.</div>';
+  else if(!shown.length) h+='<div class="panel empty">Nothing here.</div>';
+  else h+='<div class="th-cards">'+shown.map(function(p){
+    var st=p.stats||{}, s=thState(p), marks=p.questions.reduce(function(a,q){ return a+(Number(q.marks)||0); },0);
+    var avg=st.avg!=null?Math.round(st.avg*100):null, rc=avg==null?'#E4DEEC':avg>=65?'#5D1E56':avg>=50?'#C2410C':'#B42318';
+    var of=st.assigned||size, inn=st.students||0, pc=of?Math.min(100,Math.round(100*inn/of)):0;
+    var dueTxt=s==='draft'?'Not set yet':(p.assignments||[]).length?(p.assignments||[]).map(function(a){ var c=a.due&&a.lock&&a.due<now; return a.due?(c?'Closed ':'Due ')+fmtDue(a.due):'No due date'; }).join(' · '):'Open · no due date';
+    var drafted=p.questions.filter(function(q){ return q.aiDrafted; }).length;
+    return '<article class="th-card"><div class="hd"><div class="th-ring" style="--p:'+(avg||0)+';--rc:'+rc+'"><i>'+(avg==null?'–':avg+'%')+'</i></div>'+
+      '<div style="min-width:0"><h3>'+esc(p.title)+'</h3><div class="th-sub">'+esc([p.level,p.genre,marks+' marks'].filter(Boolean).join(' · '))+'</div></div></div>'+
+      '<div class="pills"><span class="pill '+(s==='live'?'good':s==='draft'?'part':'zero')+'">'+(s==='live'?'Set for the class':s==='draft'?'Draft':'Closed')+'</span><span class="pill">'+esc(dueTxt)+'</span>'+
+      (st.pending?'<span class="pill hot">'+st.pending+' to mark</span>':'')+(drafted?'<span class="pill hot">'+drafted+' AI-drafted</span>':'')+(p.source==='sample'?'<span class="pill pen">Sample</span>':'')+'</div>'+
+      (s==='draft'?'':'<div><div class="th-bar"><span>Handed in</span><span>'+inn+' of '+of+'</span></div><div class="th-track"><i style="width:'+pc+'%"></i></div></div>')+
+      '<div class="acts">'+(s==='draft'?'<button class="btn primary" data-act="edit" data-id="'+p.id+'">Check and set</button>':'<button class="btn primary" data-act="results" data-id="'+p.id+'">Results</button><button class="btn" data-act="edit" data-id="'+p.id+'">Edit</button>')+'</div></article>';
   }).join('')+'</div>';
+  h+='</section>';
+  h+='<div class="th-foot"><span>Pupils open these in the Class Hub: English → 📖 Comprehension.'+(cls.length?' Class list: '+esc(cls.map(function(c){ return c.cls+' ('+c.names.length+')'; }).join(' · '))+'.':'')+'</span>'+
+     '<span class="row">'+(d.settings && d.settings.sheetUrl?'<a class="btn small" href="'+esc(d.settings.sheetUrl)+'" target="_blank" rel="noopener">Open the Google Sheet</a>':'')+'<button class="btn small ghost" data-act="reloadDash">Reload</button></span></div>';
   return h+'</div>';
 }
 
@@ -2005,6 +2152,8 @@ document.addEventListener('click', function(e){
       markDirty(); render(); break;
     case 'asgDel': syncParas(); S.editor.p.assignments.splice(Number(t.dataset.i),1); markDirty(); render(); break;
     case 'flt': S.subs.cls=t.dataset.cls||''; render(); break;
+    case 'listen': compListen(t); break;
+    case 'homeF': S.homeF=t.dataset.f||'all'; render(); break;
     case 'openResult': openResult(id); break;
     case 'back':
       if(S.view==='teacher'){ S.attempt=null; S.route={name:'editor'}; render(); }

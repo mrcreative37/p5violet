@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <style>
-  :root { --bg:#F3F2F8; --card:#FFFFFF; --ink:#1B1E3A; --muted:#5F6383; --line:#E4E1F0; --brand:#3B2A8F; --brand-2:#5A45C9; --soft:#ECE9FB; --ok:#1E7A3C; --ok-soft:#E3F4E8; --warn:#9A5A00; --warn-soft:#FDF0DB; --danger:#B42318; }
+  :root { --bg:#F3F2F8; --card:#FFFFFF; --ink:#3E1239; --muted:#5F6383; --line:#E4E1F0; --brand:#5D1E56; --brand-2:#5D1E56; --soft:#ECE9FB; --ok:#1E7A3C; --ok-soft:#E3F4E8; --warn:#9A5A00; --warn-soft:#FDF0DB; --danger:#B42318; }
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-text-size-adjust:100%; }
   button { font:inherit; cursor:pointer; }
@@ -53,11 +53,34 @@
   @media screen and (min-width:1024px) {
     .wrap { max-width:760px; padding:40px 24px; }
     .names { grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
-    .name { font-size:16px; padding:14px 12px; cursor:pointer; } .name:hover { border-color:#5B3FD6; }
+    .name { font-size:16px; padding:14px 12px; cursor:pointer; } .name:hover { border-color:#5D1E56; }
     .big { cursor:pointer; }
     .sheet { grid-template-columns:repeat(4,minmax(0,1fr)); }
   }
+/* =================== 🎨 Studio look (8 Nov): same colours, type, cards and buttons as the Dashboard and Class Hub =================== */
+:root{ --st-ink:#1E1A32; --st-paper:#FDFAF3; --st-canvas:#F7F5FA; --st-plum:#5D1E56; --st-yellow:#FFE995; --st-coral:#F19A9D;
+  --bg:#F7F5FA; --card:#FDFAF3; --surface:#FDFAF3; --surface-2:#F1EEF4; --soft:#F1EEF4; --tint:#F3E6F1; --ink:#1E1A32; --muted:#5A536E; --line:#D8D1E3;
+  --brand:#5D1E56; --brand-2:#5D1E56; --brand-soft:#F3E6F1; --on-brand:#FDFAF3; --on-brand-muted:#EBD3E5; --ink-violet:#5D1E56; --ink-violet-deep:#3E1239;
+  --violet:#5D1E56; --violet-2:#5D1E56; --accent:#5D1E56; --gold:#DB962F; --shadow:none;
+  --display:'Cal Sans','Manrope',system-ui,sans-serif; color-scheme:light; }
+html,body{background:#F7F5FA !important;color:#1E1A32;font-family:'Manrope','Avenir Next',system-ui,sans-serif !important}
+h1,h2{font-family:'Cal Sans','Manrope',system-ui,sans-serif !important;font-weight:400 !important;letter-spacing:0 !important}
+.card,.panel,.gcard,.note,.settings,.req,.sheet-card{background:#FDFAF3 !important;border:2px solid #1E1A32 !important;border-radius:22px !important;box-shadow:4px 5px 0 #1E1A32 !important}
+.btn{border:2px solid #1E1A32 !important;border-radius:999px !important;font-weight:800 !important}
+.btn-primary,.btn.primary,.btn-main,button.send,button.big:not(.soft):not(.ghost){background:#FFE995 !important;color:#1E1A32 !important;border:2px solid #1E1A32 !important;border-radius:999px !important;box-shadow:2px 3px 0 #1E1A32 !important;font-weight:800 !important}
+.btn-primary:active,.btn.primary:active,.btn-main:active,button.send:active{transform:translate(2px,3px);box-shadow:none !important}
+.btn-soft,.btn.soft,.btn-ghost,button.big.soft{background:#fff !important;color:#1E1A32 !important;border:2px solid #1E1A32 !important;box-shadow:none !important}
+.chip,.chipbtn{border:2px solid #D8D1E3 !important;border-radius:999px !important;font-weight:800}
+.chip.on,.chip[aria-pressed=true],.chipbtn[aria-pressed=true]{background:#5D1E56 !important;border-color:#5D1E56 !important;color:#fff !important}
+input[type=text],input[type=search],input[type=number],input[type=date],input[type=time],input[type=email],select,textarea{border:2px solid #D8D1E3 !important;border-radius:14px !important;background:#fff !important;color:#1E1A32}
+input:focus,select:focus,textarea:focus{outline:none !important;border-color:#5D1E56 !important;box-shadow:0 0 0 3px #F3E6F1 !important}
+header,#hdr,.appbar,body > .bar{background:#5D1E56 !important;color:#FDFAF3 !important;border-bottom:2px solid #1E1A32 !important}
+body > .bar select{background:#FDFAF3 !important;color:#1E1A32 !important}
+ul.list{background:#FDFAF3 !important;border:2px solid #1E1A32 !important;border-radius:22px !important;box-shadow:4px 5px 0 #1E1A32 !important}
+.page-stamp,.appbar-stamp{opacity:.18}
+.toast{background:#1E1A32 !important;color:#FDFAF3 !important;border-radius:999px !important}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Manrope:wght@400..800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 </head>
 <body>
 <div class="wrap">

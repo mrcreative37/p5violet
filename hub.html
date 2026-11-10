@@ -21,8 +21,8 @@
 <style>
   /* ===== Our class scrapbook: violet paper, sticker colours, washi tape, the class stamp ===== */
   :root {
-    --paper:#F3F0FD; --dot:#DCD4F7; --card:#FFFFFF; --ink:#1E1735; --muted:#635C82; --line:#E4DEF6;
-    --violet:#2E1A78; --violet-2:#5B3FD6; --lilac:#ECE7FF; --gold:#F2AE00; --gold-ink:#7A5200;
+    --paper:#F3F0FD; --dot:#DCD4F7; --card:#FFFFFF; --ink:#1E1A32; --muted:#635C82; --line:#E4DEF6;
+    --violet:#3E1239; --violet-2:#5D1E56; --lilac:#ECE7FF; --gold:#F2AE00; --gold-ink:#7A5200;
     --ok:#12805C; --ok-soft:#E2F4EC; --danger:#C43A3A; --danger-soft:#FDECEC; --warn:#8A5A00; --warn-soft:#FFF3D1;
     --head:'Bricolage Grotesque','Instrument Sans',system-ui,sans-serif; --hand:'Nothing You Could Do','Segoe Print',cursive;
     --s1:#FFE58F; --s2:#C9F2E1; --s3:#FFD3C2; --s4:#CFE3FF; --s5:#F9D1EC; --s6:#E1D8FF;   /* sticky-note colours */
@@ -85,7 +85,7 @@
   .or-check { font-size:13px; line-height:1.45; color:var(--muted); background:var(--card, #fff); border:1px solid var(--line); border-radius:14px; padding:9px 12px; margin:8px 0; }
   .or-review { background:#FFF4C9 !important; color:#5A3D00 !important; border:1px solid rgba(30,26,50,.12); }
   .or-key .k-ok { color:#1E7A4C; } .or-key .k-diff { color:#9A4B00; background:#FFE7CF; } .or-key .k-miss { color:#C53030; } .or-key .k-unclear { color:#6B6789; }
-  .or-wbar { position:sticky; bottom:calc(var(--dock, 80px) + 12px); z-index:6; display:flex; flex-wrap:wrap; align-items:center; gap:8px; background:#fff; border:2px solid var(--violet-2); border-radius:16px; padding:10px 12px; margin-top:10px; box-shadow:0 8px 24px rgba(46,26,120,.18); }
+  .or-wbar { position:sticky; bottom:calc(var(--dock, 80px) + 12px); z-index:6; display:flex; flex-wrap:wrap; align-items:center; gap:8px; background:#fff; border:2px solid var(--violet-2); border-radius:16px; padding:10px 12px; margin-top:10px; box-shadow:0 8px 24px rgba(62,18,57,.18); }
   .or-wbar > b { font:800 20px/1.1 var(--head); color:var(--violet); margin-right:4px; }
   .or-wres { font-weight:800; font-size:14px; } .or-wres.ok { color:#1E7A4C; } .or-wres.no { color:#9A4B00; }
   .or-x { margin-left:auto; border:0; background:var(--paper); border-radius:10px; width:34px; height:34px; font-weight:800; cursor:pointer; }
@@ -117,7 +117,7 @@
   .or-oreo.big .or-tile.on { background:#EEE8FF; color:var(--violet); border-color:#C9BDF6; }
   .or-praise { font-weight:700; margin:10px 0 0; } .or-hint { margin:10px 0 0; background:#FFF6DC; border-radius:12px; padding:10px 12px; font-weight:800; color:#6A4B00; } .or-lang { margin:8px 0 0; color:var(--muted); }
   .or-model p { line-height:1.7; } .or-mp b { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:6px; background:var(--violet-2); color:#fff; font-size:12px; margin-right:3px; }
-  .top { position:sticky; top:0; z-index:20; color:#fff; background:radial-gradient(130% 180% at 100% 0%, #4A2BB8 0%, var(--violet) 52%, #21115C 100%); box-shadow:0 6px 24px rgba(46,26,120,.18); }
+  .top { position:sticky; top:0; z-index:20; color:#fff; background:radial-gradient(130% 180% at 100% 0%, #5D1E56 0%, var(--violet) 52%, #3E1239 100%); box-shadow:0 6px 24px rgba(62,18,57,.18); }
   .top-in { max-width:820px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; gap:12px; }
   .logo { width:40px; height:40px; flex:none; }
   .top small { display:block; color:#C9BEF7; font-weight:700; font-size:12.5px; }
@@ -136,20 +136,20 @@
   /* ---------- Bottom dock ---------- */
   .tabs { position:fixed; left:12px; right:12px; bottom:calc(10px + env(safe-area-inset-bottom,0px)); z-index:25; max-width:520px; margin:0 auto;
     background:rgba(255,255,255,.9); -webkit-backdrop-filter:saturate(1.4) blur(16px); backdrop-filter:saturate(1.4) blur(16px);
-    border:1px solid var(--line); border-radius:26px; padding:6px; box-shadow:0 12px 32px rgba(46,26,120,.18); }
+    border:1px solid var(--line); border-radius:26px; padding:6px; box-shadow:0 12px 32px rgba(62,18,57,.18); }
   .tabs-in { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; }
   .tabs.t5 { max-width:600px; } .tabs.t5 button { font-size:11.5px; } .tabs.t6 { max-width:640px; } .tabs.t6 .tabs-in { gap:2px; } .tabs.t6 button { font-size:10.5px; letter-spacing:-.01em; } .tabs.t6 svg { width:22px; height:22px; } .tabs .dot.gold { background:var(--gold); color:#3A2600; }
   .tabs button { border:0; background:none; padding:7px 0 6px; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:12.5px; font-weight:700; color:var(--muted); border-radius:20px; position:relative; min-height:56px; transition:background .18s, color .18s; }
   .tabs svg { width:24px; height:24px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-  .tabs button.on { color:#fff; background:var(--violet-2); box-shadow:0 6px 16px rgba(91,63,214,.35); }
+  .tabs button.on { color:#fff; background:var(--violet-2); box-shadow:0 6px 16px rgba(93,30,86,.35); }
   .dot { position:absolute; top:3px; left:calc(50% + 8px); background:var(--danger); color:#fff; font-size:11px; font-weight:800; border-radius:999px; min-width:20px; height:20px; padding:0 6px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 2px #fff; }
 
   /* ---------- Common ---------- */
-  .card { background:var(--card); border:1px solid var(--line); border-radius:22px; padding:18px; margin-top:16px; box-shadow:0 2px 0 rgba(46,26,120,.04), 0 10px 26px rgba(46,26,120,.06); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:22px; padding:18px; margin-top:16px; box-shadow:0 2px 0 rgba(62,18,57,.04), 0 10px 26px rgba(62,18,57,.06); }
   .muted { color:var(--muted); font-size:14.5px; line-height:1.5; }
   .btn { border:0; border-radius:16px; padding:12px 18px; font-weight:700; min-height:50px; font-size:16px; display:inline-flex; align-items:center; justify-content:center; gap:8px; transition:transform .1s; }
   .btn:active:not(:disabled) { transform:scale(.97); }
-  .primary { background:linear-gradient(135deg, #6B4DF0, var(--violet-2) 45%, #4527B8); color:#fff; box-shadow:0 8px 20px rgba(91,63,214,.32); }
+  .primary { background:linear-gradient(135deg, #873F7E, var(--violet-2) 45%, #5D1E56); color:#fff; box-shadow:0 8px 20px rgba(93,30,86,.32); }
   .soft { background:var(--lilac); color:var(--violet); } .danger { background:var(--danger-soft); color:var(--danger); }
   .btn:disabled { opacity:.5; cursor:default; box-shadow:none; }
   .big { width:100%; font-size:18px; min-height:58px; }
@@ -179,7 +179,7 @@
   .name:active { transform:translateY(2px); box-shadow:0 1px 0 var(--line); }
   .name .av { width:38px; height:38px; font-size:14px; }
   .pinwrap { text-align:center; padding-top:22px; }
-  .pinwrap .av { width:84px; height:84px; font-size:30px; margin:0 auto; box-shadow:0 0 0 5px #fff, 0 10px 24px rgba(46,26,120,.2); }
+  .pinwrap .av { width:84px; height:84px; font-size:30px; margin:0 auto; box-shadow:0 0 0 5px #fff, 0 10px 24px rgba(62,18,57,.2); }
   .pin-key { font-size:44px; line-height:1; margin-top:6px; }
   .pin-dots { display:flex; justify-content:center; gap:14px; margin:20px 0 6px; }
   .pin-dots i { width:34px; height:34px; display:grid; place-items:center; font-style:normal; font-size:26px; color:var(--dot); transition:transform .15s, color .15s; }
@@ -187,7 +187,7 @@
   .pin-dots i.on { color:var(--gold); transform:scale(1.15) rotate(-8deg); }
   .shake { animation:shake .4s; } @keyframes shake { 20%,60% { transform:translateX(-9px); } 40%,80% { transform:translateX(9px); } }
   .pad { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:320px; margin:16px auto 0; }
-  .pad button { border:0; background:#fff; color:var(--violet); font:800 28px/1 var(--head); border-radius:22px; min-height:66px; box-shadow:0 4px 0 var(--line), 0 6px 14px rgba(46,26,120,.06); transition:transform .08s; }
+  .pad button { border:0; background:#fff; color:var(--violet); font:800 28px/1 var(--head); border-radius:22px; min-height:66px; box-shadow:0 4px 0 var(--line), 0 6px 14px rgba(62,18,57,.06); transition:transform .08s; }
   .pad button:active { transform:translateY(3px); box-shadow:0 1px 0 var(--line); }
   .pad button.ghost { background:none; box-shadow:none; font:700 15px/1.2 'Instrument Sans',sans-serif; color:var(--muted); }
 
@@ -195,8 +195,8 @@
   .chips { display:flex; gap:8px; overflow-x:auto; padding:16px 2px 4px; margin:0 -16px; padding-left:16px; padding-right:16px; scrollbar-width:none; }
   .chips::-webkit-scrollbar { display:none; }
   .chip { flex:0 0 auto; border:1.5px solid var(--line); background:#fff; border-radius:999px; padding:10px 16px; font-weight:700; font-size:15px; min-height:46px; white-space:nowrap; box-shadow:0 2px 0 var(--line); }
-  .chip.on { background:var(--violet); border-color:var(--violet); color:#fff; box-shadow:0 6px 14px rgba(46,26,120,.25); }
-  .board { position:relative; background:#fff; border-radius:22px; padding:26px 20px 20px; margin-top:20px; border:1px solid var(--line); box-shadow:0 10px 26px rgba(46,26,120,.07); }
+  .chip.on { background:var(--violet); border-color:var(--violet); color:#fff; box-shadow:0 6px 14px rgba(62,18,57,.25); }
+  .board { position:relative; background:#fff; border-radius:22px; padding:26px 20px 20px; margin-top:20px; border:1px solid var(--line); box-shadow:0 10px 26px rgba(62,18,57,.07); }
   .tape { position:absolute; top:-12px; left:50%; width:110px; height:26px; transform:translateX(-50%) rotate(-3deg); background:rgba(242,174,0,.38); border-left:2px dotted rgba(255,255,255,.6); border-right:2px dotted rgba(255,255,255,.6); }
   .board h2 { margin:0 0 6px; font-size:26px; line-height:1.1; }
   .board .prompt { font-size:16px; line-height:1.5; white-space:pre-wrap; }
@@ -206,9 +206,9 @@
   .grid { columns:2 180px; column-gap:14px; margin-top:22px; }
   @media (min-width:700px) { .grid { columns:3 200px; } }
   .post { position:relative; break-inside:avoid; border:0; border-radius:6px 6px 16px 16px; margin:0 0 18px; width:100%; text-align:left; padding:10px 10px 12px; display:block;
-    background:#fff; box-shadow:0 2px 0 rgba(30,23,53,.05), 0 10px 22px rgba(46,26,120,.10); transform:rotate(var(--r,0deg)); transition:transform .15s; animation:pop .45s both cubic-bezier(.2,.9,.3,1.2); }
+    background:#fff; box-shadow:0 2px 0 rgba(30,26,50,.05), 0 10px 22px rgba(62,18,57,.10); transform:rotate(var(--r,0deg)); transition:transform .15s; animation:pop .45s both cubic-bezier(.2,.9,.3,1.2); }
   .post:active { transform:rotate(0deg) scale(.98); }
-  .post:before { content:""; position:absolute; top:-9px; left:50%; width:62px; height:20px; transform:translateX(-50%) rotate(var(--tr,-4deg)); background:var(--tape,rgba(91,63,214,.25)); z-index:1; }
+  .post:before { content:""; position:absolute; top:-9px; left:50%; width:62px; height:20px; transform:translateX(-50%) rotate(var(--tr,-4deg)); background:var(--tape,rgba(93,30,86,.25)); z-index:1; }
   .post.note { background:var(--bgc,var(--s1)); padding:16px 14px 12px; border-radius:4px 4px 16px 4px; }
   @keyframes pop { from { opacity:0; transform:translateY(14px) rotate(var(--r,0deg)) scale(.96); } }
   .post .phbox { border-radius:4px; overflow:hidden; background:var(--lilac); }
@@ -226,7 +226,7 @@
   .post.hidden-post { outline:2.5px dashed #F0B4AE; outline-offset:-2px; }
   .stampwait { position:absolute; top:14px; right:10px; z-index:2; font:800 11px/1 var(--head); letter-spacing:.08em; color:#B9354B; border:2px solid #B9354B; border-radius:8px; padding:5px 7px; transform:rotate(8deg); background:rgba(255,255,255,.75); }
   .rx { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; font-size:13px; }
-  .rx span { background:rgba(255,255,255,.75); border:1px solid rgba(30,23,53,.08); border-radius:999px; padding:3px 9px; font-weight:700; }
+  .rx span { background:rgba(255,255,255,.75); border:1px solid rgba(30,26,50,.08); border-radius:999px; padding:3px 9px; font-weight:700; }
   .linkchip { display:inline-flex; align-items:center; gap:6px; margin-top:8px; font-size:14px; font-weight:700; color:var(--violet-2); word-break:break-all; }
   .state { font-size:12px; font-weight:800; border-radius:8px; padding:4px 8px; display:inline-block; margin-bottom:6px; }
   .state.no { background:var(--danger-soft); color:var(--danger); }
@@ -248,11 +248,11 @@
   /* ---------- Spotlight & Birthdays ---------- */
   .cheer-hero { padding:22px 2px 6px; } .cheer-hero h1 { margin:0; font-size:30px; line-height:1.1; } .cheer-hero .hand { font-size:21px; color:var(--violet-2); }
   .cheer-hero p { margin:6px 0 0; color:var(--muted); font-size:15px; }
-  .cheer { position:relative; background:#fff; border-radius:22px; padding:18px 16px 14px; margin:22px 0 0; box-shadow:0 2px 0 rgba(30,23,53,.05), 0 14px 30px rgba(46,26,120,.10); animation:pop .45s both cubic-bezier(.2,.9,.3,1.2); }
+  .cheer { position:relative; background:#fff; border-radius:22px; padding:18px 16px 14px; margin:22px 0 0; box-shadow:0 2px 0 rgba(30,26,50,.05), 0 14px 30px rgba(62,18,57,.10); animation:pop .45s both cubic-bezier(.2,.9,.3,1.2); }
   .cheer.spot { background:linear-gradient(180deg,#FFFBEA 0,#fff 120px); border:1.5px solid #F6E2A3; }
   .cheer.spot:before { content:"★ SPOTLIGHT ★"; position:absolute; top:-12px; left:50%; transform:translateX(-50%) rotate(-2deg); background:var(--gold); color:#3A2600; font:800 11.5px/1 var(--head); letter-spacing:.12em; padding:7px 12px; border-radius:8px; box-shadow:0 4px 10px rgba(242,174,0,.35); white-space:nowrap; }
   .cheer-top { display:flex; gap:14px; align-items:center; }
-  .pframe { position:relative; flex:none; width:84px; height:84px; border-radius:50%; overflow:hidden; background:var(--lilac); box-shadow:0 0 0 4px #fff, 0 0 0 6px var(--gold), 0 8px 18px rgba(46,26,120,.18); display:grid; place-items:center; }
+  .pframe { position:relative; flex:none; width:84px; height:84px; border-radius:50%; overflow:hidden; background:var(--lilac); box-shadow:0 0 0 4px #fff, 0 0 0 6px var(--gold), 0 8px 18px rgba(62,18,57,.18); display:grid; place-items:center; }
   .pframe img { width:100%; height:100%; object-fit:cover; display:block; opacity:0; transition:opacity .35s; position:absolute; inset:0; }
   .pframe img.in { opacity:1; }
   .pframe .av { width:100%; height:100%; font-size:28px; box-shadow:none; }
@@ -263,7 +263,7 @@
   .cheer .meyou { margin:12px 0 0; background:var(--lilac); color:var(--violet); border-radius:14px; padding:10px 14px; font-weight:700; font-size:15px; }
   .wcount { display:flex; align-items:center; gap:8px; margin:14px 0 4px; font-weight:800; font-size:14px; color:var(--violet); }
   .wishes { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; margin-top:8px; }
-  .wish { position:relative; background:var(--bgc,#FFE58F); border-radius:4px 4px 14px 4px; padding:10px 11px 9px; font-size:14.5px; line-height:1.4; transform:rotate(var(--r,0deg)); box-shadow:0 6px 14px rgba(46,26,120,.10); word-wrap:break-word; }
+  .wish { position:relative; background:var(--bgc,#FFE58F); border-radius:4px 4px 14px 4px; padding:10px 11px 9px; font-size:14.5px; line-height:1.4; transform:rotate(var(--r,0deg)); box-shadow:0 6px 14px rgba(62,18,57,.10); word-wrap:break-word; }
   .wish b { display:block; font-family:var(--hand); font-weight:400; font-size:17px; color:var(--violet); margin-top:4px; }
   .wish.teacher { background:#fff; border:1.5px solid #D9CFFF; }
   .wish.can-rm { padding-right:34px; }
@@ -280,26 +280,26 @@
   /* Birthdays */
   .cheer.bday-today { background:linear-gradient(160deg,#FFF0F6 0,#F1ECFF 55%,#FFF8E1 100%); border:1.5px solid #F4C9E0; padding-top:24px; overflow:hidden; }
   .confetti { position:absolute; inset:0; pointer-events:none; opacity:.9; background-image:
-    radial-gradient(circle at 8% 12%,#F2AE00 3px,transparent 4px), radial-gradient(circle at 22% 6%,#FF6FAE 3px,transparent 4px), radial-gradient(circle at 78% 9%,#5B3FD6 3px,transparent 4px),
+    radial-gradient(circle at 8% 12%,#F2AE00 3px,transparent 4px), radial-gradient(circle at 22% 6%,#FF6FAE 3px,transparent 4px), radial-gradient(circle at 78% 9%,#5D1E56 3px,transparent 4px),
     radial-gradient(circle at 92% 18%,#2BB57F 3px,transparent 4px), radial-gradient(circle at 60% 4%,#FF8A3D 2.5px,transparent 3.5px), radial-gradient(circle at 40% 14%,#4FA9FF 2.5px,transparent 3.5px); }
   .bday-big { text-align:center; position:relative; }
-  .bday-big .pframe { width:150px; height:150px; margin:4px auto 0; border-radius:10px; transform:rotate(-3deg); box-shadow:0 0 0 8px #fff, 0 14px 30px rgba(46,26,120,.22); }
+  .bday-big .pframe { width:150px; height:150px; margin:4px auto 0; border-radius:10px; transform:rotate(-3deg); box-shadow:0 0 0 8px #fff, 0 14px 30px rgba(62,18,57,.22); }
   .bday-big .pframe .av { font-size:46px; border-radius:0; }
   .bday-big .tape { position:absolute; top:-6px; left:50%; width:90px; height:22px; transform:translateX(-50%) rotate(4deg); background:rgba(255,111,174,.4); z-index:2; }
   .bday-big .hb { font-family:var(--hand); font-size:34px; line-height:1.1; color:var(--violet); margin:22px 0 0; }
   .bday-big h2 { font-size:28px; margin:2px 0 0; }
   .bday-big .from { text-align:center; }
   .bsec { margin:28px 0 0; font:800 13px/1 var(--head); letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
-  .bmini { display:flex; gap:12px; align-items:center; background:#fff; border-radius:18px; padding:12px; margin-top:10px; box-shadow:0 8px 20px rgba(46,26,120,.07); }
+  .bmini { display:flex; gap:12px; align-items:center; background:#fff; border-radius:18px; padding:12px; margin-top:10px; box-shadow:0 8px 20px rgba(62,18,57,.07); }
   .bmini .pframe { width:56px; height:56px; box-shadow:0 0 0 3px #fff, 0 0 0 5px #FFB3D4; }
   .bmini .pframe .av { font-size:19px; }
   .bmini b { display:block; font-size:16.5px; } .bmini span { color:var(--muted); font-size:13.5px; font-weight:600; }
   .bmini .when { margin-left:auto; text-align:right; font-weight:800; color:var(--violet-2); font-size:13.5px; white-space:nowrap; }
   .cheer.bday-past { padding-top:16px; }
   /* Slideshow at the top of Spotlight / Birthdays (changes every 10 seconds) */
-  .show { position:relative; margin:18px 0 0; border-radius:26px; overflow:hidden; background:linear-gradient(165deg,#2E1A78 0,#5B3FD6 100%); color:#fff; box-shadow:0 18px 40px rgba(46,26,120,.28); outline:none; touch-action:pan-y; -webkit-user-select:none; user-select:none; }
-  .show.bd { background:linear-gradient(160deg,#B8336A 0,#7A3FD6 100%); }
-  .show:focus-visible { box-shadow:0 0 0 4px var(--gold), 0 18px 40px rgba(46,26,120,.28); }
+  .show { position:relative; margin:18px 0 0; border-radius:26px; overflow:hidden; background:linear-gradient(165deg,#3E1239 0,#5D1E56 100%); color:#fff; box-shadow:0 18px 40px rgba(62,18,57,.28); outline:none; touch-action:pan-y; -webkit-user-select:none; user-select:none; }
+  .show.bd { background:linear-gradient(160deg,#B8336A 0,#5D1E56 100%); }
+  .show:focus-visible { box-shadow:0 0 0 4px var(--gold), 0 18px 40px rgba(62,18,57,.28); }
   .show .bar { position:absolute; top:0; left:0; right:0; height:4px; background:rgba(255,255,255,.18); z-index:3; }
   .show .bar i { display:block; height:100%; width:0; background:var(--gold); }
   .show .bar i.run { animation:slidebar 10s linear forwards; } .show.paused .bar i { animation-play-state:paused; }
@@ -332,9 +332,9 @@
   .show:fullscreen .slide .sl-hand, .show:-webkit-full-screen .slide .sl-hand { font-size:5.5vh; }
   .show:fullscreen .slide .sl-quote, .show:-webkit-full-screen .slide .sl-quote { font-size:3.4vh; max-width:70vw; -webkit-line-clamp:5; }
   .show:fullscreen .slide .sl-from, .show:-webkit-full-screen .slide .sl-from, .show:fullscreen .slide .sl-count, .show:-webkit-full-screen .slide .sl-count { font-size:2.4vh; }
-  .hl { animation:hl 1.6s ease-out; } @keyframes hl { 0%,40% { box-shadow:0 0 0 5px var(--gold), 0 14px 30px rgba(46,26,120,.2); } }
+  .hl { animation:hl 1.6s ease-out; } @keyframes hl { 0%,40% { box-shadow:0 0 0 5px var(--gold), 0 14px 30px rgba(62,18,57,.2); } }
   /* Groups (Group League) */
-  .lg-mine { display:flex; gap:14px; align-items:center; margin:18px 0 0; padding:16px; border-radius:22px; background:#fff; border:2px solid var(--gc); box-shadow:0 14px 30px rgba(46,26,120,.12); }
+  .lg-mine { display:flex; gap:14px; align-items:center; margin:18px 0 0; padding:16px; border-radius:22px; background:#fff; border:2px solid var(--gc); box-shadow:0 14px 30px rgba(62,18,57,.12); }
   .lg-mine .lg-medal { font:800 30px/1 var(--head); min-width:46px; height:46px; border-radius:50%; display:grid; place-items:center; background:var(--gc); color:#fff; flex:none; }
   /* ---------- 👑 Group leaders (inside the Groups tab) ---------- */
   .ld-seg { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin:16px 0 0; padding:5px; background:#fff; border:1px solid var(--line); border-radius:18px; box-shadow:0 2px 0 var(--line); }
@@ -347,7 +347,7 @@
   .ld-head b { display:block; font:800 19px/1.2 var(--head); } .ld-head span { color:var(--muted); font-weight:600; font-size:14px; }
   .ld-how { margin-top:12px; font-size:15px; line-height:1.5; } .ld-how b { color:var(--violet); }
   .ld-prog { display:flex; justify-content:space-between; font-weight:700; font-size:14px; color:var(--muted); margin:18px 4px 0; }
-  .ld-card { background:#fff; border:1px solid var(--line); border-radius:20px; margin-top:12px; overflow:hidden; box-shadow:0 2px 0 rgba(46,26,120,.04); }
+  .ld-card { background:#fff; border:1px solid var(--line); border-radius:20px; margin-top:12px; overflow:hidden; box-shadow:0 2px 0 rgba(62,18,57,.04); }
   .ld-gh { display:flex; align-items:center; gap:12px; padding:14px 16px; border-top:6px solid var(--gc); }
   .ld-gb { width:40px; height:40px; border-radius:12px; background:var(--gc); color:#fff; display:grid; place-items:center; font:800 18px/1 var(--head); flex:none; }
   .ld-gn { font:800 18px/1.2 var(--head); } .ld-gs { font-size:13px; color:var(--muted); font-weight:600; }
@@ -366,7 +366,7 @@
   .ld-sent { list-style:none; margin:0; padding:0 16px 14px; } .ld-sent li { padding:6px 0; font-size:15px; border-top:1px dashed var(--line); } .ld-sent li:first-child { border-top:0; } .ld-sent li::before { content:'✓ '; color:var(--ok); font-weight:800; }
   .ld-go { width:100%; border:0; border-radius:16px; padding:14px; min-height:54px; font-weight:800; font-size:16px; background:var(--gc,var(--violet)); color:#fff; }
   .ld-go:disabled { opacity:.55; cursor:default; } .ld-go.armed { background:var(--ink); }
-  .ld-sendbar { position:sticky; bottom:calc(var(--dock) + 14px + env(safe-area-inset-bottom,0px)); z-index:5; margin-top:16px; background:#fff; border:1px solid var(--line); border-radius:20px; padding:10px 12px 12px; box-shadow:0 10px 28px rgba(46,26,120,.16); }
+  .ld-sendbar { position:sticky; bottom:calc(var(--dock) + 14px + env(safe-area-inset-bottom,0px)); z-index:5; margin-top:16px; background:#fff; border:1px solid var(--line); border-radius:20px; padding:10px 12px 12px; box-shadow:0 10px 28px rgba(62,18,57,.16); }
   .ld-chips { display:flex; flex-wrap:wrap; justify-content:center; gap:4px; margin-bottom:8px; }
   .ld-chip { padding:3px 10px; border-radius:999px; font-size:13px; font-weight:700; color:#fff; background:var(--gc); } .ld-chip.zero { background:none; color:var(--muted); box-shadow:inset 0 0 0 2px var(--line); }
   .ld-note { margin-top:6px; font-size:12.5px; font-weight:600; color:var(--muted); text-align:center; }
@@ -420,7 +420,7 @@
   .ld-news .e { font-size:28px; } .ld-news b { display:block; font:800 16px/1.25 var(--head); } .ld-news span { font-size:13.5px; color:var(--gold-ink); }
   .lg-mine b { display:block; font:800 20px/1.2 var(--head); } .lg-mine span { color:var(--muted); font-weight:600; font-size:14.5px; }
   .lg-table { margin:16px 0 0; display:grid; gap:10px; }
-  .lg-row { display:flex; align-items:center; gap:12px; background:#fff; border-radius:18px; padding:12px 14px; box-shadow:0 8px 20px rgba(46,26,120,.07); border-left:6px solid var(--gc); animation:pop .45s both cubic-bezier(.2,.9,.3,1.2); }
+  .lg-row { display:flex; align-items:center; gap:12px; background:#fff; border-radius:18px; padding:12px 14px; box-shadow:0 8px 20px rgba(62,18,57,.07); border-left:6px solid var(--gc); animation:pop .45s both cubic-bezier(.2,.9,.3,1.2); }
   .lg-row.me { background:linear-gradient(90deg,#FFFBEA,#fff); box-shadow:0 0 0 2px var(--gold), 0 10px 24px rgba(242,174,0,.18); }
   .lg-pos { font:800 22px/1 var(--head); min-width:32px; text-align:center; color:var(--violet); flex:none; }
   .lg-mid { flex:1; min-width:0; }
@@ -428,26 +428,26 @@
   .lg-name em { font-style:normal; font:800 10.5px/1 var(--head); letter-spacing:.08em; background:var(--gold); color:#3A2600; padding:4px 7px; border-radius:6px; }
   .lg-bar { height:10px; background:var(--lilac); border-radius:999px; margin:7px 0 0; overflow:hidden; } .lg-bar i { display:block; height:100%; background:var(--gc); border-radius:999px; transition:width .6s; }
   .lg-who { margin:6px 0 0; font-size:12.5px; color:var(--muted); font-weight:600; line-height:1.35; }
-  .lg-pts { text-align:right; flex:none; font-size:12px; color:var(--muted); font-weight:700; } .lg-pts b { display:block; font:800 24px/1 var(--head); color:var(--ink,#1E1735); }
+  .lg-pts { text-align:right; flex:none; font-size:12px; color:var(--muted); font-weight:700; } .lg-pts b { display:block; font:800 24px/1 var(--head); color:var(--ink,#1E1A32); }
   .lg-how { margin:14px 2px 0; font-size:14px; }
   .lg-titles { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
   .lg-title { background:#fff; border:2px solid var(--gc); border-radius:999px; padding:7px 12px; font-weight:700; font-size:14.5px; } .lg-title.me { background:#FFFBEA; }
-  .lg-past { background:#fff; border-radius:18px; padding:12px 14px; margin-top:10px; box-shadow:0 8px 20px rgba(46,26,120,.07); }
+  .lg-past { background:#fff; border-radius:18px; padding:12px 14px; margin-top:10px; box-shadow:0 8px 20px rgba(62,18,57,.07); }
   .lg-plabel { font-size:13px; font-weight:800; color:var(--muted); }
   .lg-champ { margin-top:4px; font:800 18px/1.25 var(--head); color:var(--violet); } .lg-champ small { font-size:13px; color:var(--muted); } .lg-champ span { font:700 13px var(--body,inherit); color:var(--muted); }
   .lg-rest { margin-top:4px; font-size:13.5px; color:var(--muted); font-weight:600; }
   /* Today: homework and updates */
   .tabs.t7 .tabs-in { gap:1px; } .tabs.t7 button { font-size:10px; letter-spacing:-.02em; } .tabs.t7 svg { width:21px; height:21px; }
   .subj { flex:none; display:inline-block; background:var(--sc); color:#fff; font:800 11.5px/1 var(--head); letter-spacing:.02em; padding:6px 8px; border-radius:8px; max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .hw-row { display:flex; gap:10px; align-items:flex-start; background:#fff; border-radius:16px; padding:12px; margin-top:8px; box-shadow:0 6px 16px rgba(46,26,120,.07); border-left:5px solid var(--sc); }
+  .hw-row { display:flex; gap:10px; align-items:flex-start; background:#fff; border-radius:16px; padding:12px; margin-top:8px; box-shadow:0 6px 16px rgba(62,18,57,.07); border-left:5px solid var(--sc); }
   .hw-main { min-width:0; flex:1; } .hw-desc { font-size:16px; font-weight:700; line-height:1.35; word-wrap:break-word; }
   .hw-meta { margin-top:3px; font-size:13px; color:var(--muted); font-weight:600; } .hw-meta b { color:var(--violet); }
   .newb { font-style:normal; font:800 10px/1 var(--head); background:var(--gold); color:#3A2600; padding:3px 6px; border-radius:6px; vertical-align:2px; letter-spacing:.06em; }
   .hw-day { margin-top:14px; } .hw-dayh { display:flex; align-items:baseline; justify-content:space-between; gap:8px; padding:0 2px; }
-  .hw-dayh b { font:800 16px/1.2 var(--head); color:var(--ink,#1E1735); } .hw-dayh span { font-size:13px; color:var(--muted); font-weight:700; }
+  .hw-dayh b { font:800 16px/1.2 var(--head); color:var(--ink,#1E1A32); } .hw-dayh span { font-size:13px; color:var(--muted); font-weight:700; }
   .hw-day.now .hw-dayh b { color:var(--danger,#D6336C); } .hw-day.tmr .hw-dayh b { color:var(--violet-2); }
   .td-subs { margin-top:10px; } .td-subs .chip[style] { border-color:var(--sc); } .td-subs .chip.on[style] { background:var(--sc); color:#fff; border-color:var(--sc); }
-  .up-card { display:flex; gap:12px; align-items:flex-start; background:#fff; border-radius:18px; padding:12px 14px; margin-top:10px; box-shadow:0 8px 20px rgba(46,26,120,.08); }
+  .up-card { display:flex; gap:12px; align-items:flex-start; background:#fff; border-radius:18px; padding:12px 14px; margin-top:10px; box-shadow:0 8px 20px rgba(62,18,57,.08); }
   .up-card.pin { background:linear-gradient(180deg,#FFFBEA,#fff); box-shadow:0 0 0 2px var(--gold), 0 10px 24px rgba(242,174,0,.16); }
   .dtile { flex:none; width:52px; min-height:56px; border-radius:14px; background:var(--lilac); color:var(--violet); display:flex; flex-direction:column; align-items:center; justify-content:center; }
   .dtile b { font:800 22px/1 var(--head); } .dtile span { font:800 11px/1.2 var(--head); letter-spacing:.08em; } .dtile.ic { font-size:24px; }
@@ -478,19 +478,19 @@
     .tabs.t9 { -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent); mask-image:linear-gradient(90deg,#000 88%,transparent); }
   }
   /* ✍️ Compo Marker */
-  .cw-card { background:#fff; border-radius:22px; padding:18px 16px; margin-top:12px; box-shadow:0 8px 22px rgba(46,26,120,.08); }
+  .cw-card { background:#fff; border-radius:22px; padding:18px 16px; margin-top:12px; box-shadow:0 8px 22px rgba(62,18,57,.08); }
   .cw-step { display:flex; align-items:center; gap:10px; font:800 17px/1.25 var(--head); margin:4px 0 10px; }
   .cw-step b { flex:none; width:30px; height:30px; border-radius:50%; background:var(--violet-2); color:#fff; display:grid; place-items:center; font-size:15px; }
   .cw-kinds { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
   .cw-kind { border:2px solid var(--line); background:var(--paper); border-radius:16px; padding:12px 10px; font:700 15px/1.25 inherit; color:var(--ink); min-height:56px; }
-  .cw-kind.on { border-color:var(--violet-2); background:var(--lilac); color:var(--violet); box-shadow:0 0 0 3px rgba(91,63,214,.15); }
+  .cw-kind.on { border-color:var(--violet-2); background:var(--lilac); color:var(--violet); box-shadow:0 0 0 3px rgba(93,30,86,.15); }
   .cw-q { width:100%; border:1.5px solid var(--line); border-radius:14px; padding:10px 12px; font:inherit; font-size:15px; resize:vertical; background:var(--paper); }
   .cw-qbox { background:var(--warn-soft); border-radius:14px; padding:10px 12px; font-size:14.5px; margin-bottom:8px; }
   .cw-pages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:6px 0 10px; }
-  .cw-pg { position:relative; aspect-ratio:3/4; border-radius:14px; overflow:hidden; background:var(--lilac); box-shadow:0 3px 10px rgba(46,26,120,.15); display:grid; place-items:center; text-align:center; font-weight:700; font-size:13px; color:var(--violet); }
+  .cw-pg { position:relative; aspect-ratio:3/4; border-radius:14px; overflow:hidden; background:var(--lilac); box-shadow:0 3px 10px rgba(62,18,57,.15); display:grid; place-items:center; text-align:center; font-weight:700; font-size:13px; color:var(--violet); }
   .cw-pg img { width:100%; height:100%; object-fit:cover; display:block; }
   .cw-pg .n { position:absolute; left:6px; top:6px; background:var(--violet-2); color:#fff; border-radius:10px; padding:1px 8px; font-size:12px; font-weight:800; }
-  .cw-pg .x { position:absolute; right:4px; top:4px; width:34px; height:34px; border-radius:50%; border:0; background:rgba(30,23,53,.72); color:#fff; font-size:16px; }
+  .cw-pg .x { position:absolute; right:4px; top:4px; width:34px; height:34px; border-radius:50%; border:0; background:rgba(30,26,50,.72); color:#fff; font-size:16px; }
   .cw-pg.busy { opacity:.6; }
   .cw-add { display:grid; gap:8px; }
   .cw-add label.btn { cursor:pointer; width:100%; }
@@ -507,7 +507,7 @@
   .cw-parts { flex:1; display:grid; gap:6px; } .cw-parts div { background:var(--paper); border-radius:12px; padding:8px 12px; font-weight:700; font-size:14.5px; display:flex; justify-content:space-between; gap:8px; }
   .cw-list { margin:6px 0 0; padding-left:20px; } .cw-list li { margin:4px 0; line-height:1.45; }
   .cw-h { font:800 17px/1.25 var(--head); margin:0 0 6px; }
-  .cw-script { position:relative; background:#FFFDF6; border-radius:16px; padding:22px 16px 18px 18px; font-size:17px; line-height:2.45; white-space:pre-wrap; overflow-wrap:anywhere; color:#1E1735; box-shadow:inset 0 0 0 1px #EFE6C8; }
+  .cw-script { position:relative; background:#FFFDF6; border-radius:16px; padding:22px 16px 18px 18px; font-size:17px; line-height:2.45; white-space:pre-wrap; overflow-wrap:anywhere; color:#1E1A32; box-shadow:inset 0 0 0 1px #EFE6C8; }
   .cw-script .cwh { cursor:pointer; border-radius:2px; }
   .cw-script .cwh.good { background:linear-gradient(transparent 45%, #DDF3E6 45%); }
   .cw-script .cwh.fix { background:linear-gradient(transparent 45%, #FFEDA8 45%); }
@@ -536,19 +536,19 @@
   .cw-corr li { display:flex; gap:10px; align-items:baseline; font-size:15px; } .cw-corr .sy { flex:none; min-width:34px; font-family:var(--hand); font-weight:700; color:#CC1530; font-size:19px; text-align:center; }
   .cw-corr s { color:var(--muted); } .cw-corr .cf { color:var(--ok); font-weight:800; } .cw-corr .cn { display:block; font-size:12.5px; color:var(--muted); font-weight:600; } .cw-corr .cr { display:block; font-size:13.5px; color:var(--ink); margin-top:2px; line-height:1.4; }
   .cw-pt { display:flex; gap:8px; margin:6px 0; font-size:14.5px; line-height:1.4; }
-  .cw-hist { display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:#fff; border:0; border-radius:16px; padding:12px 14px; margin-top:8px; box-shadow:0 4px 12px rgba(46,26,120,.07); font:inherit; color:var(--ink); }
+  .cw-hist { display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:#fff; border:0; border-radius:16px; padding:12px 14px; margin-top:8px; box-shadow:0 4px 12px rgba(62,18,57,.07); font:inherit; color:var(--ink); }
   .cw-hist .ic { font-size:24px; } .cw-hist .t { flex:1; min-width:0; font-weight:700; } .cw-hist .t small { display:block; color:var(--muted); font-weight:600; font-size:13px; }
   .cw-warn { background:var(--warn-soft); font-size:15px; line-height:1.45; }
-  .cw-new { color:var(--violet-2); font-weight:800; } .cw-tnote { box-shadow:0 0 0 2px var(--violet-2), 0 8px 22px rgba(46,26,120,.08); }
-  .en-sw { display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#fff; border-radius:16px; padding:5px; margin:12px 0 4px; box-shadow:0 4px 14px rgba(46,26,120,.08); }
+  .cw-new { color:var(--violet-2); font-weight:800; } .cw-tnote { box-shadow:0 0 0 2px var(--violet-2), 0 8px 22px rgba(62,18,57,.08); }
+  .en-sw { display:grid; grid-template-columns:1fr 1fr; gap:6px; background:#fff; border-radius:16px; padding:5px; margin:12px 0 4px; box-shadow:0 4px 14px rgba(62,18,57,.08); }
   .en-sw button { border:0; background:transparent; border-radius:12px; min-height:44px; font:800 15px/1.2 var(--head); color:var(--muted); cursor:pointer; }
   /* 🧩 Cloze and ✏️ Spelling & Grammar */
   .pr-text { font-family:'Literata',Georgia,serif; font-size:17px; line-height:2.15; }
   .pr-text p { margin:0 0 12px; } .pr-text p:last-child { margin:0; }
   .pr-text sup { font-family:var(--head); font-size:11px; font-weight:800; color:var(--violet-2); margin-right:2px; }
   .pr-b { white-space:nowrap; }
-  .pr-in { font:16px/1.3 'Literata',Georgia,serif; width:7.2em; border:0; border-bottom:2px solid var(--violet-2); background:#F4F1FF; border-radius:6px 6px 0 0; padding:3px 6px; color:var(--ink,#1E1735); }
-  .pr-in:focus { outline:none; background:#fff; box-shadow:0 0 0 3px rgba(91,63,214,.18); }
+  .pr-in { font:16px/1.3 'Literata',Georgia,serif; width:7.2em; border:0; border-bottom:2px solid var(--violet-2); background:#F4F1FF; border-radius:6px 6px 0 0; padding:3px 6px; color:var(--ink,#1E1A32); }
+  .pr-in:focus { outline:none; background:#fff; box-shadow:0 0 0 3px rgba(93,30,86,.18); }
   .pr-in.wide { width:100%; border:2px solid var(--line); border-radius:12px; padding:9px 11px; background:#FFFDF8; }
   .pr-u { text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px; font-weight:600; }
   .pr-r { white-space:nowrap; border-radius:6px; padding:1px 5px; cursor:pointer; }
@@ -559,7 +559,7 @@
   .pr-num { background:var(--lilac,#EDE8FD); color:var(--violet-2); font:800 14px/1 var(--head); border-radius:9px; padding:7px 0; text-align:center; }
   .pr-wrong { font-family:'Literata',Georgia,serif; text-decoration:underline; text-underline-offset:3px; font-size:16px; overflow-wrap:anywhere; } .pr-arrow { color:var(--muted); font-weight:800; }
   .pr-x { border-left:6px solid var(--line); padding:12px 14px; margin-top:8px; } .pr-x.ok { border-left-color:var(--ok); } .pr-x.no { border-left-color:var(--danger); }
-  .pr-x.flash { box-shadow:0 0 0 4px rgba(91,63,214,.35); transition:box-shadow .3s; }
+  .pr-x.flash { box-shadow:0 0 0 4px rgba(93,30,86,.35); transition:box-shadow .3s; }
   .pr-line { font-size:15px; line-height:1.55; } .pr-line .g { color:var(--ok); } .pr-line s.r { color:#B4232F; } .pr-also { color:var(--muted); font-size:13px; }
   .sy-type.t-blank { background:#EEE; color:#555; }
   /* 🔁 Synthesis & Transformation */
@@ -568,10 +568,10 @@
   .sy-start { display:grid; gap:12px; } @media (min-width:640px) { .sy-start { grid-template-columns:minmax(0,1fr) auto; align-items:center; } }
   .sy-btns { display:flex; gap:8px; flex-wrap:wrap; } .sy-btns .btn { flex:1 1 auto; }
   .sy-sets { display:grid; gap:8px; } @media (min-width:640px) { .sy-sets { grid-template-columns:1fr 1fr; } }
-  .sy-set { text-align:left; border:0; background:#FFF6DF; border-radius:16px; padding:14px 16px; display:grid; gap:3px; cursor:pointer; font:inherit; color:inherit; box-shadow:0 4px 14px rgba(46,26,120,.06); }
+  .sy-set { text-align:left; border:0; background:#FFF6DF; border-radius:16px; padding:14px 16px; display:grid; gap:3px; cursor:pointer; font:inherit; color:inherit; box-shadow:0 4px 14px rgba(62,18,57,.06); }
   .sy-set b { font:800 16px/1.25 var(--head); } .sy-set span { color:var(--muted); font-size:13.5px; font-weight:700; }
   .sy-topics { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
-  .sy-topic { background:#fff; border-radius:18px; box-shadow:0 6px 16px rgba(46,26,120,.07); display:flex; flex-direction:column; overflow:hidden; }
+  .sy-topic { background:#fff; border-radius:18px; box-shadow:0 6px 16px rgba(62,18,57,.07); display:flex; flex-direction:column; overflow:hidden; }
   .sy-tmain { flex:1; border:0; background:transparent; text-align:left; padding:14px 14px 8px; display:grid; gap:4px; cursor:pointer; font:inherit; color:inherit; }
   .sy-te { font-size:26px; line-height:1; } .sy-tmain b { font:800 15px/1.25 var(--head); } .sy-tn { font-size:12.5px; color:var(--muted); font-weight:700; }
   .sy-tnew { border:0; border-top:1px solid var(--line); background:#FBFAFF; color:var(--violet-2); font:800 13px/1 var(--head); padding:10px; cursor:pointer; }
@@ -582,10 +582,10 @@
   .sy-m { margin-left:auto; background:#F3F1FA; color:var(--muted); font-weight:800; font-size:12.5px; padding:3px 10px; border-radius:999px; }
   .sy-given { font-family:'Literata',Georgia,serif; font-size:17px; line-height:1.55; }
   .sy-use { margin:8px 0 6px; font-size:14px; color:var(--muted); font-weight:700; } .sy-use b { color:#8A4B00; background:#FFF0D6; border-radius:8px; padding:2px 8px; }
-  .sy-line { font-family:'Literata',Georgia,serif; font-size:16px; color:var(--ink,#1E1735); margin:6px 0 10px; line-height:2; }
+  .sy-line { font-family:'Literata',Georgia,serif; font-size:16px; color:var(--ink,#1E1A32); margin:6px 0 10px; line-height:2; }
   .sy-blank { display:inline-block; width:4.5em; border-bottom:2px solid var(--muted); margin:0 4px; vertical-align:-2px; }
   .sy-ans { width:100%; box-sizing:border-box; border:2px solid var(--line); border-radius:14px; padding:11px 13px; font:16px/1.5 'Literata',Georgia,serif; resize:none; overflow:hidden; background:#FFFDF8; min-height:56px; }
-  .sy-ans:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(91,63,214,.15); background:#fff; }
+  .sy-ans:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(93,30,86,.15); background:#fff; }
   .sy-go { text-align:center; } .sy-go .btn { min-width:240px; }
   .sy-score { display:flex; gap:16px; align-items:center; }
   .sy-ring { --p:0; width:92px; height:92px; border-radius:50%; flex:none; display:grid; place-items:center; background:conic-gradient(var(--violet-2) calc(var(--p)*1%), #EEEAF9 0); }
@@ -603,7 +603,7 @@
   .sy-errs li { display:flex; gap:8px; align-items:flex-start; font-size:14.5px; line-height:1.45; } .sy-errs s { color:var(--muted); }
   .pr-tests { font-size:12px; font-weight:800; color:var(--muted); background:var(--violet-1,#F1EEFB); border-radius:999px; padding:3px 9px; margin-left:auto; }
   .sy-type { flex:none; font-size:11.5px; font-weight:800; border-radius:999px; padding:3px 8px; background:#EEE; color:#333; margin-top:1px; }
-  .sy-type.t-spelling { background:#E4EDFC; color:#1C5FB8; } .sy-type.t-grammar { background:#F1E8FD; color:#6D3FC0; } .sy-type.t-punctuation { background:#FFF0D6; color:#8A4B00; }
+  .sy-type.t-spelling { background:#E4EDFC; color:#1C5FB8; } .sy-type.t-grammar { background:#F1E8FD; color:#5D1E56; } .sy-type.t-punctuation { background:#FFF0D6; color:#8A4B00; }
   .sy-type.t-structure, .sy-type.t-meaning, .sy-type.t-givenword, .sy-type.t-tense, .sy-type.t-wordform, .sy-type.t-missingword { background:var(--danger-soft); color:var(--danger); }
   .sy-f.add { text-decoration:none; color:var(--violet-2); font-weight:800; background:#EEE8FF; border-radius:5px; padding:0 3px; margin-left:1px; }
   .sy-major { margin:8px 0 0; padding:8px 10px; border-radius:10px; background:var(--danger-soft); color:var(--danger); font-weight:700; font-size:13.5px; line-height:1.4; }
@@ -619,7 +619,7 @@
   .sy-r > .btn { margin-top:12px; }
   .sy-sim { margin-top:14px; border-top:2px dashed var(--line); padding-top:12px; } .sy-sim .cw-card { box-shadow:none; background:#FBFAFF; margin-top:8px; } .sy-simh { font:800 15px/1.3 var(--head); }
   .sy-sim > .btn { margin-top:10px; }
-  .en-sw button.on { background:var(--violet-2); color:#fff; box-shadow:0 4px 12px rgba(91,63,214,.3); }
+  .en-sw button.on { background:var(--violet-2); color:#fff; box-shadow:0 4px 12px rgba(93,30,86,.3); }
   .cm-frame { width:100%; border:0; display:block; background:transparent; border-radius:14px; }
   .cm-wrap { margin-top:6px; }
   .ma-cols { display:grid; gap:0; }
@@ -628,7 +628,7 @@
   .ma-sel { border:1.5px solid var(--line); border-radius:12px; padding:10px 12px; font:inherit; font-size:16px; background:var(--paper); min-height:48px; }
   .ma-photo { position:relative; border-radius:14px; overflow:hidden; background:var(--lilac); max-width:260px; }
   .ma-photo img { width:100%; display:block; max-height:200px; object-fit:cover; object-position:top; }
-  .ma-photo .x { position:absolute; right:6px; top:6px; width:36px; height:36px; border-radius:50%; border:0; background:rgba(30,23,53,.72); color:#fff; font-size:16px; }
+  .ma-photo .x { position:absolute; right:6px; top:6px; width:36px; height:36px; border-radius:50%; border:0; background:rgba(30,26,50,.72); color:#fff; font-size:16px; }
   .ma-qtext { font-size:15px; line-height:1.5; margin-bottom:10px; }
   .ma-tag { display:inline-block; font-size:12px; font-weight:800; padding:2px 9px; border-radius:999px; background:var(--warn-soft); color:#8A6400; white-space:nowrap; }
   .ma-svg { background:#fff; border-radius:14px; padding:8px; background-image:linear-gradient(#EEF1F8 1px,transparent 1px),linear-gradient(90deg,#EEF1F8 1px,transparent 1px); background-size:20px 20px; box-shadow:inset 0 0 0 1px var(--line); overflow-x:auto; }
@@ -643,13 +643,13 @@
   .mb-say { border:0; background:#F1EDFD; border-radius:50%; width:34px; height:34px; font-size:16px; cursor:pointer; vertical-align:middle; flex:none; }
   .mb-q .mb-qh { display:flex; align-items:center; gap:8px; flex-wrap:wrap; } .mb-qt { margin-top:8px; font-size:16.5px; line-height:1.55; }
   .mb-stages { display:flex; flex-wrap:wrap; gap:4px; align-items:center; margin:12px 2px 0; font-size:13px; font-weight:800; color:var(--muted); }
-  .mb-stages span { background:#fff; border-radius:999px; padding:5px 10px; box-shadow:0 2px 8px rgba(46,26,120,.06); } .mb-stages span.on { background:var(--violet-2); color:#fff; } .mb-stages span.done { background:var(--ok-soft); color:var(--ok); } .mb-stages i { font-style:normal; opacity:.5; }
+  .mb-stages span { background:#fff; border-radius:999px; padding:5px 10px; box-shadow:0 2px 8px rgba(62,18,57,.06); } .mb-stages span.on { background:var(--violet-2); color:#fff; } .mb-stages span.done { background:var(--ok-soft); color:var(--ok); } .mb-stages i { font-style:normal; opacity:.5; }
   .mb-bub { display:flex; gap:10px; align-items:flex-start; margin-top:8px; } .mb-av { font-size:28px; line-height:1; flex:none; }
   .mb-bt { background:#F1EDFD; border-radius:4px 16px 16px 16px; padding:10px 13px; font-size:16px; line-height:1.5; flex:1; min-width:0; }
   .mb-n { display:block; font-size:12.5px; font-weight:800; color:var(--violet-2); text-transform:uppercase; letter-spacing:.04em; margin-bottom:2px; }
   .mb-ans { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:10px; }
   .mb-ans input { flex:1 1 140px; min-width:0; min-height:50px; border:2px solid var(--line); border-radius:14px; padding:0 14px; font:18px/1.2 var(--body,inherit); background:#FFFDF8; }
-  .mb-ans input:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(91,63,214,.15); }
+  .mb-ans input:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(93,30,86,.15); }
   .mb-unit { font-weight:800; color:var(--muted); }
   .mb-ch { display:grid; gap:8px; margin-top:10px; }
   .mb-done { border-left:4px solid var(--ok); background:#F4FBF7; border-radius:0 12px 12px 0; padding:8px 11px; margin:8px 0; display:grid; gap:2px; font-size:14.5px; }
@@ -658,16 +658,16 @@
   .mb-win .ma-ans { margin-top:6px; }
   .mb-link { display:block; margin-top:12px; border:0; background:none; color:var(--violet-2); font:800 14.5px/1.3 var(--head); text-decoration:underline; text-underline-offset:3px; cursor:pointer; padding:4px 0; }
   .mb-req { margin-top:12px; background:#FFF6DF; border-radius:14px; padding:12px; } .mb-mine .mb-qt { font-size:15px; }
-  .kb-bar { display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; background:#fff; border-radius:16px; padding:10px 12px; margin:10px 0 8px; box-shadow:0 4px 14px rgba(46,26,120,.08); }
+  .kb-bar { display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; background:#fff; border-radius:16px; padding:10px 12px; margin:10px 0 8px; box-shadow:0 4px 14px rgba(62,18,57,.08); }
   .kb-bar b { display:block; font:800 16px/1.2 var(--head); } .kb-bar span { color:var(--muted); font-size:13.5px; }
-  .kb-frame { width:100%; border:0; border-radius:16px; background:#fff; display:block; box-shadow:0 6px 18px rgba(46,26,120,.08); }
+  .kb-frame { width:100%; border:0; border-radius:16px; background:#fff; display:block; box-shadow:0 6px 18px rgba(62,18,57,.08); }
   .ma-empty { min-height:120px; display:grid; place-items:center; text-align:center; color:var(--muted,#6B6489); font-weight:700; padding:16px; }
   .ma-guide { margin-top:12px; background:var(--lilac,#F1EDFD); border-radius:16px; padding:14px; display:grid; gap:10px; }
   .ma-gq { font:800 17px/1.35 var(--head); display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; }
-  .ma-gn { font:800 12px/1 var(--body,inherit); background:var(--violet-2,#4B2FC4); color:#fff; border-radius:999px; padding:4px 9px; white-space:nowrap; }
+  .ma-gn { font:800 12px/1 var(--body,inherit); background:var(--violet-2,#5D1E56); color:#fff; border-radius:999px; padding:4px 9px; white-space:nowrap; }
   .ma-gc { display:grid; gap:8px; }
   .ma-gb { text-align:left; font:inherit; font-size:15.5px; font-weight:700; padding:12px 14px; min-height:48px; border-radius:12px; border:2px solid var(--line); background:#fff; color:inherit; cursor:pointer; }
-  .ma-gb:hover { border-color:var(--violet-2,#4B2FC4); }
+  .ma-gb:hover { border-color:var(--violet-2,#5D1E56); }
   .ma-gb.no { border-color:var(--danger); background:var(--danger-soft); }
   .ma-gf { margin:0; border-radius:12px; padding:9px 12px; font-weight:700; font-size:15px; }
   .ma-gf.no { background:var(--warn-soft); color:var(--warn); }
@@ -688,10 +688,10 @@
   }
   .cw-qpic { border:0; padding:0; border-radius:12px; overflow:hidden; background:var(--lilac); min-height:110px; display:grid; place-items:center; cursor:zoom-in; }
   .cw-qpic img { width:100%; height:auto; display:block; }
-  .cw-go { font-weight:800; color:var(--violet-2); white-space:nowrap; } .cw-todo { box-shadow:0 0 0 2px var(--violet-2), 0 4px 12px rgba(46,26,120,.07); }
+  .cw-go { font-weight:800; color:var(--violet-2); white-space:nowrap; } .cw-todo { box-shadow:0 0 0 2px var(--violet-2), 0 4px 12px rgba(62,18,57,.07); }
   .cw-hist .sc { font-family:var(--hand); color:#CC1530; font-weight:700; font-size:20px; }
   .vo-pages { display:flex; flex-direction:column; gap:10px; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
-  .vo-pages canvas { width:100%; height:auto; display:block; border-radius:8px; background:#fff; box-shadow:0 2px 10px rgba(46,26,120,.12); pointer-events:none; }
+  .vo-pages canvas { width:100%; height:auto; display:block; border-radius:8px; background:#fff; box-shadow:0 2px 10px rgba(62,18,57,.12); pointer-events:none; }
   .vo-status { text-align:center; color:var(--muted); font-weight:600; padding:18px 0; }
   .vo-note { margin:10px 2px 0; font-size:13.5px; color:var(--muted); }
   .file-view { width:100%; height:62vh; border:0; border-radius:12px; background:#fff; } .up-card p.clip { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
@@ -703,7 +703,7 @@
   .td-cols { display:block; }
   @media (min-width:1024px) { .td-cols { display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:28px; align-items:start; } .td-imp { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 14px; } .tabs.t7 button { font-size:15px; letter-spacing:0; } }
   /* ---------- Pop-up sheet ---------- */
-  .sheet { position:fixed; inset:0; z-index:50; background:rgba(25,14,60,.5); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); display:flex; align-items:flex-end; justify-content:center; animation:fade .2s; }
+  .sheet { position:fixed; inset:0; z-index:50; background:rgba(30,26,50,.5); -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px); display:flex; align-items:flex-end; justify-content:center; animation:fade .2s; }
   .sheet-in { background:var(--paper); width:100%; max-width:640px; max-height:94vh; overflow:auto; border-radius:28px 28px 0 0; padding:0 18px 28px; animation:up .28s cubic-bezier(.2,.9,.3,1); }
   @keyframes fade { from { opacity:0; } } @keyframes up { from { transform:translateY(40px); opacity:.6; } }
   .sheet-top { position:sticky; top:0; background:var(--paper); display:flex; align-items:center; gap:10px; padding:16px 0 10px; z-index:2; }
@@ -715,7 +715,7 @@
   .preview button { position:absolute; top:8px; right:8px; }
   .detail-img { width:100%; display:block; background:var(--lilac); min-height:140px; opacity:0; transition:opacity .35s; }
   .detail-img.in { opacity:1; }
-  .polaroid { background:#fff; padding:10px 10px 14px; border-radius:6px; box-shadow:0 10px 26px rgba(46,26,120,.12); transform:rotate(-1deg); margin-top:6px; }
+  .polaroid { background:#fff; padding:10px 10px 14px; border-radius:6px; box-shadow:0 10px 26px rgba(62,18,57,.12); transform:rotate(-1deg); margin-top:6px; }
   /* Photo protection: no long-press "Save image", no dragging, a name watermark, and photos blur when the app is switched away */
   img { -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; -webkit-user-drag:none; }
   .wm { position:relative; display:block; overflow:hidden; border-radius:4px; }
@@ -732,17 +732,17 @@
   .cm time { color:var(--muted); font-size:12px; margin-left:6px; }
 
   /* ---------- Ask ---------- */
-  .askhead { display:flex; align-items:center; gap:14px; background:#fff; border:1px solid var(--line); border-radius:22px; padding:14px 16px; margin-top:16px; box-shadow:0 10px 26px rgba(46,26,120,.06); }
+  .askhead { display:flex; align-items:center; gap:14px; background:#fff; border:1px solid var(--line); border-radius:22px; padding:14px 16px; margin-top:16px; box-shadow:0 10px 26px rgba(62,18,57,.06); }
   .askhead .av { width:52px; height:52px; font-size:18px; background:var(--violet); color:#fff; box-shadow:0 0 0 4px var(--lilac); }
   .askhead h2 { margin:0; font-size:20px; } .askhead p { margin:2px 0 0; font-size:13.5px; color:var(--muted); line-height:1.4; }
   .chat { display:flex; flex-direction:column; gap:8px; padding:16px 0 170px; }
   .bub { max-width:82%; padding:11px 15px; border-radius:22px; font-size:16px; line-height:1.4; white-space:pre-wrap; word-wrap:break-word; animation:pop .3s both; }
-  .bub.me { align-self:flex-end; background:linear-gradient(135deg, #6B4DF0, var(--violet-2)); color:#fff; border-bottom-right-radius:6px; box-shadow:0 6px 16px rgba(91,63,214,.25); }
+  .bub.me { align-self:flex-end; background:linear-gradient(135deg, #873F7E, var(--violet-2)); color:#fff; border-bottom-right-radius:6px; box-shadow:0 6px 16px rgba(93,30,86,.25); }
   .bub.them { align-self:flex-start; background:#fff; border:1px solid var(--line); border-bottom-left-radius:6px; }
   .bub time { display:block; font-size:11px; opacity:.75; margin-top:4px; }
   .bub img { display:block; max-width:100%; border-radius:14px; margin-bottom:6px; background:rgba(255,255,255,.3); min-height:60px; }
   .day { align-self:center; font-size:12px; font-weight:800; color:var(--muted); margin:10px 0 2px; background:#fff; border-radius:999px; padding:4px 12px; border:1px solid var(--line); }
-  .composer { position:fixed; left:12px; right:12px; bottom:calc(var(--dock) + env(safe-area-inset-bottom,0px)); z-index:24; max-width:620px; margin:0 auto; background:#fff; border:1px solid var(--line); border-radius:24px; box-shadow:0 10px 28px rgba(46,26,120,.14); }
+  .composer { position:fixed; left:12px; right:12px; bottom:calc(var(--dock) + env(safe-area-inset-bottom,0px)); z-index:24; max-width:620px; margin:0 auto; background:#fff; border:1px solid var(--line); border-radius:24px; box-shadow:0 10px 28px rgba(62,18,57,.14); }
   .composer-in { padding:8px; display:flex; gap:8px; align-items:flex-end; }
   .composer textarea { flex:1; min-height:46px; max-height:140px; resize:none; border:0; background:var(--paper); border-radius:18px; padding:11px 14px; font-size:16px; }
   .composer textarea:focus { outline:none; box-shadow:0 0 0 3px var(--lilac); }
@@ -756,9 +756,9 @@
   @media (min-width:600px) { .albums { grid-template-columns:repeat(3,minmax(0,1fr)); } }
   .album { position:relative; border:0; background:none; padding:0; text-align:center; }
   .album .stack { position:relative; }
-  .album .stack:before, .album .stack:after { content:""; position:absolute; inset:0; background:#fff; border-radius:4px; box-shadow:0 6px 16px rgba(46,26,120,.10); }
+  .album .stack:before, .album .stack:after { content:""; position:absolute; inset:0; background:#fff; border-radius:4px; box-shadow:0 6px 16px rgba(62,18,57,.10); }
   .album .stack:before { transform:rotate(-6deg); } .album .stack:after { transform:rotate(4deg); background:var(--s6); }
-  .album .pol { position:relative; z-index:1; background:#fff; padding:8px 8px 10px; border-radius:4px; box-shadow:0 10px 22px rgba(46,26,120,.16); transform:rotate(var(--r,-1deg)); transition:transform .15s; }
+  .album .pol { position:relative; z-index:1; background:#fff; padding:8px 8px 10px; border-radius:4px; box-shadow:0 10px 22px rgba(62,18,57,.16); transform:rotate(var(--r,-1deg)); transition:transform .15s; }
   .album:active .pol { transform:rotate(0) scale(.97); }
   .album .cv { width:100%; aspect-ratio:1; object-fit:cover; display:block; background:var(--lilac); opacity:0; transition:opacity .35s; border-radius:2px; }
   .album .cv.in { opacity:1; }
@@ -775,7 +775,7 @@
   @keyframes shim { to { background-position:-150% 0; } }
   .thumbs img { width:100%; height:100%; object-fit:cover; display:block; opacity:0; transform:scale(1.04); transition:opacity .35s, transform .5s; }
   .thumbs img.in { opacity:1; transform:none; }
-  .viewer { position:fixed; inset:0; z-index:60; background:#0B0718; display:flex; flex-direction:column; overflow:hidden; animation:fade .2s; }
+  .viewer { position:fixed; inset:0; z-index:60; background:#1E1A32; display:flex; flex-direction:column; overflow:hidden; animation:fade .2s; }
   .vbg { position:absolute; inset:-40px; background-size:cover; background-position:center; filter:blur(40px) saturate(1.3) brightness(.55); opacity:.9; transition:background-image .3s; }
   .viewer-top, .viewer .stage, .viewer .nav, .protect-note { position:relative; z-index:1; }
   .viewer-top { display:flex; gap:8px; padding:12px; align-items:center; color:#fff; }
@@ -877,7 +877,7 @@
   .cf-cz { display:inline-block; border-radius:9px; padding:0 8px; margin:0 1px; font:700 16px/1.6 'Instrument Sans',system-ui,sans-serif; }
   .cf-cz.g { background:#E3F6EC; color:#145E3C; } .cf-cz.r { background:#FDECEC; color:#B42323; } .cf-cz.r s { text-decoration-thickness:2px; }
   .pr-text.cf-sent p { margin:0 0 6px; line-height:2.7; }
-  .cf-more { background:#fff; border-radius:16px; margin-top:12px; padding:2px 14px; box-shadow:0 4px 14px rgba(46,26,120,.06); }
+  .cf-more { background:#fff; border-radius:16px; margin-top:12px; padding:2px 14px; box-shadow:0 4px 14px rgba(62,18,57,.06); }
   .cf-more summary { cursor:pointer; min-height:44px; display:flex; align-items:center; font-weight:800; color:var(--violet); }
   .cf-more[open] { padding-bottom:12px; }
   @media (min-width:760px) { .en-sw.n3 { grid-template-columns:repeat(auto-fit, minmax(118px, 1fr)); } }
@@ -886,10 +886,10 @@
   .mq-opts { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
   @media (max-width:420px) { .mq-opts { grid-template-columns:1fr; } }
   .mq-opt { text-align:left; min-height:48px; border-radius:14px; border:2px solid var(--line); background:#fff; padding:9px 12px; font:600 15.5px/1.3 inherit; color:var(--ink); }
-  .mq-opt b { color:var(--muted); margin-right:4px; } .mq-opt.on { border-color:var(--violet-2); background:var(--lilac); box-shadow:0 0 0 3px rgba(91,63,214,.15); } .mq-opt.on b { color:var(--violet-2); }
-  .vt-img { background:#fff; border-radius:18px; padding:8px; margin:12px 0 4px; box-shadow:0 4px 14px rgba(46,26,120,.07); text-align:center; }
+  .mq-opt b { color:var(--muted); margin-right:4px; } .mq-opt.on { border-color:var(--violet-2); background:var(--lilac); box-shadow:0 0 0 3px rgba(93,30,86,.15); } .mq-opt.on b { color:var(--violet-2); }
+  .vt-img { background:#fff; border-radius:18px; padding:8px; margin:12px 0 4px; box-shadow:0 4px 14px rgba(62,18,57,.07); text-align:center; }
   .vt-img img { max-width:100%; border-radius:12px; display:block; margin:0 auto; cursor:zoom-in; }
-  .vtp { margin:12px 0; background:#fff; border-radius:22px; overflow:hidden; border:3px solid var(--vc); box-shadow:0 6px 18px rgba(30,23,53,.1); }
+  .vtp { margin:12px 0; background:#fff; border-radius:22px; overflow:hidden; border:3px solid var(--vc); box-shadow:0 6px 18px rgba(30,26,50,.1); }
   .vtp-top { background:var(--vc); color:#fff; padding:16px 18px 14px; text-align:center; }
   .vtp-top small { display:block; font-weight:800; opacity:.85; letter-spacing:.04em; text-transform:uppercase; font-size:12px; }
   .vtp-top h2 { margin:4px 0 0; font:800 27px/1.1 var(--head); } .vtp-top p { margin:6px 0 0; font-weight:700; font-style:italic; }
@@ -898,7 +898,7 @@
   .vtp-h { font:800 15px/1.2 var(--head); color:var(--vc); margin-bottom:5px; }
   .vtp-t { width:100%; border-collapse:collapse; } .vtp-t th { text-align:left; padding:3px 10px 3px 0; color:var(--vc); width:30%; vertical-align:top; } .vtp-t td { padding:3px 0; }
   .vtp-price .big { font:800 22px/1.2 var(--head); color:var(--vc); } .vtp-price .sm { font-weight:700; font-size:14px; margin-top:2px; }
-  .vtp-badge { justify-self:center; transform:rotate(-2deg); background:#FFE14D; color:#1E1735; font:800 18px/1.2 var(--head); padding:8px 16px; border-radius:12px; box-shadow:0 3px 0 rgba(0,0,0,.12); text-align:center; }
+  .vtp-badge { justify-self:center; transform:rotate(-2deg); background:#FFE14D; color:#1E1A32; font:800 18px/1.2 var(--head); padding:8px 16px; border-radius:12px; box-shadow:0 3px 0 rgba(0,0,0,.12); text-align:center; }
   .vtp-note { border:2px dashed var(--vc); border-radius:12px; padding:8px 12px; font-weight:700; }
   .vtp-foot { background:var(--vs); padding:10px 16px; text-align:center; font-weight:700; font-size:14px; color:var(--vc); }
   body.ex-on .tabs, body.ex-on #workBar { display:none !important; }
@@ -917,7 +917,7 @@
   .ex-group .ex-gtext { font:400 17px/1.7 Georgia,serif; background:#FBFAFF; border-radius:12px; padding:10px 12px; }
   .ex-lab { display:block; font-weight:800; font-size:14px; margin-top:8px; }
   .ex-in, .ex-ta { display:block; width:100%; margin-top:4px; border:2px solid var(--line); border-radius:12px; padding:10px 12px; font:500 16.5px/1.4 inherit; background:#fff; }
-  .ex-in:focus, .ex-ta:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(91,63,214,.15); }
+  .ex-in:focus, .ex-ta:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(93,30,86,.15); }
   .ex-rules .cw-list li { margin:6px 0; }
   @media print { body.ex-on * { visibility:hidden !important; } body.ex-on::after { content:"This paper can’t be printed."; visibility:visible; } }
 
@@ -929,7 +929,7 @@
   .a11y-size { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
   .a11y-size button { border:2px solid var(--line); background:#fff; border-radius:14px; padding:8px 4px; display:flex; flex-direction:column; align-items:center; gap:2px; font-weight:900; color:var(--ink); cursor:pointer; min-height:64px; }
   .a11y-size button small { font-size:12.5px; font-weight:700; color:var(--muted); }
-  .a11y-size button.on { border-color:var(--violet-2); background:#F4F1FF; box-shadow:0 0 0 3px rgba(91,63,214,.12); }
+  .a11y-size button.on { border-color:var(--violet-2); background:#F4F1FF; box-shadow:0 0 0 3px rgba(93,30,86,.12); }
   .a11y-row { display:flex; align-items:center; gap:12px; padding:12px 2px; border-top:1px solid var(--line); cursor:pointer; }
   .a11y-ic { font-size:22px; width:30px; text-align:center; }
   .a11y-t { flex:1; min-width:0; } .a11y-t b { display:block; } .a11y-t small { display:block; color:var(--muted); font-size:13.5px; line-height:1.35; }
@@ -984,12 +984,12 @@
   .ff-s { display:inline-flex; flex-direction:column; align-items:center; gap:5px; }
   .ff-n, .ff-d { width:64px; height:42px; }
   .ff-n:placeholder-shown, .ff-d:placeholder-shown { background:#F7F5FF; }
-  .ff-w:focus, .ff-n:focus, .ff-d:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(107,63,184,.18); }
+  .ff-w:focus, .ff-n:focus, .ff-d:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(93,30,86,.18); }
   .ff-bar { width:74px; height:3px; border-radius:2px; background:var(--ink); }
   .ff-sw { border:1.5px solid var(--line); background:#fff; color:var(--ink); border-radius:999px; padding:7px 12px; font:inherit; font-size:13.5px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:6px; min-height:40px; }
   .wk { margin-top:4px; }
   .wk-ed { min-height:96px; border:2px solid var(--line); border-radius:12px; padding:10px 12px; font-size:17px; line-height:2.3; white-space:pre-wrap; overflow-wrap:anywhere; background:#fff; color:var(--ink); outline:none; cursor:text; font-weight:500; }
-  .wk-ed:focus-within { border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(107,63,184,.14); }
+  .wk-ed:focus-within { border-color:var(--violet-2); box-shadow:0 0 0 3px rgba(93,30,86,.14); }
   .wk-ed:empty::before { content:attr(data-ph); color:var(--muted); font-size:15px; }
   .wf { display:inline-flex; flex-direction:column; align-items:stretch; vertical-align:middle; margin:0 3px; line-height:1.15; }
   .wf-n, .wf-d { display:block; min-width:1.5em; min-height:1.1em; padding:1px 4px; text-align:center; font-size:.92em; outline:none; border-radius:4px; caret-color:var(--violet-2); }
@@ -1003,7 +1003,7 @@
   /* ✏️📷 Working: type, write or photo */
   .wk-tabs { display:flex; gap:6px; margin:4px 0 8px; background:#F1EEFB; padding:4px; border-radius:12px; }
   .wk-tab { flex:1; min-height:42px; border:0; border-radius:9px; background:transparent; font:inherit; font-weight:800; font-size:14.5px; color:var(--muted); cursor:pointer; position:relative; }
-  .wk-tab.on { background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(30,23,53,.15); }
+  .wk-tab.on { background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(30,26,50,.15); }
   .wk-dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:#1E9E62; margin-left:6px; vertical-align:middle; }
   .pad-wrap { border:2px solid var(--line); border-radius:12px; overflow:hidden; background:#fff repeating-linear-gradient(#fff 0 39px, #E6E1F5 39px 40px); }
   canvas.pad { display:block; width:100%; cursor:crosshair; touch-action:none; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
@@ -1153,6 +1153,90 @@
   }
   @media (prefers-reduced-motion:reduce) { .btn, .btn:hover { transition:none; transform:none !important; } }
   .pin-dots i { color:#D3CEDB !important; } .pin-dots i.on { color:#DB962F !important; }   /* the PIN stars show on the light theme */
+  /* =================== 🎨 Studio 2 (8 Nov): sticker cards, chunky PIN pad, English tiles, rail and dock =================== */
+  :root { --stk:4px 5px 0 #1E1A32; --stk-s:2px 3px 0 #1E1A32; }
+  /* sign in */
+  .pinwrap { max-width:420px; margin:10px auto 0; padding:0 0 24px; background:var(--st-paper); border:2px solid var(--st-ink); border-radius:28px; box-shadow:var(--stk); overflow:hidden; }
+  .pin-top { background:var(--st-plum); color:var(--st-paper); padding:26px 20px 22px; border-bottom:2px solid var(--st-ink); display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .pin-key { width:70px; height:70px; border-radius:50%; background:var(--st-yellow); border:2.5px solid var(--st-ink); box-shadow:var(--stk-s); display:grid; place-items:center; font-size:0; }
+  .pin-key svg { width:32px; height:32px; fill:var(--st-plum); }
+  .pin-hi { margin:6px 0 0; font-family:var(--st-display); font-size:32px; line-height:1.05; color:var(--st-paper); }
+  .pin-sub { margin:0; font-size:15px; font-weight:600; color:#F1DDEE; }
+  .pin-dots { gap:16px; margin:22px 0 4px; }
+  .pin-dots i { width:24px; height:24px; border-radius:50%; border:2px solid var(--st-ink); background:#fff; font-size:0; transform:none !important; }
+  .pin-dots i:before { content:none; }
+  .pin-dots i.on { background:var(--st-plum); }
+  .pad { max-width:330px; gap:14px; padding:0 18px; }
+  .pad button { background:#fff; color:var(--st-ink); font-family:var(--st-display); font-weight:400; border:2px solid var(--st-ink); border-radius:20px; box-shadow:var(--stk-s); }
+  .pad button:active { transform:translate(2px,3px); box-shadow:none; }
+  .pad button.ghost { background:transparent; border-color:transparent; box-shadow:none; font-family:var(--st-body); font-weight:800; }
+  /* cards and buttons */
+  .cw-card, .mw-card, .sy-set, .cw-h + .sy-sets .sy-set { border:2px solid var(--st-ink) !important; box-shadow:var(--stk-s); }
+  .cw-card { border-radius:22px !important; background:var(--st-paper) !important; box-shadow:var(--stk) !important; }
+  .btn { border:2px solid var(--st-ink) !important; border-radius:999px !important; font-weight:800 !important; }
+  .btn.primary { background:var(--st-yellow) !important; color:var(--st-ink) !important; box-shadow:var(--stk-s) !important; }
+  .btn.primary:active { transform:translate(2px,3px); box-shadow:none !important; }
+  .btn.soft { background:#fff !important; color:var(--st-ink) !important; }
+  .cheer-hero h1 { font-family:var(--st-display); font-weight:400; letter-spacing:0; }
+  /* My work */
+  .mw-card { background:var(--st-yellow); border-radius:22px; box-shadow:var(--stk) !important; padding:16px; }
+  .mw-card .bsec { font-family:var(--st-display); font-size:22px; font-weight:400; color:var(--st-ink); text-transform:none; letter-spacing:0; }
+  button.mw-row { width:100%; text-align:left; font:inherit; color:var(--st-ink); cursor:pointer; background:var(--st-paper); border:2px solid var(--st-ink); border-radius:16px; }
+  button.mw-row:active { transform:translate(1px,2px); }
+  .mw-ic { width:40px; height:40px; border-radius:12px; background:#fff; border:2px solid var(--st-ink); display:grid; place-items:center; font-size:20px; flex:none; }
+  .mw-t { flex:1; min-width:0; } .mw-t b { display:block; } .mw-t small { color:var(--st-muted); font-weight:600; }
+  .mw-st { border:1.5px solid var(--st-ink); color:var(--st-ink) !important; background:#fff; }
+  .mw-st.late { background:var(--st-coral) !important; } .mw-st.done { background:#CFEBD9 !important; }
+  .mw-st.carry { background:var(--st-plum) !important; color:#fff !important; }
+  /* English home */
+  .en-home { display:flex; flex-direction:column; gap:14px; }
+  .en-hero { padding:4px 2px 0; }
+  .en-eye { font-size:12.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--st-muted); }
+  .en-hero h1 { margin:2px 0 0; font-family:var(--st-display); font-weight:400; font-size:clamp(28px,5vw,40px); line-height:1.05; letter-spacing:0; }
+  .en-carry { display:flex; align-items:center; gap:14px; width:100%; text-align:left; font:inherit; cursor:pointer; background:var(--st-plum); color:var(--st-paper); border:2px solid var(--st-ink); border-radius:22px; box-shadow:var(--stk); padding:14px 16px; }
+  .en-carry-ic { flex:none; width:50px; height:50px; border-radius:16px; background:var(--st-yellow); color:var(--st-ink); border:2px solid var(--st-ink); display:grid; place-items:center; }
+  .en-carry-t { flex:1; min-width:0; } .en-carry-t small { display:block; font-size:12.5px; font-weight:700; color:#F1DDEE; } .en-carry-t b { font-family:var(--st-display); font-weight:400; font-size:20px; line-height:1.15; }
+  .en-carry-go { flex:none; font-weight:800; font-size:14px; padding:10px 16px; border-radius:999px; background:var(--st-yellow); color:var(--st-ink); border:2px solid var(--st-ink); }
+  .en-tiles { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:14px; }
+  .en-tile { font:inherit; text-align:left; cursor:pointer; color:var(--st-ink); background:var(--st-paper); border:2px solid var(--st-ink); border-radius:20px; box-shadow:var(--stk); padding:14px; min-height:120px; display:flex; flex-direction:column; justify-content:space-between; gap:10px; }
+  .en-tile.hot { background:var(--st-yellow); }
+  .en-tile:active { transform:translate(3px,4px); box-shadow:none; }
+  .en-tile-top { display:flex; justify-content:space-between; align-items:flex-start; gap:6px; }
+  .en-tile-ic { width:40px; height:40px; border-radius:12px; background:#fff; border:2px solid var(--st-ink); display:grid; place-items:center; }
+  .en-tag { font-size:11.5px; font-weight:800; padding:4px 9px; border-radius:999px; border:1.5px solid var(--st-ink); background:#fff; white-space:nowrap; }
+  .en-tag.late { background:var(--st-coral); } .en-tag.prog { background:var(--st-yellow); } .en-tile.hot .en-tag.due { background:var(--st-paper); }
+  .en-tile-b b { display:block; font-family:var(--st-display); font-weight:400; font-size:19px; line-height:1.1; }
+  .en-tile-b small { font-size:12.5px; font-weight:700; color:#3A3450; }
+  .en-back { display:flex; align-items:center; gap:12px; margin:12px 0 12px; }
+  .en-back .btn { min-height:40px; padding:0 14px; }
+  .en-back b { font-family:var(--st-display); font-weight:400; font-size:22px; }
+  @media (max-width:430px) { .en-tiles { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } .en-tile { min-height:112px; padding:12px; } }
+  /* dock (phones) and rail (iPads, laptops) */
+  .tabs { border:2px solid var(--st-ink) !important; box-shadow:var(--stk-s) !important; border-radius:26px !important; background:var(--st-paper) !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
+  .tabs button.on { border-radius:20px; }
+  .top-in { border:2px solid var(--st-ink) !important; box-shadow:var(--stk-s) !important; background:var(--st-paper) !important; }
+  @media (min-width:1024px) { .tabs { box-shadow:var(--stk) !important; } .tabs button { border-radius:999px; } }
+  /* Spotlight and Birthday slideshows: Studio colours, every word readable on the dark slide */
+  .show { background:var(--st-plum) !important; border:2px solid var(--st-ink); box-shadow:var(--stk) !important; }
+  .show.bd { background:#8E2C5E !important; }
+  .show .slide, .show .slide h3, .show .slide .sl-quote { color:#FDFAF3 !important; }
+  .show .slide .hand, .show .slide .sl-from .hand, .show .slide .sl-hand, .show .slide .sl-count { color:#FFE995 !important; }
+  .show .slide .sl-from { color:rgba(253,250,243,.9) !important; }
+  .show .slide .sl-tag { background:var(--st-yellow); color:var(--st-ink); border:1.5px solid var(--st-ink); }
+  /* ✨ 9 Nov: Listen, revision, mistakes, streaks */
+  .btn.lst { min-height:36px !important; padding:0 12px !important; font-size:13.5px; margin:6px 0 4px; }
+  .mw-tools { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
+  .mw-tools .btn { min-height:50px; }
+  .st-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:0 0 10px; }
+  .st-fire { background:#fff; border:2px solid var(--st-ink); border-radius:999px; padding:6px 12px; font-weight:800; }
+  .st-fire.on { background:var(--st-coral); }
+  .st-note { font-size:13px; font-weight:700; color:#3A3450; }
+  .st-badges { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 10px; }
+  .st-badge { font-size:12px; font-weight:800; padding:4px 10px; border-radius:999px; background:var(--st-paper); border:1.5px solid var(--st-ink); }
+  .mk { display:flex; flex-direction:column; gap:6px; }
+  .mk.ok { background:#E8F6EE !important; }
+  .mk-meta { font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--st-muted); }
+  .mk-mine { font-size:14px; color:#7A2A2E; } .mk-right { font-size:15px; }
 </style>
 </head>
 <body>
@@ -1248,7 +1332,7 @@ function dayLabel(ms) {
   return d.toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" });
 }
 /** Each student gets their own sticker colour (the same every time). */
-var STICK = ["#FFE58F", "#C9F2E1", "#FFD3C2", "#CFE3FF", "#F9D1EC", "#E1D8FF"], TAPE = ["rgba(242,174,0,.42)", "rgba(43,181,127,.35)", "rgba(255,120,90,.35)", "rgba(80,140,255,.33)", "rgba(230,90,170,.33)", "rgba(91,63,214,.30)"];
+var STICK = ["#FFE58F", "#C9F2E1", "#FFD3C2", "#CFE3FF", "#F9D1EC", "#E1D8FF"], TAPE = ["rgba(242,174,0,.42)", "rgba(43,181,127,.35)", "rgba(255,120,90,.35)", "rgba(80,140,255,.33)", "rgba(230,90,170,.33)", "rgba(93,30,86,.30)"];
 function hue(name) { var h = 0, s = String(name || ""); for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return Math.abs(h) % STICK.length; }
 function initials(n) { return String(n || "?").trim().split(/\s+/).slice(0, 2).map(function(w) { return w.charAt(0); }).join("").toUpperCase(); }
 function avatar(name, cls) { return '<span class="av ' + (cls || "") + '" style="background:' + STICK[hue(name)] + '" aria-hidden="true">' + esc(initials(name)) + '</span>'; }
@@ -1264,7 +1348,11 @@ function apiDirect(fn, args) {
     r[fn].apply(r, args);
   });
 }
-function call(fn) { var a = Array.prototype.slice.call(arguments, 1); return api(fn, [HUB_KEY, S.token].concat(a)); }
+/** 🛡️ Each request says which device it came from (a random ID made on this device, and e.g. "iPad · Safari"), so the teacher is told if one PIN is used on several devices at once. */
+function devLabel() { var u = navigator.userAgent || "", d = /iPad|Macintosh.*Mobile|Macintosh.*Touch/.test(u) && "ontouchend" in document ? "iPad" : /iPhone/.test(u) ? "iPhone" : /Android/.test(u) ? (/Mobile/.test(u) ? "Android phone" : "Android tablet") : /CrOS/.test(u) ? "Chromebook" : /Windows/.test(u) ? "Windows" : /Mac/.test(u) ? "Mac" : "Computer";
+  var b = /Edg\//.test(u) ? "Edge" : /SamsungBrowser/.test(u) ? "Samsung" : /Firefox|FxiOS/.test(u) ? "Firefox" : /Chrome|CriOS/.test(u) ? "Chrome" : /Safari/.test(u) ? "Safari" : "browser"; return d + " · " + b; }
+function devTag() { return "|" + devId() + "|" + encodeURIComponent(devLabel()); }
+function call(fn) { var a = Array.prototype.slice.call(arguments, 1); return api(fn, [HUB_KEY, S.token ? S.token + devTag() : S.token].concat(a)); }
 function busy(btn, t) { if (!btn) return function() {}; var o = btn.innerHTML; btn.disabled = true; if (t) btn.textContent = t; return function() { btn.disabled = false; btn.innerHTML = o; }; }
 function flash(text, isErr, where) {
   var el = document.createElement("div"); el.className = "msg " + (isErr ? "err" : "ok"); el.setAttribute("role", isErr ? "alert" : "status"); el.textContent = text;
@@ -1442,8 +1530,8 @@ function devId() { var d = store("dev"); if (!/^[A-Za-z0-9]{16,40}$/.test(d)) { 
 function showPin(err, okNote) {
   S.picked = ""; S.pin = "";
   $("app").innerHTML = '<div class="pinwrap">' + (okNote ? '<div class="msg ok" role="status">' + esc(okNote) + '</div>' : '') +
-    '<div class="pin-key" aria-hidden="true">🔑</div><p class="hand pin-hi" style="font-size:24px;color:var(--violet-2);margin:10px 0 0">Hello' + (CLASS_NAME ? ', ' + esc(CLASS_NAME) : '') + '!</p>' +
-    '<h1 style="margin:2px 0 0;font-size:26px">Type your secret PIN</h1><p class="muted" style="margin:4px 0 0">The 4 numbers on your Class Hub slip.</p>' +
+    '<div class="pin-top"><div class="pin-key" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.5 1.3 6.5L12 17.1l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg></div><p class="pin-hi">Hello' + (CLASS_NAME ? ', ' + esc(CLASS_NAME) : '') + '!</p>' +
+    '<p class="pin-sub">Type your 4-digit PIN to open your Class Hub.</p></div>' +
     '<div class="pin-dots' + (err ? " shake" : "") + '" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>' +
     '<div id="pinErr" role="alert" style="color:var(--danger);font-weight:700;min-height:22px">' + esc(err || "") + '</div>' +
     '<div class="pad" id="pad">' + [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function(n) { return '<button data-d="' + n + '" aria-label="' + n + '">' + n + '</button>'; }).join("") +
@@ -1468,7 +1556,7 @@ function tryPin() {
   Array.prototype.forEach.call($("pad").querySelectorAll("button"), function(b) { b.disabled = true; });
   $("pinErr").style.color = ""; $("pinErr").textContent = "Checking…";
   var pin = S.pin;
-  api("hubLogin", [HUB_KEY, "", pin, devId()]).then(function(r) { if (r && r.choose) return showChoose(r.choose, pin); pinDone(r); })
+  api("hubLogin", [HUB_KEY, "", pin, devId() + "|" + encodeURIComponent(devLabel())]).then(function(r) { if (r && r.choose) return showChoose(r.choose, pin); pinDone(r); })
     .catch(function(e) { showPin(e.message); });
 }
 /** Two pupils still share this PIN (from before PINs were unique): tap your name. */
@@ -1479,7 +1567,7 @@ function showChoose(names, pin) {
     '<button class="btn soft" id="chooseBack" style="width:100%;margin-top:10px">‹ Back</button></div>';
   $("chooseBack").onclick = function() { showPin(); };
   $("names").onclick = function(e) { var t = e.target.closest("[data-n]"); if (!t) return; t.disabled = true;
-    api("hubLogin", [HUB_KEY, t.getAttribute("data-n"), pin, devId()]).then(pinDone).catch(function(er) { showPin(er.message); }); };
+    api("hubLogin", [HUB_KEY, t.getAttribute("data-n"), pin, devId() + "|" + encodeURIComponent(devLabel())]).then(pinDone).catch(function(er) { showPin(er.message); }); };
 }
 function signOut(expired, okNote) {
   stopTimers(); clearBoots(); store("board", null); S.wallPre = null; store("tok", null); S.token = ""; S.home = null; S.wall = null; S.msgs = []; S.msgVer = ""; S.pingVer = ""; S.albums = null; S.album = null;
@@ -1556,9 +1644,9 @@ function gotHome(h, refresh, fromCache) {
     S.timers.push(setInterval(ping, 60000));
     S.timers.push(setInterval(function() { if (S.tab === "ask" && !document.hidden) loadMsgs(true); }, 15000));
     $("app").removeAttribute("data-snap"); go(S.tab || "wall"); hubSnapLater(1500);
-    if (OPEN_AT === "comp" && h.english && h.english.comp) { OPEN_AT = ""; EN.sec = "comp"; go("compo"); }
+    if (OPEN_AT === "comp" && h.english && h.english.comp) { OPEN_AT = ""; EN.home = false; EN.sec = "comp"; go("compo"); }
     if (window.SITE_COMP) { try { localStorage.setItem("cm_hub_url", location.href.split("#")[0].replace(/[?&]open=[^&#]*/, "")); } catch (e) {} }
-    if (OPEN_AT && /^oral:/.test(OPEN_AT) && h.english && h.english.oral) { var oid = OPEN_AT.slice(5); OPEN_AT = ""; EN.sec = "oral"; OR.openId = oid; OR.home = null; OR.view = "home"; go("compo"); }
+    if (OPEN_AT && /^oral:/.test(OPEN_AT) && h.english && h.english.oral) { var oid = OPEN_AT.slice(5); OPEN_AT = ""; EN.home = false; EN.sec = "oral"; OR.openId = oid; OR.home = null; OR.view = "home"; go("compo"); }
     ldDot(); ldNews();
     if (!fromCache && h.popup && (h.planner || (h.work && h.work.todo)) && !S.popShown) { S.popShown = true; showTodayPopup(h.planner || {}); }   // the moment they come in: homework due and important news
     if (h.gallery !== false) setTimeout(function() { if (!S.albums && S.token) call("hubAlbums").then(gotAlbums).catch(function() {}); }, fromCache ? 4000 : 2500);   // photos ready before they're opened (after the wall's pictures)
@@ -1631,7 +1719,7 @@ function go(tab) {
   var tb = document.querySelector('#tabs button[data-tab="' + tab + '"]');
   if (tb && $("tabs").classList.contains("t9") && tb.scrollIntoView) try { tb.scrollIntoView({ block: "nearest", inline: "nearest" }); } catch (e) {}
 }
-$("tabs").onclick = function(e) { var b = e.target.closest("button[data-tab]"); if (b) go(b.dataset.tab); };
+$("tabs").onclick = function(e) { var b = e.target.closest("button[data-tab]"); if (b) { if (b.dataset.tab === "compo") EN.home = true; go(b.dataset.tab); } };
 /** Sign out: asks first, then ends the sign-in on this device AND on Google's side (safe on a shared iPad). */
 var DOOR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>';
 $("meBtn").onclick = function() {
@@ -2212,7 +2300,7 @@ function loadPdfJs() {
 function voMark(cv, who) {
   var x = cv.getContext("2d"), w = cv.width, h = cv.height, fs = Math.max(14, Math.round(w / 22));
   x.save(); x.translate(w / 2, h / 2); x.rotate(-Math.PI / 6);
-  x.font = "700 " + fs + "px 'Instrument Sans', Arial, sans-serif"; x.fillStyle = "rgba(46,26,120,0.13)"; x.textAlign = "center";
+  x.font = "700 " + fs + "px 'Instrument Sans', Arial, sans-serif"; x.fillStyle = "rgba(62,18,57,0.13)"; x.textAlign = "center";
   var step = fs * 5, span = Math.sqrt(w * w + h * h);
   for (var yy = -span / 2; yy < span / 2; yy += step) for (var xx = -span / 2; xx < span / 2; xx += fs * 14) x.fillText(who, xx + (Math.round(yy / step) % 2 ? fs * 7 : 0), yy);
   x.restore();
@@ -2260,9 +2348,11 @@ function mwItems() { return (S.work && S.work.items) || []; }
 function mwSet(w) { if (!w || !w.items) return; S.work = w; mwBar(); var c = $("mwCard"); if (c) c.outerHTML = mwCard(); }
 function mwRefresh(force) { if (!S.token && !(S.home && S.home.preview)) return; if (!force && Date.now() - MW.at < 15000) return; MW.at = Date.now(); call("getHubWork").then(mwSet).catch(function() {}); }
 function mwDue(x) { return x.done ? '<span class="mw-st done">✅ Done</span>' : x.late ? '<span class="mw-st late">⏰ Late</span>' : x.dueLabel ? '<span class="mw-st">Due ' + esc(x.dueLabel) + '</span>' : '<span class="mw-st">To do</span>'; }
-function mwRow(x) { return '<div class="mw-row' + (x.done ? ' done' : '') + '"><span class="mw-ic" aria-hidden="true">' + x.icon + '</span><span class="mw-t"><b>' + esc(x.title) + '</b><small>' + esc(x.type) + '</small></span>' + mwDue(x) + '</div>'; }
+function mwSaved(x) { var k = x.sec === "mathexam" ? "exam" : x.sec, s = DR.mine && DR.mine[k + "|" + x.id]; return s && !x.done ? s : null; }
+function mwRow(x) { var sv = mwSaved(x); return '<button class="mw-row' + (x.done ? ' done' : '') + '" data-mwopen="' + esc(x.key) + '"><span class="mw-ic" aria-hidden="true">' + x.icon + '</span><span class="mw-t"><b>' + esc(x.title) + '</b><small>' + esc(x.type) + (sv ? ' · saved ' + drAgo(sv.at) : '') + '</small></span>' + (sv ? '<span class="mw-st carry">Carry on</span>' : mwDue(x)) + '</button>'; }
 function mwStartBtn() { var n = (S.work && S.work.todo) || 0; return '<button class="btn primary big mw-go" data-mwstart>▶ ' + (n ? 'Start my work (' + n + ' to do)' : 'Open my work') + '</button>'; }
-function mwCard() { var sk = skOn() ? '<button class="btn soft big mw-sk" data-skhome>🎯 My skills</button>' : ''; if (!mwItems().length) return sk ? '<div id="mwCard" class="mw-card">' + sk + '</div>' : '<div id="mwCard"></div>'; return '<div id="mwCard" class="mw-card"><div class="bsec">📝 My work</div>' + mwItems().map(mwRow).join("") + mwStartBtn() + sk + '</div>'; }
+function mwTools() { if (!skOn()) return ''; return '<div class="mw-tools"><button class="btn soft big" data-rvopen>🔁 Revision · 10 min</button><button class="btn soft big" data-mkopen>📒 My mistakes</button></div>'; }
+function mwCard() { if (S.tab === "today") drList(function() { var c = $("mwCard"); if (c) c.outerHTML = mwCard(); }); var sk = skOn() ? '<button class="btn soft big mw-sk" data-skhome>🎯 My skills</button>' : '', top = streakHtml(); streakCheer(); if (!mwItems().length) return (sk || top) ? '<div id="mwCard" class="mw-card">' + top + sk + mwTools() + '</div>' : '<div id="mwCard"></div>'; return '<div id="mwCard" class="mw-card"><div class="bsec">📝 My work</div>' + top + mwItems().map(mwRow).join("") + mwStartBtn() + sk + mwTools() + '</div>'; }
 /** One tap: the bar of tabs appears and the first piece still to do opens. */
 function mwStart() { var it = mwItems(); if (!it.length) return; var f = it.filter(function(x) { return !x.done; })[0] || it[0]; mwOpen(f.key); }
 function mwOpen(key) {
@@ -2270,7 +2360,7 @@ function mwOpen(key) {
   MW.on = true; MW.cur = key; try { closeSheet(); } catch (e) {}
   if (x.sec === "skill") { var sp = String(x.id).split(":"); mwBar(); skOpen(sp[0], sp[1]); return; }
   if (x.sec === "mathexam") { MA.sec = "exam"; var XM = EX.math; if (!XM.sitting) { XM.res = null; XM.intro = null; XM.home = null; XM.openId = x.id; } mwBar(); go("math"); mwRefresh(false); return; }
-  EN.sec = x.sec; try { store("ensec", x.sec); } catch (e) {}
+  EN.home = false; EN.sec = x.sec; try { store("ensec", x.sec); } catch (e) {}
   if (x.sec === "compo") { CW.view = null; CW.review = false; CW.cur = null; CW.openTask = x.id; }
   else if (x.sec === "comp") CMX.openPid = x.id;
   else if (x.sec === "cloze" || x.sec === "edit") PR[x.sec] = {};
@@ -2455,7 +2545,7 @@ function orReadResult() {
     '<div class="cw-card or-passage res">' + orPassageHtml(m.text, r.status, r.heard) + '</div>' + orWordBar();
   var miss = orMissedWords(m, r);
   if (miss.length) out += '<div class="cf"><div class="cf-ok" style="background:#FFF4DC;color:#7A4B00">🔊 Practise: ' + miss.map(esc).join(" · ") + ' <small style="display:inline;margin-left:4px;color:#9A5B00">tap them in the passage</small></div></div>';
-  if (f.expression) out += '<div class="cf"><div class="cf-ok" style="background:#F7F4FF;color:#2E1A78">🎭 ' + esc(f.expression) + '</div></div>';
+  if (f.expression) out += '<div class="cf"><div class="cf-ok" style="background:#F7F4FF;color:#3E1239">🎭 ' + esc(f.expression) + '</div></div>';
   var ls = []; if (sc.accuracy < 90 && !sc.review) ls.push({ id: "or-words" }); if (P.fluency < 2) ls.push({ id: "or-pace" }, { id: "or-pause" }); if (P.expression != null && P.expression < 2) ls.push({ id: "or-expr" });
   out += CF.lessons(ls, "Quick tips");
   out += '<p class="cf-note">Practice score only (not a PSLE grade). Accuracy, smoothness, sounds and feeling are scored separately. Any accent is fine.</p>';
@@ -2522,7 +2612,7 @@ function orSbcResult() {
   if (r.listened) out += '<p class="or-check">✔️ ' + (r.listened === 1 ? 'Your spoken answer was' : r.listened + ' spoken answers were') + ' checked against your recording' + (r.fixed ? ', fixing ' + r.fixed + ' word' + (r.fixed === 1 ? '' : 's') + ' the speech checker misheard (not your mistakes)' : '') + '.' + (r.clarity != null ? ' Clear speaking: ' + r.clarity + '/2.' : '') + ' Any accent is fine.</p>';
   else out += '<p class="or-check">✔️ Words the speech checker wasn’t sure of were not counted against you. Pauses to think are fine.</p>';
   if (r.pron && r.pron.length) out += '<p class="or-lang">🗣️ Say clearly: ' + r.pron.map(function(x) { return '<b>' + esc(x.word) + '</b>' + (x.note ? ' (' + esc(x.note) + ')' : ''); }).join(" · ") + '</p>';
-  if (r.oreo) out += '<div class="cf"><div class="cf-ok" style="background:#F7F4FF;color:#2E1A78">🍪 ' + esc(r.oreo) + '</div></div>';
+  if (r.oreo) out += '<div class="cf"><div class="cf-ok" style="background:#F7F4FF;color:#3E1239">🍪 ' + esc(r.oreo) + '</div></div>';
   var ls = []; if (p.ideas < 2) ls.push({ id: "or-opinion" }); if (p.development < 2) ls.push({ id: "or-reason" }, { id: "or-example" }); else if (p.development < 3) ls.push({ id: "or-example" });
   out += CF.lessons(ls, "Quick tips") + '<p class="cf-note">Practice score, not an official PSLE grade.</p>';
   if (m.history && m.history.length > 1) out += '<div class="bsec">📈 Your scores for this one</div><div class="cw-card">' + orBars(m.history) + '</div>';
@@ -2757,41 +2847,41 @@ function drawToday(d) {
 // on, colour-coded marks written ON the pupil's words (only the wrong word is crossed out; missing words and punctuation are
 // added in purple), and a 📘 Quick lesson for each concept they got wrong: the rule, their own mistake fixed, and one
 // "Your turn" question to check they've got it. The same look is used inside the Comprehension frame.
-var CF_CSS = '.cf{--cf-r:#D93A3A;--cf-rs:#FDECEC;--cf-y:#E79A12;--cf-ys:#FFF4DC;--cf-g:#1E9E62;--cf-gs:#E3F6EC;--cf-o:#E8711C;--cf-b:#2F6BD8;--cf-p:#8A4FD8;--cf-ink:#1E1735;--cf-mu:#635C82;--cf-li:#E4DEF6;--cf-pa:#F3F0FD}' +
-  '.cf-sum{background:#fff;border-radius:20px;padding:14px;display:flex;gap:14px;align-items:center;box-shadow:0 4px 14px rgba(46,26,120,.07);margin:10px 0}' +
-  '.cf-ring{width:84px;height:84px;border-radius:50%;flex:none;display:grid;place-items:center;background:conic-gradient(#5B3FD6 0 calc(var(--p)*1%),#E4DEF6 calc(var(--p)*1%) 100%)}' +
-  '.cf-ring b{width:66px;height:66px;border-radius:50%;background:#fff;display:grid;place-items:center;align-content:center;font:800 23px/1 "Bricolage Grotesque",system-ui,sans-serif;color:#1E1735}.cf-ring b small{display:block;font-size:12px;color:#635C82;margin-top:3px}' +
+var CF_CSS = '.cf{--cf-r:#D93A3A;--cf-rs:#FDECEC;--cf-y:#E79A12;--cf-ys:#FFF4DC;--cf-g:#1E9E62;--cf-gs:#E3F6EC;--cf-o:#E8711C;--cf-b:#2F6BD8;--cf-p:#5D1E56;--cf-ink:#1E1A32;--cf-mu:#635C82;--cf-li:#E4DEF6;--cf-pa:#F3F0FD}' +
+  '.cf-sum{background:#fff;border-radius:20px;padding:14px;display:flex;gap:14px;align-items:center;box-shadow:0 4px 14px rgba(62,18,57,.07);margin:10px 0}' +
+  '.cf-ring{width:84px;height:84px;border-radius:50%;flex:none;display:grid;place-items:center;background:conic-gradient(#5D1E56 0 calc(var(--p)*1%),#E4DEF6 calc(var(--p)*1%) 100%)}' +
+  '.cf-ring b{width:66px;height:66px;border-radius:50%;background:#fff;display:grid;place-items:center;align-content:center;font:800 23px/1 "Bricolage Grotesque",system-ui,sans-serif;color:#1E1A32}.cf-ring b small{display:block;font-size:12px;color:#635C82;margin-top:3px}' +
   '.cf-sr{flex:1;min-width:0}.cf-lights{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}.cf-lights i{min-width:30px;height:30px;padding:0 4px;border-radius:9px;display:grid;place-items:center;font:800 12.5px/1 "Bricolage Grotesque",sans-serif;color:#fff;font-style:normal}' +
   '.cf-lights i.g{background:#1E9E62}.cf-lights i.y{background:#E79A12}.cf-lights i.r{background:#D93A3A}.cf-lights i.n{background:#C9C2E0}' +
   '.cf-one{font-weight:700;font-size:15px;line-height:1.5}.cf-one span{display:block}' +
   '.cf-bars .cf-bar{display:flex;align-items:center;gap:8px;margin:4px 0 6px;font:700 13px/1.1 inherit}.cf-bar em{font-style:normal;width:84px;color:#635C82}.cf-bar i{flex:1;height:10px;border-radius:99px;background:#E4DEF6;position:relative;overflow:hidden}.cf-bar i b{position:absolute;left:0;top:0;bottom:0;border-radius:99px}.cf-bar span{min-width:36px;text-align:right}' +
   '.cf-key{display:flex;flex-wrap:wrap;gap:6px;margin:10px 2px 4px}.cf-key span{font-size:12px;font-weight:800;padding:3px 9px;border-radius:999px;background:#fff;border:2px solid}' +
-  '.cf-card{background:#fff;border-radius:20px;margin-top:12px;padding:14px 14px 14px 20px;position:relative;overflow:hidden;box-shadow:0 4px 14px rgba(46,26,120,.07)}' +
+  '.cf-card{background:#fff;border-radius:20px;margin-top:12px;padding:14px 14px 14px 20px;position:relative;overflow:hidden;box-shadow:0 4px 14px rgba(62,18,57,.07)}' +
   '.cf-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:#C9C2E0}.cf-card.r:before{background:#D93A3A}.cf-card.y:before{background:#E79A12}.cf-card.g:before{background:#1E9E62}' +
-  '.cf-qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}.cf-qn{font:800 14px/1 "Bricolage Grotesque",sans-serif;color:#5B3FD6;background:#F3F0FD;border-radius:8px;padding:5px 8px}' +
+  '.cf-qh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}.cf-qn{font:800 14px/1 "Bricolage Grotesque",sans-serif;color:#5D1E56;background:#F3F0FD;border-radius:8px;padding:5px 8px}' +
   '.cf-chip{font:800 13px/1 "Bricolage Grotesque",sans-serif;padding:5px 9px;border-radius:999px}.cf-chip.r{background:#FDECEC;color:#D93A3A}.cf-chip.y{background:#FFF4DC;color:#9A5B00}.cf-chip.g{background:#E3F6EC;color:#1E9E62}' +
   '.cf-tag2{font-size:11.5px;font-weight:800;color:#635C82;background:#F3F0FD;border-radius:6px;padding:3px 7px}' +
-  '.cf-given{color:#635C82;font-size:14.5px;line-height:1.45}.cf-given b{color:#1E1735}' +
-  '.cf-sent{font:400 19px/2.6 Georgia,"Times New Roman",serif;margin:2px 0 0;color:#1E1735;word-wrap:break-word}.cf-sent.blank{font:italic 15px/1.6 inherit;color:#635C82}' +
+  '.cf-given{color:#635C82;font-size:14.5px;line-height:1.45}.cf-given b{color:#1E1A32}' +
+  '.cf-sent{font:400 19px/2.6 Georgia,"Times New Roman",serif;margin:2px 0 0;color:#1E1A32;word-wrap:break-word}.cf-sent.blank{font:italic 15px/1.6 inherit;color:#635C82}' +
   '.cf-w{position:relative;display:inline-block;line-height:1.2;text-indent:0}.cf-w ruby{ruby-position:over}.cf-w s{text-decoration-thickness:2px;text-decoration-color:currentColor}.cf-w rt{font:800 15px/1.1 "Bricolage Grotesque",sans-serif;padding-bottom:1px;transform:rotate(-2deg);letter-spacing:0}' +
   '.cf-w .cf-tg{position:absolute;left:50%;transform:translateX(-50%);top:100%;margin-top:1px;white-space:nowrap;font:800 9.5px/1 "Instrument Sans",system-ui,sans-serif;text-transform:uppercase;letter-spacing:.04em;color:#fff;border-radius:4px;padding:2px 4px;font-style:normal}' +
   '.cf-w.t-r s{color:#D93A3A}.cf-w.t-r rt{color:#D93A3A}.cf-w.t-r .cf-tg{background:#D93A3A}.cf-w.t-o s{color:#E8711C}.cf-w.t-o rt{color:#E8711C}.cf-w.t-o .cf-tg{background:#E8711C}' +
-  '.cf-w.t-b s{color:#2F6BD8}.cf-w.t-b rt{color:#2F6BD8}.cf-w.t-b .cf-tg{background:#2F6BD8}.cf-w.t-p rt{color:#8A4FD8;font-size:20px}.cf-w.t-p .cf-tg{background:#8A4FD8}.cf-w .cf-ca{color:#8A4FD8;font:800 15px/1 sans-serif;display:inline-block;margin:0 1px}' +
-  '.cf-w s span{color:#1E1735}.cf-good{background:linear-gradient(transparent 60%,#BFEBD3 60%)}.cf-miss{text-decoration:underline dotted #D93A3A;text-decoration-thickness:3px;text-underline-offset:5px;color:#D93A3A;font-weight:700}' +
+  '.cf-w.t-b s{color:#2F6BD8}.cf-w.t-b rt{color:#2F6BD8}.cf-w.t-b .cf-tg{background:#2F6BD8}.cf-w.t-p rt{color:#5D1E56;font-size:20px}.cf-w.t-p .cf-tg{background:#5D1E56}.cf-w .cf-ca{color:#5D1E56;font:800 15px/1 sans-serif;display:inline-block;margin:0 1px}' +
+  '.cf-w s span{color:#1E1A32}.cf-good{background:linear-gradient(transparent 60%,#BFEBD3 60%)}.cf-miss{text-decoration:underline dotted #D93A3A;text-decoration-thickness:3px;text-underline-offset:5px;color:#D93A3A;font-weight:700}' +
   '.cf-ok{margin-top:12px;background:#E3F6EC;border-radius:12px;padding:8px 11px;font:400 16.5px/1.4 Georgia,serif;color:#145E3C}.cf-ok:before{content:"✓ ";font-weight:800;font-family:system-ui,sans-serif}.cf-ok small{display:block;font:800 11px/1.3 system-ui,sans-serif;letter-spacing:.05em;text-transform:uppercase;color:#1E9E62;margin-bottom:2px}' +
   '.cf-pts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.cf-pt{font-size:13.5px;font-weight:700;border-radius:10px;padding:5px 10px;border:2px solid}.cf-pt.y{border-color:#1E9E62;background:#E3F6EC;color:#145E3C}.cf-pt.n{border-style:dashed;border-color:#E79A12;background:#FFF4DC;color:#9A5B00}' +
   '.cf-lab{font:800 11px/1 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#635C82;margin:14px 0 2px}' +
   '.cf-skills{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}.cf-sk{font-size:12.5px;font-weight:800;border-radius:999px;padding:5px 10px;background:#fff;border:2px solid #E4DEF6}.cf-sk.g{border-color:#1E9E62;color:#1E9E62}.cf-sk.y{border-color:#E79A12;color:#9A5B00}.cf-sk.r{border-color:#D93A3A;color:#D93A3A}' +
   '.cf-note{font-size:12.5px;color:#635C82;text-align:center;margin:12px 0 0}.cf-fb{font-size:14.5px;color:#4A4366;margin:8px 0 0;line-height:1.45}' +
-  '.cf-ls{margin-top:18px}.cf-lh{font:800 17px/1.2 "Bricolage Grotesque",sans-serif;color:#2E1A78;margin:0 2px 6px;display:flex;gap:8px;align-items:center}.cf-lh small{font:700 12.5px/1.2 system-ui,sans-serif;color:#635C82}' +
-  '.cf-lesson{background:#F7F4FF;border:2px solid #E4DEF6;border-radius:18px;padding:13px 14px;margin-top:10px}.cf-lt{font:800 15.5px/1.25 "Bricolage Grotesque",sans-serif;color:#2E1A78;display:flex;gap:6px;align-items:baseline}' +
-  '.cf-lr{margin:6px 0 0;font-size:15px;line-height:1.45;font-weight:600}.cf-pat{margin-top:6px;font:700 13.5px/1.4 ui-monospace,Menlo,monospace;background:#fff;border-radius:10px;padding:6px 9px;color:#5B3FD6}' +
+  '.cf-ls{margin-top:18px}.cf-lh{font:800 17px/1.2 "Bricolage Grotesque",sans-serif;color:#3E1239;margin:0 2px 6px;display:flex;gap:8px;align-items:center}.cf-lh small{font:700 12.5px/1.2 system-ui,sans-serif;color:#635C82}' +
+  '.cf-lesson{background:#F7F4FF;border:2px solid #E4DEF6;border-radius:18px;padding:13px 14px;margin-top:10px}.cf-lt{font:800 15.5px/1.25 "Bricolage Grotesque",sans-serif;color:#3E1239;display:flex;gap:6px;align-items:baseline}' +
+  '.cf-lr{margin:6px 0 0;font-size:15px;line-height:1.45;font-weight:600}.cf-pat{margin-top:6px;font:700 13.5px/1.4 ui-monospace,Menlo,monospace;background:#fff;border-radius:10px;padding:6px 9px;color:#5D1E56}' +
   '.cf-ex{display:grid;gap:6px;margin-top:9px}.cf-ex div{border-radius:11px;padding:7px 10px;font:400 15.5px/1.4 Georgia,serif}.cf-ex .cf-x{background:#FDECEC;color:#8E2424}.cf-ex .cf-v{background:#E3F6EC;color:#145E3C}.cf-ex b{font-family:system-ui,sans-serif;margin-right:4px}' +
-  '.cf-try{margin-top:10px;background:#fff;border-radius:14px;padding:10px 11px}.cf-try p{margin:0 0 8px;font-weight:700;font-size:15px}.cf-try p span{display:block;font:800 11px/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#5B3FD6;margin-bottom:3px}' +
-  '.cf-opts{display:flex;flex-wrap:wrap;gap:6px}.cf-opts button{min-height:40px;border-radius:12px;border:2px solid #E4DEF6;background:#fff;padding:6px 12px;font:700 15px/1.2 inherit;color:#1E1735;cursor:pointer}' +
+  '.cf-try{margin-top:10px;background:#fff;border-radius:14px;padding:10px 11px}.cf-try p{margin:0 0 8px;font-weight:700;font-size:15px}.cf-try p span{display:block;font:800 11px/1.3 system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#5D1E56;margin-bottom:3px}' +
+  '.cf-opts{display:flex;flex-wrap:wrap;gap:6px}.cf-opts button{min-height:40px;border-radius:12px;border:2px solid #E4DEF6;background:#fff;padding:6px 12px;font:700 15px/1.2 inherit;color:#1E1A32;cursor:pointer}' +
   '.cf-opts button.ok{border-color:#1E9E62;background:#E3F6EC;color:#145E3C}.cf-opts button.no{border-color:#D93A3A;background:#FDECEC;color:#8E2424;text-decoration:line-through}.cf-opts button:disabled{cursor:default}' +
   '.cf-res{margin-top:8px;font-size:14px;font-weight:700;line-height:1.4}.cf-res.ok{color:#145E3C}.cf-res.no{color:#8E2424}' +
-  '.cf-plan{background:#fff;border-radius:16px;padding:11px 13px;margin-top:8px;border:2px solid #E4DEF6}.cf-plan b{display:block;font-size:15px}.cf-plan .kb{font-size:13.5px;color:#5B3FD6;font-weight:700;margin-top:3px}.cf-plan .rv{font-size:13px;color:#9A5B00;font-weight:700;margin-top:4px}' +
+  '.cf-plan{background:#fff;border-radius:16px;padding:11px 13px;margin-top:8px;border:2px solid #E4DEF6}.cf-plan b{display:block;font-size:15px}.cf-plan .kb{font-size:13.5px;color:#5D1E56;font-weight:700;margin-top:3px}.cf-plan .rv{font-size:13px;color:#9A5B00;font-weight:700;margin-top:4px}' +
   '.cf-opt{display:flex;gap:8px;align-items:flex-start;border-radius:12px;padding:7px 10px;margin-top:6px;border:2px solid #E4DEF6;font-size:15.5px;line-height:1.35}.cf-opt b{flex:none;color:#635C82}.cf-opt.key{border-color:#1E9E62;background:#E3F6EC}.cf-opt.mine.no{border-color:#D93A3A;background:#FDECEC}.cf-opt.mine.no span{text-decoration:line-through;text-decoration-color:#D93A3A}' +
   '@media (prefers-reduced-motion:no-preference){.cf-opts button{transition:background .15s,border-color .15s}}';
 // One quick lesson per concept: t title, r the rule, x [wrong, right], k "Your turn" questions [question, options, answer index, why].
@@ -2873,7 +2963,7 @@ var CF = {
       '<div class="cf-one">' + (o.star ? '<span>⭐ ' + E(o.star) + '</span>' : '') + (o.aim ? '<span>🎯 ' + E(o.aim) + '</span>' : '') + '</div>';
     return '<div class="cf cf-sum" role="group" aria-label="Your score: ' + o.got + ' out of ' + o.max + '"><div class="cf-ring" style="--p:' + p + '"><b>' + (Math.round(o.got * 2) / 2) + '<small>/ ' + o.max + '</small></b></div><div class="cf-sr">' + side + '</div></div>';
   },
-  key: function(list) { var col = { r: "#D93A3A", o: "#E8711C", b: "#2F6BD8", p: "#8A4FD8", g: "#1E9E62" }; return '<div class="cf cf-key">' + list.map(function(x) { return '<span style="border-color:' + col[x[0]] + ';color:' + col[x[0]] + '">● ' + CF.e(x[1]) + '</span>'; }).join("") + '</div>'; },
+  key: function(list) { var col = { r: "#D93A3A", o: "#E8711C", b: "#2F6BD8", p: "#5D1E56", g: "#1E9E62" }; return '<div class="cf cf-key">' + list.map(function(x) { return '<span style="border-color:' + col[x[0]] + ';color:' + col[x[0]] + '">● ' + CF.e(x[1]) + '</span>'; }).join("") + '</div>'; },
   /** A mark on one word: the wrong word crossed out with the fix above, a tiny label under. c: r/o/b colour. */
   fix: function(wrong, fx, tag, c) { return '<span class="cf-w t-' + (c || "o") + '"><ruby><s><span>' + CF.e(wrong) + '</span></s><rt>' + (fx ? CF.e(fx) : "✕") + '</rt></ruby>' + (tag ? '<i class="cf-tg">' + CF.e(tag) + '</i>' : '') + '</span>'; },
   /** Something added (a missing word or punctuation): a purple caret with the addition above. */
@@ -2963,7 +3053,7 @@ function prCalmText(kind, p, res) {
 function prPassageView(kind) {
   var X = PR[kind], p = X.p, res = X.res, I = PR_INFO[kind];
   var out = '<div class="sy-top"><button class="btn soft" data-prback>‹ All passages</button></div>' +
-    '<div class="cheer-hero" style="padding-top:8px"><span class="hand">' + esc(I.title) + '</span><h1>' + esc(p.title) + '</h1></div>';
+    '<div class="cheer-hero" style="padding-top:8px"><span class="hand">' + esc(I.title) + '</span><h1>' + esc(p.title) + '</h1></div>' + (res ? '' : listenBtn(lstPlain(p.text), "Listen to the passage"));
   if (res) {
     var rows = res.results.map(function(r) { return { id: r.sk, ok: r.ok }; }), sa = CF.starAim(rows), sk = {};
     res.results.forEach(function(r) { if (!r.sk || !LESSONS[r.sk]) return; var o = sk[r.sk] || (sk[r.sk] = { name: LESSONS[r.sk].t, got: 0, max: 0 }); o.max++; if (r.ok) o.got++; });
@@ -2990,7 +3080,7 @@ function prPassageView(kind) {
     }).join("") + '</div></div>';
   }
   out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="prMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button>' +
-    '<p class="cw-tip" id="prNote">' + (X.busy ? 'Checking every answer… (about 15 seconds)' : X.confirm || 'Check your spelling: a misspelt word gets no mark.') + '</p></div>';
+    '<p class="cw-tip" id="prNote">' + (X.busy ? 'Checking every answer… (about 15 seconds)' : X.confirm || 'Check your spelling: a misspelt word gets no mark.') + '</p>' + drLaterBtn() + '</div>';
   return out;
 }
 /* ----- Synthesis ----- */
@@ -2999,7 +3089,7 @@ function synResOne(q, r, i, ans, extraKey) {
   var lv = r.awarded === 2 ? "g" : r.awarded === 1 ? "y" : "r", has = String(ans || "").trim();
   var body = '<div class="cf-given">' + esc(q.s) + ' · Use <b>' + esc(q.w) + '</b></div>' + (has ? '<div class="cf-sent">' + CF.anno(ans, r.marks, synTag) + (r.awarded === 2 ? ' ✅' : '') + '</div>' : '<div class="cf-sent blank">No answer</div>');
   if (r.major && r.major.length && has) body += '<p class="cf-fb" style="color:#B42323;font-weight:700">❗ 0 marks: ' + esc(r.major.map(function(x) { return SY_MAJOR[x] || x; }).join(", ")) + '</p>';
-  else if (r.awarded === 1 && r.marks && r.marks.some(function(m) { return m.type === "punctuation"; })) body += '<p class="cf-fb" style="color:#6B3FB8;font-weight:700">Punctuation: −1 mark</p>';
+  else if (r.awarded === 1 && r.marks && r.marks.some(function(m) { return m.type === "punctuation"; })) body += '<p class="cf-fb" style="color:#5D1E56;font-weight:700">Punctuation: −1 mark</p>';
   if (r.awarded < 2) {
     if (r.corrected) body += CF.ok(r.corrected, r.awarded === 1 ? "Your sentence, corrected" : "A correct answer");
     var id = CF_SYN[q.t] || "", base = LESSONS[id] || {}, A = r.lesson || {};
@@ -3109,13 +3199,14 @@ function mqHomeView(kind) {
   var row = function(p) { return '<button class="sy-set pr-pick" data-mqstart="' + esc(p.id) + '"><b>' + esc(p.title) + '</b><span>' + p.n + ' questions' + (p.best != null ? ' · your best ' + p.best + '/' + p.n : '') + '</span></button>'; };
   var out = '<div class="cheer-hero"><span class="hand">' + esc(I.hand) + '</span><h1>' + I.icon + ' ' + esc(I.title) + '</h1><p>' + esc(I.blurb) + '</p></div>';
   if (X.err) out += '<div class="msg err">' + esc(X.err) + '</div>';
+  drList(function() { if (S.tab === "compo" && enSec() === kind && !X.set) renderMcq(kind); }); out += drCard([kind]);
   out += '<div class="cw-card sy-start"><div><div class="cw-h">' + I.icon + ' ' + (kind === "gram" ? "Practise 10 questions" : kind === "vocab" ? "Practise a passage" : "Practise a visual text") + '</div><p class="cw-tip" style="margin:0">' + esc(h.instr) + '</p></div>' +
     '<div class="sy-btns"><button class="btn primary big" data-mqstart="">Start</button>' + (h.ai ? '<button class="btn soft" data-mqfresh>✨ New ' + (kind === "gram" ? "set" : kind === "vocab" ? "passage" : "visual text") + '</button>' : '') + '</div></div>';
   if (h.sets && h.sets.length) out += '<div class="cw-h" style="margin:18px 2px 8px">📌 From ' + esc(h.teacher || "your teacher") + '</div><div class="sy-sets">' + h.sets.map(row).join("") + '</div>';
   if (h.bank && h.bank.length) out += '<div class="cw-h" style="margin:18px 2px 8px">📚 Practice ' + (kind === "vocab" ? "passages" : "visual texts") + '</div><div class="sy-sets">' + h.bank.map(row).join("") + '</div>';
   return out;
 }
-var VT_THEME = { orange: ["#E8711C", "#FFF1E3"], teal: ["#12807A", "#E1F5F3"], violet: ["#5B3FD6", "#EFEAFF"], green: ["#1E9E62", "#E3F6EC"], blue: ["#2F6BD8", "#E6EEFC"], pink: ["#C2417B", "#FDEAF2"] };
+var VT_THEME = { orange: ["#E8711C", "#FFF1E3"], teal: ["#12807A", "#E1F5F3"], violet: ["#5D1E56", "#EFEAFF"], green: ["#1E9E62", "#E3F6EC"], blue: ["#2F6BD8", "#E6EEFC"], pink: ["#C2417B", "#FDEAF2"] };
 /** A visual text drawn from its blocks (built-in and AI-written ones). */
 function mqPoster(p) {
   var T = VT_THEME[p.theme] || VT_THEME.violet, E = esc;
@@ -3145,11 +3236,11 @@ function mqSetView(kind) {
   else if (s.img) out += '<div class="vt-img" id="mqImg">' + SPIN + '</div><p class="cw-tip" style="text-align:center">Tap the picture to make it bigger.</p>';
   out += s.items.map(function(q, i) {
     var pick = X.picks[i];
-    return '<div class="cw-card mq-q"><div class="sy-qh"><span class="sy-qn">' + (i + 1) + '</span></div><div class="mq-text">' + mqQText(q.q) + '</div><div class="mq-opts" role="radiogroup" aria-label="Question ' + (i + 1) + '">' +
+    return '<div class="cw-card mq-q"><div class="sy-qh"><span class="sy-qn">' + (i + 1) + '</span></div><div class="mq-text">' + mqQText(q.q) + '</div>' + listenBtn(q.q) + '<div class="mq-opts" role="radiogroup" aria-label="Question ' + (i + 1) + '">' +
       q.o.map(function(o, k) { return '<button role="radio" aria-checked="' + (pick === k) + '" class="mq-opt' + (pick === k ? ' on' : '') + '" data-mqpick="' + i + ':' + k + '"><b>(' + (k + 1) + ')</b> ' + esc(o) + '</button>'; }).join("") + '</div></div>';
   }).join("");
   var left = s.items.filter(function(q, i) { return X.picks[i] == null; }).length;
-  out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="mqMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button><p class="cw-tip" id="mqNote">' + (X.confirm ? esc(X.confirm) : left ? left + ' question' + (left > 1 ? 's' : '') + ' still to answer.' : 'All answered. Check once more, then mark.') + '</p></div>';
+  out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="mqMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button><p class="cw-tip" id="mqNote">' + (X.confirm ? esc(X.confirm) : left ? left + ' question' + (left > 1 ? 's' : '') + ' still to answer.' : 'All answered. Check once more, then mark.') + '</p>' + drLaterBtn() + '</div>';
   return out;
 }
 function mqResultView(kind) {
@@ -3168,7 +3259,7 @@ function mqResultView(kind) {
       body = '<div class="cf-sent">' + esc(parts[0]) + fill + esc(parts.slice(1).join("____")) + '</div>';
       if (!r.ok) lessons.push({ id: r.c, mine: r.mine ? [parts[0] + r.mine + parts.slice(1).join("____"), parts[0] + r.key + parts.slice(1).join("____")] : null });
     } else {
-      body = '<div class="cf-given" style="font-size:15.5px;color:#1E1735;font-weight:600">' + esc(r.q) + '</div>' + q.o.map(function(o, k) { var key = k === r.a, mine = k === r.pick; if (!key && !mine) return ''; return '<div class="cf-opt' + (key ? ' key' : '') + (mine ? ' mine' : '') + (mine && !key ? ' no' : '') + '"><b>' + (key ? '✓' : '✗') + '</b><span>' + esc(o) + '</span></div>'; }).join("") + (r.pick < 0 ? '<div class="cf-fb"><i>No answer</i></div>' : '');
+      body = '<div class="cf-given" style="font-size:15.5px;color:#1E1A32;font-weight:600">' + esc(r.q) + '</div>' + q.o.map(function(o, k) { var key = k === r.a, mine = k === r.pick; if (!key && !mine) return ''; return '<div class="cf-opt' + (key ? ' key' : '') + (mine ? ' mine' : '') + (mine && !key ? ' no' : '') + '"><b>' + (key ? '✓' : '✗') + '</b><span>' + esc(o) + '</span></div>'; }).join("") + (r.pick < 0 ? '<div class="cf-fb"><i>No answer</i></div>' : '');
       if (!r.ok) lessons.push({ id: r.c });
     }
     return CF.card(r.ok ? "g" : "r", '<span class="cf-qn">Q' + (i + 1) + '</span>' + CF.chip(r.ok ? 1 : 0, 1) + (r.c && !r.ok ? '<span class="cf-tag2">' + esc((LESSONS[r.c] || {}).t || "") + '</span>' : ''), body + (!r.ok && r.w ? '<p class="cf-fb">💡 ' + esc(r.w) + '</p>' : ''));
@@ -3189,7 +3280,7 @@ function mqMark(kind) {
   if (left && !X.confirm) { X.confirm = left + " question" + (left > 1 ? "s are" : " is") + " not answered. Tap again to mark anyway."; var y = window.scrollY; renderMcq(kind); window.scrollTo(0, y); return; }
   X.busy = true; var y2 = window.scrollY; renderMcq(kind); window.scrollTo(0, y2);
   mqCall(kind, "mark", { id: X.set.id, picks: X.picks, looked: Object.keys(X.looked || {}).length }).then(function(r) {
-    X.busy = false; X.res = r; X.confirm = ""; mwRefresh(true);
+    X.busy = false; X.res = r; X.confirm = ""; mwRefresh(true); drDrop(kind, X.set.id);
     var seen = mqSeen(kind); (kind !== "gram" ? [X.set.id] : X.set.items.map(function(q) { return q.bid; })).forEach(function(id) { if (id && seen.indexOf(id) < 0) seen.push(id); }); store("mqseen_" + kind, JSON.stringify(seen.slice(-150)));
     if (S.tab === "compo") renderMcq(kind);
   }).catch(function(e) { X.busy = false; X.err = e.message; if (S.tab === "compo") renderMcq(kind); });
@@ -3201,7 +3292,7 @@ document.addEventListener("click", function(e) {
   if ((t = e.target.closest("[data-mqfresh]"))) { mqStart(kind, { fresh: true }, t); return; }
   if ((t = e.target.closest("[data-mqback]"))) { X.set = null; X.res = null; X.err = ""; X.home = null; renderMcq(kind); return; }
   if ((t = e.target.closest("[data-mqagain]"))) { X.res = null; X.picks = {}; X.confirm = ""; renderMcq(kind); return; }
-  if ((t = e.target.closest("[data-mqpick]"))) { var v = t.getAttribute("data-mqpick").split(":"); X.picks[+v[0]] = +v[1]; X.confirm = ""; var g = t.parentNode; g.querySelectorAll(".mq-opt").forEach(function(b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); }); var left = X.set.items.filter(function(q, i) { return X.picks[i] == null; }).length, n = $("mqNote"), mb = $("mqMark"); if (n) n.textContent = left ? left + " question" + (left > 1 ? "s" : "") + " still to answer." : "All answered. Check once more, then mark."; if (mb) mb.textContent = "✅ Mark my answers"; return; }
+  if ((t = e.target.closest("[data-mqpick]"))) { var v = t.getAttribute("data-mqpick").split(":"); X.picks[+v[0]] = +v[1]; X.confirm = ""; if (X.set && !X.res) drSave(kind, X.set.id, { set: X.set, picks: X.picks, looked: X.looked || {}, label: X.set.title || MQ_INFO[kind].title }); var g = t.parentNode; g.querySelectorAll(".mq-opt").forEach(function(b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); }); var left = X.set.items.filter(function(q, i) { return X.picks[i] == null; }).length, n = $("mqNote"), mb = $("mqMark"); if (n) n.textContent = left ? left + " question" + (left > 1 ? "s" : "") + " still to answer." : "All answered. Check once more, then mark."; if (mb) mb.textContent = "✅ Mark my answers"; return; }
   if ((t = e.target.closest("#mqMark"))) { mqMark(kind); return; }
   if ((t = e.target.closest("[data-mqzoom]"))) { sheet("Visual text", '<img src="' + X.imgUrl + '" alt="The visual text" style="width:100%;border-radius:12px;display:block">'); return; }
 });
@@ -3238,14 +3329,14 @@ function vbSetView(kind) {
   var X = MQ[kind], s = X.set, I = MQ_INFO[kind]; X.looked = X.looked || {};
   var out = '<div class="sy-top"><button class="btn soft" data-mqback>‹ All practice</button></div><div class="cheer-hero" style="padding-top:8px"><span class="hand">' + esc(I.title) + '</span><h1>' + esc(s.title) + '</h1></div><div class="sy-instr">' + esc(s.instr || X.home.instr) + '</div>';
   if (s.help === "test") out += '<div class="msg">🔒 In this set, meanings are switched off for the underlined words and the options. You can still tap the other words.</div>';
-  out += vbPassage(s) + '<div id="vbLook">' + vbLooked(X) + '</div>';
+  out += listenBtn(lstPlain(s.passage), "Listen to the passage") + vbPassage(s) + '<div id="vbLook">' + vbLooked(X) + '</div>';
   out += s.items.map(function(q, i) {
     var pick = X.picks[i];
     return '<div class="cw-card mq-q"><div class="sy-qh"><span class="sy-qn">' + (i + 1) + '</span></div><div class="mq-text">Which is closest in meaning to <u class="vb-qw">' + esc(q.q) + '</u>?' + ' <button class="vb-goto" data-vbgoto="' + i + '">See it in the passage</button></div><div class="mq-opts" role="radiogroup" aria-label="Question ' + (i + 1) + '">' +
       q.o.map(function(o, k) { return '<button role="radio" aria-checked="' + (pick === k) + '" class="mq-opt vb-opt' + (pick === k ? ' on' : '') + '" data-mqpick="' + i + ':' + k + '"><b>(' + (k + 1) + ')</b> <span class="vb-ot">' + esc(o) + '</span>' + (s.help === "test" ? '' : '<span class="vb-def" role="button" tabindex="0" data-vbopt="' + i + ':' + k + '" aria-label="What does ' + esc(o) + ' mean?">📖</span>') + '</button>'; }).join("") + '</div></div>';
   }).join("");
   var left = s.items.filter(function(q, i) { return X.picks[i] == null; }).length;
-  out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="mqMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button><p class="cw-tip" id="mqNote">' + (X.confirm ? esc(X.confirm) : left ? left + ' question' + (left > 1 ? 's' : '') + ' still to answer.' : 'All answered. Check once more, then mark.') + '</p></div>';
+  out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="mqMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button><p class="cw-tip" id="mqNote">' + (X.confirm ? esc(X.confirm) : left ? left + ' question' + (left > 1 ? 's' : '') + ' still to answer.' : 'All answered. Check once more, then mark.') + '</p>' + drLaterBtn() + '</div>';
   return out;
 }
 function vbResultView(kind) {
@@ -3256,7 +3347,7 @@ function vbResultView(kind) {
   out += '<details class="cf-more" open><summary>📖 The passage</summary>' + vbPassage(s, R) + '</details>' + '<div id="vbLook">' + vbLooked(X) + '</div>';
   out += R.results.map(function(r, i) {
     var q = s.items[i];
-    var body = '<div class="cf-given" style="font-size:15.5px;color:#1E1735;font-weight:600">Closest in meaning to <u>' + esc(q.q) + '</u></div>' + q.o.map(function(o, k) { var key = k === r.a, mine = k === r.pick; if (!key && !mine) return ''; return '<div class="cf-opt' + (key ? ' key' : '') + (mine ? ' mine' : '') + (mine && !key ? ' no' : '') + '"><b>' + (key ? '✓' : '✗') + '</b><span>' + esc(o) + '</span></div>'; }).join("") + (r.pick < 0 ? '<div class="cf-fb"><i>No answer</i></div>' : '');
+    var body = '<div class="cf-given" style="font-size:15.5px;color:#1E1A32;font-weight:600">Closest in meaning to <u>' + esc(q.q) + '</u></div>' + q.o.map(function(o, k) { var key = k === r.a, mine = k === r.pick; if (!key && !mine) return ''; return '<div class="cf-opt' + (key ? ' key' : '') + (mine ? ' mine' : '') + (mine && !key ? ' no' : '') + '"><b>' + (key ? '✓' : '✗') + '</b><span>' + esc(o) + '</span></div>'; }).join("") + (r.pick < 0 ? '<div class="cf-fb"><i>No answer</i></div>' : '');
     return CF.card(r.ok ? "g" : "r", '<span class="cf-qn">Q' + (i + 1) + '</span>' + CF.chip(r.ok ? 1 : 0, 1), body + (r.w ? '<p class="cf-fb">💡 ' + esc(r.w) + '</p>' : ''));
   }).join("");
   out += '<div class="sy-btns" style="margin-top:14px"><button class="btn soft big" data-mqagain>↻ Try again</button><button class="btn primary big" data-mqstart="">➡️ Another passage</button>' + (X.home.ai ? '<button class="btn soft big" data-mqfresh>✨ New passage</button>' : '') + '</div>';
@@ -3336,6 +3427,7 @@ function exHomeView() {
   var sub = exSub(), X = EX[sub], h = X.home, P = h.progress || {};
   var out = '<div class="cheer-hero"><span class="hand">' + (sub === "math" ? "Mathematics" : "English") + '</span><h1>📝 Mock Exams</h1><p>Sit a full paper on screen, get it marked straight away, and see exactly what to revise.</p></div>';
   if (X.err) out += '<div class="msg err">' + esc(X.err) + '</div>';
+  drList(function() { if (exSub() === sub && !X.sitting && !X.intro && !X.res) renderExam(); }); out += drCard(["exam"], function(x) { return 'data-exopen="' + esc(x.id) + '"'; });
   var row = function(p) {
     var st = p.locked ? '✅ Done' + (p.best != null ? ' · ' + p.best + '/' + p.marks : '') : p.done ? 'Best ' + p.best + '/' + p.marks + ' · try again' : (p.dueLabel ? 'Due ' + p.dueLabel : 'Not started');
     return '<button class="sy-set pr-pick" data-exopen="' + esc(p.id) + '"><b>' + esc(p.title) + '</b><span>' + p.n + ' questions · ' + p.marks + ' marks' + (p.minutes ? ' · ' + p.minutes + ' min' : '') + ' · ' + esc(st) + '</span></button>';
@@ -3358,23 +3450,25 @@ function exOpen(id, btn) {
   X.intro = p; renderExam();
 }
 function exIntroView() {
-  var X = EX[exSub()], p = X.intro, saved = store(exKey(p.id));
+  var X = EX[exSub()], p = X.intro, saved = store(exKey(p.id)) || drMine()["exam|" + p.id];
   return '<div class="sy-top"><button class="btn soft" data-exback>‹ All papers</button></div><div class="cheer-hero" style="padding-top:8px"><span class="hand">Mock exam</span><h1>' + esc(p.title) + '</h1><p>' + p.n + ' questions · ' + p.marks + ' marks' + (p.minutes ? ' · ' + p.minutes + ' minutes' : '') + '</p></div>' +
     '<div class="cw-card ex-rules"><div class="cw-h">Before you start</div><ul class="cw-list">' + (p.minutes ? '<li>⏱️ You have <b>' + p.minutes + ' minutes</b>. When time is up, your paper is handed in for you.</li>' : '') +
-    '<li>💾 Your answers are saved on this device as you go.</li><li>🔒 This paper is only for our class. It can’t be copied or printed, and your name is shown on it.</li><li>👀 Stay on this page. ' + esc((S.home && S.home.teacher) || "Your teacher") + ' can see if you leave it.</li>' +
+    '<li>💾 Your answers are saved as you go, so you can carry on later, even on another device.' + (p.minutes ? ' <b>The clock keeps running while you’re away.</b>' : ' Tap <b>💾 Later</b> to stop and come back any time.') + '</li><li>🔒 This paper is only for our class. It can’t be copied or printed, and your name is shown on it.</li><li>👀 Stay on this page. ' + esc((S.home && S.home.teacher) || "Your teacher") + ' can see if you leave it.</li>' +
     (p.attempts === 1 ? '<li>☝️ You can hand this paper in <b>once</b>.</li>' : '') + '</ul>' +
     (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<button class="btn primary big" data-exgo="' + esc(p.id) + '" style="width:100%;margin-top:10px">' + (saved ? '▶ Carry on' : '▶ Start the paper') + '</button></div>';
 }
 function exGo(id, btn) {
   var X = EX[exSub()], done = busy(btn, "Opening…"); X.err = "";
-  exCall("start", { id: id }).then(function(p) {
+  exCall("start", { id: id }).then(function(p) { return drLoad("exam", id).then(function(d) { return [p, d]; }); }).then(function(pd) {
+    var p = pd[0], dr = pd[1];
     done(); var sv = {}; try { sv = JSON.parse(store(exKey(id)) || "{}"); } catch (e) {}
+    if (dr && dr.ans && (dr.at || 0) > (sv.at || 0)) sv = dr;   // 💾 saved on another device
     X.paper = p; X.ans = sv.ans || {}; X.t0 = sv.t0 || Date.now(); X.away = sv.away || 0; X.imgs = X.imgs || {}; X.sitting = true; X.intro = null; X.confirm = false;
     exSave(); document.body.classList.add("ex-on");
     (p.subject === "math" ? wpLoad(p).catch(function() {}) : Promise.resolve()).then(function() { renderExam(); exTick(); });   // ✏️📷 drawings and photos kept on this device
   }).catch(function(e) { done(); X.err = e.message; renderExam(); });
 }
-function exSave() { var X = EX[exSub()]; if (X.paper) store(exKey(X.paper.id), JSON.stringify({ ans: X.ans, t0: X.t0, away: X.away })); }
+function exSave() { var X = EX[exSub()]; if (X.paper) { var at = Date.now(); store(exKey(X.paper.id), JSON.stringify({ ans: X.ans, t0: X.t0, away: X.away, at: at })); drSave("exam", X.paper.id, { ans: X.ans, t0: X.t0, away: X.away, label: X.paper.title }); } }
 function exLeft() { var X = EX[exSub()]; return X.paper && X.paper.minutes ? Math.max(0, X.paper.minutes * 60 - Math.floor((Date.now() - X.t0) / 1000)) : null; }
 function exTick() {
   clearInterval(EX.timer);
@@ -3390,22 +3484,22 @@ function exImgSlot(kind, id, k) { return '<div class="ex-img" data-eximg="' + ki
 function exSitView() {
   var sub = exSub(), X = EX[sub], p = X.paper, gdone = {}, MT = sub === "math" ? fracHtml : esc;   // ➗ Maths: fractions stacked
   var left = exLeft(), answered = p.questions.filter(function(q) { var a = X.ans[q.id]; return a && String(a.v == null ? "" : a.v).trim() !== ""; }).length;
-  var wm = esc(p.mark + " · " + p.today), wmSvg = "url(\"data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200"><text x="10" y="110" transform="rotate(-24 160 100)" font-family="Arial" font-size="17" fill="rgba(46,26,120,0.07)">' + wm + '</text></svg>') + "\")";
+  var wm = esc(p.mark + " · " + p.today), wmSvg = "url(\"data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200"><text x="10" y="110" transform="rotate(-24 160 100)" font-family="Arial" font-size="17" fill="rgba(62,18,57,0.07)">' + wm + '</text></svg>') + "\")";
   var h = '<div class="ex-bar"><div class="ex-bar-in"><b>' + esc(p.title) + '</b><span class="ex-cnt">' + answered + ' / ' + p.questions.length + ' answered</span>' + (left != null ? '<span class="ex-time"><span aria-hidden="true">⏱️</span> <span id="exTime">' + Math.floor(left / 60) + ':' + ('0' + (left % 60)).slice(-2) + '</span></span>' : '') +
-    '<button class="btn primary" id="exHand"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to hand in' : 'Hand in') + '</button></div></div>';
+    '<button class="btn soft" data-exlater>' + (X.laterArm ? (left != null ? 'Tap again (clock keeps running)' : 'Tap again to save and leave') : '💾 Later') + '</button><button class="btn primary" id="exHand"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to hand in' : 'Hand in') + '</button></div></div>';
   h += '<div class="ex-paper" style="background-image:' + wmSvg + '" oncopy="return false" oncut="return false" oncontextmenu="return false" ondragstart="return false">';
   p.questions.forEach(function(q) {
     if (q.group && !gdone[q.group]) {
       gdone[q.group] = 1; var g = (p.groups || []).filter(function(x) { return x.id === q.group; })[0];
-      if (g) { h += '<div class="cw-card ex-group">' + (g.title ? '<div class="cw-h">' + esc(g.title) + '</div>' : ''); for (var k = 0; k < (g.imgs || 0); k++) h += exImgSlot("g", g.id, k); if (g.text) h += '<div class="ex-gtext">' + esc(g.text).replace(/\n/g, "<br>") + '</div>'; h += '</div>'; }
+      if (g) { h += '<div class="cw-card ex-group">' + (g.title ? '<div class="cw-h">' + esc(g.title) + '</div>' : ''); for (var k = 0; k < (g.imgs || 0); k++) h += exImgSlot("g", g.id, k); if (g.text) h += listenBtn(g.text, "Listen to the passage") + '<div class="ex-gtext">' + esc(g.text).replace(/\n/g, "<br>") + '</div>'; h += '</div>'; }
     }
     var a = X.ans[q.id] || {}, v = a.v == null ? "" : a.v;
-    h += '<div class="cw-card ex-q" id="exq_' + esc(q.id) + '"><div class="sy-qh"><span class="sy-qn">' + esc(q.n) + '</span><span class="ex-m">[' + q.marks + ' mark' + (q.marks === 1 ? '' : 's') + ']</span></div><div class="ex-prompt">' + MT(q.prompt).replace(/\n/g, "<br>").replace(/_{3,}/g, '<span class="mq-blank"></span>') + '</div>';
+    h += '<div class="cw-card ex-q" id="exq_' + esc(q.id) + '"><div class="sy-qh"><span class="sy-qn">' + esc(q.n) + '</span><span class="ex-m">[' + q.marks + ' mark' + (q.marks === 1 ? '' : 's') + ']</span></div><div class="ex-prompt">' + MT(q.prompt).replace(/\n/g, "<br>").replace(/_{3,}/g, '<span class="mq-blank"></span>') + '</div>' + listenBtn(q.prompt);
     for (var j = 0; j < (q.imgs || 0); j++) h += exImgSlot("q", q.id, j);
     if (q.type === "mcq") h += '<div class="mq-opts" role="radiogroup" aria-label="Question ' + esc(q.n) + '">' + q.options.map(function(o, k2) { var on = String(v) === String(k2); return '<button role="radio" aria-checked="' + on + '" class="mq-opt' + (on ? ' on' : '') + '" data-expick="' + esc(q.id) + ':' + k2 + '"><b>(' + (k2 + 1) + ')</b> ' + MT(o) + '</button>'; }).join("") + '</div>';
     else if (sub === "math" && q.type !== "open") {   // ➗ fraction boxes and a working editor where "/" makes a fraction
       var fq = hasFrac(q.prompt) || q.topic === "fr" || /^fr/.test(q.skill || "");
-      if (q.type === "long") h += '<div class="ex-lab">Working <span class="cw-tip" style="font-weight:600">(shows how you got it: can earn method marks)</span></div>' + workBox(q, a);
+      if (q.type === "long") h += '<div class="ex-lab">Working <span class="cw-tip" style="font-weight:600">(needed: type, write or add a photo of how you got it; it can earn method marks)</span></div>' + workBox(q, a);
       h += '<div class="ex-lab">Answer</div>' + ansField('data-exq="' + esc(q.id) + '"', v, fq);
     }
     else if (q.type === "short") h += '<label class="ex-lab">Answer <input class="ex-in" data-exq="' + esc(q.id) + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false"></label>';
@@ -3435,8 +3529,8 @@ function exSubmit(force) {
   X.busy = true; X.err = ""; exSitView();
   var pics = sub === "math" ? wpCollect(p) : {};
   Object.keys(pics).forEach(function(qid) { pics[qid].forEach(function(x, k) { WP_SHOWN[p.id + ":" + qid + ":" + k] = x.data; }); });   // show them on the result straight away
-  exCall("submit", { id: p.id, answers: X.ans, seconds: Math.round((Date.now() - X.t0) / 1000), away: X.away, pics: pics }).then(function(r) {
-    store(exKey(p.id), null); if (sub === "math") wpClearPaper(p); X.busy = false; X.sitting = false; X.confirm = false; X.res = r; X.home = null; document.body.classList.remove("ex-on"); mwRefresh(true);
+  exCall("submit", { id: p.id, answers: X.ans, seconds: Math.round((Date.now() - X.t0) / 1000), away: X.away, pics: pics, final: !!force }).then(function(r) {
+    store(exKey(p.id), null); drDrop("exam", p.id); if (sub === "math") wpClearPaper(p); X.busy = false; X.sitting = false; X.confirm = false; X.res = r; X.home = null; document.body.classList.remove("ex-on"); mwRefresh(true);
     if (exSub() === sub) renderExam();
   }).catch(function(e) { X.busy = false; X.confirm = false; X.err = e.message + " Your answers are still saved. Try again."; if (exSub() === sub) exSitView(); });
 }
@@ -3493,6 +3587,11 @@ document.addEventListener("click", function(e) {
   if ((t = e.target.closest("[data-exopen]"))) { exOpen(t.getAttribute("data-exopen"), t); return; }
   if ((t = e.target.closest("[data-exgo]"))) { exGo(t.getAttribute("data-exgo"), t); return; }
   if ((t = e.target.closest("[data-exback]"))) { X.intro = null; X.res = null; X.err = ""; X.home = null; renderExam(); return; }
+  if ((t = e.target.closest("[data-exlater]"))) {   // 💾 stop now, carry on later
+    if (!X.laterArm) { X.laterArm = true; t.textContent = exLeft() != null ? "Tap again (clock keeps running)" : "Tap again to save and leave"; setTimeout(function() { X.laterArm = false; if (t.isConnected) t.textContent = "💾 Later"; }, 4000); return; }
+    X.laterArm = false; exSave(); var timed = exLeft() != null; clearInterval(EX.timer); X.sitting = false; X.paper = null; X.intro = null; X.home = null; document.body.classList.remove("ex-on");
+    drFlush().then(function(ok) { toast((ok ? "💾 Saved." : "💾 Saved on this device.") + (timed ? " The clock is still running, so come back soon." : " Carry on any time from Mock Exams.")); }); renderExam(); return;
+  }
   if ((t = e.target.closest("#exHand,#exHand2"))) { exSubmit(false); return; }
   if ((t = e.target.closest("[data-expick]"))) { var v = t.getAttribute("data-expick").split(":"); (X.ans[v[0]] = X.ans[v[0]] || {}).v = Number(v[1]); exSave(); t.parentNode.querySelectorAll(".mq-opt").forEach(function(b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); }); exCount(); return; }
   if ((t = e.target.closest("[data-exzoom]"))) { sheet("Picture", '<div class="ex-zoom" oncontextmenu="return false"><img src="' + t.getAttribute("src") + '" alt="Picture" draggable="false"></div>'); return; }
@@ -3512,6 +3611,179 @@ document.addEventListener("copy", function(e) { if (document.body.classList.cont
 function devKey(k) { return "dc_" + hh((S.home && S.home.me) || "") + "_" + k; }      // 🔒 no name in the key
 function devGet(k) { try { var v = store(devKey(k)); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
 function devPut(k, v) { try { var j = JSON.stringify(v); if (j.length < 150000) store(devKey(k), j); } catch (e) {} }
+// ---------------- 💾 Saved work: everything in the English and Maths tabs is saved as pupils go, on this device and online ----------------
+var DR = { pend: {}, t: null, mine: null, loading: false };
+function drOn() { return !!(S.home && !S.home.preview && S.token); }
+function drKey(kind, id) { return "dr_" + kind + "_" + id; }
+function drMine() { return DR.mine || (DR.mine = {}); }
+/** Saves at once on this device, and online a few seconds after the last change. */
+function drSave(kind, id, data, keep) {
+  if (!drOn() || !id) return;
+  data.at = Date.now(); devPut(drKey(kind, id), data);
+  DR.pend[kind + "|" + id] = { kind: kind, id: String(id), data: data, keep: keep || null };
+  drMine()[kind + "|" + id] = { kind: kind, id: String(id), at: data.at, label: data.label || "" };
+  drPill("…"); clearTimeout(DR.t); DR.t = setTimeout(drFlush, 2500);
+}
+function drFlush() {
+  clearTimeout(DR.t); var all = DR.pend, keys = Object.keys(all); DR.pend = {};
+  if (!keys.length) return Promise.resolve(true);
+  return Promise.all(keys.map(function(k) {
+    var x = all[k];
+    return call("draftApi", "put", JSON.stringify(x)).then(function(r) { var o = JSON.parse(r); if (!o.ok) throw new Error(o.error); })
+      .catch(function(e) { if (!DR.pend[k]) DR.pend[k] = x; throw e; });
+  })).then(function() { drPill("ok"); return true; }, function() { drPill("dev"); clearTimeout(DR.t); DR.t = setTimeout(drFlush, 20000); return false; });
+}
+/** The newest saved copy: this device's, or the online one (e.g. saved on another device). */
+function drLoad(kind, id) {
+  var loc = devGet(drKey(kind, id)); if (!drOn()) return Promise.resolve(null);
+  var m = DR.mine && DR.mine[kind + "|" + id];
+  if (DR.mine && !m) return Promise.resolve(loc);                       // nothing online for this one
+  if (loc && m && (loc.at || 0) >= (m.at || 0)) return Promise.resolve(loc);
+  return call("draftApi", "get", JSON.stringify({ kind: kind, id: String(id) })).then(function(r) {
+    var o = JSON.parse(r), sv = o.ok && o.data ? o.data.data : null;
+    if (sv && (!loc || (sv.at || 0) > (loc.at || 0))) { devPut(drKey(kind, id), sv); return sv; }
+    return loc;
+  }).catch(function() { return loc; });
+}
+/** Handed in: the saved copy goes, here and online. */
+function drDrop(kind, id) {
+  if (!id) return; try { store(devKey(drKey(kind, id)), null); } catch (e) {}
+  delete DR.pend[kind + "|" + id]; if (DR.mine) delete DR.mine[kind + "|" + id];
+  if (drOn()) call("draftApi", "del", JSON.stringify({ kind: kind, id: String(id) })).catch(function() {});
+}
+/** The list of this pupil's saved work online (once per visit), then redraw(). */
+function drList(redraw) {
+  if (DR.mine && DR.listed) return; if (DR.loading || !drOn()) return; DR.loading = true;
+  call("draftApi", "list", "{}").then(function(r) {
+    var o = JSON.parse(r); DR.loading = false; if (!o.ok) return;
+    var m = drMine(); o.data.forEach(function(x) { var k = x.kind + "|" + x.id; if (!m[k] || (m[k].at || 0) < x.at) m[k] = x; });
+    DR.listed = true; if (redraw) redraw();
+  }).catch(function() { DR.loading = false; });
+}
+function drAgo(t) { var m = Math.round((Date.now() - t) / 60000); return m < 2 ? "just now" : m < 60 ? m + " min ago" : m < 1440 ? Math.round(m / 60) + " h ago" : Math.round(m / 1440) + " day" + (m < 2880 ? "" : "s") + " ago"; }
+/** "Carry on where you left off" for one section. attr(x) gives the button's data attribute. */
+function drCard(kinds, attr) {
+  var m = drMine(), list = Object.keys(m).map(function(k) { return m[k]; }).filter(function(x) { return kinds.indexOf(x.kind) > -1; }).sort(function(a, b) { return b.at - a.at; }).slice(0, 6);
+  if (!list.length) return "";
+  return '<div class="cw-card dr-card"><div class="cw-h">💾 Carry on where you left off</div><div class="sy-sets">' + list.map(function(x) {
+    return '<button class="sy-set pr-pick" ' + (attr ? attr(x) : 'data-drgo="' + esc(x.kind + "|" + x.id) + '"') + '><b>▶ ' + esc(x.label || "Your work") + '</b><span>Saved ' + drAgo(x.at) + '</span></button>'; }).join("") + '</div></div>';
+}
+function drLaterBtn() { return '<button class="btn soft" data-drlater style="margin-top:8px;width:100%">💾 Save and finish later</button>'; }
+function drPill(st) {
+  var el = $("drPill");
+  if (!el) { el = document.createElement("div"); el.id = "drPill"; el.setAttribute("role", "status"); el.style.cssText = "position:fixed;left:12px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:60;background:#1E1A32;color:#fff;font:600 12.5px/1 Manrope,system-ui,sans-serif;padding:8px 11px;border-radius:999px;opacity:0;transition:opacity .25s;pointer-events:none"; document.body.appendChild(el); }
+  el.textContent = st === "…" ? "💾 Saving…" : st === "ok" ? "💾 Saved" : "💾 Saved on this device (will save online when the internet is back)";
+  el.style.opacity = "0.92"; clearTimeout(el._t); el._t = setTimeout(function() { el.style.opacity = "0"; }, st === "dev" ? 5000 : 1600);
+}
+document.addEventListener("visibilitychange", function() { if (document.hidden) drFlush(); });
+window.addEventListener("pagehide", function() { drFlush(); });
+// resume a saved piece from a "Carry on" card
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-drgo]"); if (!t) return;
+  var v = t.getAttribute("data-drgo").split("|"), kind = v[0], id = v.slice(1).join("|"); t.disabled = true;
+  drLoad(kind, id).then(function(d) {
+    t.disabled = false;
+    if (!d) { toast("That saved work isn’t here any more."); return; }
+    if (kind === "cloze" || kind === "edit") { var X = PR[kind]; X.p = d.p; X.answers = d.answers || {}; X.res = null; X.confirm = ""; X.err = ""; renderPrac(kind); }
+    else if (kind === "syn") { SY.set = d.set; SY.answers = d.answers || {}; SY.res = null; SY.extra = {}; SY.confirm = ""; SY.err = ""; renderSyn(); }
+    else if (MQ[kind]) { var Q = MQ[kind]; Q.set = d.set; Q.picks = d.picks || {}; Q.res = null; Q.confirm = ""; Q.looked = d.looked || {}; Q.defs = {}; renderMcq(kind); }
+  });
+});
+// 💾 Save and finish later: saves now, then back to the section's list
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-drlater]"); if (!t) return;
+  var sec = S.tab === "compo" ? enSec() : "";
+  t.disabled = true; t.textContent = "Saving…";
+  drFlush().then(function(ok) {
+    toast(ok ? "💾 Saved. Carry on any time: it’s at the top of this page." : "💾 Saved on this device. It will save online when the internet is back.");
+    if (sec === "cloze" || sec === "edit") { PR[sec].p = null; PR[sec].res = null; renderPrac(sec); }
+    else if (sec === "syn") { SY.set = null; SY.res = null; renderSyn(); }
+    else if (MQ[sec]) { MQ[sec].set = null; MQ[sec].res = null; renderMcq(sec); }
+  });
+});
+/* =================== ✨ 9 Nov: 🔊 Listen, 🔁 Revision, 📒 Mistake notebook, 🔥 streaks =================== */
+var LST = { n: 0, t: {}, on: null };
+/** A 🔊 Listen button: reads the text aloud with the device's own voice (nothing is sent anywhere). */
+function listenBtn(text, label) {
+  if (!("speechSynthesis" in window) || !text) return "";
+  var id = "L" + (++LST.n); LST.t[id] = String(text).replace(/<[^>]+>/g, " ").replace(/_{3,}/g, " blank ").replace(/\s+/g, " ").trim();
+  return '<button type="button" class="btn soft lst" data-listen="' + id + '">🔊 ' + esc(label || "Listen") + '</button>';
+}
+function lstStop() { try { speechSynthesis.cancel(); } catch (e) {} if (LST.on) { var b = document.querySelector('[data-listen="' + LST.on + '"]'); if (b) b.innerHTML = b.getAttribute("data-l") || "🔊 Listen"; } LST.on = null; }
+document.addEventListener("click", function(e) {
+  var b = e.target.closest && e.target.closest("[data-listen]"); if (!b) return;
+  var id = b.getAttribute("data-listen"); if (LST.on === id) { lstStop(); return; }
+  lstStop(); var txt = LST.t[id]; if (!txt) return;
+  try {
+    var u = new SpeechSynthesisUtterance(txt); u.lang = "en-GB"; u.rate = (window.A11Y && A11Y.slow) ? .75 : .9;
+    var v = (speechSynthesis.getVoices() || []).filter(function(x) { return /^en-(GB|SG)/i.test(x.lang); })[0]; if (v) u.voice = v;
+    b.setAttribute("data-l", b.innerHTML); b.innerHTML = "⏹ Stop"; LST.on = id;
+    u.onend = u.onerror = function() { if (LST.on === id) lstStop(); };
+    speechSynthesis.speak(u);
+  } catch (x) { flash("This device can’t read aloud.", true); }
+});
+document.addEventListener("visibilitychange", function() { if (document.hidden) lstStop(); });
+function lstPlain(t) { return String(t || "").replace(/\[(\d+):([^\]]+)\]/g, "$2").replace(/\[\d+\]/g, " blank ").replace(/\[\[|\]\]/g, ""); }
+
+/* 🔁 Revision: a 10-minute mixed set from the skills this pupil finds hardest */
+function rvCall(action, d) { return call("reviseApi", action, JSON.stringify(d || {})).then(function(r) { var o = JSON.parse(r); if (!o.ok) throw new Error(o.error); return o.data; }); }
+function rvOpen() {
+  SK.set = null; SK.res = null; SK.picks = {}; SK.busy = false;
+  if (!$("sheet")) sheet("🔁 Revision", SPIN); else { skTitle("🔁 Revision"); skBody(SPIN); }
+  rvCall("start").then(function(s) { SK.set = s; skDraw(); }).catch(function(e) { skBody('<div class="msg">' + esc(e.message) + '</div>'); });
+}
+
+/* 📒 Mistake notebook */
+var MK = { list: null, count: 0, busy: false };
+function mkCall(action, d) { return call("mistakeApi", action, JSON.stringify(d || {})).then(function(r) { var o = JSON.parse(r); if (!o.ok) throw new Error(o.error); return o.data; }); }
+function mkOpen() {
+  if (!$("sheet")) sheet("📒 My mistakes", SPIN); else { skTitle("📒 My mistakes"); skBody(SPIN); }
+  mkCall("list").then(function(d) { MK.list = d.open; MK.count = d.count; MK.fixed = d.fixed; mkDraw(); var c = $("mwCard"); if (c) c.outerHTML = mwCard(); }).catch(function(e) { skBody('<div class="msg err">' + esc(e.message) + '</div>'); });
+}
+function mkDraw() {
+  var L = MK.list || [];
+  var h = '<div class="sk-head">Try each one again. When you get it right, it leaves your notebook.' + (MK.fixed ? ' <b>' + MK.fixed + ' fixed so far!</b>' : '') + '</div>';
+  if (!L.length) h += '<div class="cw-card" style="text-align:center"><div style="font-size:40px">🎉</div><b>Your notebook is empty.</b><p class="cw-tip" style="margin:4px 0 0">Wrong answers from practice and revision show up here.</p></div>';
+  h += L.map(function(m, i) {
+    var MT = m.subject === "math" ? fracHtml : esc, top = '<div class="mk-meta">' + esc(m.src) + (m.skill ? ' · ' + esc(m.skill) : '') + '</div>';
+    var q = top + (m.ctx ? '<div class="cw-tip">' + esc(m.ctx) + '</div>' : '') + '<div class="mq-text">' + MT(m.q) + '</div>' + listenBtn(m.q) +
+      (m.mine !== "" && m.mine != null ? '<div class="mk-mine">You wrote: <s>' + MT(m.mineText || m.mine) + '</s></div>' : '');
+    if (m.fixed) return '<div class="cw-card mk ok">' + q + '<div class="mk-right">✅ Right: <b>' + MT(m.a) + '</b></div>' + (m.w ? '<div class="cw-tip">' + esc(m.w) + '</div>' : '') + '</div>';
+    if (m.kind === "read") return '<div class="cw-card mk">' + q + '<div class="mk-right">A correct answer: <b>' + esc(m.a || "") + '</b></div>' + (m.w ? '<div class="cw-tip">💡 ' + esc(m.w) + '</div>' : '') +
+      '<button class="btn primary" data-mkgot="' + i + '" style="margin-top:8px">✓ I’ve got it</button></div>';
+    var ans = m.o ? '<div class="mq-opts" role="radiogroup" aria-label="Try again">' + m.o.map(function(o, k) { return '<button role="radio" aria-checked="false" class="mq-opt" data-mktry="' + i + ':' + k + '"><b>(' + (k + 1) + ')</b> ' + MT(o) + '</button>'; }).join("") + '</div>'
+      : '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><input class="ex-in" id="mkIn' + i + '" autocomplete="off" aria-label="Your new answer" style="flex:1;min-width:140px">' + (m.unit ? '<span>' + esc(m.unit) + '</span>' : '') + '<button class="btn primary" data-mkcheck="' + i + '">Check</button></div>';
+    return '<div class="cw-card mk">' + q + ans + (m.wrongAgain ? '<div class="msg" role="status">Not yet. Have another go, or <button class="link" data-mkshow="' + i + '">show me the answer</button>.</div>' : '') +
+      (m.shown ? '<div class="mk-right">The answer: <b>' + MT(m.a) + '</b></div>' + (m.w ? '<div class="cw-tip">💡 ' + esc(m.w) + '</div>' : '') : '') + '</div>';
+  }).join("");
+  skBody(h);
+}
+function mkTry(i, v) {
+  var m = MK.list[i]; if (!m || MK.busy) return; MK.busy = true;
+  mkCall("try", { id: m.id, v: v }).then(function(r) { MK.busy = false; if (r.ok) { m.fixed = true; m.a = r.a; m.w = r.w; MK.count = Math.max(0, MK.count - 1); MK.fixed = (MK.fixed || 0) + 1; flash("✅ Fixed! That one leaves your notebook."); } else m.wrongAgain = true; mkDraw(); })
+    .catch(function(e) { MK.busy = false; flash(e.message, true); });
+}
+document.addEventListener("click", function(e) {
+  var t; if (!e.target.closest) return;
+  if ((t = e.target.closest("[data-rvopen]"))) { rvOpen(); return; }
+  if ((t = e.target.closest("[data-mkopen]"))) { mkOpen(); return; }
+  if ((t = e.target.closest("[data-mktry]"))) { var v = t.getAttribute("data-mktry").split(":"); mkTry(+v[0], +v[1]); return; }
+  if ((t = e.target.closest("[data-mkcheck]"))) { var i = +t.getAttribute("data-mkcheck"), el = $("mkIn" + i); if (el && el.value.trim()) mkTry(i, el.value.trim()); return; }
+  if ((t = e.target.closest("[data-mkshow]"))) { var j = +t.getAttribute("data-mkshow"), m = MK.list[j]; mkCall("reveal", { id: m.id }).then(function(r) { m.shown = true; m.a = r.a; m.w = r.w; mkDraw(); }); return; }
+  if ((t = e.target.closest("[data-mkgot]"))) { var k = +t.getAttribute("data-mkgot"), m2 = MK.list[k]; mkCall("gotit", { id: m2.id }).then(function() { MK.list.splice(k, 1); MK.count = Math.max(0, MK.count - 1); MK.fixed = (MK.fixed || 0) + 1; mkDraw(); }); return; }
+});
+
+/* 🔥 Streaks and badges (on Today) */
+function streakHtml() {
+  var st = S.work && S.work.streak; if (!st) return "";
+  var b = st.badges || [];
+  return '<div class="st-row"><span class="st-fire' + (st.today ? ' on' : '') + '">🔥 <b>' + st.days + '</b>-day streak</span>' +
+    (st.today ? '<span class="st-note">Practised today ✓</span>' : st.days ? '<span class="st-note">Practise today to keep it going!</span>' : '<span class="st-note">Practise today to start a streak</span>') +
+    (st.next ? '<span class="st-note">Next badge at ' + st.next + ' days</span>' : '') + '</div>' +
+    (b.length ? '<div class="st-badges">' + b.map(function(x) { return '<span class="st-badge">' + (x.kind === "streak" ? "🔥" : "⭐") + ' ' + esc(x.name) + '</span>'; }).join("") + '</div>' : '');
+}
+function streakCheer() { var st = S.work && S.work.streak; if (st && st.awarded && st.awarded.length && !MW.cheered) { MW.cheered = true; flash("🔥 " + st.awarded[st.awarded.length - 1] + "-day streak! A stamp for your group."); } }
+function synDid() { var st = SY.set; return st ? (st.id || "q" + hh(st.questions.map(function(q) { return q.id; }).join(","))) : ""; }
 /** Shows the saved copy straight away (if there is one) and fetches a fresh one quietly; redraw() runs only if something changed. */
 function swrHome(X, key, load, redraw) {
   if (!X.home) { var c = devGet(key); if (c) { X.home = c; X._stale = true; } }
@@ -3740,7 +4012,7 @@ function padSetup(c) {
 }
 function padStroke(ctx, s, k) {
   if (!s.p.length) return;
-  ctx.globalCompositeOperation = s.e ? "destination-out" : "source-over"; ctx.strokeStyle = "#1E1735"; ctx.fillStyle = "#1E1735"; ctx.lineCap = ctx.lineJoin = "round";
+  ctx.globalCompositeOperation = s.e ? "destination-out" : "source-over"; ctx.strokeStyle = "#1E1A32"; ctx.fillStyle = "#1E1A32"; ctx.lineCap = ctx.lineJoin = "round";
   var pts = s.p, base = s.e ? 22 : 2.6;
   if (pts.length === 1) { ctx.beginPath(); ctx.arc(pts[0].x * k, pts[0].y * k, base * k * 0.6, 0, 7); ctx.fill(); return; }
   for (var i = 1; i < pts.length; i++) {
@@ -3884,7 +4156,7 @@ function batchable(fn, args) {
 /** ⚡ The student site starts the first server trip in the page's <head>, before the rest loads. Use it if it matches. */
 function earlyTake(fn, args) {
   var E = window.__EARLY, x = E && E[fn]; if (!x) return null; delete E[fn];
-  if (x.key !== JSON.stringify(args)) return null;
+  if (x.key !== JSON.stringify(args).replace(/\|[^"]*"/g, '"')) return null;   // (the device tag isn't in the early trip)
   return x.p.then(function(t) { var d = JSON.parse(t); if (!d.ok) throw new Error(d.error || ""); return d.result; }).catch(function() { return apiDirect(fn, args); });
 }
 function api(fn, args) {
@@ -4059,19 +4331,22 @@ function hubTodayLocal() { var d = new Date(); return d.getFullYear() + "-" + St
 function skOpen(subject, skill) {
   SK.set = null; SK.res = null; SK.picks = {}; SK.busy = false;
   if (!$("sheet")) sheet("🎯 Skill practice", SPIN); else { skTitle("🎯 Skill practice"); skBody(SPIN); }
-  skCall("start", { subject: subject, skill: skill }).then(function(s) { SK.set = s; skDraw(); })
+  drLoad("sk", subject + "_" + skill).then(function(d) {
+    if (d && d.set && d.set.id) { SK.set = d.set; SK.picks = d.picks || {}; skDraw(); return; }   // 💾 carry on
+    return skCall("start", { subject: subject, skill: skill }).then(function(s) { SK.set = s; skDraw(); });
+  })
     .catch(function(e) { skBody('<div class="msg err">' + esc(e.message) + '</div><button class="btn soft big" data-skhome style="margin-top:10px">🎯 My skills</button>'); });
 }
 function skQText(q) { return fracHtml(q).replace(/_{3,}/g, '<span class="mq-blank"></span>'); }
 function skDraw() {
-  var s = SK.set; skTitle((s.mode === "recheck" ? "🔁 Check again: " : "🎯 Practise: ") + s.name);
-  var h = '<div class="sk-head">' + (s.mode === "recheck" ? 'A quick check on a skill you practised last week. Get <b>' + s.pass + ' of ' + s.items.length + '</b> right to make it 🟢 secure.' : 'Get <b>' + s.pass + ' of ' + s.items.length + '</b> right to move on. Next week there’s a quick check to make sure it’s stuck.') + '</div>';
+  var s = SK.set; if (s.revise) skTitle("🔁 Revision"); else skTitle((s.mode === "recheck" ? "🔁 Check again: " : "🎯 Practise: ") + s.name);
+  var h = s.revise ? '<div class="sk-head">10 minutes of mixed questions from the skills you find hardest. Wrong answers go into your 📒 Mistake notebook.</div>' : '<div class="sk-head">' + (s.mode === "recheck" ? 'A quick check on a skill you practised last week. Get <b>' + s.pass + ' of ' + s.items.length + '</b> right to make it 🟢 secure.' : 'Get <b>' + s.pass + ' of ' + s.items.length + '</b> right to move on. Next week there’s a quick check to make sure it’s stuck.') + '</div>';
   var MT = s.subject === "math" ? fracHtml : esc;   // ➗ Maths: fractions stacked, answered in fraction boxes
   h += s.items.map(function(q, i) {
     var pick = SK.picks[i];
-    return '<div class="cw-card mq-q"><div class="sy-qh"><span class="sy-qn">' + (i + 1) + '</span></div><div class="mq-text sk-q">' + (s.subject === "math" ? skQText(q.q) : mqQText(q.q)) + '</div>' +
+    return '<div class="cw-card mq-q"><div class="sy-qh"><span class="sy-qn">' + (i + 1) + '</span></div><div class="mq-text sk-q">' + ((q.subject || s.subject) === "math" ? skQText(q.q) : mqQText(q.q)) + (q.tag ? '<div class="mk-meta">' + esc(q.tag) + '</div>' : '') + listenBtn(q.q) + '</div>' +
       (q.o ? '<div class="mq-opts" role="radiogroup" aria-label="Question ' + (i + 1) + '">' + q.o.map(function(o, k) { return '<button role="radio" aria-checked="' + (pick === k) + '" class="mq-opt' + (pick === k ? ' on' : '') + '" data-skpick="' + i + ':' + k + '"><b>(' + (k + 1) + ')</b> ' + MT(o) + '</button>'; }).join("") + '</div>'
-        : '<div class="sk-num"><div class="ex-lab">Your answer</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' + (s.subject === "math" ? ansField('id="skIn' + i + '" data-skin="' + i + '"', pick, /^fr/.test(s.skill || "") || hasFrac(q.q)) : '<input class="ex-in" id="skIn' + i + '" data-skin="' + i + '" inputmode="decimal" autocomplete="off" value="' + esc(pick == null ? "" : pick) + '" style="max-width:220px">') + (q.unit ? '<b>' + esc(q.unit) + '</b>' : '') + '</div></div>') + '</div>';
+        : '<div class="sk-num"><div class="ex-lab">Your answer</div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">' + ((q.subject || s.subject) === "math" ? ansField('id="skIn' + i + '" data-skin="' + i + '"', pick, /^fr/.test(s.skill || "") || hasFrac(q.q)) : '<input class="ex-in" id="skIn' + i + '" data-skin="' + i + '" inputmode="decimal" autocomplete="off" value="' + esc(pick == null ? "" : pick) + '" style="max-width:220px">') + (q.unit ? '<b>' + esc(q.unit) + '</b>' : '') + '</div></div>') + '</div>';
   }).join("");
   skBody(h + '<button class="btn primary big" data-skmark style="width:100%;margin-top:6px">✅ Check my answers</button><div id="skMsg"></div>');
 }
@@ -4081,12 +4356,13 @@ function skMark(btn) {
   var left = s.items.filter(function(q, i) { return SK.picks[i] == null; }).length;
   if (left && !SK.confirm) { SK.confirm = true; $("skMsg").innerHTML = '<div class="msg err" role="alert">' + left + ' question' + (left === 1 ? ' isn’t' : 's aren’t') + ' answered yet. Tap “Check my answers” again to hand in anyway.</div>'; return; }
   SK.busy = true; var done = busy(btn, "Checking…");
-  skCall("mark", { id: s.id, picks: SK.picks }).then(function(r) { SK.busy = false; SK.confirm = false; SK.res = r; skResult(); }).catch(function(e) { SK.busy = false; done(); $("skMsg").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+  (s.revise ? rvCall("mark", { id: s.id, picks: SK.picks }) : skCall("mark", { id: s.id, picks: SK.picks })).then(function(r) { drDrop("sk", s.subject + "_" + s.skill); if (s.revise) mwRefresh(true); SK.busy = false; SK.confirm = false; SK.res = r; skResult(); }).catch(function(e) { SK.busy = false; done(); $("skMsg").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
 }
 function skResult() {
   var r = SK.res, s = SK.set, E = s.subject === "math" ? fracHtml : esc;
   var star = r.pass ? (r.next === "secure" ? "Secure! You’ve got " + r.name + "." : "Well done! You’ll do a quick check on " + (r.due || "next week") + ".") : (r.got ? r.got + " right. Keep going!" : "Good try. Have a look at the answers below.");
   var aim = r.pass ? (r.next === "secure" ? "Keep using it in your work." : "Come back for the check next week.") : "Get " + s.pass + " right to move on. Try a new set when you’re ready.";
+  if (s.revise) { star = r.got === r.max ? "Every answer right!" : r.got + " of " + r.max + " right."; aim = r.got === r.max ? "Great revision. Come back tomorrow for a new mix." : "The ones you got wrong are in your 📒 Mistake notebook. Try them again there."; }
   var h = CF.sum({ got: r.got, max: r.max, star: star, aim: aim });
   var wrongEn = [], right = [];
   r.results.forEach(function(x, i) { if (x.ok) right.push('<span class="sk-r"><b>Q' + (i + 1) + '</b> ' + E(s.items[i].o ? s.items[i].o[x.key] : x.keyText) + '</span>'); });
@@ -4108,13 +4384,14 @@ function skResult() {
 }
 document.addEventListener("click", function(e) {
   var t;
-  if ((t = e.target.closest("[data-skpick]"))) { var v = t.getAttribute("data-skpick").split(":"); SK.picks[+v[0]] = +v[1]; SK.confirm = false; t.parentNode.querySelectorAll(".mq-opt").forEach(function(b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); }); return; }
+  if ((t = e.target.closest("[data-skpick]"))) { var v = t.getAttribute("data-skpick").split(":"); SK.picks[+v[0]] = +v[1]; SK.confirm = false; t.parentNode.querySelectorAll(".mq-opt").forEach(function(b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); }); skKeep(); return; }
   if ((t = e.target.closest("[data-skmark]"))) { skMark(t); return; }
   if ((t = e.target.closest("[data-skgo]"))) { var p = t.getAttribute("data-skgo").split(":"); skOpen(p[0], p[1]); return; }
   if ((t = e.target.closest("[data-skhome]"))) { skHome(); return; }
-  if ((t = e.target.closest("[data-sksec]"))) { var sc = t.getAttribute("data-sksec"); closeSheet(); EN.sec = sc; try { store("ensec", sc); } catch (x) {} go("compo"); return; }
+  if ((t = e.target.closest("[data-sksec]"))) { var sc = t.getAttribute("data-sksec"); closeSheet(); EN.home = false; EN.sec = sc; try { store("ensec", sc); } catch (x) {} go("compo"); return; }
 });
-document.addEventListener("input", function(e) { var t = e.target; if (t && t.hasAttribute && t.hasAttribute("data-skin")) { SK.confirm = false; if (t.value.trim()) SK.picks[+t.getAttribute("data-skin")] = t.value.trim(); else delete SK.picks[+t.getAttribute("data-skin")]; } });
+document.addEventListener("input", function(e) { var t = e.target; if (t && t.hasAttribute && t.hasAttribute("data-skin")) { SK.confirm = false; if (t.value.trim()) SK.picks[+t.getAttribute("data-skin")] = t.value.trim(); else delete SK.picks[+t.getAttribute("data-skin")]; skKeep(); } });
+function skKeep() { var s = SK.set; if (s && !SK.res) drSave("sk", s.subject + "_" + s.skill, { set: s, picks: SK.picks, label: s.name }, [s.id]); }
 // ---------------- 🧭 Desktop side menu: always starts below the header and any banner (Teacher view, My work) ----------------
 function sideFit() {
   var t = document.querySelector(".tabs"); if (!t) return;
@@ -4135,7 +4412,7 @@ function sideFit() {
 var CW = { st: null, cur: null, pages: [], busy: false, view: null, qimg: {} };
 var CW_EMO = { cw: "📖", sw: "✉️" };
 // ---------------- English Assistant: ✍️ Compo and 📖 Comprehension ----------------
-var EN = { sec: "" }, CMX = { html: null, route: "home" };
+var EN = { sec: "", home: true }, CMX = { html: null, route: "home" };
 var AI_NOTE = '<p class="ai-note">🤖 An AI helps check your work. It never sees your name.</p>';
 function enHas() { var h = S.home || {}, e = h.english || { compo: !!h.compo, comp: false }; return { compo: !!e.compo, comp: !!e.comp, syn: !!e.syn, cloze: !!e.cloze, edit: !!e.edit, oral: !!e.oral, gram: !!e.gram, vt: !!e.vt, vocab: !!e.vocab, exam: !!e.exam }; }
 function enSec() {
@@ -4146,14 +4423,52 @@ function enSec() {
   return e.compo ? "compo" : e.comp ? "comp" : e.syn ? "syn" : e.cloze ? "cloze" : e.edit ? "edit" : e.gram ? "gram" : e.vocab ? "vocab" : e.vt ? "vt" : e.exam ? "exam" : "oral";
 }
 function enSwitch() {
-  var e = enHas(), s = enSec();
-  var n = (e.compo ? 1 : 0) + (e.comp ? 1 : 0) + (e.syn ? 1 : 0) + (e.cloze ? 1 : 0) + (e.edit ? 1 : 0) + (e.oral ? 1 : 0) + (e.gram ? 1 : 0) + (e.vocab ? 1 : 0) + (e.vt ? 1 : 0) + (e.exam ? 1 : 0);
-  if (n < 2) return "";
-  var b = function(k, t) { return '<button role="tab" aria-selected="' + (s === k) + '" class="' + (s === k ? 'on' : '') + '" data-ensec="' + k + '">' + t + '</button>'; };
-  return AI_NOTE + '<div class="en-sw' + (n >= 3 ? ' n3' : '') + '" role="tablist" aria-label="English Assistant">' + (e.compo ? b("compo", '<span class="i">✍️</span> <span>Compo</span>') : '') + (e.comp ? b("comp", '<span class="i">📖</span> <span>Comprehension</span>') : '') + (e.syn ? b("syn", '<span class="i">🔁</span> <span>Synthesis</span>') : '') + (e.cloze ? b("cloze", '<span class="i">🧩</span> <span>Cloze</span>') : '') + (e.edit ? b("edit", '<span class="i">✏️</span> <span>Spelling &amp; Grammar</span>') : '') + (e.gram ? b("gram", '<span class="i">🔤</span> <span>Grammar</span>') : '') + (e.vocab ? b("vocab", '<span class="i">📖</span> <span>Vocabulary</span>') : '') + (e.vt ? b("vt", '<span class="i">🖼️</span> <span>Visual Text</span>') : '') + (e.oral ? b("oral", '<span class="i">🎤</span> <span>Oral</span>') : '') + (e.exam ? b("exam", '<span class="i">📝</span> <span>Mock Exam</span>') : '') + '</div>';
+  if (enCount() < 2) return "";
+  var s = enSec(), I = EN_INFO[s] || ["English"];
+  return '<div class="en-back"><button class="btn soft" data-enhome>‹ English</button><b>' + esc(I[0]) + '</b></div>';
 }
+/* ---------------- 📚 English home: one tile per section, and "carry on where you left off" ---------------- */
+var EN_INFO = {
+  compo: ["Compo", "Write and hand in your compo", "M4 20h4L19 9l-4-4L4 16zM13 7l4 4"],
+  comp: ["Comprehension", "Read a passage and answer", "M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1zM12 6v14"],
+  syn: ["Synthesis", "Join sentences, PSLE style", "M4 7h11l-3-3M20 17H9l3 3"],
+  cloze: ["Cloze", "Fill in the blanks", "M4 6h16M4 12h6M14 12h6M4 18h16"],
+  edit: ["Spelling & Grammar", "Find and fix the mistakes", "M5 19L12 5l7 14M8 13h8"],
+  gram: ["Grammar", "Quick grammar questions", "M5 6h14M5 12h14M5 18h9"],
+  vocab: ["Vocabulary", "Words in context", "M4 19V5h11l5 5v9zM14 5v5h5"],
+  vt: ["Visual Text", "Read posters and adverts", "M3 5h18v14H3zM7 9h6M7 13h10"],
+  oral: ["Oral", "Reading aloud and conversation", "M12 3a3 3 0 013 3v6a3 3 0 01-6 0V6a3 3 0 013-3zM5 11a7 7 0 0014 0M12 18v3"],
+  exam: ["Mock exams", "Full English papers", "M6 3h9l4 4v14H6zM9 12h7M9 16h7"]
+};
+var EN_ORDER = ["compo", "comp", "syn", "cloze", "edit", "gram", "vocab", "vt", "oral", "exam"];
+function enCount() { var e = enHas(); return EN_ORDER.filter(function(k) { return e[k]; }).length; }
+function svgI(d, sz) { return '<svg width="' + (sz || 22) + '" height="' + (sz || 22) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"/></svg>'; }
+function renderEnHome() {
+  window.scrollTo(0, 0); $("topTitle").textContent = "English Assistant";
+  drList(function() { if (S.tab === "compo" && EN.home) renderEnHome(); });
+  var e = enHas(), m = drMine(), items = mwItems();
+  var saved = Object.keys(m).map(function(k) { return m[k]; }).filter(function(x) { return EN_INFO[x.kind] && x.kind !== "exam" && e[x.kind]; }).sort(function(a, b) { return b.at - a.at; })[0];
+  var h = '<div class="en-home"><div class="en-hero"><span class="en-eye">English Assistant</span><h1>What shall we practise?</h1></div>' + AI_NOTE;
+  if (saved) h += '<button class="en-carry" data-encarry="' + esc(saved.kind + "|" + saved.id) + '"><span class="en-carry-ic">' + svgI(EN_INFO[saved.kind][2], 26) + '</span><span class="en-carry-t"><small>Carry on where you left off · saved ' + drAgo(saved.at) + '</small><b>' + esc(saved.label || EN_INFO[saved.kind][0]) + '</b></span><span class="en-carry-go">Carry on</span></button>';
+  h += '<div class="en-tiles">' + EN_ORDER.filter(function(k) { return e[k]; }).map(function(k) {
+    var I = EN_INFO[k], todo = items.filter(function(x) { return x.sec === k && !x.done; }), late = todo.some(function(x) { return x.late; });
+    var inProg = Object.keys(m).some(function(key) { return m[key].kind === k; });
+    var tag = late ? '<span class="en-tag late">Late</span>' : todo.length ? '<span class="en-tag due">' + (todo[0].dueLabel ? 'Due ' + esc(todo[0].dueLabel) : todo.length + ' to do') + '</span>' : inProg ? '<span class="en-tag prog">In progress</span>' : '';
+    var sub = todo.length ? todo.length + ' from ' + esc((S.home && S.home.teacher) || 'your teacher') : I[1];
+    return '<button class="en-tile' + (todo.length ? ' hot' : '') + '" data-ensec="' + k + '"><span class="en-tile-top"><span class="en-tile-ic">' + svgI(I[2], 20) + '</span>' + tag + '</span><span class="en-tile-b"><b>' + I[0] + '</b><small>' + sub + '</small></span></button>';
+  }).join("") + '</div></div>';
+  $("app").innerHTML = h + '<div style="height:24px"></div>';
+}
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-encarry],[data-enhome]"); if (!t) return;
+  if (t.hasAttribute("data-enhome")) { if (typeof orStopAll === "function") orStopAll(); EN.home = true; renderCompo(); return; }
+  var v = t.getAttribute("data-encarry").split("|"), kind = v[0], id = v.slice(1).join("|");
+  EN.home = false; EN.sec = kind; if (!S.preview) store("ensec", kind);
+  if (kind === "comp") { CMX.openPid = id; renderCompo(); return; }
+  var b = document.createElement("button"); b.setAttribute("data-drgo", kind + "|" + id); b.style.display = "none"; document.body.appendChild(b); renderCompo(); b.click(); b.remove();
+});
 /** 📖 Comprehension: the comprehension screens (the same page the teacher uses) in a frame, signed in as this pupil. */
-var CMX_V = "20261104";   // bump when comprehension.html changes, so no device keeps an old copy
+var CMX_V = "20261109";   // bump when comprehension.html changes, so no device keeps an old copy
 function renderComp() {
   window.scrollTo(0, 0);
   $("app").innerHTML = '<div id="enSwWrap">' + enSwitch() + '</div><div class="cm-wrap">' + SPIN + '</div>';
@@ -4189,6 +4504,7 @@ function cmFit() {
 window.addEventListener("resize", function() { if (S.tab === "compo") cmFit(); });
 function renderCompo() {
   $("topTitle").textContent = "English Assistant";
+  if (EN.home && enCount() > 1 && !(EX.english && EX.english.sitting)) return renderEnHome();
   if (enSec() === "comp") return renderComp();
   if (enSec() === "syn") return renderSyn();
   if (enSec() === "cloze" || enSec() === "edit") return renderPrac(enSec());
@@ -4426,7 +4742,7 @@ function cwExplain(t) {
 document.addEventListener("click", function(e) {
   if (S.tab !== "compo") return;
   var t;
-  if ((t = e.target.closest("[data-ensec]"))) { if (typeof orStopAll === "function") orStopAll(); EN.sec = t.getAttribute("data-ensec"); if (!S.preview) store("ensec", EN.sec); CW.view = null; CW.cur = null; renderCompo(); return; }
+  if ((t = e.target.closest("[data-ensec]"))) { if (typeof orStopAll === "function") orStopAll(); EN.home = false; EN.sec = t.getAttribute("data-ensec"); if (!S.preview) store("ensec", EN.sec); CW.view = null; CW.cur = null; renderCompo(); return; }
   if ((t = e.target.closest("[data-cwtask]"))) { var nt = CW.st.tasks.filter(function(x) { return x.id === t.getAttribute("data-cwtask"); })[0]; if (nt) { if (!CW.cur || CW.cur.id !== nt.id) CW.pages = []; CW.cur = nt; drawCompoTask(); window.scrollTo(0, 0); } return; }
   if ((t = e.target.closest("#cwBack"))) { CW.cur = null; CW.review = false; drawCompoHome(); return; }
   if ((t = e.target.closest("[data-cwdel]"))) { CW.pages.splice(+t.getAttribute("data-cwdel"), 1); drawCompoTask(); return; }
@@ -4477,6 +4793,7 @@ function prHomeView(kind) {
   var row = function(p, tag) { var b = best[p.id]; return '<button class="sy-set pr-pick" data-prstart="' + esc(p.id) + '"><b>' + esc(p.title) + '</b><span>' + p.n + ' ' + I.unit + 's · ' + p.n + ' marks' + (b != null ? ' · your best ' + b + '/' + p.n : '') + (tag ? ' · ' + tag : '') + '</span></button>'; };
   var out = '<div class="cheer-hero"><span class="hand">' + esc(I.hand) + '</span><h1>' + esc(I.title) + '</h1><p>' + esc(I.blurb) + '</p></div>';
   if (X.err) out += '<div class="msg err">' + esc(X.err) + '</div>';
+  drList(function() { if (S.tab === "compo" && enSec() === kind && !X.p) renderPrac(kind); }); out += drCard([kind]);
   out += '<div class="cw-card sy-start"><div><div class="cw-h">' + (kind === "cloze" ? '🧩' : '✏️') + ' Practise a passage</div><p class="cw-tip" style="margin:0">' + esc(h.instr) + '</p></div>' +
     '<div class="sy-btns"><button class="btn primary big" data-prstart="">Start</button><button class="btn soft" data-prfresh>✨ New passage</button></div></div>';
   if (h.sets && h.sets.length) out += '<div class="cw-h" style="margin:18px 2px 8px">📌 From ' + esc(h.teacher || "your teacher") + '</div><div class="sy-sets">' + h.sets.map(function(p) { return row(p); }).join("") + '</div>';
@@ -4514,7 +4831,7 @@ function prMarkAll(kind) {
   if (!X.confirm && blank) { X.confirm = blank + " " + PR_INFO[kind].unit + (blank > 1 ? "s are" : " is") + " still empty. Tap again to mark anyway."; var y = window.scrollY; renderPrac(kind); window.scrollTo(0, y); return; }
   X.busy = true; X.err = ""; var y2 = window.scrollY; renderPrac(kind); window.scrollTo(0, y2);
   prCall(kind, "mark", { id: p.id, answers: X.answers }).then(function(r) { mwRefresh(true);
-    X.busy = false; X.res = r; X.confirm = "";
+    X.busy = false; X.res = r; X.confirm = ""; drDrop(kind, p.id);
     var s = prSeen(kind); if (s.indexOf(p.id) < 0) s.push(p.id); store("prseen_" + kind, JSON.stringify(s.slice(-50)));
     var b = prBest(kind); if (!/^pa_/.test(p.id) && (b[p.id] == null || r.total > b[p.id])) { b[p.id] = r.total; store("prbest_" + kind, JSON.stringify(b)); }
     if (S.tab === "compo") renderPrac(kind);
@@ -4534,6 +4851,7 @@ document.addEventListener("input", function(e) {
   var el = e.target; if (!el || !el.classList || !el.classList.contains("pr-in")) return;
   var kind = enSec(), X = PR[kind]; if (!X) return;
   X.answers = X.answers || {}; X.answers[el.getAttribute("data-prn")] = el.value;
+  if (X.p && !X.res) drSave(kind, X.p.id, { p: X.p, answers: X.answers, label: X.p.title });
   if (X.confirm) { X.confirm = ""; var b = $("prMark"); if (b) b.textContent = "✅ Mark my answers"; var n = $("prNote"); if (n) n.textContent = "Check your spelling: a misspelt word gets no mark."; }
 });
 document.addEventListener("keydown", function(e) {   // Enter in a blank jumps to the next blank
@@ -4584,6 +4902,7 @@ function synHomeView() {
   var h = SY.home, seen = synSeen();
   var out = '<div class="cheer-hero"><span class="hand">PSLE Paper 2</span><h1>Synthesis &amp; Transformation</h1><p>Join or change sentences using the word given, without changing the meaning. Each question is worth 2 marks.</p></div>';
   if (SY.err) out += '<div class="msg err">' + esc(SY.err) + '</div>';
+  drList(function() { if (S.tab === "compo" && enSec() === "syn" && !SY.set && !SY.res) renderSyn(); }); out += drCard(["syn"]);
   out += '<div class="cw-card sy-start"><div><div class="cw-h">📝 PSLE practice set</div><p class="cw-tip" style="margin:0">5 questions, each a different type, like the real paper. 10 marks.</p></div>' +
     '<div class="sy-btns"><button class="btn primary big" data-systart="">Start</button><button class="btn soft" data-syfresh="">✨ 5 new questions</button></div></div>';
   if (h.sets && h.sets.length) out += '<div class="cw-h" style="margin:18px 2px 8px">📌 From ' + esc(h.teacher || "your teacher") + '</div><div class="sy-sets">' +
@@ -4597,7 +4916,7 @@ function synHomeView() {
 }
 function synQCard(q, i, val, idp) {
   return '<div class="cw-card sy-q"><div class="sy-qh"><span class="sy-qn">Q' + i + '</span><span class="sy-m">2 marks</span></div>' +
-    '<div class="sy-given">' + esc(q.s) + '</div><div class="sy-use">Use: <b>' + esc(q.w) + '</b></div>' +
+    '<div class="sy-given">' + esc(q.s) + '</div>' + listenBtn(q.s) + '<div class="sy-use">Use: <b>' + esc(q.w) + '</b></div>' +
     '<div class="sy-line" aria-hidden="true">' + synTpl(q.tpl) + '</div>' +
     '<label class="sr" for="' + idp + esc(q.id) + '">Your answer to question ' + i + '</label>' +
     '<textarea class="sy-ans" rows="2" id="' + idp + esc(q.id) + '" data-syq="' + esc(q.id) + '" placeholder="Write the whole sentence here" autocapitalize="sentences" spellcheck="false">' + esc(val || "") + '</textarea></div>';
@@ -4609,7 +4928,7 @@ function synSetView() {
   out += st.questions.map(function(q, i) { return synQCard(q, i + 1, SY.answers[q.id], "syA_"); }).join("");
   out += (SY.err ? '<div class="msg err">' + esc(SY.err) + '</div>' : '') +
     '<div class="cw-card sy-go"><button class="btn primary big" id="syMark"' + (SY.busy ? ' disabled' : '') + '>' + (SY.busy ? 'Marking…' : SY.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button>' +
-    '<p class="cw-tip" id="syNote">' + (SY.busy ? 'Checking every sentence… (about 15 seconds)' : SY.confirm || 'Check spelling, capital letters and the full stop before you mark.') + '</p></div>';
+    '<p class="cw-tip" id="syNote">' + (SY.busy ? 'Checking every sentence… (about 15 seconds)' : SY.confirm || 'Check spelling, capital letters and the full stop before you mark.') + '</p>' + drLaterBtn() + '</div>';
   return out;
 }
 /** "Try a similar one": a new question of the same type, answered and marked right here. */
@@ -4635,7 +4954,7 @@ function synMarkAll() {
   if (!SY.confirm && blank) { SY.confirm = blank + " question" + (blank > 1 ? "s are" : " is") + " still blank. Tap again to mark anyway."; renderSyn(); var b = $("syMark"); if (b) b.scrollIntoView({ block: "center" }); return; }
   SY.busy = true; SY.err = ""; renderSyn(); var b2 = $("syMark"); if (b2) b2.scrollIntoView({ block: "center" });
   synCall("mark", { questions: st.questions, answers: SY.answers, label: st.label }).then(function(r) { mwRefresh(true);
-    SY.busy = false; SY.res = r; SY.confirm = ""; synMarkSeen(st.questions.map(function(q) { return q.id; })); if (S.tab === "compo") renderSyn();
+    drDrop("syn", synDid()); SY.busy = false; SY.res = r; SY.confirm = ""; synMarkSeen(st.questions.map(function(q) { return q.id; })); if (S.tab === "compo") renderSyn();
   }).catch(function(e) { SY.busy = false; SY.err = e.message; if (S.tab === "compo") renderSyn(); });
 }
 function synRedrawKeepScroll() { var y = window.scrollY; renderSyn(); window.scrollTo(0, y); }
@@ -4669,7 +4988,7 @@ document.addEventListener("input", function(e) {
   var el = e.target; if (!el || !el.classList || !el.classList.contains("sy-ans")) return;
   synGrow(el);
   var id = el.getAttribute("data-syq");
-  if (/^syA_/.test(el.id)) { SY.answers[id] = el.value; if (SY.confirm) { SY.confirm = ""; var b = $("syMark"); if (b) b.textContent = "✅ Mark my answers"; var n = $("syNote"); if (n) n.textContent = "Check spelling, capital letters and the full stop before you mark."; } }
+  if (/^syA_/.test(el.id)) { SY.answers[id] = el.value; if (SY.set && !SY.res) drSave("syn", synDid(), { set: SY.set, answers: SY.answers, label: SY.set.label || SY.set.title || "Synthesis practice" }, SY.set.questions.map(function(q) { return q.id; })); if (SY.confirm) { SY.confirm = ""; var b = $("syMark"); if (b) b.textContent = "✅ Mark my answers"; var n = $("syNote"); if (n) n.textContent = "Check spelling, capital letters and the full stop before you mark."; } }
   else { Object.keys(SY.extra).forEach(function(k) { var x = SY.extra[k]; if (x.q && x.q.id === id) x.ans = el.value; }); }
 });
 
@@ -4941,7 +5260,7 @@ function maGuideNext(m) { MA.g++; MA.tries = 0; MA.fb = null; renderMath(); }
 /** The bar model as a picture (same layout as Model & Disc Math Studio). */
 function maSvg(m, lvl) {
   if (lvl == null) lvl = 4;
-  var FILLS = ["#DCD3FB", "#FFE0C7", "#D6F2DF"], INK = "#1E1735", MUTED = "#6B6489", ACC = "#4B2FC4", OFF = "#C2410C", ADD = "#1D7743";
+  var FILLS = ["#DCD3FB", "#FFE0C7", "#D6F2DF"], INK = "#1E1A32", MUTED = "#6B6489", ACC = "#5D1E56", OFF = "#C2410C", ADD = "#1D7743";
   var narrow = window.innerWidth < 600, VW = narrow ? 420 : 640;            // phones: a narrower drawing so the labels stay readable
   var y = 10, out = "", LX = narrow ? 62 : 86, W = narrow ? 250 : 430, BH = 34, GAP = 26;
   var mods = m.models || [], staged = mods.length > 1;
@@ -5274,12 +5593,16 @@ function renderPhotos() {
   if (S.album) return renderAlbum();
   $("app").innerHTML = SPIN;
   var p = S.albums ? Promise.resolve(S.albums) : call("hubAlbums").then(gotAlbums);
-  p.then(function(list) {
+  p.then(function(all) {
     if (S.tab !== "photos" || S.album) return;
-    $("app").innerHTML = list.length ? '<div class="ph-hero"><span class="hand">Our memories</span><h1>Class photos</h1></div><div class="albums" id="albums">' + list.map(function(a, i) {
+    var me = all.filter(function(a) { return a.me; })[0], list = all.filter(function(a) { return !a.me; });
+    // 📸 two tabs: the class albums, and only the photos this pupil is in
+    var tabs = me ? '<div class="en-sw ph-sw" role="tablist" style="margin:0 0 12px"><button role="tab" class="on" aria-selected="true">🖼️ Class albums</button><button role="tab" data-phme aria-selected="false">📸 Photos of me' + (me.count ? ' · ' + me.count : '') + '</button></div>' : '';
+    $("app").innerHTML = tabs + (list.length ? '<div class="ph-hero"><span class="hand">Our memories</span><h1>Class photos</h1></div><div class="albums" id="albums">' + list.map(function(a, i) {
       return '<button class="album" data-al="' + esc(a.id) + '" style="--r:' + [-2, 1.5, -1, 2, -1.5, 1][i % 6] + 'deg"><div class="stack"><div class="pol"><img class="cv" alt="" data-img="' + esc(a.cover) + '"></div></div>' +
         '<b>' + esc(a.name) + '</b><small>' + a.count + ' photo' + (a.count === 1 ? "" : "s") + '</small></button>';
-    }).join("") + '</div>' : '<div class="empty"><span class="e">🖼️</span><span class="hand">No photos yet</span>' + esc(S.home.teacher) + ' will add class photos here.</div>';
+    }).join("") + '</div>' : '<div class="empty"><span class="e">🖼️</span><span class="hand">No photos yet</span>' + esc(S.home.teacher) + ' will add class photos here.</div>');
+    var meb = document.querySelector("[data-phme]"); if (meb) meb.onclick = function() { openAlbum("__me"); };
     var al = $("albums");
     if (al) {
       al.onclick = function(e) { var b = e.target.closest("[data-al]"); if (!b) return; openAlbum(b.getAttribute("data-al")); };
@@ -5290,7 +5613,7 @@ function renderPhotos() {
 }
 function openAlbum(id) {
   var known = (S.albums || []).filter(function(a) { return a.id === id; })[0];
-  $("app").innerHTML = '<div class="albhead"><button class="btn soft" id="back">‹ Albums</button><h2>' + esc(known ? known.name : "") + '</h2></div>' + SPIN;
+  $("app").innerHTML = '<div class="albhead"><button class="btn soft" id="back">‹ ' + (id === "__me" ? 'Photos' : 'Albums') + '</button><h2>' + esc(known ? known.name : (id === "__me" ? "Photos of me" : "")) + '</h2></div>' + SPIN;
   $("back").onclick = function() { S.album = null; renderPhotos(); };
   call("hubAlbum", id).then(function(a) {
     S.album = a;
@@ -5301,7 +5624,11 @@ function openAlbum(id) {
 }
 function renderAlbum() {
   var a = S.album;
-  $("app").innerHTML = '<div class="albhead"><button class="btn soft" id="back">‹ Albums</button><h2>' + esc(a.name) + '</h2><span class="count">' + a.photos.length + '</span>' +
+  if (a.me && !a.photos.length) {   // 📸 nothing yet
+    $("app").innerHTML = '<div class="albhead"><button class="btn soft" id="back">‹ Photos</button><h2>Photos of me</h2></div><div class="empty"><span class="e">📸</span><span class="hand">No photos of you yet</span>When ' + esc(S.home.teacher || "your teacher") + ' adds photos you’re in, they’ll appear here. Only you (and friends in the same photo) can see them.</div>';
+    $("back").onclick = function() { S.album = null; renderPhotos(); }; return;
+  }
+  $("app").innerHTML = '<div class="albhead"><button class="btn soft" id="back">‹ ' + (a.me ? 'Photos' : 'Albums') + '</button><h2>' + esc(a.name) + '</h2><span class="count">' + a.photos.length + '</span>' +
     (a.photos.length > 1 ? '<button class="btn primary" id="play">▶ Slideshow</button>' : '') + '</div>' +
     '<div class="thumbs" id="thumbs">' + a.photos.map(function(id, i) { return '<button data-i="' + i + '" aria-label="Photo ' + (i + 1) + '"><img alt="" data-size="t" data-img="' + esc(id) + '"></button>'; }).join("") + '</div>';
   $("back").onclick = function() { S.album = null; renderPhotos(); };
