@@ -1250,6 +1250,11 @@
   .ai-note { text-align: left; margin: 0 0 12px; }
   .td-cols .empty { text-align: left; padding: 8px 0 20px; margin: 0; max-width: none; }
   .td-cols .empty .e { display: block; font-size: 30px; margin-bottom: 4px; }
+  /* ✍️ Type straight into the blank (10 Nov) */
+  .pr-eb { display: inline-flex; align-items: baseline; gap: 4px; flex-wrap: wrap; }
+  .pr-in.pr-fix { width: 6.4em; }
+  .ex-gtext .pr-in { width: 7.2em; margin: 2px 0; }
+  @media (max-width: 480px) { .pr-in { width: 6em; } .pr-in.pr-fix { width: 5.4em; } }
   @media (min-width:1024px) {
     body.nav .wrap > * { max-width: 1120px; }
     body.nav .wrap > .cheer-hero, body.nav .wrap > .en-home > .cheer-hero { padding-top: 18px; }
@@ -3091,12 +3096,6 @@ function prPassageView(kind) {
   }
   out += '<div class="sy-instr">' + esc(p.instr || X.home.instr) + '</div>';
   out += '<div class="cw-card pr-text">' + prTextHtml(kind, p, null) + '</div>';
-  if (kind === "edit") {
-    out += '<div class="cw-card"><div class="cw-h">Your corrections</div><div class="pr-list">' + p.items.map(function(it) {
-      var v = (X.answers || {})[it.n] || "";
-      return '<label class="pr-row"><span class="pr-num">' + it.n + '</span><span class="pr-wrong">' + esc(it.wrong) + '</span><span class="pr-arrow">→</span><input class="pr-in wide" data-prn="' + it.n + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Correct word for ' + esc(it.wrong) + '"></label>';
-    }).join("") + '</div></div>';
-  }
   out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="prMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button>' +
     '<p class="cw-tip" id="prNote">' + (X.busy ? 'Checking every answer… (about 15 seconds)' : X.confirm || 'Check your spelling: a misspelt word gets no mark.') + '</p>' + drLaterBtn() + '</div>';
   return out;
@@ -3499,6 +3498,21 @@ function exTick() {
   }, 1000);
 }
 function exImgSlot(kind, id, k) { return '<div class="ex-img" data-eximg="' + kind + ':' + esc(id) + ':' + k + '">' + SPIN + '</div>'; }
+/* ✍️ One-word blanks (cloze, editing) are typed straight into the passage: a short question whose number, e.g. (41), is in its passage. */
+function exBlankNo(q) { var m = String(q.prompt || "").match(/^\s*(?:blank|gap|line|no\.?|number)?\s*\(?(\d{1,3})\)?/i); return m ? m[1] : (/^\d{1,3}$/.test(String(q.n)) ? String(q.n) : ""); }
+function exInline(p, q) {
+  if (q.type !== "short" || !q.group || (q.imgs || 0) || String(q.prompt || "").length > 90) return false;
+  var g = (p.groups || []).filter(function(x) { return x.id === q.group; })[0], n = exBlankNo(q);
+  return !!(g && n && new RegExp("\\(" + n + "\\)").test(g.text || ""));
+}
+function exInlineText(p, g, X) {
+  var byN = {}; p.questions.forEach(function(q) { if (q.group === g.id && exInline(p, q)) byN[exBlankNo(q)] = q; });
+  return esc(g.text).replace(/\((\d{1,3})\)/g, function(m, n) {
+    var q = byN[n]; if (!q) return m;
+    var a = X.ans[q.id] || {}, v = a.v == null ? "" : a.v;
+    return '<span class="pr-b"><sup>' + n + '</sup><input class="pr-in" data-exq="' + esc(q.id) + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Blank ' + n + '"></span>';
+  }).replace(/\n/g, "<br>");
+}
 function exSitView() {
   var sub = exSub(), X = EX[sub], p = X.paper, gdone = {}, MT = sub === "math" ? fracHtml : esc;   // ➗ Maths: fractions stacked
   var left = exLeft(), answered = p.questions.filter(function(q) { var a = X.ans[q.id]; return a && String(a.v == null ? "" : a.v).trim() !== ""; }).length;
@@ -3509,8 +3523,9 @@ function exSitView() {
   p.questions.forEach(function(q) {
     if (q.group && !gdone[q.group]) {
       gdone[q.group] = 1; var g = (p.groups || []).filter(function(x) { return x.id === q.group; })[0];
-      if (g) { h += '<div class="cw-card ex-group">' + (g.title ? '<div class="cw-h">' + esc(g.title) + '</div>' : ''); for (var k = 0; k < (g.imgs || 0); k++) h += exImgSlot("g", g.id, k); if (g.text) h += listenBtn(g.text, "Listen to the passage") + '<div class="ex-gtext">' + esc(g.text).replace(/\n/g, "<br>") + '</div>'; h += '</div>'; }
+      if (g) { h += '<div class="cw-card ex-group">' + (g.title ? '<div class="cw-h">' + esc(g.title) + '</div>' : ''); for (var k = 0; k < (g.imgs || 0); k++) h += exImgSlot("g", g.id, k); if (g.text) h += listenBtn(g.text, "Listen to the passage") + '<div class="ex-gtext">' + exInlineText(p, g, X) + '</div>'; h += '</div>'; }
     }
+    if (exInline(p, q)) return;   // typed straight into the blank in the passage above
     var a = X.ans[q.id] || {}, v = a.v == null ? "" : a.v;
     h += '<div class="cw-card ex-q" id="exq_' + esc(q.id) + '"><div class="sy-qh"><span class="sy-qn">' + esc(q.n) + '</span><span class="ex-m">[' + q.marks + ' mark' + (q.marks === 1 ? '' : 's') + ']</span></div><div class="ex-prompt">' + MT(q.prompt).replace(/\n/g, "<br>").replace(/_{3,}/g, '<span class="mq-blank"></span>') + '</div>' + listenBtn(q.prompt);
     for (var j = 0; j < (q.imgs || 0); j++) h += exImgSlot("q", q.id, j);
@@ -4830,8 +4845,8 @@ function prTextHtml(kind, p, res) {
         if (r.ok) return '<span class="pr-r ok" data-prgo="' + n + '"><sup>' + n + '</sup>' + (kind === "edit" ? '<s>' + esc(shown) + '</s> ' : '') + '<b>' + esc(r.ans) + '</b> ✓</span>';
         return '<span class="pr-r no" data-prgo="' + n + '"><sup>' + n + '</sup>' + (kind === "edit" ? '<s>' + esc(shown) + '</s> ' : '') + (r.ans && (kind !== "edit") ? '<s class="pr-mine">' + esc(r.ans) + '</s> ' : '') + '<b>' + esc(r.key) + '</b></span>';
       }
-      if (kind === "edit") return '<sup>' + n + '</sup><span class="pr-u">' + esc(it.wrong || "") + '</span>';
       var v = (PR[kind].answers || {})[n] || "";
+      if (kind === "edit") return '<span class="pr-b pr-eb"><sup>' + n + '</sup><span class="pr-u">' + esc(it.wrong || "") + '</span><input class="pr-in pr-fix" data-prn="' + n + '" value="' + esc(v) + '" placeholder="fix" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Correct word for ' + n + ', ' + esc(it.wrong || "") + '"></span>';
       return '<span class="pr-b"><sup>' + n + '</sup><input class="pr-in" data-prn="' + n + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Blank ' + n + '"></span>';
     }).replace(/\n/g, "<br>") + '</p>';
   }).join("");
@@ -4866,7 +4881,7 @@ document.addEventListener("click", function(e) {
   if ((t = e.target.closest("[data-prgo]"))) { var el = $("prx" + t.getAttribute("data-prgo")); if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.add("flash"); setTimeout(function() { el.classList.remove("flash"); }, 1400); } return; }
 });
 document.addEventListener("input", function(e) {
-  var el = e.target; if (!el || !el.classList || !el.classList.contains("pr-in")) return;
+  var el = e.target; if (!el || !el.classList || !el.classList.contains("pr-in") || !el.hasAttribute("data-prn")) return;
   var kind = enSec(), X = PR[kind]; if (!X) return;
   X.answers = X.answers || {}; X.answers[el.getAttribute("data-prn")] = el.value;
   if (X.p && !X.res) drSave(kind, X.p.id, { p: X.p, answers: X.answers, label: X.p.title });
