@@ -1237,6 +1237,24 @@
   .mk.ok { background:#E8F6EE !important; }
   .mk-meta { font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--st-muted); }
   .mk-mine { font-size:14px; color:#7A2A2E; } .mk-right { font-size:15px; }
+  /* =================== 📐 Tidy pass (10 Nov): one content width, one left edge, the same page heading everywhere =================== */
+  .cheer-hero + .empty, .cheer-hero + .en-sw + .empty { padding-top: 28px; }
+  .empty { max-width: 520px; margin: 0 auto; }
+  .askhead { background: var(--st-paper); border: 2px solid var(--st-ink); box-shadow: var(--stk); max-width: 860px; }
+  .askhead .av { box-shadow: none; border: 2px solid var(--st-ink); }
+  .chat { max-width: 860px; }
+  .chips { margin: 4px 0 14px; }
+  .ph-sw { max-width: 560px; }
+  .en-tile { justify-content: flex-start !important; gap: 12px; }
+  .en-tile-b small { display: block; margin-top: 4px; line-height: 1.35; }
+  .ai-note { text-align: left; margin: 0 0 12px; }
+  .td-cols .empty { text-align: left; padding: 8px 0 20px; margin: 0; max-width: none; }
+  .td-cols .empty .e { display: block; font-size: 30px; margin-bottom: 4px; }
+  @media (min-width:1024px) {
+    body.nav .wrap > * { max-width: 1120px; }
+    body.nav .wrap > .cheer-hero, body.nav .wrap > .en-home > .cheer-hero { padding-top: 18px; }
+    .empty { padding: 56px 20px; }
+  }
 </style>
 </head>
 <body>
@@ -4448,7 +4466,7 @@ function renderEnHome() {
   drList(function() { if (S.tab === "compo" && EN.home) renderEnHome(); });
   var e = enHas(), m = drMine(), items = mwItems();
   var saved = Object.keys(m).map(function(k) { return m[k]; }).filter(function(x) { return EN_INFO[x.kind] && x.kind !== "exam" && e[x.kind]; }).sort(function(a, b) { return b.at - a.at; })[0];
-  var h = '<div class="en-home"><div class="en-hero"><span class="en-eye">English Assistant</span><h1>What shall we practise?</h1></div>' + AI_NOTE;
+  var h = '<div class="en-home"><div class="cheer-hero"><span class="hand">English</span><h1>What shall we practise?</h1><p>Pick a skill. Your work saves as you go, so you can carry on later.</p></div>' + AI_NOTE;
   if (saved) h += '<button class="en-carry" data-encarry="' + esc(saved.kind + "|" + saved.id) + '"><span class="en-carry-ic">' + svgI(EN_INFO[saved.kind][2], 26) + '</span><span class="en-carry-t"><small>Carry on where you left off · saved ' + drAgo(saved.at) + '</small><b>' + esc(saved.label || EN_INFO[saved.kind][0]) + '</b></span><span class="en-carry-go">Carry on</span></button>';
   h += '<div class="en-tiles">' + EN_ORDER.filter(function(k) { return e[k]; }).map(function(k) {
     var I = EN_INFO[k], todo = items.filter(function(x) { return x.sec === k && !x.done; }), late = todo.some(function(x) { return x.late; });
@@ -5359,8 +5377,9 @@ document.addEventListener("change", function(e) {
 function renderWallShell() {
   var h = S.home;
   $("topTitle").textContent = "Class wall";
-  if (!h.boards.length) { $("app").innerHTML = '<div class="empty"><span class="e">📌</span><span class="hand">Nothing pinned yet</span>' + esc(h.teacher) + ' will add a board soon!</div>'; return; }
-  $("app").innerHTML = '<div class="chips" id="chips" role="tablist">' + h.boards.map(function(b) {
+  var hero = '<div class="cheer-hero"><span class="hand">Our class</span><h1>Class wall</h1><p>Share your work and cheer on your classmates.</p></div>';
+  if (!h.boards.length) { $("app").innerHTML = hero + '<div class="empty"><span class="e">📌</span><span class="hand">Nothing pinned yet</span>' + esc(h.teacher) + ' will add a board soon!</div>'; return; }
+  $("app").innerHTML = hero + '<div class="chips" id="chips" role="tablist">' + h.boards.map(function(b) {
     return '<button class="chip' + (b.id === S.boardId ? " on" : "") + '" role="tab" aria-selected="' + (b.id === S.boardId) + '" data-b="' + esc(b.id) + '">' + esc(b.title) + (b.open ? "" : " 🔒") + '</button>';
   }).join("") + '</div><div id="wallBody">' + SPIN + '</div>';
   $("chips").onclick = function(e) { var c = e.target.closest("[data-b]"); if (!c) return; S.boardId = c.getAttribute("data-b"); if (!S.preview) store("board", S.boardId); renderWallShell(); };
@@ -5598,7 +5617,7 @@ function renderPhotos() {
     var me = all.filter(function(a) { return a.me; })[0], list = all.filter(function(a) { return !a.me; });
     // 📸 two tabs: the class albums, and only the photos this pupil is in
     var tabs = me ? '<div class="en-sw ph-sw" role="tablist" style="margin:0 0 12px"><button role="tab" class="on" aria-selected="true">🖼️ Class albums</button><button role="tab" data-phme aria-selected="false">📸 Photos of me' + (me.count ? ' · ' + me.count : '') + '</button></div>' : '';
-    $("app").innerHTML = tabs + (list.length ? '<div class="ph-hero"><span class="hand">Our memories</span><h1>Class photos</h1></div><div class="albums" id="albums">' + list.map(function(a, i) {
+    $("app").innerHTML = '<div class="cheer-hero"><span class="hand">Our memories</span><h1>Photos</h1><p>Class albums, and the photos you are in.</p></div>' + tabs + (list.length ? '<div class="albums" id="albums">' + list.map(function(a, i) {
       return '<button class="album" data-al="' + esc(a.id) + '" style="--r:' + [-2, 1.5, -1, 2, -1.5, 1][i % 6] + 'deg"><div class="stack"><div class="pol"><img class="cv" alt="" data-img="' + esc(a.cover) + '"></div></div>' +
         '<b>' + esc(a.name) + '</b><small>' + a.count + ' photo' + (a.count === 1 ? "" : "s") + '</small></button>';
     }).join("") + '</div>' : '<div class="empty"><span class="e">🖼️</span><span class="hand">No photos yet</span>' + esc(S.home.teacher) + ' will add class photos here.</div>');
