@@ -3064,7 +3064,7 @@ function prTag(kind, r) { if (kind === "edit") return r.sk === "spell" || r.type
 function prCalmText(kind, p, res) {
   var R = {}; res.results.forEach(function(r) { R[r.n] = r; });
   var W = {}; p.items.forEach(function(it) { W[it.n] = it; });
-  return String(p.text).split(/\n\s*\n/).map(function(para) {
+  return blankTidy(p.text).split(/\n\s*\n/).map(function(para) {
     return '<p>' + esc(para).replace(/\[(\d{1,2})\]/g, function(m, n) {
       n = Number(n); var r = R[n], it = W[n] || {}; if (!r) return m;
       if (kind === "edit") return r.ok ? '<span class="cf-cz g" title="' + n + '"><s style="opacity:.55">' + esc(it.wrong || "") + '</s> ' + esc(r.ans) + ' ✓</span>'
@@ -3507,7 +3507,7 @@ function exInline(p, q) {
 }
 function exInlineText(p, g, X) {
   var byN = {}; p.questions.forEach(function(q) { if (q.group === g.id && exInline(p, q)) byN[exBlankNo(q)] = q; });
-  return esc(g.text).replace(/\((\d{1,3})\)/g, function(m, n) {
+  return esc(blankTidy(g.text)).replace(/\((\d{1,3})\)/g, function(m, n) {
     var q = byN[n]; if (!q) return m;
     var a = X.ans[q.id] || {}, v = a.v == null ? "" : a.v;
     return '<span class="pr-b"><sup>' + n + '</sup><input class="pr-in" data-exq="' + esc(q.id) + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Blank ' + n + '"></span>';
@@ -3527,7 +3527,10 @@ function exSitView() {
     }
     if (exInline(p, q)) return;   // typed straight into the blank in the passage above
     var a = X.ans[q.id] || {}, v = a.v == null ? "" : a.v;
-    h += '<div class="cw-card ex-q" id="exq_' + esc(q.id) + '"><div class="sy-qh"><span class="sy-qn">' + esc(q.n) + '</span><span class="ex-m">[' + q.marks + ' mark' + (q.marks === 1 ? '' : 's') + ']</span></div><div class="ex-prompt">' + MT(q.prompt).replace(/\n/g, "<br>").replace(/_{3,}/g, '<span class="mq-blank"></span>') + '</div>' + listenBtn(q.prompt);
+    var oneBlank = sub !== "math" && q.type === "short" && (String(q.prompt).match(/_{3,}|\u2026{2,}/g) || []).length === 1;   // ✍️ type straight into the one blank
+    var promptHtml = MT(q.prompt).replace(/\n/g, "<br>");
+    promptHtml = oneBlank ? promptHtml.replace(/_{3,}|\u2026{2,}/, '<input class="pr-in" data-exq="' + esc(q.id) + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Answer to ' + esc(q.n) + '">') : promptHtml.replace(/_{3,}/g, '<span class="mq-blank"></span>');
+    h += '<div class="cw-card ex-q" id="exq_' + esc(q.id) + '"><div class="sy-qh"><span class="sy-qn">' + esc(q.n) + '</span><span class="ex-m">[' + q.marks + ' mark' + (q.marks === 1 ? '' : 's') + ']</span></div><div class="ex-prompt">' + promptHtml + '</div>' + listenBtn(q.prompt);
     for (var j = 0; j < (q.imgs || 0); j++) h += exImgSlot("q", q.id, j);
     if (q.type === "mcq") h += '<div class="mq-opts" role="radiogroup" aria-label="Question ' + esc(q.n) + '">' + q.options.map(function(o, k2) { var on = String(v) === String(k2); return '<button role="radio" aria-checked="' + on + '" class="mq-opt' + (on ? ' on' : '') + '" data-expick="' + esc(q.id) + ':' + k2 + '"><b>(' + (k2 + 1) + ')</b> ' + MT(o) + '</button>'; }).join("") + '</div>';
     else if (sub === "math" && q.type !== "open") {   // ➗ fraction boxes and a working editor where "/" makes a fraction
@@ -3535,6 +3538,7 @@ function exSitView() {
       if (q.type === "long") h += '<div class="ex-lab">Working <span class="cw-tip" style="font-weight:600">(needed: type, write or add a photo of how you got it; it can earn method marks)</span></div>' + workBox(q, a);
       h += '<div class="ex-lab">Answer</div>' + ansField('data-exq="' + esc(q.id) + '"', v, fq);
     }
+    else if (q.type === "short" && oneBlank) { /* answered in the blank above */ }
     else if (q.type === "short") h += '<label class="ex-lab">Answer <input class="ex-in" data-exq="' + esc(q.id) + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false"></label>';
     else if (q.type === "open") h += '<textarea class="ex-ta" rows="3" data-exq="' + esc(q.id) + '" aria-label="Answer to ' + esc(q.n) + '" spellcheck="false">' + esc(v) + '</textarea>';
     else h += '<label class="ex-lab">Working <span class="cw-tip" style="font-weight:600">(shows how you got it: can earn method marks)</span><textarea class="ex-ta" rows="3" data-exw="' + esc(q.id) + '" spellcheck="false">' + esc(a.w || "") + '</textarea></label><label class="ex-lab">Answer <input class="ex-in" data-exq="' + esc(q.id) + '" value="' + esc(v) + '" autocomplete="off" spellcheck="false"></label>';
@@ -4834,10 +4838,15 @@ function prHomeView(kind) {
   return out;
 }
 /** The passage: blanks to fill (cloze), underlined words (editing), or the marked answers. */
+/** A numbered blank and the answer line printed beside it become one typable blank: "(28) ______" → "(28)". */
+function blankTidy(t) {
+  var M = "(\\[\\d{1,2}(?::[^\\]\\n]{1,40})?\\]|\\(\\d{1,3}\\))", L = "(?:_{2,}|\u2026{2,}|\\.{4,})";
+  return String(t == null ? "" : t).replace(new RegExp(L + "[ \\t]*" + M, "g"), "$1").replace(new RegExp(M + "[ \\t]*" + L, "g"), "$1");
+}
 function prTextHtml(kind, p, res) {
   var R = {}; if (res) res.results.forEach(function(r) { R[r.n] = r; });
   var W = {}; p.items.forEach(function(it) { W[it.n] = it; });
-  return String(p.text).split(/\n\s*\n/).map(function(para) {
+  return blankTidy(p.text).split(/\n\s*\n/).map(function(para) {
     return '<p>' + esc(para).replace(/\[(\d{1,2})\]/g, function(m, n) {
       n = Number(n); var it = W[n] || {}, r = R[n];
       if (r) {
