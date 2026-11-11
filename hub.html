@@ -625,6 +625,71 @@
   .ma-cols { display:grid; gap:0; }
   @media (min-width:900px) { .ma-cols { grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr); gap:14px; align-items:start; } }
   .ma-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:10px; }
+  /* 🔢 Maths practice */
+  .mp-lv { display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:10px 0 2px; --mp-ink:#5D1E56; }
+  .mp-lv button { border:2px solid var(--line); background:#fff; border-radius:14px; min-height:46px; font:800 15px/1 var(--head); color:var(--muted); cursor:pointer; }
+  .mp-lv button.on { background:var(--violet-2); border-color:var(--violet-2); color:#fff; }
+  .mp-h { font:800 18px/1.2 var(--head); color:var(--ink); }
+  .mp-sprint { display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+  .mp-go { display:flex; gap:10px; align-items:center; }
+  .mp-topics { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:8px; }
+  .mp-topic { display:flex; align-items:center; gap:10px; text-align:left; border:1.5px solid var(--line); background:#fff; border-radius:16px; padding:10px 12px; min-height:58px; font:inherit; color:var(--ink); cursor:pointer; }
+  .mp-topic:active, .mp-tool:active { transform:scale(.98); }
+  .mp-ic { font-size:22px; flex:0 0 30px; text-align:center; }
+  .mp-tn { flex:1; font-weight:700; font-size:15px; line-height:1.25; } .mp-tn small { display:block; font-weight:500; font-size:13px; color:var(--muted); margin-top:2px; }
+  .mp-best { flex:0 0 auto; font-size:12.5px; font-weight:800; border-radius:999px; padding:4px 9px; background:var(--lilac); color:var(--violet-2); white-space:nowrap; }
+  .mp-best.full { background:var(--ok-soft); color:var(--ok); }
+  .mp-tools { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; }
+  .mp-tool { display:flex; flex-direction:column; align-items:center; gap:6px; border:1.5px solid var(--line); background:#fff; border-radius:16px; padding:14px 8px; min-height:84px; font:700 14.5px/1.2 inherit; color:var(--ink); cursor:pointer; } .mp-tool span { font-size:26px; }
+  .mp-back { border:0; background:none; color:var(--violet-2); font:700 15px inherit; padding:12px 0 6px; min-height:44px; cursor:pointer; }
+  .mp-top { display:flex; justify-content:space-between; gap:10px; align-items:baseline; font-size:15px; } .mp-top span { color:var(--muted); font-weight:700; white-space:nowrap; } .mp-top .low { color:var(--danger); }
+  #mpClock { font:800 22px/1 var(--head); color:var(--ink); font-variant-numeric:tabular-nums; }
+  .mp-dots { display:flex; gap:5px; margin:8px 0 2px; } .mp-dots i { flex:1; height:6px; border-radius:3px; background:var(--line); } .mp-dots i.done { background:var(--violet-2); opacity:.45; } .mp-dots i.now { background:var(--violet-2); }
+  .mp-how { background:var(--warn-soft); color:var(--ink); border-radius:14px; padding:10px 12px; margin-top:10px; font-size:14.5px; }
+  .mp-card { --mp-ink:#5D1E56; }
+  .mp-ctx { white-space:pre-wrap; background:var(--paper); border-radius:14px; padding:12px 14px; font-size:16px; line-height:1.55; margin-bottom:12px; }
+  .mp-figbox { display:flex; justify-content:center; margin:4px 0 12px; overflow-x:auto; color:var(--ink); } .mp-figbox svg { max-width:100%; height:auto; flex:0 0 auto; }
+  .mp-q { font:700 19px/1.4 var(--head); color:var(--ink); white-space:pre-wrap; }
+  .mp-opts { display:grid; gap:8px; margin-top:14px; }
+  .mp-opt { text-align:left; border:2px solid var(--line); background:#fff; border-radius:14px; padding:12px 14px; min-height:52px; font:600 17px/1.3 inherit; color:var(--ink); cursor:pointer; }
+  .mp-opt.on { border-color:var(--violet-2); background:var(--lilac); }
+  .mp-inrow { display:flex; align-items:center; gap:8px; margin-top:14px; }
+  .mp-in { flex:1; min-width:0; border:2px solid var(--line); border-radius:14px; padding:12px 14px; font:700 20px/1.2 inherit; min-height:54px; background:#fff; color:var(--ink); }
+  .mp-in:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px var(--lilac); }
+  .mp-unit { font:700 18px/1 inherit; color:var(--muted); white-space:nowrap; }
+  .mp-nav { display:flex; gap:10px; justify-content:space-between; align-items:center; margin-top:14px; } .mp-nav .btn.big { flex:1; max-width:320px; margin-left:auto; }
+  .mp-score { display:flex; gap:16px; align-items:center; }
+  .mp-big { font:800 46px/1 var(--head); color:var(--violet-2); white-space:nowrap; } .mp-big small { font-size:22px; color:var(--muted); }
+  .mp-res { background:#fff; border-radius:18px; padding:14px 16px; margin-top:10px; border-left:6px solid var(--ok); box-shadow:0 4px 14px rgba(62,18,57,.06); } .mp-res.no { border-left-color:var(--danger); }
+  .mp-rh { display:flex; gap:8px; align-items:center; font-weight:800; font-size:13.5px; color:var(--ok); margin-bottom:6px; } .mp-res.no .mp-rh { color:var(--danger); }
+  .mp-ra { display:flex; gap:6px 18px; flex-wrap:wrap; margin-top:8px; font-size:15px; }
+  .mp-w { margin:8px 0 0; font-size:15px; line-height:1.5; background:var(--paper); border-radius:12px; padding:9px 12px; white-space:pre-wrap; }
+  .mp-spc { text-align:center; transition:background .15s; } .mp-spc.good { background:var(--ok-soft); } .mp-spc.bad { background:var(--danger-soft); }
+  .mp-spq { font:800 clamp(30px,9vw,46px)/1.15 var(--head); color:var(--ink); }
+  .mp-spa { font:800 34px/1 var(--head); color:var(--violet-2); min-height:44px; margin-top:12px; border-bottom:3px solid var(--line); display:inline-block; min-width:120px; padding-bottom:6px; } .mp-spa i { color:var(--line); font-style:normal; }
+  .mp-spn { margin-top:10px; font-weight:800; color:var(--ok); }
+  .mp-pad { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; max-width:360px; margin:14px auto 0; }
+  .mp-pad button { border:2px solid var(--line); background:#fff; border-radius:16px; min-height:58px; font:800 24px/1 var(--head); color:var(--ink); cursor:pointer; touch-action:manipulation; }
+  .mp-pad button:active { background:var(--lilac); } .mp-pad .ok { grid-column:1 / -1; background:var(--violet-2); border-color:var(--violet-2); color:#fff; font-size:20px; }
+  .mp-toolcard { --mp-fill:#C9B8F5; --mp-ink:#5D1E56; color:var(--ink); }
+  .mp-wide { width:100%; height:auto; display:block; } .mp-scroll { overflow-x:auto; }
+  .mp-fr { margin-top:10px; } .mp-frc { display:flex; align-items:center; gap:10px; margin-top:6px; font-size:15px; } .mp-frc span { color:var(--muted); margin-left:auto; } .mp-frv { font:800 22px/1 var(--head); min-width:56px; }
+  .mp-frc button, .mp-colc button { width:44px; height:44px; border-radius:12px; border:2px solid var(--line); background:#fff; font:800 22px/1 inherit; color:var(--ink); cursor:pointer; }
+  .mp-say { text-align:center; font-size:18px; margin-top:14px; line-height:1.5; } .mp-say b { font-family:var(--head); font-size:22px; color:var(--violet-2); }
+  .mp-ctl { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; } .mp-ctl label { flex:1; min-width:96px; font-weight:700; font-size:13.5px; color:var(--muted); display:grid; gap:4px; }
+  .mp-ctl input, .mp-ctl select { border:2px solid var(--line); border-radius:12px; padding:9px 10px; font:700 17px inherit; min-height:46px; background:#fff; color:var(--ink); width:100%; }
+  .mp-clock { width:min(260px,70vw); height:auto; display:block; margin:0 auto; }
+  .mp-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:12px; } .mp-steps button { border:2px solid var(--line); background:#fff; border-radius:14px; min-height:48px; font:700 15px inherit; color:var(--ink); cursor:pointer; }
+  .mp-discs { display:grid; gap:6px; margin-top:8px; }
+  .mp-col { border:1.5px solid var(--line); border-radius:14px; background:#fff; display:flex; flex-direction:column; min-width:0; }
+  .mp-colh { font-weight:800; font-size:12px; text-align:center; padding:7px 2px; border-bottom:1.5px solid var(--line); overflow:hidden; text-overflow:ellipsis; }
+  .mp-colb { display:flex; flex-wrap:wrap; gap:3px; justify-content:center; align-content:flex-start; padding:6px 2px; min-height:128px; flex:1; }
+  .mp-colb i { width:30px; height:30px; border-radius:50%; border:1.5px solid #1E1A32; font:800 9.5px/27px inherit; font-style:normal; text-align:center; color:#1E1A32; }
+  .mp-colc { display:flex; align-items:center; justify-content:space-between; gap:2px; padding:5px; border-top:1.5px solid var(--line); } .mp-colc button { width:36px; height:40px; }
+  @media (max-width:640px) { .mp-discs.six { gap:4px; } .mp-discs.six .mp-colc { flex-direction:column-reverse; gap:4px; } .mp-discs.six .mp-colc button { width:100%; height:38px; } .mp-discs.six .mp-colh { font-size:10px; } }
+  .mp-range { width:100%; margin-top:10px; height:44px; accent-color:var(--violet-2); }
+  @media (max-width:420px) { .mp-colc button { width:30px; } .mp-colb i { width:26px; height:26px; line-height:23px; font-size:8.5px; } .mp-q { font-size:18px; } }
+  .en-sw.n4 { grid-template-columns:repeat(4,1fr); } .en-sw.n5 { grid-template-columns:repeat(5,1fr); } .en-sw.n4 button, .en-sw.n5 button { font-size:12px; }
   .ma-sel { border:1.5px solid var(--line); border-radius:12px; padding:10px 12px; font:inherit; font-size:16px; background:var(--paper); min-height:48px; }
   .ma-photo { position:relative; border-radius:14px; overflow:hidden; background:var(--lilac); max-width:260px; }
   .ma-photo img { width:100%; display:block; max-height:200px; object-fit:cover; object-position:top; }
@@ -3180,6 +3245,7 @@ function cwResult(v) {
 /* ----- Math tab: sections ----- */
 function maSections() {
   var L = [];
+  if (featOn("mathprac") || featOn("maththink") || featOn("mathtools")) L.push({ k: "prac", t: '<span class="i">🔢</span> <span>Practice</span>' });
   if (S.home && S.home.mathAi !== false) {
     if (featOn("mathbuddy")) L.push({ k: "buddy", t: '<span class="i">🦉</span> <span>Maths Buddy</span>' });
     if (featOn("modeldraw")) L.push({ k: "model", t: '<span class="i">📊</span> <span>Model drawing</span>' });
@@ -3188,7 +3254,7 @@ function maSections() {
   if (featOn("koobits")) L.push({ k: "koobits", t: '<span class="i">🎮</span> <span>KooBits</span>' });
   return L;
 }
-function maSwitch() { var L = maSections(); return L.length > 1 ? '<div class="en-sw' + (L.length >= 3 ? ' n3' : '') + '" role="tablist" aria-label="Math Assistant">' + L.map(function(x) { return '<button role="tab" aria-selected="' + (MA.sec === x.k) + '" class="' + (MA.sec === x.k ? 'on' : '') + '" data-masec="' + x.k + '">' + x.t + '</button>'; }).join("") + '</div>' : ''; }
+function maSwitch() { var L = maSections(); return L.length > 1 ? '<div class="en-sw' + (L.length >= 3 ? ' n3' : '') + (L.length >= 5 ? ' n5' : L.length === 4 ? ' n4' : '') + '" role="tablist" aria-label="Math Assistant">' + L.map(function(x) { return '<button role="tab" aria-selected="' + (MA.sec === x.k) + '" class="' + (MA.sec === x.k ? 'on' : '') + '" data-masec="' + x.k + '">' + x.t + '</button>'; }).join("") + '</div>' : ''; }
 
 // ---------------- 🔤 Grammar and 🖼️ Visual Text (English tab) ----------------
 var MQ_INFO = {
@@ -5287,9 +5353,250 @@ document.addEventListener("change", function(e) {
 });
 
 // ---------------- 🧮 Math Assistant (sections: 📊 Model drawing; add more to MA_SECTIONS) ----------------
+/* ====================== 🔢 MATHS PRACTICE (Math tab → Practice) ======================
+   Topic practice, number facts sprint, spot the mistake, problem sums, read the question, and the show-me tools.
+   Questions are made by the class app (no AI). The tools run on this device only: nothing in them is sent anywhere. */
+var MP = { home: null, lv: "", view: "home", round: null, i: 0, ans: [], res: null, busy: false, err: "", last: null, sp: null, tool: "", T: {} };
+var MP_LV = ["P1", "P2", "P3", "P4", "P5", "P6"];
+function mpCall(action, d) { return call("mathPracApi", action, JSON.stringify(d || {})).then(function(r) { var o = JSON.parse(r); if (!o.ok) throw new Error(o.error); return o.data; }); }
+function mpOn(k) { return featOn(k) && !(MP.home && MP.home.on && MP.home.on[k] === false); }
+function mpDraw() { if (S.tab === "math" && MA.sec === "prac") renderMath(); }
+function mpView() {
+  if (!MP.lv) MP.lv = store("mplv") || (/^P[1-6]/.test((S.home && S.home.className) || "") ? S.home.className.slice(0, 2) : "P5");
+  if (MP.view === "round" && MP.round) return mpRoundView();
+  if (MP.view === "sprint" && MP.sp) return mpSprintView();
+  if (MP.view === "result" && MP.res) return mpResultView();
+  if (MP.view === "tool" && MP.tool) return mpToolView();
+  if (!MP.home && !MP.busy && (featOn("mathprac") || featOn("maththink"))) { MP.busy = true; mpCall("home").then(function(d) { MP.home = d; MP.busy = false; MP.err = ""; mpDraw(); }).catch(function(e) { MP.busy = false; MP.err = e.message || String(e); MP.home = { topics: [], sprint: [], heur: [], on: {} }; mpDraw(); }); }
+  if (!MP.home && !featOn("mathprac") && !featOn("maththink")) MP.home = { topics: [], sprint: [], heur: [], on: {} };   // only the tools are switched on
+  return mpHomeView();
+}
+function mpBest(b, sprint) { return b ? '<span class="mp-best' + (!sprint && b.max && b.got === b.max ? ' full' : '') + '">' + (sprint ? 'Best: ' + b.got : b.got + '/' + b.max) + '</span>' : ''; }
+function mpHomeView() {
+  var H = MP.home, n = MP_LV.indexOf(MP.lv) + 1, out = '<div class="cheer-hero"><span class="hand">A little every day</span><h1>Maths practice</h1><p>Choose your level, then pick something to practise. New numbers every time.</p></div>' +
+    '<div class="mp-lv" role="group" aria-label="Level">' + MP_LV.map(function(l) { return '<button class="' + (l === MP.lv ? 'on' : '') + '" data-mplv="' + l + '" aria-pressed="' + (l === MP.lv) + '">' + l + '</button>'; }).join("") + '</div>';
+  if (MP.err) out += '<div class="msg err">' + esc(MP.err) + '</div>';
+  if (!H) return out + '<div class="cw-card"><p class="cw-tip" style="margin:0">Getting your practice ready…</p></div>';
+  var sp = (H.sprint || []).filter(function(x) { return x.lv === MP.lv; })[0], topics = (H.topics || []).filter(function(t) { return t.lv === MP.lv; }), heur = (H.heur || []).filter(function(h) { return h.lv <= n; });
+  if (mpOn("mathprac") && sp) out += '<div class="cw-card mp-sprint"><div><div class="mp-h">⚡ Number facts sprint</div><p class="cw-tip" style="margin:2px 0 0">2 minutes. How many can you get right?</p></div><div class="mp-go">' + mpBest(sp.best, 1) + '<button class="btn primary" data-mpstart="sprint">Start</button></div></div>';
+  if (mpOn("mathprac") && topics.length) out += '<div class="cw-card"><div class="mp-h">📚 Topic practice</div><p class="cw-tip" style="margin:2px 0 10px">10 questions on one topic.</p><div class="mp-topics">' + topics.map(function(t) {
+    return '<button class="mp-topic" data-mptopic="' + esc(t.id) + '"><span class="mp-ic" aria-hidden="true">' + esc(t.icon || "🔢") + '</span><span class="mp-tn">' + esc(t.name) + '</span>' + mpBest(t.best) + '</button>'; }).join("") + '</div></div>';
+  if (mpOn("maththink")) {
+    out += '<div class="cw-card"><div class="mp-h">🧠 Think it through</div><div class="mp-topics" style="margin-top:10px">' +
+      '<button class="mp-topic" data-mpstart="spot"><span class="mp-ic" aria-hidden="true">🔍</span><span class="mp-tn">Spot the mistake<small>Find the wrong line in someone’s working.</small></span></button>' +
+      '<button class="mp-topic" data-mpstart="read"><span class="mp-ic" aria-hidden="true">👀</span><span class="mp-tn">Read the question<small>What is it asking? No working out.</small></span></button></div></div>';
+    if (heur.length) out += '<div class="cw-card"><div class="mp-h">🧩 Problem sums</div><p class="cw-tip" style="margin:2px 0 10px">One method at a time. 5 questions.</p><div class="mp-topics">' + heur.map(function(h) {
+      return '<button class="mp-topic" data-mpheur="' + esc(h.id) + '"><span class="mp-ic" aria-hidden="true">🧩</span><span class="mp-tn">' + esc(h.name) + '</span>' + mpBest(h.best) + '</button>'; }).join("") + '</div></div>';
+  }
+  if (featOn("mathtools")) out += '<div class="cw-card"><div class="mp-h">🧰 Show-me tools</div><p class="cw-tip" style="margin:2px 0 10px">Move things around to see how the maths works.</p><div class="mp-tools">' +
+    [["frac", "🍫", "Fraction bars"], ["line", "📏", "Number line"], ["clock", "🕒", "Clock"], ["discs", "🔵", "Place-value discs"], ["angle", "📐", "Protractor"]].map(function(t) { return '<button class="mp-tool" data-mptool="' + t[0] + '"><span aria-hidden="true">' + t[1] + '</span>' + t[2] + '</button>'; }).join("") + '</div></div>';
+  return out + '<div style="height:24px"></div>';
+}
+function mpStart(p) {
+  if (MP.busy) return; MP.busy = true; MP.err = ""; MP.last = p; flash("Getting your questions…");
+  mpCall("start", p).then(function(d) {
+    MP.busy = false; MP.round = d; MP.i = 0; MP.ans = d.items.map(function() { return ""; }); MP.res = null;
+    if (d.mode === "sprint") { MP.sp = { i: 0, cur: "", right: 0, done: 0, left: d.secs || 120, ok: null, answers: [], t: null, started: false }; MP.view = "sprint"; }
+    else MP.view = "round";
+    mpDraw(); window.scrollTo(0, 0);
+  }).catch(function(e) { MP.busy = false; flash(e.message || String(e), true); });
+}
+function mpHint(q) { return q.kind === "frac" ? 'Type a fraction like 3/4, or a mixed number like 1 1/2.' + (q.simp ? ' Give it in its simplest form.' : '') : q.kind === "ratio" ? 'Type a ratio like 2:3.' : q.kind === "digits" ? 'Type the 4 digits, like 0915.' : q.kind === "alg" ? 'Type it like 3a + 2.' : ''; }
+function mpQBody(q, val, idp) {
+  var out = (q.ctx ? '<div class="mp-ctx">' + esc(q.ctx) + '</div>' : '') + (q.fig ? '<div class="mp-figbox">' + q.fig + '</div>' : '') + '<div class="mp-q" id="' + idp + 'q">' + esc(q.q) + '</div>';
+  if (q.kind === "pick") return out + '<div class="mp-opts" role="group" aria-labelledby="' + idp + 'q">' + q.o.map(function(o, k) { return '<button class="mp-opt' + (String(val) === String(k) ? ' on' : '') + '" data-mpopt="' + k + '" aria-pressed="' + (String(val) === String(k)) + '">' + esc(o) + '</button>'; }).join("") + '</div>';
+  var num = q.kind === "num";
+  return out + '<div class="mp-inrow">' + (q.pre ? '<span class="mp-unit">' + esc(q.pre) + '</span>' : '') + '<input class="mp-in" id="mpIn" aria-labelledby="' + idp + 'q" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="' + (num ? 'decimal' : 'text') + '" value="' + esc(val) + '" placeholder="Your answer">' + (q.unit ? '<span class="mp-unit">' + esc(q.unit) + '</span>' : '') + '</div>' +
+    (mpHint(q) ? '<p class="cw-tip" style="margin:8px 0 0">' + mpHint(q) + '</p>' : '');
+}
+function mpRoundView() {
+  var R = MP.round, q = R.items[MP.i], n = R.items.length, last = MP.i === n - 1, blank = MP.ans.filter(function(a) { return String(a).trim() === ""; }).length;
+  return '<button class="mp-back" data-mpquit>‹ Stop and go back</button><div class="mp-top"><b>' + esc(R.title || "Practice") + '</b><span>Question ' + (MP.i + 1) + ' of ' + n + '</span></div>' +
+    '<div class="mp-dots" aria-hidden="true">' + R.items.map(function(x, k) { return '<i class="' + (k === MP.i ? 'now' : String(MP.ans[k]).trim() !== "" ? 'done' : '') + '"></i>'; }).join("") + '</div>' +
+    (R.how && MP.i === 0 ? '<div class="mp-how">💡 ' + esc(R.how) + '</div>' : '') +
+    '<div class="cw-card mp-card">' + mpQBody(q, MP.ans[MP.i], "mp") + '</div>' +
+    '<div class="mp-nav">' + (MP.i > 0 ? '<button class="btn soft" data-mpgo="-1">‹ Back</button>' : '<span></span>') +
+    (last ? '<button class="btn primary big" data-mpmark' + (MP.busy ? ' disabled' : '') + '>' + (MP.busy ? 'Marking…' : 'Check my answers') + '</button>' : '<button class="btn primary big" data-mpgo="1">Next ›</button>') + '</div>' +
+    (last && blank ? '<p class="cw-tip" style="text-align:center">' + blank + ' question' + (blank === 1 ? ' has' : 's have') + ' no answer yet. You can go back.</p>' : '') + '<div style="height:24px"></div>';
+}
+function mpKeep() { var el = $("mpIn"); if (el && MP.view === "round") MP.ans[MP.i] = el.value; }
+function mpMark() {
+  if (MP.busy) return; mpKeep(); MP.busy = true; mpDraw();
+  mpCall("mark", { id: MP.round.id, answers: MP.ans }).then(function(d) { MP.busy = false; MP.res = d; MP.view = "result"; MP.home = null; mpDraw(); window.scrollTo(0, 0); })
+    .catch(function(e) { MP.busy = false; mpDraw(); flash(e.message || String(e), true); });
+}
+function mpResultView() {
+  var D = MP.res, R = MP.round, sprint = D.mode === "sprint", pct = D.max ? D.got / D.max : 0;
+  var head = sprint ? (D.got >= 30 ? "Lightning fast!" : D.got >= 15 ? "Great sprint!" : "Good start!") : pct === 1 ? "Full marks!" : pct >= 0.7 ? "Well done!" : pct >= 0.4 ? "Good try!" : "Keep going!";
+  var beat = D.best && (sprint ? D.got > D.best.got : (D.best.max && pct > D.best.got / D.best.max));
+  var out = '<div class="cw-card mp-score"><div class="mp-big">' + (sprint ? D.got : D.got + '<small>/' + D.max + '</small>') + '</div><div><div class="mp-h">' + head + '</div><p class="cw-tip" style="margin:2px 0 0">' +
+    (sprint ? D.got + ' right out of ' + D.max + ' tried in 2 minutes.' : esc(R.title || "") + (beat || D.best ? "." : "")) + (beat ? ' 🎉 A new best!' : D.best ? ' Your best before: ' + (sprint ? D.best.got : D.best.got + '/' + D.best.max) + '.' : '') + '</p></div></div>' +
+    '<div class="mp-nav"><button class="btn soft" data-mphome>‹ All practice</button><button class="btn primary" data-mpagain>Try again (new numbers)</button></div>';
+  var wrong = 0;
+  out += R.items.map(function(q, i) {
+    var r = D.results[i]; if (!r) return ''; if (sprint && r.ok) return ''; if (!r.ok) wrong++;
+    return '<div class="mp-res ' + (r.ok ? 'ok' : 'no') + '"><div class="mp-rh"><span class="mp-mark" aria-hidden="true">' + (r.ok ? '✓' : '✗') + '</span><span>Q' + (i + 1) + (r.ok ? ' · correct' : ' · not yet') + '</span></div>' +
+      (!sprint && q.ctx ? '<div class="mp-ctx">' + esc(q.ctx) + '</div>' : '') + (!sprint && q.fig ? '<div class="mp-figbox">' + q.fig + '</div>' : '') + '<div class="mp-q" style="font-size:16px">' + esc(q.q) + '</div>' +
+      '<div class="mp-ra">' + (r.ok ? '<span>Your answer: <b>' + esc(r.right) + '</b></span>' : '<span>Your answer: <b>' + (r.mine ? esc(q.kind === "pick" && q.o && q.o[r.mine] != null ? q.o[r.mine] : r.mine) : '(blank)') + '</b></span><span>Answer: <b>' + esc(r.right) + '</b></span>') + '</div>' +
+      (r.note ? '<p class="mp-w">' + esc(r.note) + '</p>' : '') + (r.w && !r.ok ? '<p class="mp-w">💡 ' + esc(r.w) + '</p>' : '') + '</div>';
+  }).join("");
+  if (sprint && !wrong) out += '<div class="cw-card"><p class="cw-tip" style="margin:0">Every one you tried was right. 👏</p></div>';
+  return out + '<div style="height:24px"></div>';
+}
+/* ----- ⚡ sprint: one fact at a time, with its own number pad ----- */
+function mpSprintView() {
+  var P = MP.sp, q = MP.round.items[P.i], m = Math.floor(P.left / 60), s = ("0" + (P.left % 60)).slice(-2);
+  return '<button class="mp-back" data-mpquit>‹ Stop and go back</button><div class="mp-top"><b>⚡ Number facts sprint · ' + esc(MP.round.lv) + '</b><span id="mpClock" class="' + (P.left <= 10 ? 'low' : '') + '">' + m + ':' + s + '</span></div>' +
+    '<div class="cw-card mp-card mp-spc' + (P.ok === true ? ' good' : P.ok === false ? ' bad' : '') + '" id="mpSpCard"><div class="mp-spq" id="mpSpQ">' + esc(q ? q.q : "") + '</div><div class="mp-spa" id="mpSpA" aria-live="polite">' + (P.cur ? esc(P.cur) : '<i>?</i>') + '</div>' +
+    '<div class="mp-spn"><span id="mpSpN">✓ ' + P.right + '</span></div></div>' +
+    (P.started ? '' : '<p class="cw-tip" style="text-align:center">The clock starts when you tap your first number. You can use the keyboard too.</p>') +
+    '<div class="mp-pad" role="group" aria-label="Number pad">' + ["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0", "⌫"].map(function(k) { return '<button data-mpkey="' + k + '"' + (k === "⌫" ? ' aria-label="Delete"' : '') + '>' + k + '</button>'; }).join("") + '<button class="ok" data-mpkey="ok">OK ↵</button></div><div style="height:24px"></div>';
+}
+function mpSprintTick() {
+  var P = MP.sp; if (!P || MP.view !== "sprint") return;
+  P.left--; var c = $("mpClock"); if (c) { c.textContent = Math.floor(P.left / 60) + ":" + ("0" + (P.left % 60)).slice(-2); c.className = P.left <= 10 ? "low" : ""; }
+  if (P.left <= 0) mpSprintEnd();
+}
+function mpSprintEnd() {
+  var P = MP.sp; if (!P || P.ended) return; P.ended = true; clearInterval(P.t); MP.busy = true; flash("Time’s up! Marking…");
+  mpCall("mark", { id: MP.round.id, answers: P.answers }).then(function(d) { MP.busy = false; MP.res = d; MP.view = "result"; MP.home = null; MP.sp = null; mpDraw(); window.scrollTo(0, 0); })
+    .catch(function(e) { MP.busy = false; MP.view = "home"; MP.sp = null; mpDraw(); flash(e.message || String(e), true); });
+}
+function mpSprintKey(k) {
+  var P = MP.sp; if (!P || P.ended || MP.view !== "sprint") return;
+  if (!P.started && k !== "ok") { P.started = true; P.t = setInterval(mpSprintTick, 1000); var tip = document.querySelector(".mp-pad"); if (tip && tip.previousElementSibling && tip.previousElementSibling.className === "cw-tip") tip.previousElementSibling.remove(); }
+  if (k === "⌫") P.cur = P.cur.slice(0, -1);
+  else if (k === "ok") {
+    if (!P.cur) return; var q = MP.round.items[P.i], ok = Math.abs(Number(P.cur) - Number(q.a)) < 1e-6;
+    P.answers.push(P.cur); P.done++; if (ok) P.right++; P.ok = ok; P.cur = ""; P.i++;
+    if (P.i >= MP.round.items.length) { mpSprintEnd(); return; }
+    var card = $("mpSpCard"); if (card) { card.className = "cw-card mp-card mp-spc " + (ok ? "good" : "bad"); setTimeout(function() { var c2 = $("mpSpCard"); if (c2) c2.className = "cw-card mp-card mp-spc"; }, 260); }
+    $("mpSpQ").textContent = MP.round.items[P.i].q; $("mpSpN").textContent = "✓ " + P.right;
+  } else if (k === ".") { if (P.cur.indexOf(".") < 0 && P.cur.length < 7) P.cur += P.cur ? "." : "0."; }
+  else if (/^\d$/.test(k) && P.cur.length < 7) P.cur += k;
+  var a = $("mpSpA"); if (a) a.innerHTML = P.cur ? esc(P.cur) : "<i>?</i>";
+}
+document.addEventListener("keydown", function(e) {
+  if (S.tab !== "math" || MA.sec !== "prac") return;
+  if (MP.view === "sprint" && MP.sp) { var k = e.key === "Enter" ? "ok" : e.key === "Backspace" ? "⌫" : e.key; if (k === "ok" || k === "⌫" || k === "." || /^\d$/.test(k)) { e.preventDefault(); mpSprintKey(k); } return; }
+  if (MP.view === "round" && e.key === "Enter" && e.target && e.target.id === "mpIn") { e.preventDefault(); mpKeep(); if (MP.i < MP.round.items.length - 1) { MP.i++; mpDraw(); var el = $("mpIn"); if (el) el.focus(); } else mpMark(); }
+});
+
+/* ----- 🧰 show-me tools (all on this device) ----- */
+function mpSvgT(x, y, t, size, bold, anchor) { return '<text x="' + x + '" y="' + y + '" text-anchor="' + (anchor || "middle") + '" font-size="' + (size || 14) + '" font-weight="' + (bold ? 800 : 600) + '" fill="currentColor" stroke="none">' + t + '</text>'; }
+function mpPolar(cx, cy, r, deg) { var a = deg * Math.PI / 180; return [Math.round((cx + r * Math.cos(a)) * 10) / 10, Math.round((cy - r * Math.sin(a)) * 10) / 10]; }
+function mpGcd(a, b) { while (b) { var t = a % b; a = b; b = t; } return a || 1; }
+function mpToolView() {
+  var t = MP.tool, T = MP.T, name = { frac: "Fraction bars", line: "Number line", clock: "Clock", discs: "Place-value discs", angle: "Protractor" }[t], body = "";
+  if (t === "frac") {
+    T.f = T.f || [{ d: 2, n: 1 }, { d: 4, n: 2 }];
+    var val = function(b) { return b.n / b.d; }, a = T.f[0], b = T.f[1], cmp = Math.abs(val(a) - val(b)) < 1e-9 ? "is equal to" : val(a) > val(b) ? "is greater than" : "is smaller than";
+    body = '<p class="cw-tip" style="margin-top:0">Tap the pieces to colour them. Change how many pieces each bar is cut into.</p>' + T.f.map(function(bar, k) {
+      var w = 300 / bar.d, cells = ""; for (var i = 0; i < bar.d; i++) cells += '<rect data-mpfr="' + k + ':' + i + '" x="' + (10 + i * w) + '" y="6" width="' + w + '" height="52" fill="' + (i < bar.n ? "var(--mp-fill)" : "#fff") + '" stroke="currentColor" stroke-width="2" style="cursor:pointer"/>';
+      return '<div class="mp-fr"><svg viewBox="0 0 320 64" class="mp-wide" role="img" aria-label="A bar cut into ' + bar.d + ' equal pieces with ' + bar.n + ' coloured">' + cells + '</svg><div class="mp-frc"><b class="mp-frv">' + bar.n + '/' + bar.d + '</b><span>pieces</span><button data-mpfd="' + k + ':-1" aria-label="Fewer pieces">−</button><b>' + bar.d + '</b><button data-mpfd="' + k + ':1" aria-label="More pieces">+</button></div></div>'; }).join("") +
+      '<div class="mp-say">' + a.n + '/' + a.d + ' <b>' + cmp + '</b> ' + b.n + '/' + b.d + '</div>';
+  } else if (t === "line") {
+    T.l = T.l || { start: 0, step: 5, hops: 3, max: 50 };
+    var L = T.l, end = L.start + L.step * L.hops, span = L.max, X = function(v) { return 20 + 560 * v / span; }, tick = span <= 20 ? 1 : span <= 50 ? 5 : span <= 100 ? 10 : 100, s = '<line x1="20" y1="90" x2="580" y2="90" stroke="currentColor" stroke-width="2"/>';
+    for (var v = 0; v <= span; v += tick) s += '<line x1="' + X(v) + '" y1="84" x2="' + X(v) + '" y2="96" stroke="currentColor" stroke-width="2"/>' + mpSvgT(X(v), 114, v, 12);
+    for (var h = 0; h < Math.abs(L.hops); h++) { var x1 = X(L.start + L.step * h * (L.hops < 0 ? -1 : 1)), x2 = X(L.start + L.step * (h + 1) * (L.hops < 0 ? -1 : 1)), mid = (x1 + x2) / 2, hi = Math.min(60, Math.abs(x2 - x1) * 0.6 + 14);
+      s += '<path d="M' + x1 + ' 84 Q' + mid + ' ' + (84 - hi) + ' ' + x2 + ' 84" fill="none" stroke="var(--mp-ink)" stroke-width="2.5"/>' + mpSvgT(mid, 84 - hi / 2 - 6, (L.hops < 0 ? "−" : "+") + L.step, 12, 1); }
+    s += '<circle cx="' + X(L.start) + '" cy="90" r="6" fill="currentColor"/><circle cx="' + X(end) + '" cy="90" r="7" fill="var(--mp-ink)"/>';
+    var n2 = Math.abs(L.hops);
+    body = '<p class="cw-tip" style="margin-top:0">Start at a number, choose the size of each jump, then jump forwards or backwards.</p><div class="mp-scroll"><svg viewBox="0 0 600 130" class="mp-wide" style="min-width:520px" role="img" aria-label="A number line from 0 to ' + span + '">' + s + '</svg></div>' +
+      '<div class="mp-ctl"><label>Line to<select data-mpl="max">' + [10, 20, 50, 100, 1000].map(function(m) { return '<option' + (m === L.max ? ' selected' : '') + '>' + m + '</option>'; }).join("") + '</select></label>' +
+      '<label>Start at<input type="number" inputmode="numeric" data-mpl="start" value="' + L.start + '" min="0" max="' + L.max + '"></label><label>Jump size<input type="number" inputmode="numeric" data-mpl="step" value="' + L.step + '" min="1" max="' + L.max + '"></label></div>' +
+      '<div class="mp-nav"><button class="btn soft" data-mphop="-1">‹ Jump back</button><button class="btn primary" data-mphop="1">Jump forward ›</button></div>' +
+      '<div class="mp-say">' + (n2 ? L.start + (L.hops < 0 ? " − " : " + ") + (n2 > 1 ? n2 + " × " + L.step : L.step) + " = <b>" + end + "</b>" + (n2 > 1 && L.start === 0 && L.hops > 0 ? "  (" + n2 + " jumps of " + L.step + ")" : "") : "You are at <b>" + L.start + "</b>. Make a jump.") + '</div>';
+  } else if (t === "clock") {
+    if (T.c == null) T.c = 9 * 60; if (T.c24 == null) T.c24 = false;
+    var tot = ((T.c % 1440) + 1440) % 1440, hh = Math.floor(tot / 60), mm = tot % 60, h12 = hh % 12 || 12, ap = hh < 12 ? "a.m." : "p.m.", g = '<circle cx="110" cy="110" r="100" fill="#fff" stroke="currentColor" stroke-width="3"/>';
+    for (var k2 = 0; k2 < 60; k2++) { var p1 = mpPolar(110, 110, 100, 90 - k2 * 6), p2 = mpPolar(110, 110, k2 % 5 ? 95 : 90, 90 - k2 * 6); g += '<line x1="' + p1[0] + '" y1="' + p1[1] + '" x2="' + p2[0] + '" y2="' + p2[1] + '" stroke="currentColor" stroke-width="' + (k2 % 5 ? 1 : 2.5) + '"/>'; }
+    for (var n3 = 1; n3 <= 12; n3++) { var pn = mpPolar(110, 116, 76, 90 - n3 * 30); g += mpSvgT(pn[0], pn[1], n3, 18, 1); }
+    var ph = mpPolar(110, 110, 50, 90 - ((hh % 12) * 30 + mm / 2)), pm = mpPolar(110, 110, 80, 90 - mm * 6);
+    g += '<line x1="110" y1="110" x2="' + ph[0] + '" y2="' + ph[1] + '" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><line x1="110" y1="110" x2="' + pm[0] + '" y2="' + pm[1] + '" stroke="var(--mp-ink)" stroke-width="4" stroke-linecap="round"/><circle cx="110" cy="110" r="6" fill="currentColor"/>';
+    var nx = (h12 % 12) + 1, words = mm === 0 ? h12 + " o’clock" : mm === 15 ? "quarter past " + h12 : mm === 30 ? "half past " + h12 : mm === 45 ? "quarter to " + nx : mm < 30 ? mm + " minute" + (mm === 1 ? "" : "s") + " past " + h12 : (60 - mm) + " minute" + (60 - mm === 1 ? "" : "s") + " to " + nx;
+    body = '<p class="cw-tip" style="margin-top:0">Move the time forwards or backwards and watch both hands.</p><svg viewBox="0 0 220 220" class="mp-clock" role="img" aria-label="A clock showing ' + words + '">' + g + '</svg>' +
+      '<div class="mp-say"><b>' + (T.c24 ? ("0" + hh).slice(-2) + ":" + ("0" + mm).slice(-2) : h12 + "." + ("0" + mm).slice(-2) + " " + ap) + '</b><br>' + words + '</div>' +
+      '<div class="mp-steps">' + [[-60, "− 1 hour"], [-5, "− 5 min"], [-1, "− 1 min"], [1, "+ 1 min"], [5, "+ 5 min"], [60, "+ 1 hour"]].map(function(x) { return '<button data-mpck="' + x[0] + '">' + x[1] + '</button>'; }).join("") + '</div>' +
+      '<div class="mp-nav" style="justify-content:center"><button class="btn soft" data-mpc24>' + (T.c24 ? "Show a.m. / p.m." : "Show 24-hour time") + '</button></div>';
+  } else if (t === "discs") {
+    T.d = T.d || { v: [0, 1, 2, 3, 0, 0], dec: false };
+    var D = T.d, cols = [["Thousands", "1000", "#F19A9D"], ["Hundreds", "100", "#FFE995"], ["Tens", "10", "#BFE3FF"], ["Ones", "1", "#C9F2E1"], ["Tenths", "0.1", "#E1D8FF"], ["Hundredths", "0.01", "#F9D1EC"]], show = D.dec ? cols : cols.slice(0, 4);
+    var whole = D.v[0] * 1000 + D.v[1] * 100 + D.v[2] * 10 + D.v[3], frac = D.v[4] * 10 + D.v[5], wholeTxt = String(whole + Math.floor(frac / 100)), numTxt = (wholeTxt.length > 4 ? wholeTxt.replace(/\B(?=(\d{3})+(?!\d))/g, " ") : wholeTxt) + (D.dec ? "." + ("0" + (frac % 100)).slice(-2) : "");
+    var over = -1; for (var c3 = (D.dec ? 5 : 3); c3 >= 1; c3--) if (D.v[c3] >= 10) { over = c3; break; }
+    body = '<p class="cw-tip" style="margin-top:0">Add or take away discs. When a column has 10 discs, trade them for 1 disc in the next column.</p><div class="mp-discs' + (D.dec ? ' six' : '') + '" style="grid-template-columns:repeat(' + show.length + ',1fr)">' + show.map(function(c, k) {
+      var dots = ""; for (var i2 = 0; i2 < D.v[k]; i2++) dots += '<i style="background:' + c[2] + '">' + c[1] + '</i>';
+      return '<div class="mp-col"><div class="mp-colh">' + c[0] + '</div><div class="mp-colb" aria-label="' + D.v[k] + ' ' + c[0].toLowerCase() + '">' + dots + '</div><div class="mp-colc"><button data-mpdisc="' + k + ':-1" aria-label="Take away one from ' + c[0] + '">−</button><b>' + D.v[k] + '</b><button data-mpdisc="' + k + ':1" aria-label="Add one to ' + c[0] + '">+</button></div></div>'; }).join("") + '</div>' +
+      '<div class="mp-say">The number is <b>' + numTxt + '</b></div>' +
+      '<div class="mp-nav" style="justify-content:center;flex-wrap:wrap">' + (over > 0 ? '<button class="btn primary" data-mptrade="' + over + '">Trade 10 ' + cols[over][0].toLowerCase() + ' for 1 ' + cols[over - 1][0].toLowerCase().replace(/s$/, "") + '</button>' : '') +
+      '<button class="btn soft" data-mpdec>' + (D.dec ? "Hide decimals" : "Show tenths and hundredths") + '</button><button class="btn soft" data-mpclear>Clear</button></div>';
+  } else if (t === "angle") {
+    if (T.a == null) T.a = 60; if (T.ah == null) T.ah = false;
+    var A = T.a, cx = 160, cy = 170, r = 130, arc = "", end2 = mpPolar(cx, cy, r + 12, A);
+    for (var d2 = 0; d2 <= 180; d2 += 5) { var q1 = mpPolar(cx, cy, r, d2), q2 = mpPolar(cx, cy, r - (d2 % 10 ? 6 : 12), d2); arc += '<line x1="' + q1[0] + '" y1="' + q1[1] + '" x2="' + q2[0] + '" y2="' + q2[1] + '" stroke="currentColor" stroke-width="1"/>'; if (d2 % 30 === 0) { var q3 = mpPolar(cx, cy, r - 26, d2); arc += mpSvgT(q3[0], q3[1] + 4, d2, 11); } }
+    var sweep = mpPolar(cx, cy, 40, A);
+    body = '<p class="cw-tip" style="margin-top:0">Drag the slider to open the angle. Guess the size first, then show the number.</p><svg viewBox="0 0 320 190" class="mp-wide" id="mpAngSvg" role="img" aria-label="A protractor with an angle' + (T.ah ? '' : ' of ' + A + ' degrees') + '" style="touch-action:none">' +
+      '<path d="M' + (cx - r) + ' ' + cy + ' A' + r + ' ' + r + ' 0 0 1 ' + (cx + r) + ' ' + cy + ' Z" fill="rgba(140,110,220,.10)" stroke="currentColor" stroke-width="2"/>' + arc +
+      '<path d="M' + (cx + 40) + ' ' + cy + ' A40 40 0 0 0 ' + sweep[0] + ' ' + sweep[1] + '" fill="none" stroke="var(--mp-ink)" stroke-width="3"/>' +
+      '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + r + 12) + '" y2="' + cy + '" stroke="var(--mp-ink)" stroke-width="4" stroke-linecap="round"/><line x1="' + cx + '" y1="' + cy + '" x2="' + end2[0] + '" y2="' + end2[1] + '" stroke="var(--mp-ink)" stroke-width="4" stroke-linecap="round"/><circle cx="' + cx + '" cy="' + cy + '" r="5" fill="currentColor"/></svg>' +
+      '<input type="range" min="0" max="180" step="1" value="' + A + '" id="mpAng" class="mp-range" aria-label="Size of the angle in degrees">' +
+      '<div class="mp-say">' + (T.ah ? 'How big is this angle? <b>?</b>' : 'The angle is <b>' + A + '°</b> · ' + (A === 0 ? "no turn" : A < 90 ? "smaller than a right angle (acute)" : A === 90 ? "a right angle" : A < 180 ? "greater than a right angle (obtuse)" : "a straight line")) + '</div>' +
+      '<div class="mp-nav" style="justify-content:center;flex-wrap:wrap"><button class="btn soft" data-mpahide>' + (T.ah ? "Show the number" : "Hide the number") + '</button><button class="btn soft" data-mparand>Give me a new angle</button></div>';
+  }
+  return '<button class="mp-back" data-mphome>‹ All practice</button><div class="cheer-hero" style="padding-top:8px"><h1 style="font-size:30px">' + name + '</h1></div><div class="cw-card mp-toolcard">' + body + '</div><div style="height:24px"></div>';
+}
+document.addEventListener("click", function(e) {
+  var t, p; if (!e.target.closest || S.tab !== "math" || MA.sec !== "prac") return;
+  if ((t = e.target.closest("[data-mplv]"))) { MP.lv = t.getAttribute("data-mplv"); store("mplv", MP.lv); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mptopic]"))) { mpStart({ mode: "topic", topic: t.getAttribute("data-mptopic"), lv: MP.lv }); return; }
+  if ((t = e.target.closest("[data-mpheur]"))) { mpStart({ mode: "heur", heur: t.getAttribute("data-mpheur"), lv: MP.lv }); return; }
+  if ((t = e.target.closest("[data-mpstart]"))) { mpStart({ mode: t.getAttribute("data-mpstart"), lv: MP.lv }); return; }
+  if ((t = e.target.closest("[data-mptool]"))) { MP.tool = t.getAttribute("data-mptool"); MP.view = "tool"; mpDraw(); window.scrollTo(0, 0); return; }
+  if ((t = e.target.closest("[data-mphome]"))) { MP.view = "home"; MP.round = null; MP.res = null; mpDraw(); window.scrollTo(0, 0); return; }
+  if ((t = e.target.closest("[data-mpagain]"))) { if (MP.last) mpStart(MP.last); return; }
+  if ((t = e.target.closest("[data-mpquit]"))) { if (MP.sp && MP.sp.t) clearInterval(MP.sp.t); MP.sp = null; MP.view = "home"; MP.round = null; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpopt]"))) { MP.ans[MP.i] = t.getAttribute("data-mpopt"); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpgo]"))) { mpKeep(); MP.i = Math.max(0, Math.min(MP.round.items.length - 1, MP.i + Number(t.getAttribute("data-mpgo")))); mpDraw(); var el = $("mpIn"); if (el && window.innerWidth > 700) el.focus(); window.scrollTo(0, 0); return; }
+  if ((t = e.target.closest("[data-mpmark]"))) { mpMark(); return; }
+  if ((t = e.target.closest("[data-mpkey]"))) { mpSprintKey(t.getAttribute("data-mpkey")); return; }
+  var T = MP.T;
+  if ((t = e.target.closest("[data-mpfr]"))) { p = t.getAttribute("data-mpfr").split(":"); var bar = T.f[+p[0]], i = +p[1]; bar.n = (i + 1 === bar.n) ? i : i + 1; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpfd]"))) { p = t.getAttribute("data-mpfd").split(":"); var b2 = T.f[+p[0]]; b2.d = Math.max(1, Math.min(12, b2.d + Number(p[1]))); b2.n = Math.min(b2.n, b2.d); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mphop]"))) { var L = T.l, nh = L.hops + Number(t.getAttribute("data-mphop")), to = L.start + L.step * nh; if (to < 0 || to > L.max) { flash("That jump goes off the line."); return; } L.hops = nh; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpck]"))) { T.c += Number(t.getAttribute("data-mpck")); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpc24]"))) { T.c24 = !T.c24; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpdisc]"))) { p = t.getAttribute("data-mpdisc").split(":"); T.d.v[+p[0]] = Math.max(0, Math.min(19, T.d.v[+p[0]] + Number(p[1]))); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mptrade]"))) { var c = Number(t.getAttribute("data-mptrade")); if (T.d.v[c] >= 10 && T.d.v[c - 1] < 19) { T.d.v[c] -= 10; T.d.v[c - 1] += 1; } mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpdec]"))) { T.d.dec = !T.d.dec; if (!T.d.dec) { T.d.v[4] = 0; T.d.v[5] = 0; } mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpclear]"))) { T.d.v = [0, 0, 0, 0, 0, 0]; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpahide]"))) { T.ah = !T.ah; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mparand]"))) { T.a = 5 * (1 + Math.floor(Math.random() * 35)); T.ah = true; mpDraw(); return; }
+});
+document.addEventListener("input", function(e) {
+  var el = e.target; if (!el || S.tab !== "math" || MA.sec !== "prac") return;
+  if (el.id === "mpIn") { MP.ans[MP.i] = el.value; return; }
+  if (el.id === "mpAng") { MP.T.a = Number(el.value); mpDraw(); var s = $("mpAng"); if (s) s.focus(); return; }
+});
+document.addEventListener("change", function(e) {
+  var el = e.target, k = el && el.getAttribute && el.getAttribute("data-mpl"); if (!k || S.tab !== "math" || MA.sec !== "prac") return;
+  var L = MP.T.l, v = Math.round(Number(el.value)); if (!isFinite(v)) return;
+  if (k === "max") { L.max = v; L.start = Math.min(L.start, v); L.step = Math.min(L.step, v); }
+  else if (k === "start") L.start = Math.max(0, Math.min(L.max, v));
+  else L.step = Math.max(1, Math.min(L.max, v));
+  L.hops = 0; mpDraw();
+});
+/* the protractor arm can also be dragged */
+(function() {
+  var drag = false, move = function(e) { var svg = $("mpAngSvg"); if (!drag || !svg) return; var r = svg.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * 320 - 160, y = 170 - (e.clientY - r.top) / r.height * 190; var a = Math.round(Math.atan2(Math.max(0, y), x) * 180 / Math.PI); MP.T.a = Math.max(0, Math.min(180, a)); mpDraw(); };
+  document.addEventListener("pointerdown", function(e) { if (e.target.closest && e.target.closest("#mpAngSvg")) { drag = true; move(e); } });
+  document.addEventListener("pointermove", move);
+  document.addEventListener("pointerup", function() { drag = false; }); document.addEventListener("pointercancel", function() { drag = false; });
+})();
+
 var MA_SECTIONS = [{ k: "buddy", t: '<span class="i">🦉</span> <span>Maths Buddy</span>' }, { k: "model", t: '<span class="i">📊</span> <span>Model drawing</span>' }, { k: "koobits", t: '<span class="i">🎮</span> <span>KooBits</span>' }];
 var KOOBITS_URL = "https://member.koobits.com/";
-var MA = { sec: "buddy", model: null, shown: 1, photo: null, q: "", level: "", busy: false, status: "", revealed: false, g: 0, tries: 0, fb: null };
+var MA = { sec: "", model: null, shown: 1, photo: null, q: "", level: "", busy: false, status: "", revealed: false, g: 0, tries: 0, fb: null };
 var MA_SAMPLE = { sample: true, question: "Ali had 3 times as many stickers as Ben. Together they had 240 stickers. How many stickers did Ali have?", heuristic: "Part-whole (units)",
   models: [{ title: "", bars: [{ name: "Ali", parts: [{ value: 3, divisions: 3, label: "", kind: "known" }], right: "?" }, { name: "Ben", parts: [{ value: 1, divisions: 1, label: "", kind: "known" }], right: "" }], total: { label: "240", from: 0, to: 1 } }],
   guide: [
@@ -5306,6 +5613,7 @@ function renderMath() {
   var msl = maSections(); if (!msl.some(function(x) { return x.k === MA.sec; })) MA.sec = msl[0].k;
   if (MA.sec === "exam") return renderExam();
   var sw = maSwitch();
+  if (MA.sec === "prac") { var busyRound = MP.view === "round" || MP.view === "sprint"; $("app").innerHTML = (busyRound ? "" : sw) + mpView(); return; }
   if (MA.sec === "buddy") { $("app").innerHTML = sw + maBuddyView() + '<div style="height:24px"></div>'; return; }
   if (MA.sec === "koobits") { $("app").innerHTML = sw + maKoobitsView(); maKbFit(); return; }
   $("app").innerHTML = sw + maModelView() + '<div style="height:24px"></div>';
