@@ -1660,6 +1660,7 @@ function gotHome(h, refresh, fromCache) {
     $("meBtn").classList.remove("hidden");
     $("tabs").classList.remove("hidden"); document.body.classList.add("nav");
     setTabs(h);
+    if (!featOn("reading")) { var ab = $("a11yBtn"); if (ab) ab.remove(); }
     setDot(h.unread);
     if (!S.boardId || !h.boards.some(function(b) { return b.id === S.boardId; })) S.boardId = (h.boards[0] || {}).id || "";
     if (h.wall && h.wall.board && h.wall.board.id === S.boardId) S.wallPre = h.wall;     // no second trip for the wall
@@ -1714,8 +1715,10 @@ function ping() {
   }).catch(function() {});
 }
 /** Which tabs show (Spotlight / Birthdays can be switched off by the teacher), and their little badges. */
+function featOn(k) { var f = S.home && S.home.features; return !f || f[k] !== false; }   // is this part of the app switched on for the class?
 function setTabs(h) {
-  var on = { today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math }, n = 3 + (on.today ? 1 : 0) + (on.spot ? 1 : 0) + (on.bday ? 1 : 0) + (on.league ? 1 : 0) + (on.compo ? 1 : 0) + (on.math ? 1 : 0);
+  var on = { today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math, photos: h.photosTab !== false, ask: h.askTab !== false }, n = 1;
+  Object.keys(on).forEach(function(k) { if (on[k]) n++; });
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button[data-tab]"), function(b) { if (b.dataset.tab in on) b.classList.toggle("hidden", !on[b.dataset.tab]); });
   document.querySelector(".tabs-in").style.gridTemplateColumns = "repeat(" + n + ",1fr)";
   $("tabs").classList.toggle("t5", n > 3); $("tabs").classList.toggle("t6", n > 5); $("tabs").classList.toggle("t7", n > 6); $("tabs").classList.toggle("t8", n > 7); $("tabs").classList.toggle("t9", n > 8);
@@ -1724,7 +1727,7 @@ function setTabs(h) {
   $("askLabel").textContent = n > 3 ? "Ask" : "Ask " + (h.teacher.length <= 12 ? h.teacher : "teacher");
   var c = h.celebrating || {};
   [["spotDot", c.spot], ["bdayDot", c.bday]].forEach(function(x) { var d = $(x[0]); d.textContent = x[1] > 9 ? "9+" : (x[1] || ""); d.classList.toggle("hidden", !x[1]); });
-  if ((S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo) || (S.tab === "math" && !on.math)) S.tab = "wall";
+  if ((S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo) || (S.tab === "math" && !on.math) || (S.tab === "photos" && !on.photos) || (S.tab === "ask" && !on.ask)) S.tab = "wall";
 }
 function go(tab) {
   stopShow(); if (typeof orStopAll === "function") orStopAll();
@@ -2642,16 +2645,12 @@ function orSbcResult() {
   out += '<div class="sy-btns" style="margin-top:12px"><button class="btn primary big" data-oragain>🔁 Try it again</button><button class="btn soft big" data-orback>📚 Choose another</button></div>';
   return out;
 }
-function orStopAll() { orRecStop(true); try { speechSynthesis.cancel(); } catch (e) {} OR.speaking = false; }
+function orStopAll() { orRecStop(true); try { ttsStop(); } catch (e) {} OR.speaking = false; }
 window.addEventListener("pagehide", function() { orStopAll(); });
 document.addEventListener("visibilitychange", function() { if (document.hidden) orStopAll(); });
 function orSay(text, rate, onWord, onDone) {
-  try {
-    speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(String(text || "")); u.lang = "en-GB"; u.rate = rate || .9;
-    var v = (speechSynthesis.getVoices() || []).filter(function(x) { return /^en-(GB|SG)/i.test(x.lang); })[0]; if (v) u.voice = v;
-    if (onWord) u.onboundary = function(e) { if (e.name === "word" || e.name === undefined) onWord(e.charIndex); };
-    u.onend = function() { OR.speaking = false; if (onDone) onDone(); }; OR.speaking = true; speechSynthesis.speak(u);
-  } catch (e) { flash("Sound isn’t available on this device.", true); }
+  OR.speaking = true;
+  if (!ttsSay(text, { rate: rate || .9, whole: !!onWord, onWord: onWord, onDone: function() { OR.speaking = false; if (onDone) onDone(); }, onFail: function() { OR.speaking = false; if (onDone) onDone(); } })) OR.speaking = false;
 }
 function orLevel() { return OR.level || store("orlevel") || (/^P[3-6]/.test((S.home && S.home.className) || "") ? S.home.className.slice(0, 2) : "P5"); }
 function orTop() { return '<div id="enSwWrap">' + enSwitch() + '</div>'; }
@@ -3181,9 +3180,12 @@ function cwResult(v) {
 /* ----- Math tab: sections ----- */
 function maSections() {
   var L = [];
-  if (S.home && S.home.mathAi !== false) L.push({ k: "buddy", t: '<span class="i">🦉</span> <span>Maths Buddy</span>' }, { k: "model", t: '<span class="i">📊</span> <span>Model drawing</span>' });
-  if (S.home && S.home.mathExam) L.push({ k: "exam", t: '<span class="i">📝</span> <span>Mock Exam</span>' });
-  L.push({ k: "koobits", t: '<span class="i">🎮</span> <span>KooBits</span>' });
+  if (S.home && S.home.mathAi !== false) {
+    if (featOn("mathbuddy")) L.push({ k: "buddy", t: '<span class="i">🦉</span> <span>Maths Buddy</span>' });
+    if (featOn("modeldraw")) L.push({ k: "model", t: '<span class="i">📊</span> <span>Model drawing</span>' });
+  }
+  if (S.home && S.home.mathExam && featOn("mathexam")) L.push({ k: "exam", t: '<span class="i">📝</span> <span>Mock Exam</span>' });
+  if (featOn("koobits")) L.push({ k: "koobits", t: '<span class="i">🎮</span> <span>KooBits</span>' });
   return L;
 }
 function maSwitch() { var L = maSections(); return L.length > 1 ? '<div class="en-sw' + (L.length >= 3 ? ' n3' : '') + '" role="tablist" aria-label="Math Assistant">' + L.map(function(x) { return '<button role="tab" aria-selected="' + (MA.sec === x.k) + '" class="' + (MA.sec === x.k ? 'on' : '') + '" data-masec="' + x.k + '">' + x.t + '</button>'; }).join("") + '</div>' : ''; }
@@ -3404,7 +3406,7 @@ document.addEventListener("click", function(e) {
   }
   if ((t = e.target.closest("[data-vbagain]"))) { var L = (X.looked || {})[t.getAttribute("data-vbagain")]; if (L) vbLookUp(X, L.word || t.textContent, L.req); return; }
   if ((t = e.target.closest("[data-vbgoto]"))) { var el = $("vbt" + t.getAttribute("data-vbgoto")); if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.add("flash"); setTimeout(function() { el.classList.remove("flash"); }, 1500); } return; }
-  if ((t = e.target.closest("[data-vbsay]"))) { try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(t.getAttribute("data-vbsay")); u.lang = "en-GB"; u.rate = .85; speechSynthesis.speak(u); } catch (x) {} return; }
+  if ((t = e.target.closest("[data-vbsay]"))) { ttsSay(t.getAttribute("data-vbsay"), { rate: .85 }); return; }
 }, true);
 document.addEventListener("keydown", function(e) { var t = e.target; if (t && t.hasAttribute && t.hasAttribute("data-vbopt") && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); t.click(); } }, true);
 
@@ -3738,6 +3740,70 @@ document.addEventListener("click", function(e) {
     else if (MQ[sec]) { MQ[sec].set = null; MQ[sec].res = null; renderMcq(sec); }
   });
 });
+/* =================== 🔊 Reading aloud, done carefully (the device's own voice; nothing is sent anywhere) ===================
+   Fixes for silence: (1) never "cancel" just before speaking unless something is playing, and then wait a moment
+   (browsers drop the new speech otherwise); (2) long passages are read sentence by sentence (one long piece often
+   never starts); (3) voices built into the device come first (online voices fail without a good connection);
+   (4) if the chosen voice fails, the device's default voice is tried; (5) if nothing starts, the pupil is told why. */
+var TTS = { run: 0, keep: [], hinted: false };
+function ttsVoice() {
+  var V = []; try { V = speechSynthesis.getVoices() || []; } catch (e) {}
+  // Voices on the device come first. Chrome's "Google …" voices are made on Google's servers (the text would be sent there), so they are never chosen.
+  var pick = function(rx, local) { return V.filter(function(v) { return rx.test(v.lang) && !/^Google /i.test(v.name || "") && (!local || v.localService); })[0]; };
+  return pick(/^en[-_](GB|SG)/i, true) || pick(/^en[-_](AU|IE|NZ|IN|ZA)/i, true) || pick(/^en/i, true) || pick(/^en[-_](GB|SG)/i) || pick(/^en/i) || null;
+}
+function ttsChunks(t) {
+  var parts = String(t == null ? "" : t).replace(/\s+/g, " ").match(/[^.!?;:]+[.!?;:]*["”’)]*\s*/g) || [], out = [], cur = "";
+  parts.forEach(function(p) {
+    if (cur && (cur + p).length > 180) { out.push(cur.trim()); cur = ""; }
+    cur += p;
+    while (cur.length > 220) { var k = cur.lastIndexOf(" ", 200); if (k < 40) k = 200; out.push(cur.slice(0, k).trim()); cur = cur.slice(k); }
+  });
+  if (cur.trim()) out.push(cur.trim());
+  return out;
+}
+function ttsStop() { TTS.run++; TTS.keep = []; try { if (speechSynthesis.speaking || speechSynthesis.pending) speechSynthesis.cancel(); } catch (e) {} }
+/** Reads text aloud. o: { rate, whole (don't split), onWord(charIndex), onDone(), onFail() }. Returns false if it can't even try. */
+function ttsSay(text, o) {
+  o = o || {};
+  if (!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") { ttsNote("This device can’t read aloud. Try another browser, such as Chrome or Safari."); if (o.onFail) o.onFail(); return false; }
+  var busy = false; try { busy = speechSynthesis.speaking || speechSynthesis.pending; } catch (e) {}
+  ttsStop();
+  var run = TTS.run, plain = !!o._plain, started = false, chunks = o.whole ? [String(text || "").trim()] : ttsChunks(text);
+  chunks = chunks.filter(String); if (!chunks.length) { if (o.onFail) o.onFail(); return false; }
+  var fail = function(msg) { if (run !== TTS.run) return; ttsStop(); if (o.onFail) o.onFail(); ttsNote(msg); };
+  var go = function() {
+    if (run !== TTS.run) return;
+    try { speechSynthesis.resume(); } catch (e) {}                      // a browser left "paused" stays silent
+    var v = plain ? null : ttsVoice();
+    try {
+      chunks.forEach(function(c, i) {
+        var u = new SpeechSynthesisUtterance(c);
+        if (v) { u.voice = v; u.lang = v.lang; } else if (!plain) u.lang = "en-GB";
+        u.rate = o.rate || .9;
+        u.onstart = function() { started = true; };
+        if (o.onWord && o.whole) u.onboundary = function(e) { if (run === TTS.run && (e.name === "word" || e.name === undefined)) o.onWord(e.charIndex); };
+        u.onend = function() { started = true; if (run === TTS.run && i === chunks.length - 1) { TTS.keep = []; if (o.onDone) o.onDone(); } };
+        u.onerror = function(e) {
+          var why = e && e.error; if (run !== TTS.run || why === "interrupted" || why === "canceled") return;
+          if (!started && !plain) { var o2 = {}; for (var k in o) o2[k] = o[k]; o2._plain = true; ttsSay(text, o2); return; }   // that voice isn't usable here: try the device's default voice
+          fail(why === "not-allowed" ? "Tap the 🔊 button again to hear it." : "This device couldn’t read it aloud. Check the volume, or try another browser.");
+        };
+        TTS.keep.push(u);                                               // kept, or some browsers forget it before it speaks
+        speechSynthesis.speak(u);
+      });
+    } catch (e) { fail("This device can’t read aloud."); return; }
+    setTimeout(function() {                                             // nothing started: say why instead of staying silent
+      if (run !== TTS.run || started) return;
+      var sp = false; try { sp = speechSynthesis.speaking; } catch (e) {}
+      if (!sp) fail("No sound started. This device may not have an English voice. Try Chrome or Safari, or another device.");
+    }, 3500);
+    if (!TTS.hinted && /iPhone|iPad|iPod/i.test(navigator.userAgent || "")) { TTS.hinted = true; ttsNote("🔊 No sound? Turn off silent mode (the switch on the side) and turn the volume up."); }
+  };
+  if (busy) setTimeout(go, 160); else go();                             // straight away when nothing was playing (phones need the tap itself)
+  return true;
+}
+function ttsNote(m) { try { flash(m, true); } catch (e) {} }
 /* =================== ✨ 9 Nov: 🔊 Listen, 🔁 Revision, 📒 Mistake notebook, 🔥 streaks =================== */
 var LST = { n: 0, t: {}, on: null };
 /** A 🔊 Listen button: reads the text aloud with the device's own voice (nothing is sent anywhere). */
@@ -3746,18 +3812,15 @@ function listenBtn(text, label) {
   var id = "L" + (++LST.n); LST.t[id] = String(text).replace(/<[^>]+>/g, " ").replace(/_{3,}/g, " blank ").replace(/\s+/g, " ").trim();
   return '<button type="button" class="btn soft lst" data-listen="' + id + '">🔊 ' + esc(label || "Listen") + '</button>';
 }
-function lstStop() { try { speechSynthesis.cancel(); } catch (e) {} if (LST.on) { var b = document.querySelector('[data-listen="' + LST.on + '"]'); if (b) b.innerHTML = b.getAttribute("data-l") || "🔊 Listen"; } LST.on = null; }
+function lstStop() { ttsStop(); if (LST.on) { var b = document.querySelector('[data-listen="' + LST.on + '"]'); if (b) b.innerHTML = b.getAttribute("data-l") || "🔊 Listen"; } LST.on = null; }
 document.addEventListener("click", function(e) {
   var b = e.target.closest && e.target.closest("[data-listen]"); if (!b) return;
   var id = b.getAttribute("data-listen"); if (LST.on === id) { lstStop(); return; }
-  lstStop(); var txt = LST.t[id]; if (!txt) return;
-  try {
-    var u = new SpeechSynthesisUtterance(txt); u.lang = "en-GB"; u.rate = (window.A11Y && A11Y.slow) ? .75 : .9;
-    var v = (speechSynthesis.getVoices() || []).filter(function(x) { return /^en-(GB|SG)/i.test(x.lang); })[0]; if (v) u.voice = v;
-    b.setAttribute("data-l", b.innerHTML); b.innerHTML = "⏹ Stop"; LST.on = id;
-    u.onend = u.onerror = function() { if (LST.on === id) lstStop(); };
-    speechSynthesis.speak(u);
-  } catch (x) { flash("This device can’t read aloud.", true); }
+  var txt = LST.t[id]; if (!txt) return;
+  var reset = function() { if (LST.on !== id) return; var bb = document.querySelector('[data-listen="' + id + '"]'); if (bb) bb.innerHTML = bb.getAttribute("data-l") || "🔊 Listen"; LST.on = null; };
+  if (LST.on) { var ob = document.querySelector('[data-listen="' + LST.on + '"]'); if (ob) ob.innerHTML = ob.getAttribute("data-l") || "🔊 Listen"; LST.on = null; }
+  b.setAttribute("data-l", b.innerHTML); b.innerHTML = "⏹ Stop"; LST.on = id;
+  if (!ttsSay(txt, { rate: (window.A11Y && A11Y.slow) ? .75 : .9, onDone: reset, onFail: reset })) reset();
 });
 document.addEventListener("visibilitychange", function() { if (document.hidden) lstStop(); });
 function lstPlain(t) { return String(t || "").replace(/\[(\d+):([^\]]+)\]/g, "$2").replace(/\[\d+\]/g, " blank ").replace(/\[\[|\]\]/g, ""); }
@@ -4309,16 +4372,13 @@ function sayVoice() {
 }
 function sayIt(btn) {
   var el = btn.nextElementSibling; if (!el) return;
-  try { if (speechSynthesis.speaking && SAY.on === el) { speechSynthesis.cancel(); SAY.on = null; btn.classList.remove("on"); return; } } catch (e) {}
+  try { if (speechSynthesis.speaking && SAY.on === el) { ttsStop(); SAY.on = null; btn.classList.remove("on"); return; } } catch (e) {}
   var t = el.innerText.replace(/_{2,}/g, " blank ").replace(/\s+/g, " ").trim(), opts = el.parentNode && el.parentNode.querySelector(".mq-opts");
   if (opts && el.classList.contains("mq-text")) t += ". The choices are: " + Array.prototype.map.call(opts.querySelectorAll(".mq-opt"), function(b) { return b.innerText.replace(/^\s*\((\d)\)\s*/, "$1. "); }).join(". ");
-  try {
-    var v = sayVoice(); if (!v) { flash("This device doesn’t have a built-in English voice. Ask your teacher or try another device.", true, $("sheetBody") || $("app")); return; }
-    var u = new SpeechSynthesisUtterance(t.substring(0, 3000)); u.voice = v; u.lang = v.lang; u.rate = 0.92;
-    document.querySelectorAll(".say-btn.on").forEach(function(b) { b.classList.remove("on"); });
-    u.onend = function() { btn.classList.remove("on"); SAY.on = null; };
-    speechSynthesis.cancel(); speechSynthesis.speak(u); SAY.on = el; btn.classList.add("on");
-  } catch (e) { flash("Reading aloud isn’t available on this device.", true); }
+  document.querySelectorAll(".say-btn.on").forEach(function(b) { b.classList.remove("on"); });
+  var off = function() { btn.classList.remove("on"); if (SAY.on === el) SAY.on = null; };
+  SAY.on = el; btn.classList.add("on");
+  if (!ttsSay(t.substring(0, 3000), { rate: 0.92, onDone: off, onFail: off })) off();
 }
 try { if (window.speechSynthesis) speechSynthesis.getVoices(); } catch (e) {}
 // ⏬ after choosing an answer, bring up the next question (only the first time a question is answered)
@@ -5051,8 +5111,7 @@ function mbNum(v) {
 function mbSame(a, b) { return a != null && b != null && Math.abs(a - b) <= 1e-6 * Math.max(1, Math.abs(b)); }
 /** 🔊 Read it aloud (the device's own voice). */
 function mbSay(text) {
-  try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(String(text || "")); u.lang = "en-GB"; u.rate = .9;
-    var v = (speechSynthesis.getVoices() || []).filter(function(x) { return /^en-(GB|SG)/i.test(x.lang); })[0]; if (v) u.voice = v; speechSynthesis.speak(u); } catch (e) { flash("Sound isn’t available on this device.", true); }
+  ttsSay(text, { rate: .9 });
 }
 var MB_REC = null;
 function mbCanListen() { return !!(window.SpeechRecognition || window.webkitSpeechRecognition); }
