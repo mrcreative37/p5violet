@@ -1433,6 +1433,33 @@
 .pl-rb { display: grid; grid-template-columns: minmax(70px, 38%) 1fr 44px; gap: 8px; align-items: center; font-size: 14.5px; margin-top: 6px; } .pl-rb .tr { height: 16px; border-radius: 4px; background: #F1EEF4; position: relative; } .pl-rb .tr i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--violet-2); }
 .pl-rb em { font-style: normal; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; } .pl-rb.mine span { font-weight: 800; }
 @media (max-width: 420px) { .pl-scale .pl-ch small { display: none; } .pl-qt { font-size: 20px; } }
+/* 💬 replies to cards and certificates */
+.mbr { margin-top: 10px; background: #fff; border: 2px solid var(--line); border-radius: 18px; padding: 12px 14px; }
+.mbr-h { font-weight: 800; font-size: 15px; margin-bottom: 8px; color: var(--ink); }
+.mbr-em { display: flex; flex-wrap: wrap; gap: 8px; } .mbr-em button { width: 48px; height: 48px; border-radius: 14px; border: 2px solid var(--line); background: #fff; font-size: 24px; line-height: 1; padding: 0; }
+.mbr-em button.on { border-color: var(--violet-2); background: #F6EEF5; box-shadow: 0 0 0 2px var(--violet-2) inset; }
+.mbr textarea { margin-top: 10px; min-height: 72px; } .mbr-f { display: flex; gap: 8px; align-items: center; margin-top: 8px; } .mbr-f .muted { flex: 1; font-size: 13px; } .mbr-f .btn { min-height: 46px; }
+.mbr-done { display: flex; gap: 10px; align-items: flex-start; } .mbr-done .big { font-size: 26px; letter-spacing: 2px; line-height: 1.1; } .mbr-done p { margin: 2px 0 0; line-height: 1.45; } .mbr-done .grow { flex: 1; min-width: 0; }
+.mbr-done button { border: 0; background: none; color: var(--violet-2); font-weight: 800; text-decoration: underline; padding: 6px; font-size: 14px; }
+/* ✉️ pupils send cards */
+.pm-send { width: 100%; margin-top: 12px; min-height: 56px; font-size: 17px; }
+.pm-sec { margin: 22px 2px 4px; font-weight: 800; font-size: 15px; color: var(--muted); }
+.pm-seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .pm-seg button, .pm-occ button, .pm-des button { border: 2px solid var(--line); background: #fff; border-radius: 14px; min-height: 50px; font-weight: 800; font-size: 15px; color: var(--ink); padding: 6px 10px; }
+.pm-seg button.on, .pm-occ button.on, .pm-des button.on { border-color: var(--violet-2); background: #F6EEF5; box-shadow: 0 0 0 2px var(--violet-2) inset; }
+.pm-occ { display: flex; flex-wrap: wrap; gap: 8px; } .pm-occ button { min-height: 44px; font-size: 14.5px; }
+.pm-des { display: flex; gap: 8px; } .pm-des button { flex: 1; font-size: 14px; }
+.pm-bday { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; } .pm-bday button { border: 2px dashed #E8B400; background: #FFF8E1; border-radius: 999px; padding: 8px 12px; font-weight: 700; font-size: 14px; color: #4A3200; }
+.pm-lbl { font-weight: 800; margin: 14px 0 6px; font-size: 15px; }
+.pm-st { display: inline-block; border-radius: 999px; padding: 2px 9px; font-size: 12.5px; font-weight: 800; } .pm-st.Waiting { background: #FFF1C2; color: #6E4A00; } .pm-st.Sent { background: #DDF1E5; color: #1B5E3B; } .pm-st.no { background: #F1EEF4; color: #4A4560; }
+.pm-row { background: #fff; border: 1.5px solid var(--line); border-radius: 16px; padding: 10px 12px; margin-top: 8px; } .pm-row b { font-size: 15px; } .pm-row p { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.pcard.has-img { aspect-ratio: auto; } .pc-doodle { display: block; width: 100%; max-width: 420px; max-height: 260px; object-fit: contain; margin: 8px 0 4px; border-radius: 10px; background: #fff; border: 1px solid rgba(30,26,50,.12); } .pc-dwait { padding: 18px; text-align: center; color: #615D73; font-size: 13px; }
+.pm-pad { position: relative; border: 2px solid #1E1A32; border-radius: 16px; overflow: hidden; background: #fff; touch-action: none; }
+.pm-pad canvas { display: block; width: 100%; aspect-ratio: 3 / 2; cursor: crosshair; touch-action: none; }
+.pm-pad .hint0 { position: absolute; inset: 0; display: grid; place-items: center; color: #9A94B3; font-weight: 700; pointer-events: none; font-size: 15px; text-align: center; padding: 10px; }
+.pm-tools { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 8px 0; }
+.pm-col { width: 34px; height: 34px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 1.5px var(--line); padding: 0; } .pm-col.on { box-shadow: 0 0 0 3px var(--violet-2); }
+.pm-t { border: 1.5px solid var(--line); background: #fff; border-radius: 12px; min-height: 38px; padding: 4px 10px; font-weight: 800; font-size: 14px; color: var(--ink); } .pm-t.on { background: var(--violet); color: #fff; border-color: var(--violet); }
+.pm-sep { width: 1px; height: 26px; background: var(--line); }
 </style>
 </head>
 <body>
@@ -1917,7 +1944,7 @@ function ping() {
 /** Which tabs show (Spotlight / Birthdays can be switched off by the teacher), and their little badges. */
 function featOn(k) { var f = S.home && S.home.features; return !f || f[k] !== false; }   // is this part of the app switched on for the class?
 function setTabs(h) {
-  var on = { board: !!WB.on && featOn("whiteboard") && !S.preview, mail: !!(h.mailbox && h.mailbox.n) && !S.preview, poll: !!(h.polls && h.polls.n) && featOn("polls"), today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math, photos: h.photosTab !== false, ask: h.askTab !== false }, n = 1;
+  var on = { board: !!WB.on && featOn("whiteboard") && !S.preview, mail: !!(h.mailbox && (h.mailbox.n || h.mailbox.send)) && !S.preview, poll: !!(h.polls && h.polls.n) && featOn("polls"), today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math, photos: h.photosTab !== false, ask: h.askTab !== false }, n = 1;
   Object.keys(on).forEach(function(k) { if (on[k]) n++; });
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button[data-tab]"), function(b) { if (b.dataset.tab in on) b.classList.toggle("hidden", !on[b.dataset.tab]); });
   document.querySelector(".tabs-in").style.gridTemplateColumns = "repeat(" + n + ",1fr)";
@@ -6407,10 +6434,10 @@ function sheet(title, html) {
 function pcCardHtml(c, esc2) {
   var e = esc2 || function(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); };
   var d = /^(bright|classic|sky)$/.test(c.design) ? c.design : "bright", L = String(c.message || "").length;
-  return '<div class="pcard pc-' + d + '"><div class="pc-panel"><span class="pc-b1"></span><span class="pc-b2"></span><span class="pc-b3"></span><span class="pc-star">★</span>' +
+  return '<div class="pcard pc-' + d + (c.img || c.imgWait ? ' has-img' : '') + '"><div class="pc-panel"><span class="pc-b1"></span><span class="pc-b2"></span><span class="pc-b3"></span><span class="pc-star">★</span>' +
     '<div class="pc-occ">' + e(c.occasion || "") + '</div><div class="pc-for">for ' + e(c.first || "") + '</div></div>' +
     '<div class="pc-letter"><div class="pc-dear">Dear ' + e(c.first || "") + ',</div><div class="pc-msg' + (L > 420 ? ' s2' : L > 260 ? ' s1' : '') + '">' + e(c.message || "").replace(/\n/g, "<br>") + '</div>' +
-    '<div class="pc-love">With love and pride,</div><div class="pc-sign">' + e(c.signed || "") + '</div>' + (c.cls || c.when ? '<div class="pc-meta">' + e([c.cls, c.when].filter(Boolean).join(" · ")) + '</div>' : '') + '</div></div>';
+    (c.img && /^data:image\/(png|jpeg);base64,[A-Za-z0-9+\/=]+$/.test(c.img) ? '<img class="pc-doodle" src="' + c.img + '" alt="A drawing">' : c.imgWait ? '<div class="pc-doodle pc-dwait">🎨 Loading the drawing…</div>' : '') + '<div class="pc-love">' + e(c.love || "With love and pride,") + '</div><div class="pc-sign">' + e(c.signed || "") + '</div>' + (c.cls || c.when ? '<div class="pc-meta">' + e([c.cls, c.when].filter(Boolean).join(" · ")) + '</div>' : '') + '</div></div>';
 }
 
 
@@ -6512,28 +6539,169 @@ document.addEventListener("click", function(e) {
 
 /* 📬 MAILBOX: cards and certificates from the teacher (only this pupil's own). A new card opens by itself once;
    the Mailbox tab keeps everything, and each one can be saved as a PDF. */
-var PCH = { list: [], certs: [], loaded: false };
+var PCH = { list: [], certs: [], loaded: false, emojis: ["❤️", "😊", "🥹", "🙏", "🎉", "🌟", "😄", "💪"], draft: {}, edit: {} };
+/* 💬 Reply to a card or certificate: tap up to 3 emojis and/or write a few words. Only the teacher sees it. */
+function mbItem(kind, id) { return (kind === "cert" ? PCH.certs : PCH.list).filter(function(x) { return x.id === id; })[0]; }
+function mbReplyHtml(kind, id) {
+  var it = mbItem(kind, id) || {}, key = kind + "|" + id, r = it.reply, T = esc((S.home && S.home.teacher) || "your teacher");
+  if (S.preview) return "";
+  if (r && !PCH.edit[key]) return '<div class="mbr" data-mbrk="' + esc(key) + '"><div class="mbr-done">' + (r.emoji.length ? '<div class="big" aria-label="Your emojis">' + r.emoji.join(" ") + '</div>' : '') + '<div class="grow"><b>💬 You replied</b> <span class="muted">· ' + esc(r.when) + '</span>' + (r.text ? '<p>' + esc(r.text) + '</p>' : '') + '</div><button data-mbredit="' + esc(key) + '">Change</button></div></div>';
+  var dr = PCH.draft[key] || (PCH.draft[key] = { emoji: r ? r.emoji.slice() : [], text: r ? r.text : "" });
+  return '<div class="mbr" data-mbrk="' + esc(key) + '"><div class="mbr-h">💬 Reply to ' + T + '</div><div class="mbr-em" role="group" aria-label="Pick up to 3 emojis">' +
+    PCH.emojis.map(function(e) { var on = dr.emoji.indexOf(e) > -1; return '<button data-mbre="' + esc(key) + '" data-e="' + e + '" class="' + (on ? 'on' : '') + '" aria-pressed="' + on + '">' + e + '</button>'; }).join("") + '</div>' +
+    '<textarea class="input" data-mbrt="' + esc(key) + '" maxlength="300" placeholder="Write something back (you can just send emojis)" aria-label="Your reply">' + esc(dr.text) + '</textarea>' +
+    '<div class="mbr-f"><span class="muted">Only ' + T + ' sees this.</span>' + (r ? '<button class="btn soft" data-mbrcancel="' + esc(key) + '">Cancel</button>' : '') + '<button class="btn primary" data-mbrsend="' + esc(key) + '"' + (dr.emoji.length || dr.text.trim() ? '' : ' disabled') + '>Send</button></div></div>';
+}
+function mbReplyRedraw(key) { var k = key.split("|"); Array.prototype.forEach.call(document.querySelectorAll('.mbr[data-mbrk="' + key.replace(/"/g, '\\"') + '"]'), function(el) { el.outerHTML = mbReplyHtml(k[0], k.slice(1).join("|")); }); }
+document.addEventListener("input", function(e) { var t = e.target; if (!t || !t.hasAttribute || !t.hasAttribute("data-mbrt")) return; var key = t.getAttribute("data-mbrt"), dr = PCH.draft[key]; if (!dr) return; dr.text = t.value; var b = document.querySelector('[data-mbrsend="' + key + '"]'); if (b) b.disabled = !(dr.emoji.length || dr.text.trim()); });
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-mbre],[data-mbrsend],[data-mbredit],[data-mbrcancel]"); if (!t) return;
+  if (t.hasAttribute("data-mbredit")) { var ke = t.getAttribute("data-mbredit"); PCH.edit[ke] = true; delete PCH.draft[ke]; return mbReplyRedraw(ke); }
+  if (t.hasAttribute("data-mbrcancel")) { var kc = t.getAttribute("data-mbrcancel"); PCH.edit[kc] = false; delete PCH.draft[kc]; return mbReplyRedraw(kc); }
+  if (t.hasAttribute("data-mbre")) {
+    var key = t.getAttribute("data-mbre"), dr = PCH.draft[key], em = t.getAttribute("data-e"), i = dr.emoji.indexOf(em);
+    if (i > -1) dr.emoji.splice(i, 1); else { if (dr.emoji.length >= 3) { flash("You can pick up to 3 emojis."); return; } dr.emoji.push(em); }
+    return mbReplyRedraw(key);
+  }
+  var ks = t.getAttribute("data-mbrsend"), k = ks.split("|"), d2 = PCH.draft[ks]; if (!d2) return;
+  var done = busy(t, "Sending…");
+  call("mailApi", "reply", JSON.stringify({ kind: k[0], id: k.slice(1).join("|"), emoji: d2.emoji, text: d2.text })).then(function(r) {
+    done(); PCH.list = r.cards || PCH.list; PCH.certs = r.certs || PCH.certs; if (r.emojis) PCH.emojis = r.emojis; delete PCH.draft[ks]; PCH.edit[ks] = false;
+    mbReplyRedraw(ks); flash("💬 Sent to " + S.home.teacher + ". Thank you!");
+  }, function(err) { done(); flash(err.message, true); });
+});
 function pcHome(list) {
   PCH.list = list || [];
-  var n = PCH.list.filter(function(c) { return c.unread; }).length, dot = $("mailDot");
+  var n = PCH.list.filter(function(c) { return c.unread; }).length + (PCH.gotUnread != null ? PCH.gotUnread : Math.max(0, ((S.home && S.home.mailbox && S.home.mailbox.unread) || 0) - PCH.list.filter(function(c) { return c.unread; }).length)), dot = $("mailDot");
   if (dot) { dot.textContent = n > 9 ? "9+" : (n || ""); dot.classList.toggle("hidden", !n); }
   var first = PCH.list.filter(function(c) { return c.unread; })[0], seen = ""; try { seen = localStorage.getItem("pc_seen_" + (first || {}).id) || ""; } catch (e) {}
   if (first && !seen && !S.preview) setTimeout(function() { if (!$("sheet")) pcShow(PCH.list.indexOf(first)); }, 1400);
 }
 function renderMail() {
   $("topTitle").textContent = "Mailbox";
-  $("app").innerHTML = '<div class="mb-head"><h2>📬 From ' + esc(S.home.teacher) + '</h2><p class="muted">Cards and certificates just for you. Tap ⬇ PDF to keep a copy.</p></div><div id="mbList">' + SPIN + '</div>';
-  call("mailApi", "list", "{}").then(function(r) { PCH.list = r.cards || []; PCH.certs = r.certs || []; pcHome(PCH.list); mbDraw(); }).catch(function(e) { $("mbList").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+  var canSend = !!(S.home.mailbox && S.home.mailbox.send);
+  $("app").innerHTML = '<div class="mb-head"><h2>📬 Mailbox</h2><p class="muted">Cards and certificates from ' + esc(S.home.teacher) + ' and your friends. Tap ⬇ PDF to keep a copy.</p>' +
+    (canSend ? '<button class="btn primary pm-send" data-pmnew>✉️ Send a card to a friend or teacher</button>' : '') + '</div><div id="mbList">' + SPIN + '</div><div id="pmList"></div>';
+  call("mailApi", "list", "{}").then(function(r) { PCH.list = r.cards || []; PCH.certs = r.certs || []; if (r.emojis) PCH.emojis = r.emojis; pcHome(PCH.list); mbDraw(); pmDraw(); }).catch(function(e) { $("mbList").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+  if (canSend) pmLoad();
 }
+/* ✉️ SEND A CARD: to a classmate (it arrives in their Mailbox) or a teacher (it is emailed: pupils never see the address).
+   The teacher may check cards first. Cards from friends show here too. */
+var PM = { d: null, f: null };
+function pmLoad(after) { return call("pmApi", "home", "{}").then(function(r) { PM.d = r; pmDraw(); PCH.gotUnread = r.got.filter(function(c) { return c.unread; }).length; pcHome(PCH.list); if (after) after(); }).catch(function(e) { var el = $("pmList"); if (el) el.innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; }); }
+function pmStatus(c) { return c.status === "Sent" ? '<span class="pm-st Sent">' + (c.kind === "teacher" ? "✉️ Emailed" : "✅ Delivered") + '</span>' : c.status === "Waiting" ? '<span class="pm-st Waiting">⏳ Waiting for ' + esc(PM.d.teacher) + ' to check</span>' : '<span class="pm-st no">Not sent</span>'; }
+function pmMyFirst() { return String((S.home && (S.home.short || S.home.me)) || "").split(" ")[0]; }
+function pmGotCard(c) { var im = c.img ? (PM.imgs || {})[c.id] : ""; return { design: c.design, occasion: c.occasion, first: pmMyFirst(), message: c.message, img: im || "", imgWait: c.img && !im, signed: c.from, love: "From your friend,", when: c.when }; }
+function pmLoadImgs() {
+  PM.imgs = PM.imgs || {}; PM.imgBusy = PM.imgBusy || {};
+  PM.d.got.forEach(function(c) { if (!c.img || PM.imgs[c.id] || PM.imgBusy[c.id]) return; PM.imgBusy[c.id] = 1;
+    call("pmApi", "img", JSON.stringify({ id: c.id })).then(function(r) { PM.imgs[c.id] = r.img || ""; delete PM.imgBusy[c.id]; pmDraw(); var sc = document.querySelector("#sheet [data-pmcard=\"" + c.id + "\"]"); if (sc) sc.innerHTML = pcCardHtml(pmGotCard(c), esc); }).catch(function() { delete PM.imgBusy[c.id]; }); });
+}
+function pmDraw() {
+  var el = $("pmList"), d = PM.d; if (!el || !d) return;
+  var got = d.got.map(function(c, i) { return '<div class="mb-item"><div class="mb-kind">💌 From ' + esc(c.from) + ' · ' + esc(c.when) + (c.unread ? ' <b class="mb-new">NEW</b>' : '') + '</div>' +
+    '<button class="mb-open" data-pmopen="' + i + '" aria-label="Open the card from ' + esc(c.from) + '">' + pcCardHtml(pmGotCard(c), esc) + '</button></div>'; }).join("");
+  var sent = d.sent.length ? '<div class="pm-sec">✉️ Cards you sent</div>' + d.sent.map(function(c) { return '<div class="pm-row"><b>' + esc(c.occasion) + '</b> to ' + esc(c.to) + ' · <span class="muted">' + esc(c.when) + '</span><div style="margin-top:4px">' + pmStatus(c) + (c.img ? ' <span class="pm-st no">🎨 with a drawing</span>' : '') + '</div>' + (c.edited ? '<div class="muted" style="font-size:13px;margin-top:4px">✏️ ' + esc(d.teacher) + ' changed a few words before sending.</div>' : '') + (c.message ? '<p>' + esc(c.message) + '</p>' : '') + '</div>'; }).join("") : '';
+  el.innerHTML = got + sent; pmLoadImgs();
+  var mb = $("mbList"); if (mb && !PCH.list.length && !PCH.certs.length && !d.got.length && !mb.querySelector(".spin")) mb.innerHTML = '<div class="card" style="text-align:center"><div style="font-size:40px">📭</div><p class="muted">Nothing here yet. Why not send someone a card?</p></div>';
+}
+function pmWho(f) { var d = PM.d, who = f.kind === "teacher" ? (d.teachers.filter(function(t) { return t.id === f.to; })[0] || {}).name || "" : f.to; return f.kind === "teacher" ? who.replace(/\s*\(your form teacher\)$/, "") : String(who).split(" ")[0]; }
+function pmPrevCard(f) { return pcCardHtml({ design: f.design, occasion: (f.occasion || "Your card").replace(/^\S+\s/, ""), first: pmWho(f) || "…", message: f.message || (f.img ? "" : "Your message will appear here."), img: f.img || "", signed: (S.home.short || S.home.me), love: "From,", cls: S.home.className }, esc); }
+/* 🎨 The drawing pad: strokes are kept, so the drawing survives when the form redraws. Exported as a PNG (600 × 400). */
+var PM_COLS = ["#1E1A32", "#E5484D", "#F2A900", "#1BA672", "#2A78D6", "#8B5CF6"];
+function pmPadHtml() {
+  var f = PM.f, P = f.pad || (f.pad = { strokes: [], c: 0, w: 6, er: false });
+  return '<div class="pm-tools" role="group" aria-label="Drawing tools">' + PM_COLS.map(function(c, i) { return '<button class="pm-col' + (!P.er && P.c === i ? ' on' : '') + '" style="background:' + c + '" data-pmcol="' + i + '" aria-label="Colour ' + (i + 1) + '"></button>'; }).join("") +
+    '<span class="pm-sep"></span><button class="pm-t' + (!P.er && P.w === 6 ? ' on' : '') + '" data-pmw="6">Thin</button><button class="pm-t' + (!P.er && P.w === 14 ? ' on' : '') + '" data-pmw="14">Thick</button><button class="pm-t' + (P.er ? ' on' : '') + '" data-pmer>🧽 Rubber</button><button class="pm-t" data-pmundo>↶ Undo</button><button class="pm-t" data-pmclear>Clear</button></div>' +
+    '<div class="pm-pad"><canvas id="pmCanvas" width="900" height="600" aria-label="Drawing pad"></canvas>' + (P.strokes.length ? '' : '<div class="hint0" id="pmHint0">Draw here with your finger or pen ✏️</div>') + '</div>';
+}
+function pmPadPaint(cv, strokes, scale) {
+  var x = cv.getContext("2d"); x.fillStyle = "#FFFFFF"; x.fillRect(0, 0, cv.width, cv.height); x.lineCap = "round"; x.lineJoin = "round";
+  strokes.forEach(function(st) { x.strokeStyle = st.er ? "#FFFFFF" : st.c; x.lineWidth = st.w * scale; x.beginPath();
+    st.p.forEach(function(pt, i) { if (i) x.lineTo(pt[0] * scale, pt[1] * scale); else x.moveTo(pt[0] * scale, pt[1] * scale); });
+    if (st.p.length === 1) x.lineTo(st.p[0][0] * scale + 0.1, st.p[0][1] * scale); x.stroke(); });
+}
+function pmPadExport() {
+  var P = PM.f.pad; if (!P.strokes.some(function(st) { return !st.er; })) { PM.f.img = ""; return; }
+  var o = document.createElement("canvas"); o.width = 600; o.height = 400; pmPadPaint(o, P.strokes, 600 / 900); PM.f.img = o.toDataURL("image/png");
+}
+function pmPadWire() {
+  var cv = $("pmCanvas"); if (!cv) return; var P = PM.f.pad, cur = null;
+  pmPadPaint(cv, P.strokes, 1);
+  var at = function(e) { var r = cv.getBoundingClientRect(); return [Math.round((e.clientX - r.left) / r.width * 900), Math.round((e.clientY - r.top) / r.height * 600)]; };
+  cv.addEventListener("pointerdown", function(e) { e.preventDefault(); try { cv.setPointerCapture(e.pointerId); } catch (x) {} cur = { c: PM_COLS[P.c], w: P.er ? 40 : P.w, er: P.er, p: [at(e)] }; P.strokes.push(cur); var h = $("pmHint0"); if (h) h.remove(); pmPadPaint(cv, P.strokes, 1); });
+  cv.addEventListener("pointermove", function(e) { if (!cur) return; e.preventDefault(); var pt = at(e), l = cur.p[cur.p.length - 1]; if (Math.abs(pt[0] - l[0]) + Math.abs(pt[1] - l[1]) < 2) return; cur.p.push(pt); if (cur.p.length > 1500) return; pmPadPaint(cv, P.strokes, 1); });
+  var end = function() { if (!cur) return; cur = null; if (P.strokes.length > 400) P.strokes.shift(); pmPadExport(); var pv = $("pmPrev"); if (pv) pv.innerHTML = pmPrevCard(PM.f); };
+  cv.addEventListener("pointerup", end); cv.addEventListener("pointercancel", end); cv.addEventListener("lostpointercapture", end);
+}
+function pmCompose(pre) {
+  if (!PM.d) return;
+  if (!PM.f || pre) PM.f = { kind: "pupil", to: pre || "", occasion: pre ? PM.d.occasions[0] : "", design: "bright", message: "" };
+  sheet("✉️ Send a card", '<div id="pmForm"></div>'); pmForm();
+}
+function pmForm() {
+  var d = PM.d, f = PM.f, el = $("pmForm"); if (!el) return;
+  var waits = d.check === "all" || (d.check === "friends" && f.kind === "pupil");
+  el.innerHTML = (d.birthdays.length ? '<div class="pm-lbl">🎂 Birthdays coming up</div><div class="pm-bday">' + d.birthdays.map(function(b) { return '<button data-pmbday="' + esc(b.name) + '">🎂 ' + esc(b.name) + ' · ' + esc(b.when) + '</button>'; }).join("") + '</div>' : '') +
+    '<div class="pm-lbl">Who is it for?</div><div class="pm-seg" role="group"><button data-pmkind="pupil" class="' + (f.kind === "pupil" ? "on" : "") + '" aria-pressed="' + (f.kind === "pupil") + '">🧒 A classmate</button><button data-pmkind="teacher" class="' + (f.kind === "teacher" ? "on" : "") + '" aria-pressed="' + (f.kind === "teacher") + '"' + (d.teachers.length ? '' : ' disabled') + '>🍎 A teacher</button></div>' +
+    '<select class="input" id="pmTo" style="margin-top:8px" aria-label="Choose who"><option value="">Choose…</option>' + (f.kind === "teacher" ? d.teachers.map(function(t) { return '<option value="' + esc(t.id) + '"' + (t.id === f.to ? ' selected' : '') + '>' + esc(t.name) + '</option>'; }) : d.friends.map(function(n) { return '<option' + (n === f.to ? ' selected' : '') + '>' + esc(n) + '</option>'; })).join("") + '</select>' +
+    (f.kind === "teacher" ? '<div class="muted" style="font-size:13.5px;margin-top:4px">Your card will be emailed to the teacher.</div>' : '<div class="muted" style="font-size:13.5px;margin-top:4px">It will arrive in their Mailbox.</div>') +
+    '<div class="pm-lbl">What is it for?</div><div class="pm-occ">' + d.occasions.map(function(o) { return '<button data-pmocc="' + esc(o) + '" class="' + (o === f.occasion ? "on" : "") + '" aria-pressed="' + (o === f.occasion) + '">' + esc(o) + '</button>'; }).join("") + '</div>' +
+    '<div class="pm-lbl">Colours</div><div class="pm-des">' + [["bright", "🌈 Bright"], ["classic", "⭐ Navy & gold"], ["sky", "☁️ Sky"]].map(function(x) { return '<button data-pmdes="' + x[0] + '" class="' + (x[0] === f.design ? "on" : "") + '" aria-pressed="' + (x[0] === f.design) + '">' + x[1] + '</button>'; }).join("") + '</div>' +
+    '<div class="pm-lbl"><label for="pmMsg">Your message</label></div><textarea class="input" id="pmMsg" maxlength="400" rows="4" placeholder="Write something kind… (or just draw below)">' + esc(f.message) + '</textarea><div class="muted" style="text-align:right;font-size:13px"><span id="pmLeft">' + f.message.length + '</span> / 400</div>' +
+    '<div class="pm-lbl">🎨 Draw on your card <span class="muted" style="font-weight:600">(you can draw, write, or both)</span></div>' + pmPadHtml() +
+    '<div class="pm-lbl">Preview</div><div id="pmPrev">' + pmPrevCard(f) + '</div>' +
+    '<p class="muted" style="font-size:13.5px;margin:10px 0 0">' + '👀 ' + esc(d.teacher) + ' will check your card before it is sent. ' + 'Be kind: your name is on it. You can send up to ' + d.max + ' cards a day.</p>' +
+    '<button class="btn primary big" id="pmGo" style="width:100%;margin-top:12px">Send my card ✉️</button>';
+  pmPadWire();
+}
+document.addEventListener("input", function(e) { if (e.target && e.target.id === "pmMsg" && PM.f) { PM.f.message = e.target.value; $("pmLeft").textContent = e.target.value.length; var p = $("pmPrev"); if (p) p.innerHTML = pmPrevCard(PM.f); } });
+document.addEventListener("change", function(e) { if (e.target && e.target.id === "pmTo" && PM.f) { PM.f.to = e.target.value; var p = $("pmPrev"); if (p) p.innerHTML = pmPrevCard(PM.f); } });
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-pmnew],[data-pmkind],[data-pmocc],[data-pmdes],[data-pmbday],[data-pmopen],[data-pmback],[data-pmcol],[data-pmw],[data-pmer],[data-pmundo],[data-pmclear],#pmGo"); if (!t) return;
+  if (PM.f && PM.f.pad && (t.hasAttribute("data-pmcol") || t.hasAttribute("data-pmw") || t.hasAttribute("data-pmer") || t.hasAttribute("data-pmundo") || t.hasAttribute("data-pmclear"))) {
+    var P = PM.f.pad;
+    if (t.hasAttribute("data-pmcol")) { P.c = +t.getAttribute("data-pmcol"); P.er = false; }
+    else if (t.hasAttribute("data-pmw")) { P.w = +t.getAttribute("data-pmw"); P.er = false; }
+    else if (t.hasAttribute("data-pmer")) P.er = !P.er;
+    else if (t.hasAttribute("data-pmundo")) P.strokes.pop();
+    else if (!P.strokes.length || t.getAttribute("data-sure") === "1") { P.strokes = []; }
+    else { t.setAttribute("data-sure", "1"); t.textContent = "Tap again to clear"; setTimeout(function() { if (t.isConnected) { t.removeAttribute("data-sure"); t.textContent = "Clear"; } }, 2500); return; }
+    pmPadExport(); var sb = $("sheetBody"), y = sb ? sb.scrollTop : 0, sh = $("sheet"), y2 = sh ? sh.scrollTop : 0; pmForm(); if (sb) sb.scrollTop = y; if (sh) sh.scrollTop = y2; return;
+  }
+  if (t.hasAttribute("data-pmnew")) { if (!PM.d) return pmLoad(function() { pmCompose(); }); return pmCompose(); }
+  if (t.hasAttribute("data-pmopen")) {
+    var c = PM.d.got[+t.getAttribute("data-pmopen")];
+    sheet("A card from " + c.from, '<div class="pc-wrap" data-pmcard="' + esc(c.id) + '">' + pcCardHtml(pmGotCard(c), esc) + '</div><div class="mb-acts" style="margin-top:12px"><button class="btn soft" data-close>Close</button><button class="btn primary" data-pmback="' + esc(c.from) + '">✉️ Send one back</button></div>');
+    if (c.unread) call("pmApi", "open", JSON.stringify({ id: c.id })).then(function(r) { PM.d = r; pmDraw(); PCH.gotUnread = r.got.filter(function(x) { return x.unread; }).length; pcHome(PCH.list); }).catch(function() {});
+    return;
+  }
+  if (t.hasAttribute("data-pmback")) { var fr = t.getAttribute("data-pmback"), full = PM.d.friends.filter(function(n) { return n === fr || n.indexOf(fr + " ") === 0; })[0] || ""; PM.f = { kind: "pupil", to: full, occasion: "🙏 Thank you", design: "bright", message: "" }; sheet("✉️ Send a card", '<div id="pmForm"></div>'); pmForm(); return; }
+  var f = PM.f; if (!f) return;
+  if (t.hasAttribute("data-pmkind")) { f.kind = t.getAttribute("data-pmkind"); f.to = ""; return pmForm(); }
+  if (t.hasAttribute("data-pmocc")) { f.occasion = t.getAttribute("data-pmocc"); return pmForm(); }
+  if (t.hasAttribute("data-pmdes")) { f.design = t.getAttribute("data-pmdes"); return pmForm(); }
+  if (t.hasAttribute("data-pmbday")) { f.kind = "pupil"; f.to = t.getAttribute("data-pmbday"); f.occasion = PM.d.occasions[0]; return pmForm(); }
+  if (t.id === "pmGo") {
+    if (!f.to) return flash(f.kind === "teacher" ? "Choose a teacher." : "Choose a classmate.", true, $("sheetBody"));
+    if (!f.occasion) return flash("Choose what the card is for.", true, $("sheetBody"));
+    if (f.message.replace(/\s/g, "").length < 2 && !f.img) return flash("Write a message or draw something on your card.", true, $("sheetBody"));
+    var done = busy(t, "Sending…");
+    call("pmApi", "send", JSON.stringify({ kind: f.kind, to: f.to, occasion: f.occasion, design: f.design, message: f.message, img: f.img || "" })).then(function(r) {
+      done(); PM.d = r; PM.f = null; closeSheet(); pmDraw();
+      flash("✉️ Sent to " + r.teacher + " to check first. It will say “Delivered” when it goes.");
+    }, function(err) { done(); flash(err.message, true, $("sheetBody")); });
+  }
+});
 function mbDraw() {
   var el = $("mbList"); if (!el) return;
   var first = (S.home && (S.home.short || S.home.me)) || "";
   var cards = PCH.list.map(function(c, i) { return '<div class="mb-item"><div class="mb-kind">💌 Card · ' + esc(c.when) + (c.unread ? ' <b class="mb-new">NEW</b>' : '') + '</div>' +
       '<button class="mb-open" data-mbcard="' + i + '" aria-label="Open the card">' + pcCardHtml({ design: c.design, occasion: c.occasion, first: c.first || String(first).split(" ")[0], message: c.message, signed: c.signed, cls: S.home.className, when: c.when }, esc) + '</button>' +
-      '<div class="mb-acts"><button class="btn soft" data-mbcard="' + i + '">Open</button><button class="btn primary" data-mbpdf="card" data-id="' + esc(c.id) + '">⬇ PDF</button></div></div>'; }).join("");
+      '<div class="mb-acts"><button class="btn soft" data-mbcard="' + i + '">Open</button><button class="btn primary" data-mbpdf="card" data-id="' + esc(c.id) + '">⬇ PDF</button></div>' + mbReplyHtml("card", c.id) + '</div>'; }).join("");
   var certs = PCH.certs.map(function(x) { return '<div class="mb-item"><div class="mb-kind">🏅 Certificate · ' + esc(x.when) + '</div><div class="mb-cert"><div class="mb-medal">🏅</div><div><b>Certificate of Appreciation</b><div class="mb-roles">' + x.roles.map(function(r) { return '<span>★ ' + esc(r) + '</span>'; }).join("") + '</div>' + (x.message ? '<p>' + esc(x.message) + '</p>' : '') + '<div class="muted">' + esc(x.term) + '</div></div></div>' +
-      '<div class="mb-acts"><button class="btn primary" data-mbpdf="cert" data-id="' + esc(x.id) + '">⬇ Download PDF</button></div></div>'; }).join("");
-  el.innerHTML = cards + certs || '<div class="card" style="text-align:center"><div style="font-size:40px">📭</div><p class="muted">Nothing here yet.</p></div>';
+      '<div class="mb-acts"><button class="btn primary" data-mbpdf="cert" data-id="' + esc(x.id) + '">⬇ Download PDF</button></div>' + mbReplyHtml("cert", x.id) + '</div>'; }).join("");
+  el.innerHTML = cards + certs || (S.home.mailbox && S.home.mailbox.send ? '' : '<div class="card" style="text-align:center"><div style="font-size:40px">📭</div><p class="muted">Nothing here yet.</p></div>');
 }
 /** Saves a PDF the app sends (base64) on this device. */
 function mbSave(name, b64) {
@@ -6554,7 +6722,7 @@ function pcShow(i) {
   if (!document.getElementById("pcFonts")) { var l = document.createElement("link"); l.id = "pcFonts"; l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&family=Nothing+You+Could+Do&display=swap"; document.head.appendChild(l); }
   sheet("A card from " + (c.signed || S.home.teacher), '<div class="pc-wrap">' + pcCardHtml({ design: c.design, occasion: c.occasion, first: c.first || String(first).split(" ")[0], message: c.message, signed: c.signed, cls: S.home.className, when: c.when }, esc) + '</div>' +
     (list.length > 1 ? '<div class="pc-more">' + list.map(function(x, k) { return '<button class="chip' + (k === i ? ' on' : '') + '" data-pcone="' + k + '">' + esc(x.occasion) + (x.unread ? ' •' : '') + '</button>'; }).join("") + '</div>' : '') +
-    '<div class="mb-acts" style="margin-top:12px"><button class="btn soft" data-close>Close</button><button class="btn primary" id="pcSheetPdf">⬇ PDF</button></div>');
+    '<div class="mb-acts" style="margin-top:12px"><button class="btn soft" data-close>Close</button><button class="btn primary" id="pcSheetPdf">⬇ PDF</button></div>' + mbReplyHtml("card", c.id));
   Array.prototype.forEach.call(document.querySelectorAll("[data-pcone]"), function(b) { b.onclick = function() { pcShow(+b.getAttribute("data-pcone")); }; });
   try { localStorage.setItem("pc_seen_" + c.id, "1"); } catch (e) {}
   sheetPdfBtn(c);
