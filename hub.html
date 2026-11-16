@@ -1386,6 +1386,53 @@
   .wb-friends { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
   .wb-friend { display:flex; align-items:center; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:8px 10px; font-weight:700; }
   .wb-friend span { flex:1; }
+.pcard { display: grid; grid-template-columns: 34% 66%; aspect-ratio: 16 / 9; min-height: 0; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(30,26,50,.18); border: 1px solid rgba(30,26,50,.12); font-family: Poppins, system-ui, sans-serif; color: #1E1A32; background: #FFFDF8; container-type: inline-size; }
+.pc-panel { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6% 5%; background: #6D3BFF; color: #fff; }
+.pc-panel span { position: absolute; border-radius: 50%; }
+.pc-b1 { width: 70%; aspect-ratio: 1; left: -25%; bottom: -25%; background: #2F7BFF; } .pc-b2 { width: 55%; aspect-ratio: 1; right: -20%; top: -15%; background: #FFC93C; } .pc-b3 { width: 24%; aspect-ratio: 1; right: 8%; bottom: 6%; background: #FF7A1A; }
+.pc-star { position: relative !important; border-radius: 0 !important; font-size: 7cqw; line-height: 1; color: #FFC93C; margin-bottom: 2cqw; }
+.pc-occ { position: relative; font-weight: 800; font-size: 3.9cqw; line-height: 1.15; } .pc-for { position: relative; font-size: 2.2cqw; margin-top: 1.2cqw; opacity: .95; }
+.pc-letter { padding: 4.5% 6% 3.5%; display: flex; flex-direction: column; min-width: 0; }
+.pc-dear { font-family: 'Nothing You Could Do', 'Segoe Script', cursive; font-size: 3.6cqw; color: #2B1055; margin-bottom: 1.2cqw; }
+.pc-msg { font-size: 2.15cqw; line-height: 1.5; flex: 1; overflow: hidden; } .pc-msg.s1 { font-size: 1.95cqw; } .pc-msg.s2 { font-size: 1.7cqw; }
+.pc-love { font-size: 1.6cqw; color: #5E5A70; margin-top: 1cqw; } .pc-sign { font-family: 'Nothing You Could Do', 'Segoe Script', cursive; font-size: 3cqw; color: #2B1055; } .pc-meta { font-size: 1.35cqw; color: #5E5A70; }
+.pc-classic { background: #FFFCF3; } .pc-classic .pc-panel { background: #16213E; box-shadow: inset 0 0 0 0.6cqw #16213E, inset 0 0 0 0.85cqw #E0A400; } .pc-classic .pc-b1, .pc-classic .pc-b2, .pc-classic .pc-b3 { display: none; } .pc-classic .pc-star { color: #E0A400; }
+.pc-classic .pc-letter { box-shadow: inset 0 0 0 0.5cqw #FFFCF3, inset 0 0 0 0.65cqw #E0A400; } .pc-classic .pc-dear, .pc-classic .pc-sign { color: #16213E; }
+.pc-sky { background: #fff; border-bottom: 1.4cqw solid #FFC93C; } .pc-sky .pc-panel { background: #0FB5A6; } .pc-sky .pc-b1 { background: #fff; width: 60%; aspect-ratio: 2.4; border-radius: 999px; left: 5%; bottom: 10%; } .pc-sky .pc-b2 { background: #FFC93C; width: 30%; right: 8%; top: 7%; } .pc-sky .pc-b3 { background: #fff; width: 45%; aspect-ratio: 2.2; border-radius: 999px; left: 35%; bottom: 16%; }
+.pc-sky .pc-star { color: #FFF3B0; } .pc-sky .pc-dear, .pc-sky .pc-sign { color: #12324A; }
+.pc-wrap { margin: 4px 0 6px; } .pc-more { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+@media (max-width: 560px) { .pcard { grid-template-columns: 1fr; aspect-ratio: auto; } .pc-panel { padding: 18px; } .pc-star { font-size: 30px; margin-bottom: 6px; } .pc-occ { font-size: 22px; } .pc-for { font-size: 14px; margin-top: 4px; }
+  .pc-letter { padding: 18px; } .pc-dear { font-size: 24px; margin-bottom: 8px; } .pc-msg, .pc-msg.s1, .pc-msg.s2 { font-size: 16px; } .pc-love { font-size: 13px; margin-top: 12px; } .pc-sign { font-size: 22px; } .pc-meta { font-size: 12px; }
+  .pc-b1 { width: 36%; } .pc-b2 { width: 28%; } .pc-b3 { width: 14%; } .pc-sky .pc-b1, .pc-sky .pc-b3 { display: none; } .pc-occ, .pc-for, .pc-star { z-index: 1; } .pc-b2 { width: 20%; right: -6%; top: -35%; } .pc-sky .pc-b2 { width: 13%; right: 5%; top: 12%; } }
+.mb-head { margin-top: 14px; } .mb-head h2 { margin: 0; } .mb-head p { margin: 4px 0 0; }
+.mb-item { margin-top: 16px; } .mb-kind { font-weight: 800; font-size: 13.5px; color: var(--muted); margin: 0 2px 6px; } .mb-new { background: #FFC93C; color: #1E1A32; border-radius: 999px; padding: 1px 8px; font-size: 11px; }
+.mb-open { display: block; width: 100%; border: 0; padding: 0; background: none; text-align: left; cursor: pointer; }
+.mb-acts { display: flex; gap: 8px; margin-top: 8px; } .mb-acts .btn { flex: 1; min-height: 46px; }
+.mb-cert { display: flex; gap: 14px; align-items: flex-start; background: #FFFDF6; border: 1.5px solid #E8D9A8; border-radius: 16px; padding: 14px 16px; } .mb-medal { font-size: 40px; line-height: 1; }
+.mb-cert p { margin: 8px 0 4px; line-height: 1.45; } .mb-roles { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; } .mb-roles span { background: #FFC93C; color: #1E1A32; border-radius: 999px; padding: 3px 10px; font-weight: 800; font-size: 13px; }
+#app[data-view="mail"] > * { max-width: 860px; }
+/* 📊 Polls */
+#app[data-view="poll"] > * { max-width: 760px; }
+.pl-head { margin-top: 14px; } .pl-head h2 { margin: 0; } .pl-head p { margin: 4px 0 0; }
+.pl-item { background: #fff; border: 2px solid #1E1A32; border-radius: 20px; box-shadow: 3px 4px 0 #1E1A32; padding: 16px; margin-top: 14px; }
+.pl-item h3 { margin: 0 0 4px; font-size: 19px; line-height: 1.3; } .pl-item .muted { font-size: 14px; }
+.pl-item .btn { width: 100%; margin-top: 12px; }
+.pl-tag { display: inline-block; border-radius: 999px; padding: 2px 10px; font-size: 12.5px; font-weight: 800; } .pl-tag.todo { background: #FFC93C; color: #1E1A32; } .pl-tag.done { background: #DDF1E5; color: #1B5E3B; }
+.pl-steps { display: flex; gap: 6px; margin: 14px 0 6px; } .pl-steps i { flex: 1; height: 8px; border-radius: 999px; background: var(--line); } .pl-steps i.on { background: var(--violet-2); }
+.pl-qn { font-weight: 800; color: var(--muted); font-size: 14px; } .pl-qt { font-size: 22px; font-weight: 800; line-height: 1.3; margin: 6px 0 14px; color: var(--ink); }
+.pl-choices { display: grid; gap: 10px; } .pl-ch { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; border: 2px solid var(--line); background: #fff; border-radius: 16px; padding: 12px 14px; min-height: 56px; font-size: 17px; font-weight: 700; color: var(--ink); }
+.pl-ch .bx { width: 26px; height: 26px; border-radius: 50%; border: 2.5px solid #8C86A6; flex: none; display: grid; place-items: center; font-size: 15px; color: #fff; } .pl-ch.sq .bx { border-radius: 8px; }
+.pl-ch.on { border-color: var(--violet-2); background: #F6EEF5; } .pl-ch.on .bx { background: var(--violet-2); border-color: var(--violet-2); }
+.pl-yn { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } .pl-yn .pl-ch { flex-direction: column; justify-content: center; min-height: 110px; font-size: 19px; text-align: center; } .pl-yn .pl-ch span { font-size: 40px; }
+.pl-scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; } .pl-scale .pl-ch { justify-content: center; font-size: 24px; min-height: 64px; padding: 6px; flex-direction: column; gap: 2px; }
+.pl-scale .pl-ch small { font-size: 11.5px; font-weight: 700; color: var(--muted); line-height: 1.15; text-align: center; } .pl-emo .pl-ch { font-size: 34px; }
+.pl-ends { display: flex; justify-content: space-between; font-size: 13.5px; font-weight: 700; color: var(--muted); margin-top: 6px; gap: 10px; } .pl-ends span:last-child { text-align: right; }
+.pl-nav { display: flex; gap: 10px; margin-top: 18px; } .pl-nav .btn { flex: 1; min-height: 54px; font-size: 17px; } .pl-nav .btn.primary { flex: 2; }
+.pl-thanks { text-align: center; padding: 22px 12px 8px; } .pl-thanks div { font-size: 56px; } .pl-thanks h2 { margin: 6px 0 4px; }
+.pl-rq { margin-top: 14px; } .pl-rq b { display: block; font-size: 15.5px; margin-bottom: 8px; line-height: 1.35; }
+.pl-rb { display: grid; grid-template-columns: minmax(70px, 38%) 1fr 44px; gap: 8px; align-items: center; font-size: 14.5px; margin-top: 6px; } .pl-rb .tr { height: 16px; border-radius: 4px; background: #F1EEF4; position: relative; } .pl-rb .tr i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--violet-2); }
+.pl-rb em { font-style: normal; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; } .pl-rb.mine span { font-weight: 800; }
+@media (max-width: 420px) { .pl-scale .pl-ch small { display: none; } .pl-qt { font-size: 20px; } }
 </style>
 </head>
 <body>
@@ -1399,6 +1446,7 @@
 <main class="wrap" id="app"><div class="spin"><i></i><i></i><i></i></div></main>
 <nav class="tabs hidden noprint" id="tabs" aria-label="Class Hub sections"><div class="tabs-in">
   <button data-tab="board" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20l4-4 4 4"/><path d="M7 12l3-3 2 2 4-4"/></svg>Whiteboard<span class="dot gold hidden" id="boardDot"></span></button>
+  <button data-tab="poll" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Poll<span class="dot gold hidden" id="pollDot"></span></button>
   <button data-tab="today" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h3v3H8z"/></svg>Today<span class="dot gold hidden" id="todayDot"></span></button>
   <button data-tab="compo" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h5"/></svg>English</button>
   <button data-tab="math" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 8h4M9.5 6v4M13 8h4M7.5 15.5l3 3M10.5 15.5l-3 3M13 15h4M13 18h4"/></svg>Math</button>
@@ -1406,6 +1454,7 @@
   <button data-tab="spot" class="hidden"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.8z"/></svg>Spotlight<span class="dot gold hidden" id="spotDot"></span></button>
   <button data-tab="league" class="hidden"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>Groups<span class="dot gold hidden" id="leagueDot"></span></button>
   <button data-tab="bday" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 21h16v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 16c2 1.5 4 1.5 6 0s4-1.5 6 0 3 1 4 0"/><path d="M12 11V7"/><path d="M12 3.5c.8 1 .8 2 0 2.5-.8-.5-.8-1.5 0-2.5z"/></svg>Birthdays<span class="dot gold hidden" id="bdayDot"></span></button>
+  <button data-tab="mail" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Mailbox<span class="dot gold hidden" id="mailDot"></span></button>
   <button data-tab="photos"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Photos</button>
   <button data-tab="ask"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span id="askLabel">Ask</span><span class="dot hidden" id="askDot"></span></button>
 </div></nav>
@@ -1740,6 +1789,7 @@ function showChoose(names, pin) {
     api("hubLogin", [HUB_KEY, t.getAttribute("data-n"), pin, devId() + "|" + encodeURIComponent(devLabel())]).then(pinDone).catch(function(er) { showPin(er.message); }); };
 }
 function signOut(expired, okNote) {
+  var pcp = $("pcPill"); if (pcp) pcp.remove();
   stopTimers(); clearBoots(); store("board", null); S.wallPre = null; store("tok", null); S.token = ""; S.home = null; S.wall = null; S.msgs = []; S.msgVer = ""; S.pingVer = ""; S.albums = null; S.album = null;
   S.imgs = {}; IMGQ.s = []; IMGQ.l = []; IMGQ.wait = {}; LEAGUE.d = null; LEAD.d = null; LEAD.sub = ""; LEAD.picks = {}; LEAD.cart = []; LEAD.sel = []; LEAD.fresh = {}; LEAD.notes = {}; LEAD.noteOpen = {}; LEAD.stamps = {}; S.popShown = false; S.planner = null; CHEER.spot = null; CHEER.bday = null; CHEER.open = {}; if (typeof BIG === "object") for (var bk in BIG) delete BIG[bk];
   window.scrollTo(0, 0);
@@ -1815,6 +1865,7 @@ function gotHome(h, refresh, fromCache) {
     S.timers.push(setInterval(ping, featOn("whiteboard") ? 12000 : 60000)); if (featOn("whiteboard")) setTimeout(ping, 800);   // 🖊️ notices the whiteboard within seconds
     S.timers.push(setInterval(function() { if (S.tab === "ask" && !document.hidden) loadMsgs(true); }, 15000));
     $("app").removeAttribute("data-snap"); go(S.tab || "wall"); hubSnapLater(1500);
+    pcHome(h.cards || []);   // 💌 a card from the teacher
     if (OPEN_AT === "comp" && h.english && h.english.comp) { OPEN_AT = ""; EN.home = false; EN.sec = "comp"; go("compo"); }
     if (window.SITE_COMP) { try { localStorage.setItem("cm_hub_url", location.href.split("#")[0].replace(/[?&]open=[^&#]*/, "")); } catch (e) {} }
     if (OPEN_AT && /^oral:/.test(OPEN_AT) && h.english && h.english.oral) { var oid = OPEN_AT.slice(5); OPEN_AT = ""; EN.home = false; EN.sec = "oral"; OR.openId = oid; OR.home = null; OR.view = "home"; go("compo"); }
@@ -1858,6 +1909,7 @@ function ping() {
   if (document.hidden || !S.token) return;
   call("hubPing", S.pingVer || "").then(function(r) {
     if (r && "wb" in r) wbNotice(r.wb || "");
+    if (r && "poll" in r) pollNotice(r.poll || "");
     if (r.same) return;                                   // nothing new since last time
     S.pingVer = r.ver; if (S.tab !== "ask") setDot(r.unread);
   }).catch(function() {});
@@ -1865,7 +1917,7 @@ function ping() {
 /** Which tabs show (Spotlight / Birthdays can be switched off by the teacher), and their little badges. */
 function featOn(k) { var f = S.home && S.home.features; return !f || f[k] !== false; }   // is this part of the app switched on for the class?
 function setTabs(h) {
-  var on = { board: !!WB.on && featOn("whiteboard") && !S.preview, today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math, photos: h.photosTab !== false, ask: h.askTab !== false }, n = 1;
+  var on = { board: !!WB.on && featOn("whiteboard") && !S.preview, mail: !!(h.mailbox && h.mailbox.n) && !S.preview, poll: !!(h.polls && h.polls.n) && featOn("polls"), today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math, photos: h.photosTab !== false, ask: h.askTab !== false }, n = 1;
   Object.keys(on).forEach(function(k) { if (on[k]) n++; });
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button[data-tab]"), function(b) { if (b.dataset.tab in on) b.classList.toggle("hidden", !on[b.dataset.tab]); });
   document.querySelector(".tabs-in").style.gridTemplateColumns = "repeat(" + n + ",1fr)";
@@ -1873,9 +1925,10 @@ function setTabs(h) {
   Array.prototype.forEach.call(document.querySelectorAll("#tabs .tl"), function(l) { l.textContent = n > 6 && window.innerWidth < 1024 ? l.getAttribute("data-short") : l.getAttribute("data-full"); });
   var td = $("todayDot"), tn = (h.planner && h.planner.newCount) || 0; td.textContent = tn > 9 ? "9+" : (tn || ""); td.classList.toggle("hidden", !tn);
   $("askLabel").textContent = n > 3 ? "Ask" : "Ask " + (h.teacher.length <= 12 ? h.teacher : "teacher");
+  var pd = $("pollDot"), pt = (h.polls && h.polls.todo) || 0; if (pd) { pd.textContent = pt > 9 ? "9+" : (pt || ""); pd.classList.toggle("hidden", !pt); }
   var c = h.celebrating || {};
   [["spotDot", c.spot], ["bdayDot", c.bday]].forEach(function(x) { var d = $(x[0]); d.textContent = x[1] > 9 ? "9+" : (x[1] || ""); d.classList.toggle("hidden", !x[1]); });
-  if ((S.tab === "board" && !on.board) || (S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo) || (S.tab === "math" && !on.math) || (S.tab === "photos" && !on.photos) || (S.tab === "ask" && !on.ask)) S.tab = "wall";
+  if ((S.tab === "board" && !on.board) || (S.tab === "mail" && !on.mail) || (S.tab === "poll" && !on.poll) || (S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo) || (S.tab === "math" && !on.math) || (S.tab === "photos" && !on.photos) || (S.tab === "ask" && !on.ask)) S.tab = "wall";
 }
 function go(tab) {
   stopShow(); if (typeof orStopAll === "function") orStopAll();
@@ -1885,6 +1938,8 @@ function go(tab) {
   if (tab !== "board") wbStop();
   if (tab === "wall") renderWallShell();
   else if (tab === "board") renderBoard();
+  else if (tab === "mail") renderMail();
+  else if (tab === "poll") renderPoll();
   else if (tab === "ask") renderAsk();
   else if (tab === "spot" || tab === "bday") { var dd = $(tab + "Dot"); if (dd) dd.classList.add("hidden"); renderCheers(tab); }
   else if (tab === "league") renderLeague();
@@ -6347,6 +6402,163 @@ function sheet(title, html) {
   document.body.appendChild(d); document.body.style.overflow = "hidden";
   var x = d.querySelector(".x"); if (x) x.focus();
   return d;
+}
+/* 💌 A pupil card on screen (the same look as the printed card): a coloured panel with the occasion, the letter beside it. */
+function pcCardHtml(c, esc2) {
+  var e = esc2 || function(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); };
+  var d = /^(bright|classic|sky)$/.test(c.design) ? c.design : "bright", L = String(c.message || "").length;
+  return '<div class="pcard pc-' + d + '"><div class="pc-panel"><span class="pc-b1"></span><span class="pc-b2"></span><span class="pc-b3"></span><span class="pc-star">★</span>' +
+    '<div class="pc-occ">' + e(c.occasion || "") + '</div><div class="pc-for">for ' + e(c.first || "") + '</div></div>' +
+    '<div class="pc-letter"><div class="pc-dear">Dear ' + e(c.first || "") + ',</div><div class="pc-msg' + (L > 420 ? ' s2' : L > 260 ? ' s1' : '') + '">' + e(c.message || "").replace(/\n/g, "<br>") + '</div>' +
+    '<div class="pc-love">With love and pride,</div><div class="pc-sign">' + e(c.signed || "") + '</div>' + (c.cls || c.when ? '<div class="pc-meta">' + e([c.cls, c.when].filter(Boolean).join(" · ")) + '</div>' : '') + '</div></div>';
+}
+
+
+/* 📊 POLLS: the teacher switches a poll on, pupils answer one question at a time (answers can be changed while it's on).
+   Anonymous polls say so. Class results (bars only, never names or written answers) show if the teacher allows it. */
+var PLH = { sig: null, list: [], cur: null };
+function pollNotice(sig) {
+  if (!featOn("polls") || !S.home) return;
+  if (PLH.sig === null) { PLH.sig = sig; return; }               // first ping: the home screen already knows
+  if (sig === PLH.sig) return;
+  var before = PLH.sig.split(",").filter(Boolean); PLH.sig = sig;
+  call("pollApi", "list", "{}").then(function(r) {
+    pollTake(r.polls || []);
+    var fresh = sig.split(",").filter(function(id) { return id && before.indexOf(id) < 0; });
+    if (fresh.length && !S.preview) flash("📊 " + S.home.teacher + " has a poll for you. Tap Poll when you’re ready.");
+    if (S.tab === "poll" && !PLH.cur) pollList();
+  }).catch(function() {});
+}
+function pollTake(list) {
+  PLH.list = list; S.home.polls = { n: list.length, todo: S.preview ? 0 : list.filter(function(p) { return p.open && !p.done; }).length };
+  setTabs(S.home);
+}
+function renderPoll() {
+  $("topTitle").textContent = "Poll"; PLH.cur = null;
+  $("app").innerHTML = '<div class="pl-head"><h2>📊 Polls</h2><p class="muted">' + esc(S.home.teacher) + ' would like to know what you think.</p></div><div id="plList">' + SPIN + '</div>';
+  call("pollApi", "list", "{}").then(function(r) { pollTake(r.polls || []); pollList(); }).catch(function(e) { $("plList").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+}
+function pollList() {
+  var el = $("plList"); if (!el) { if (S.tab === "poll") renderPoll(); return; }
+  if (!PLH.list.length) { el.innerHTML = '<div class="card" style="text-align:center"><div style="font-size:40px">📭</div><p class="muted">No polls right now.</p></div>'; return; }
+  el.innerHTML = PLH.list.map(function(p, i) {
+    var n = p.questions.length;
+    return '<div class="pl-item"><span class="pl-tag ' + (p.done ? 'done">✓ Done' : 'todo">To do') + '</span><h3>' + esc(p.title) + '</h3><div class="muted">' + n + ' question' + (n === 1 ? '' : 's') + (p.anon ? ' · 🙈 Anonymous: ' + esc(S.home.teacher) + ' won’t see who answered' : '') + (p.open ? '' : ' · closed') + '</div>' +
+      (!p.done && p.open ? '<button class="btn primary big" data-plgo="' + i + '">Start ›</button>' : '') +
+      (p.done && p.results ? '<button class="btn soft" data-plsee="' + i + '">📊 See the class results</button>' : '') +
+      (p.done && p.open ? '<button class="btn soft" data-plgo="' + i + '">✏️ Change my answers</button>' : '') + '</div>';
+  }).join("");
+}
+function pollStart(i) {
+  var p = PLH.list[i]; if (!p) return;
+  if (S.preview) { flash("This is the teacher’s preview: you can look, but answers aren’t saved."); }
+  PLH.cur = { p: p, i: 0, a: JSON.parse(JSON.stringify(p.mine || {})) }; pollStep();
+}
+function pollAnswered(q, v) { return q.type === "text" || (v != null && v !== "" && !(Array.isArray(v) && !v.length)); }
+function pollStep() {
+  var C = PLH.cur, p = C.p, q = p.questions[C.i], v = C.a[q.id], n = p.questions.length, last = C.i === n - 1, inp = "";
+  var ch = function(val, label, on, sq, extra) { return '<button class="pl-ch' + (sq ? ' sq' : '') + (on ? ' on' : '') + '" data-plv="' + esc(String(val)) + '" aria-pressed="' + !!on + '">' + (extra || '<span class="bx">' + (on ? '✓' : '') + '</span>') + '<span>' + label + '</span></button>'; };
+  if (q.type === "one") inp = '<div class="pl-choices" role="group">' + q.opts.map(function(o) { return ch(o, esc(o), v === o); }).join("") + '</div>';
+  else if (q.type === "many") inp = '<div class="muted" style="margin:-6px 0 10px">Tick all that apply.</div><div class="pl-choices" role="group">' + q.opts.map(function(o) { return ch(o, esc(o), (v || []).indexOf(o) > -1, true); }).join("") + '</div>';
+  else if (q.type === "yesno") inp = '<div class="pl-yn" role="group">' + [["yes", "👍", "Yes"], ["no", "👎", "No"]].map(function(x) { return '<button class="pl-ch' + (v === x[0] ? ' on' : '') + '" data-plv="' + x[0] + '" aria-pressed="' + (v === x[0]) + '"><span aria-hidden="true">' + x[1] + '</span>' + x[2] + '</button>'; }).join("") + '</div>';
+  else if (q.type === "scale") inp = '<div class="pl-scale" role="group">' + [1, 2, 3, 4, 5].map(function(k) { return '<button class="pl-ch' + (Number(v) === k ? ' on' : '') + '" data-plv="' + k + '" aria-pressed="' + (Number(v) === k) + '" aria-label="' + k + (k === 1 ? ', ' + esc(q.lo) : k === 5 ? ', ' + esc(q.hi) : '') + '">' + k + '</button>'; }).join("") + '</div><div class="pl-ends"><span>1 = ' + esc(q.lo) + '</span><span>5 = ' + esc(q.hi) + '</span></div>';
+  else if (q.type === "emoji") inp = '<div class="pl-scale pl-emo" role="group">' + p.emoji.map(function(e, k) { return '<button class="pl-ch' + (Number(v) === k + 1 ? ' on' : '') + '" data-plv="' + (k + 1) + '" aria-pressed="' + (Number(v) === k + 1) + '" aria-label="' + esc(p.emojiL[k]) + '">' + e + '<small>' + esc(p.emojiL[k]) + '</small></button>'; }).join("") + '</div>';
+  else inp = '<textarea class="input" id="plText" maxlength="300" rows="4" placeholder="Type here (you can skip this one)">' + esc(v || "") + '</textarea><div class="muted" style="text-align:right" id="plCount">' + String(v || "").length + ' / 300</div>';
+  $("app").innerHTML = '<div class="pl-head"><h2>' + esc(p.title) + '</h2>' + (p.anon ? '<p class="muted">🙈 Anonymous: ' + esc(S.home.teacher) + ' won’t see who answered.</p>' : '') + '</div>' +
+    '<div class="pl-item"><div class="pl-steps" aria-hidden="true">' + p.questions.map(function(x, k) { return '<i class="' + (k <= C.i ? 'on' : '') + '"></i>'; }).join("") + '</div>' +
+    '<div class="pl-qn">Question ' + (C.i + 1) + ' of ' + n + '</div><div class="pl-qt" id="plQ">' + esc(q.q) + '</div>' + inp +
+    '<div class="pl-nav"><button class="btn soft" data-plback>' + (C.i ? '‹ Back' : 'Cancel') + '</button><button class="btn primary" data-plnext' + (pollAnswered(q, v) ? '' : ' disabled') + '>' + (last ? 'Send ✓' : 'Next ›') + '</button></div></div>';
+  var ta = $("plText"); if (ta) ta.oninput = function() { C.a[q.id] = this.value; $("plCount").textContent = this.value.length + " / 300"; };
+  window.scrollTo(0, 0);
+}
+function pollBars(r) {
+  return r.qs.map(function(q) {
+    var tot = q.type === "many" ? r.n : q.counts.reduce(function(s, c) { return s + c.n; }, 0) || 1, mine = (PLH.cur && PLH.cur.a) || {};
+    return '<div class="pl-rq"><b>' + esc(q.q) + '</b>' + q.counts.map(function(c, k) {
+      var pct = Math.round(c.n / tot * 100), my = mine[q.id], isMine = my != null && (Array.isArray(my) ? my.indexOf(c.label) > -1 : String(my) === c.label || (q.type === "yesno" && my === c.label.toLowerCase()) || ((q.type === "scale" || q.type === "emoji") && Number(my) === k + 1));
+      return '<div class="pl-rb' + (isMine ? ' mine' : '') + '"><span>' + esc(c.label) + (isMine ? ' ← you' : '') + '</span><div class="tr" aria-hidden="true"><i style="width:' + pct + '%"></i></div><em>' + pct + '%</em></div>';
+    }).join("") + '</div>';
+  }).join("");
+}
+function pollThanks(p) {
+  $("app").innerHTML = '<div class="pl-item pl-thanks"><div>🎉</div><h2>Thank you!</h2><p class="muted">Your answers are sent' + (p.anon ? ' (anonymously)' : ' to ' + esc(S.home.teacher)) + '.' + (p.open ? ' You can change them while the poll is open.' : '') + '</p></div>' +
+    (p.results ? '<div class="pl-item"><h3>📊 What the class said (' + p.results.n + ' answers)</h3>' + pollBars(p.results) + '</div>' : (p.anon || !p.results ? '' : '')) +
+    '<button class="btn soft big" style="width:100%;margin-top:14px" data-plhome>‹ Back to polls</button>';
+  window.scrollTo(0, 0);
+}
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-plgo],[data-plsee],[data-plv],[data-plback],[data-plnext],[data-plhome]"); if (!t || S.tab !== "poll") return;
+  if (t.hasAttribute("data-plgo")) return pollStart(+t.getAttribute("data-plgo"));
+  if (t.hasAttribute("data-plsee")) { var ps = PLH.list[+t.getAttribute("data-plsee")]; PLH.cur = { p: ps, a: ps.mine || {} }; return pollThanks(ps); }
+  if (t.hasAttribute("data-plhome")) return renderPoll();
+  var C = PLH.cur; if (!C) return;
+  var q = C.p.questions[C.i];
+  if (t.hasAttribute("data-plv")) {
+    var v = t.getAttribute("data-plv");
+    if (q.type === "many") { var a = (C.a[q.id] || []).slice(), k = a.indexOf(v); if (k > -1) a.splice(k, 1); else a.push(v); C.a[q.id] = a; }
+    else C.a[q.id] = q.type === "scale" || q.type === "emoji" ? Number(v) : v;
+    pollStep(); return;
+  }
+  if (t.hasAttribute("data-plback")) { if (!C.i) return renderPoll(); C.i--; return pollStep(); }
+  if (t.hasAttribute("data-plnext")) {
+    if (C.i < C.p.questions.length - 1) { C.i++; return pollStep(); }
+    if (S.preview) { flash("Teacher preview: answers aren’t saved."); return renderPoll(); }
+    var done = busy(t, "Sending…");
+    call("pollApi", "answer", JSON.stringify({ id: C.p.id, answers: C.a })).then(function(r) {
+      done(); pollTake(r.polls || []); var p2 = PLH.list.filter(function(x) { return x.id === C.p.id; })[0] || C.p; pollThanks(p2);
+    }, function(err) { done(); flash(err.message, true); });
+  }
+});
+
+/* 📬 MAILBOX: cards and certificates from the teacher (only this pupil's own). A new card opens by itself once;
+   the Mailbox tab keeps everything, and each one can be saved as a PDF. */
+var PCH = { list: [], certs: [], loaded: false };
+function pcHome(list) {
+  PCH.list = list || [];
+  var n = PCH.list.filter(function(c) { return c.unread; }).length, dot = $("mailDot");
+  if (dot) { dot.textContent = n > 9 ? "9+" : (n || ""); dot.classList.toggle("hidden", !n); }
+  var first = PCH.list.filter(function(c) { return c.unread; })[0], seen = ""; try { seen = localStorage.getItem("pc_seen_" + (first || {}).id) || ""; } catch (e) {}
+  if (first && !seen && !S.preview) setTimeout(function() { if (!$("sheet")) pcShow(PCH.list.indexOf(first)); }, 1400);
+}
+function renderMail() {
+  $("topTitle").textContent = "Mailbox";
+  $("app").innerHTML = '<div class="mb-head"><h2>📬 From ' + esc(S.home.teacher) + '</h2><p class="muted">Cards and certificates just for you. Tap ⬇ PDF to keep a copy.</p></div><div id="mbList">' + SPIN + '</div>';
+  call("mailApi", "list", "{}").then(function(r) { PCH.list = r.cards || []; PCH.certs = r.certs || []; pcHome(PCH.list); mbDraw(); }).catch(function(e) { $("mbList").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+}
+function mbDraw() {
+  var el = $("mbList"); if (!el) return;
+  var first = (S.home && (S.home.short || S.home.me)) || "";
+  var cards = PCH.list.map(function(c, i) { return '<div class="mb-item"><div class="mb-kind">💌 Card · ' + esc(c.when) + (c.unread ? ' <b class="mb-new">NEW</b>' : '') + '</div>' +
+      '<button class="mb-open" data-mbcard="' + i + '" aria-label="Open the card">' + pcCardHtml({ design: c.design, occasion: c.occasion, first: c.first || String(first).split(" ")[0], message: c.message, signed: c.signed, cls: S.home.className, when: c.when }, esc) + '</button>' +
+      '<div class="mb-acts"><button class="btn soft" data-mbcard="' + i + '">Open</button><button class="btn primary" data-mbpdf="card" data-id="' + esc(c.id) + '">⬇ PDF</button></div></div>'; }).join("");
+  var certs = PCH.certs.map(function(x) { return '<div class="mb-item"><div class="mb-kind">🏅 Certificate · ' + esc(x.when) + '</div><div class="mb-cert"><div class="mb-medal">🏅</div><div><b>Certificate of Appreciation</b><div class="mb-roles">' + x.roles.map(function(r) { return '<span>★ ' + esc(r) + '</span>'; }).join("") + '</div>' + (x.message ? '<p>' + esc(x.message) + '</p>' : '') + '<div class="muted">' + esc(x.term) + '</div></div></div>' +
+      '<div class="mb-acts"><button class="btn primary" data-mbpdf="cert" data-id="' + esc(x.id) + '">⬇ Download PDF</button></div></div>'; }).join("");
+  el.innerHTML = cards + certs || '<div class="card" style="text-align:center"><div style="font-size:40px">📭</div><p class="muted">Nothing here yet.</p></div>';
+}
+/** Saves a PDF the app sends (base64) on this device. */
+function mbSave(name, b64) {
+  var bin = atob(b64), arr = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  var url = URL.createObjectURL(new Blob([arr], { type: "application/pdf" })), a = document.createElement("a"); a.href = url; a.download = name; a.rel = "noopener";
+  document.body.appendChild(a); a.click(); a.parentNode.removeChild(a); setTimeout(function() { URL.revokeObjectURL(url); }, 60000);
+}
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-mbcard],[data-mbpdf]"); if (!t || S.tab !== "mail") return;
+  if (t.hasAttribute("data-mbcard")) return pcShow(+t.getAttribute("data-mbcard"));
+  var done = busy(t, "Making your PDF…");
+  call("mailApi", "pdf", JSON.stringify({ kind: t.getAttribute("data-mbpdf"), id: t.getAttribute("data-id") })).then(function(r) { done(); try { mbSave(r.name, r.data); flash("⬇ Saved: " + r.name); } catch (x) { flash("Your browser didn’t allow the download.", true); } }, function(err) { done(); flash(err.message, true); });
+});
+function sheetPdfBtn(c) { var b = $("pcSheetPdf"); if (!b) return; b.onclick = function() { var done = busy(b, "Making your PDF…"); call("mailApi", "pdf", JSON.stringify({ kind: "card", id: c.id })).then(function(r) { done(); try { mbSave(r.name, r.data); } catch (x) {} }, function(err) { done(); flash(err.message, true); }); }; }
+function pcShow(i) {
+  var list = PCH.list; if (!list.length) return; i = Math.max(0, Math.min(list.length - 1, i));
+  var c = list[i], first = (S.home && S.home.short) || (S.home && S.home.me) || "";
+  if (!document.getElementById("pcFonts")) { var l = document.createElement("link"); l.id = "pcFonts"; l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&family=Nothing+You+Could+Do&display=swap"; document.head.appendChild(l); }
+  sheet("A card from " + (c.signed || S.home.teacher), '<div class="pc-wrap">' + pcCardHtml({ design: c.design, occasion: c.occasion, first: c.first || String(first).split(" ")[0], message: c.message, signed: c.signed, cls: S.home.className, when: c.when }, esc) + '</div>' +
+    (list.length > 1 ? '<div class="pc-more">' + list.map(function(x, k) { return '<button class="chip' + (k === i ? ' on' : '') + '" data-pcone="' + k + '">' + esc(x.occasion) + (x.unread ? ' •' : '') + '</button>'; }).join("") + '</div>' : '') +
+    '<div class="mb-acts" style="margin-top:12px"><button class="btn soft" data-close>Close</button><button class="btn primary" id="pcSheetPdf">⬇ PDF</button></div>');
+  Array.prototype.forEach.call(document.querySelectorAll("[data-pcone]"), function(b) { b.onclick = function() { pcShow(+b.getAttribute("data-pcone")); }; });
+  try { localStorage.setItem("pc_seen_" + c.id, "1"); } catch (e) {}
+  sheetPdfBtn(c);
+  if (c.unread) call("mailApi", "open", JSON.stringify({ id: c.id })).then(function(r) { PCH.certs = r.certs || PCH.certs; pcHome(r.cards); if (S.tab === "mail") mbDraw(); }).catch(function() {});
 }
 function closeSheet() { var s = $("sheet"); if (s) s.parentNode.removeChild(s); document.body.style.overflow = ""; }
 document.addEventListener("keydown", function(e) { if (e.key === "Escape") { closeSheet(); closeViewer(); } });
