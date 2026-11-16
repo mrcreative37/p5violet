@@ -291,6 +291,8 @@ select.ord{width:72px}
 #toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;background:var(--ink);color:var(--paper);
   padding:10px 16px;border-radius:999px;font-weight:700;font-size:.9rem;max-width:calc(100% - 32px)}
 .hero{display:flex;flex-direction:column;gap:6px;margin-bottom:6px}
+.stp-fb{margin:10px 0 0;padding:10px 14px;border-radius:12px;font-size:15px;line-height:1.5}.stp-fb p{margin:6px 0 0}.stp-fb.try{background:#FFF4DC;color:#6B4500}.stp-fb.ok{background:#E5F4EC;color:#14573A}.stp-fb.no{background:#FDECEC;color:#8E2424}
+.stp-chk{margin-top:10px;width:100%;justify-content:center}.stp-like{margin:-4px 0 16px;padding:12px;border:2px dashed var(--line);border-radius:16px}.stp-like>b{display:block;margin-bottom:8px}
 .err{background:var(--part-bg);color:var(--part);border-radius:10px;padding:10px 14px;font-weight:700}
 /* Inside the Class Hub: the Hub has its own top bar */
 body.embed{--hdr:0px;background:transparent}
@@ -1024,13 +1026,65 @@ function calmLessons(p, ctx){
   p.questions.forEach(function(q){ var m=ctx.marks[q.id]; if(!m || m.awarded>=m.max) return; var id=skillId(q), L=PLES[id]; if(!L) return; items.push({id:id, lesson:{t:L.t, r:m.tip||L.r, x:L.x, k:L.k}}); });
   return PCF.lessons(items, 'Quick lessons');
 }
+/* ---------- ✅ question by question ---------- */
+function stepDone(at, id){ var r=(at.st||{})[id], t=(at.tw||{})[id]; return !!(r && r.done && (r.ok || (t && t.st && t.st.done))); }
+function stepFb(r){
+  if(!r || !r.tries) return '';
+  if(!r.done) return '<div class="stp-fb try" role="status"><b>❌ Not quite'+(r.awarded>0?' ('+fmtMarks(r.awarded)+' of '+fmtMarks(r.max)+' marks so far)':'')+'. Have another go.</b>'+(r.clue?'<p>💡 '+esc(r.clue)+'</p>':'')+'</div>';
+  if(r.ok) return '<div class="stp-fb ok" role="status"><b>✅ '+(r.first?'Full marks!':'Full marks on your second try!')+'</b></div>';
+  return '<div class="stp-fb no" role="status"><b>Here is how it is marked.</b> It’s saved in My mistakes.</div>';
+}
+function stepQ(q, num, ctx){
+  var at=S.attempt, r=(at.st||{})[q.id]||{}, t=(at.tw||{})[q.id], h;
+  if(r.done){ var M={}, K={}; M[q.id]=r.m; if(r.key) K[q.id]=r.key; h=qCard(q, num, {mode:'result', answers:ctx.answers, marks:M, keys:K, keyParts:{}}).replace(/<\/section>$/, stepFb(r)+'</section>'); }
+  else h=qCard(q, num, ctx).replace(/<\/section>$/, stepFb(r)+'<button class="btn go stp-chk" data-cmchk="'+esc(q.id)+'"'+(at.busy?' disabled':'')+'>'+(at.busy===q.id?'Checking… (a few seconds)':r.tries?'Check again':'Check')+'</button></section>');
+  if(r.done && !r.ok){
+    if(!t || !t.q) h+='<div class="stp-like"><p class="muted small">✍️ Writing a question like it…</p></div>';
+    else { var tq=t.q, ts=t.st||{};
+      if(ts.done){ var M2={}, K2={}, A2={}; M2[tq.id]=ts.m; if(ts.key) K2[tq.id]=ts.key; A2[tq.id]=ts.ans; h+='<div class="stp-like"><b>🔁 One like it</b>'+qCard(tq, '★', {mode:'result', answers:A2, marks:M2, keys:K2, keyParts:{}})+'</div>'; }
+      else h+='<div class="stp-like"><b>🔁 Now try one like it</b><section class="qc"><div class="qh"><span class="qn">★</span><div class="qp">'+esc(tq.prompt)+'</div><span class="qm">['+fmtMarks(tq.marks)+']</span></div>'+
+        (tq.type==='mcq' ? '<div class="opts" role="radiogroup">'+tq.options.map(function(o,i){ var on=t.ans===i; return '<label class="opt'+(on?' sel':'')+'"><input type="radio" name="tw-'+esc(q.id)+'" value="'+i+'" data-cmtw="'+esc(q.id)+'"'+(on?' checked':'')+'><b>('+(i+1)+')</b><span>'+esc(o)+'</span></label>'; }).join('')+'</div>'
+          : '<textarea class="lined" rows="3" data-cmtwt="'+esc(q.id)+'" aria-label="Your answer">'+esc(t.ans||'')+'</textarea>')+
+        stepFb(ts)+'<button class="btn go stp-chk" data-cmtchk="'+esc(q.id)+'"'+(at.busy?' disabled':'')+'>'+(at.busy==='t'+q.id?'Checking…':ts.tries?'Check again':'Check')+'</button></section></div>';
+    }
+  }
+  return h;
+}
+function stepCheck(qid, twin){
+  var at=S.attempt; if(at.busy) return; at.st=at.st||{}; at.tw=at.tw||{};
+  var ans = twin ? (at.tw[qid]||{}).ans : at.answers[qid];
+  if(ans===undefined || ans===null || ans==='' || (typeof ans==='object' && !Object.keys(ans).length)){ at.err='Answer the question first.'; render(); var e0=$('#q-'+qid); if(e0) e0.scrollIntoView({block:'center'}); return; }
+  at.err=''; at.busy= twin ? 't'+qid : qid; var y=window.scrollY; render(); window.scrollTo(0,y);
+  call('check',{passageId:at.passage.id, qid:qid, answer:ans, twin:twin?1:0}).then(function(r){
+    at.busy=false; if(twin) at.tw[qid].st=r; else at.st[qid]=r;
+    if(r.like && !at.tw[qid]){ at.tw[qid]={q:null, st:{}, ans:''}; call('twin',{passageId:at.passage.id, qid:qid}).then(function(d){ at.tw[qid]={q:d.q, st:d.st||{}, ans:''}; var y2=window.scrollY; render(); window.scrollTo(0,y2); }).catch(function(e){ at.tw[qid]=null; at.err=e.message; render(); }); }
+    var y3=window.scrollY; render(); window.scrollTo(0,y3);
+  }).catch(function(e){ at.busy=false; at.err=e.message; var y4=window.scrollY; render(); window.scrollTo(0,y4); toast(e.message); });
+}
+function stepFinish(){
+  var at=S.attempt, p=at.passage; if(at.busy) return; at.busy='fin'; render();
+  call('finish',{passageId:p.id, annos:at.annos}).then(function(r){
+    at.busy=false; LS.del(draftKey(p.id)); srvDraft=null; clearTimeout(srvDraftTimer); call('draftDel',{id:p.id}).catch(function(){});
+    S.results=[r].concat((S.results||[]).filter(function(x){ return x.id!==r.id; }));
+    at.passage=r.passage||at.passage; at.result=r; at.tab='questions'; at.clue=null; render(); window.scrollTo(0,0);
+  }).catch(function(e){ at.busy=false; at.err=e.message; render(); });
+}
+document.addEventListener('click', function(e){
+  var t=e.target.closest && e.target.closest('[data-cmchk],[data-cmtchk],[data-cmfin]'); if(!t || !S.attempt || S.attempt.result) return;
+  if(t.dataset.cmchk) stepCheck(t.dataset.cmchk, false); else if(t.dataset.cmtchk) stepCheck(t.dataset.cmtchk, true); else stepFinish();
+});
+document.addEventListener('input', function(e){
+  var el=e.target; if(!S.attempt || !el.dataset) return;
+  if(el.dataset.cmtw!=null && S.attempt.tw[el.dataset.cmtw]) S.attempt.tw[el.dataset.cmtw].ans=Number(el.value);
+  if(el.dataset.cmtwt!=null && S.attempt.tw[el.dataset.cmtwt]) S.attempt.tw[el.dataset.cmtwt].ans=el.value;
+});
 function bookletHTML(p, ctx){
   var nums=numbering(p.questions);
   var Q=p.questions;
   var sum=function(l){ return l.reduce(function(s,q){ return s+(Number(q.marks)||0); },0); };
   var h='<div class="booklet">';
   if(Q.length) h+='<div class="sec"><h2>Questions</h2><span class="qm">'+fmtMarks(sum(Q))+' marks</span></div>'+
-    '<p class="muted small">Read the passage and answer the questions. For multiple-choice questions, choose the correct answer. Write in complete sentences where needed.</p>'+Q.map(function(q){ return qCard(q, nums[q.id], ctx); }).join('');
+    '<p class="muted small">Read the passage and answer the questions. For multiple-choice questions, choose the correct answer. Write in complete sentences where needed.</p>'+Q.map(function(q){ return ctx.step ? stepQ(q, nums[q.id], ctx) : qCard(q, nums[q.id], ctx); }).join('');
   var A=[], B=[];
   if(A.length) h+='<div class="sec"><h2>Booklet A · Multiple choice</h2><span class="qm">'+fmtMarks(sum(A))+' marks</span></div>'+
     '<p class="muted small">Choose the correct answer and shade its number.</p>'+A.map(function(q){ return qCard(q, nums[q.id], ctx); }).join('');
@@ -1206,7 +1260,7 @@ function startAttempt(pid, preview){
     b.done();
     var d = preview ? null : LS.get(draftKey(p.id),null);
     if(sv && sv.answers && (!d || (sv.at||0)>(d.at||0))){ d=sv; LS.set(draftKey(p.id), sv); }
-    S.attempt = { passage:p, answers:(d&&d.answers)||{}, annos:(d&&d.annos)||[], words:(d&&d.words)||[], tab:'passage', showAi:true, result:null, preview:!!preview, clue:null, sel:null, sheet:null };
+    S.attempt = { passage:p, answers:(d&&d.answers)||{}, annos:(d&&d.annos)||[], words:(d&&d.words)||[], tab:'passage', showAi:true, result:null, preview:!!preview, clue:null, sel:null, sheet:null, st:{}, tw:{}, busy:false };
     S.route={name:'attempt'};
     render(); window.scrollTo(0,0);
   }).catch(function(e){ b.done(); toast(e.message); });
@@ -1327,11 +1381,10 @@ function viewAttempt(){
   if(res){
     h+=bookletHTML(p,{mode:'result', answers:at.answers, marks:res.marks||{}, keys:res.keys, keyParts:res.keyParts});
   } else {
-    h+=bookletHTML(p,{mode:'answer', answers:at.answers});
-    h+='<div class="panel stack kdone" style="margin-top:14px"><span class="e">🚀</span><h2>Finished?</h2><p class="muted small">Read your answers once more, then hand in. You\'ll get your marks and tips straight away.</p>'+
-       (at.err?'<div class="err">'+esc(at.err)+'</div>':'')+'<div id="submitNote" class="muted small"></div><div class="row">'+
-       '<button class="btn go" data-act="submit"'+(at.preview?' disabled':'')+'>'+(at.confirming?'Tap again to hand in':'Hand in for marking')+'</button></div>'+
-       (at.preview?'<span class="muted small">Pupils hand in from the student link.</span>':'<span class="muted small">💾 Your answers save on this device as you type.</span>')+'</div>';
+    h+=bookletHTML(p,{mode:'answer', answers:at.answers, step:true});
+    var left=p.questions.filter(function(q){ return !stepDone(at, q.id); }).length;
+    h+='<div class="panel stack kdone" style="margin-top:14px"><span class="e">🚀</span><h2>'+(left?'Check each question as you go':'All done!')+'</h2><p class="muted small">'+(left?left+' question'+(left>1?'s':'')+' still to check. Tap Check under each one.':'See your marks and the tips for every question.')+'</p>'+
+       (at.err?'<div class="err">'+esc(at.err)+'</div>':'')+'<div class="row"><button class="btn go" data-cmfin'+(left||at.busy?' disabled':'')+'>'+(at.busy==='fin'?'Saving…':'✅ See my results')+'</button></div><span class="muted small">💾 Your answers save on this device as you type.</span></div>';
   }
   h+='</div></div></div>';
   return h;
@@ -1342,7 +1395,7 @@ function resultHeader(res){
     var qs=S.attempt.passage.questions, M=res.marks||{}, n=0, rows=[];
     var lights=qs.map(function(q){ n++; var m=M[q.id]; if(!m) return {c:'n',t:n}; rows.push({id:skillId(q), ok:m.awarded>=m.max}); return {c:PCF.lvl(m.awarded,m.max), t:n}; });
     var sa=PCF.starAim(rows);
-    return PCF.sum({got:res.total, max:res.max, lights:lights, star:sa.star||(res.total>=res.max?'Full marks!':''), aim:sa.aim})+
+    return PCF.sum({got:res.total, max:res.max, lights:lights, star:sa.star||(res.total>=res.max?'Full marks!':''), aim:sa.aim})+(res.firstTotal!=null?'<p class="muted small" style="text-align:center;margin:4px 0 10px">'+fmtMarks(res.firstTotal)+' marks on the first try.'+(res.likes&&Object.keys(res.likes).length?' 🔁 '+Object.keys(res.likes).filter(function(k){ return res.likes[k].ok; }).length+' of '+Object.keys(res.likes).length+' “one like it” right.':'')+'</p>':'')+
       (res.teacherComment?'<div class="panel" style="margin-top:4px"><b>💬 Teacher:</b> '+esc(res.teacherComment)+'</div>':'')+
       '<div class="row" style="gap:6px;margin:2px 0 0">'+(res.markedBy==='teacher'?'<span class="pill pen">Checked by your teacher</span>':'<span class="pill">Marked by AI</span>')+'<span class="muted small">Tap a quote to see it in the passage.</span></div>';
   }
@@ -1557,6 +1610,12 @@ function clearSel(){ S.attempt.sel=null; try{ getSelection().removeAllRanges(); 
 function submitAttempt(){
   var at=S.attempt, p=at.passage;
   var blank=p.questions.filter(function(q){ var a=at.answers[q.id]; if(a===undefined||a===''||a===null) return true; if(typeof a==='object') return !Object.keys(a).length; return false; }).length;
+  if(blank){   // 🚫 no blank hand-ins
+    at.confirming=false; render();
+    var n0=$('#submitNote'); if(n0) n0.innerHTML='<b>'+blank+' question'+(blank>1?'s are':' is')+' still blank.</b> Write an answer for every question before you hand in.';
+    var first=p.questions.filter(function(q){ return isBlank(at.answers[q.id]); })[0], el0=first && document.getElementById('q-'+first.id); if(el0) el0.scrollIntoView({block:'center'});
+    return;
+  }
   if(!at.confirming){
     at.confirming=true; render();
     var n=$('#submitNote'); if(n) n.innerHTML = blank ? '<b>'+blank+' question'+(blank>1?'s are':' is')+' still blank.</b> Check your work, then tap again to hand in.' : 'All questions answered. Tap again to hand in.';

@@ -628,6 +628,9 @@
   /* 🔢 Maths practice */
   .mp-lv { display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin:10px 0 2px; --mp-ink:#5D1E56; }
   .mp-lv button { border:2px solid var(--line); background:#fff; border-radius:14px; min-height:46px; font:800 15px/1 var(--head); color:var(--muted); cursor:pointer; }
+  .mp-track { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:8px 0 2px; }
+  .mp-track button { border:2px solid var(--line); background:#fff; border-radius:14px; min-height:44px; font:800 14.5px/1 var(--head); color:var(--muted); cursor:pointer; }
+  .mp-track button.on { background:#E7F5EC; border-color:#1F7A4D; color:#14573A; }
   .mp-lv button.on { background:var(--violet-2); border-color:var(--violet-2); color:#fff; }
   .mp-h { font:800 18px/1.2 var(--head); color:var(--ink); }
   .mp-sprint { display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
@@ -653,6 +656,9 @@
   .mp-opts { display:grid; gap:8px; margin-top:14px; }
   .mp-opt { text-align:left; border:2px solid var(--line); background:#fff; border-radius:14px; padding:12px 14px; min-height:52px; font:600 17px/1.3 inherit; color:var(--ink); cursor:pointer; }
   .mp-opt.on { border-color:var(--violet-2); background:var(--lilac); }
+  .mp-wkl { display:block; font-weight:700; font-size:14px; margin:14px 0 6px; } .mp-wkl span { font-weight:500; color:var(--muted); }
+  .mp-wk { width:100%; box-sizing:border-box; min-height:84px; padding:10px 12px; border:2px solid var(--line, #D9D5EC); border-radius:12px; font:500 16px/1.5 inherit; background:#fff; color:inherit; resize:vertical; } .mp-wk:focus { outline:3px solid var(--violet-2, #7C6CF2); outline-offset:1px; }
+  .mp-myw { white-space:pre-wrap; }
   .mp-inrow { display:flex; align-items:center; gap:8px; margin-top:14px; }
   .mp-in { flex:1; min-width:0; border:2px solid var(--line); border-radius:14px; padding:12px 14px; font:700 20px/1.2 inherit; min-height:54px; background:#fff; color:var(--ink); }
   .mp-in:focus { outline:none; border-color:var(--violet-2); box-shadow:0 0 0 3px var(--lilac); }
@@ -660,6 +666,18 @@
   .mp-nav { display:flex; gap:10px; justify-content:space-between; align-items:center; margin-top:14px; } .mp-nav .btn.big { flex:1; max-width:320px; margin-left:auto; }
   .mp-score { display:flex; gap:16px; align-items:center; }
   .mp-big { font:800 46px/1 var(--head); color:var(--violet-2); white-space:nowrap; } .mp-big small { font-size:22px; color:var(--muted); }
+  .mq-chk { width:100%; margin-top:10px; }
+  .pr-panel { position:sticky; bottom:84px; z-index:6; } .pr-pcard { max-height:36vh; overflow:auto; padding:10px 14px !important; box-shadow:0 -6px 22px rgba(62,18,57,.16); border:2px solid var(--violet-2); }
+  .pr-ph { display:flex; justify-content:space-between; align-items:center; gap:8px; } .pr-ph span { color:var(--muted); font-size:13.5px; font-weight:700; }
+  .pr-in.pr-try { border-bottom-color:#E79A12; background:#FFF4DC; } .pr-sel { cursor:pointer; } .pr-sel.cur { outline:3px solid var(--violet-2); outline-offset:2px; border-radius:6px; }
+  .pr-okw { color:#14573A; } .pr-now { color:#8E2424; } .pr-tw { width:8em; } .mq-like { margin-top:12px; padding:12px; border:2px dashed var(--violet-2); border-radius:16px; }
+  .mq-opt.right { background:#E5F4EC; border-color:#1F7A4D; color:#14573A; } .mq-opt.wrong { background:#FDECEC; border-color:#C43A3A; color:#8E2424; } .mq-opt.locked { cursor:default; }
+  .mp-fb { margin:12px 0 0; padding:12px 14px; border-radius:14px; font-size:15.5px; line-height:1.5; } .mp-fb p { margin:6px 0 0; white-space:pre-wrap; } .mp-fb b { font-size:16px; }
+  .mp-fb.try { background:#FFF4DC; color:#6B4500; } .mp-fb.ok { background:#E5F4EC; color:#14573A; } .mp-fb.no { background:#FDECEC; color:#8E2424; } .mp-fbn { font-size:13.5px; opacity:.85; }
+  .mp-chk { width:100%; margin-top:12px; } .mp-like { border:2px dashed var(--violet-2); }
+  .mp-opt.right { background:#E5F4EC; border-color:#1F7A4D; color:#14573A; } .mp-opt.wrong { background:#FDECEC; border-color:#C43A3A; color:#8E2424; } .mp-opt:disabled { cursor:default; opacity:1; }
+  .mp-dots i.miss { background:var(--danger); }
+  .mp-likeres { margin-top:10px; padding:10px 12px; border-radius:12px; background:var(--paper); } .mp-likeres.ok b { color:var(--ok); } .mp-likeres.no b { color:var(--danger); }
   .mp-res { background:#fff; border-radius:18px; padding:14px 16px; margin-top:10px; border-left:6px solid var(--ok); box-shadow:0 4px 14px rgba(62,18,57,.06); } .mp-res.no { border-left-color:var(--danger); }
   .mp-rh { display:flex; gap:8px; align-items:center; font-weight:800; font-size:13.5px; color:var(--ok); margin-bottom:6px; } .mp-res.no .mp-rh { color:var(--danger); }
   .mp-ra { display:flex; gap:6px 18px; flex-wrap:wrap; margin-top:8px; font-size:15px; }
@@ -687,6 +705,25 @@
   .mp-colb i { width:30px; height:30px; border-radius:50%; border:1.5px solid #1E1A32; font:800 9.5px/27px inherit; font-style:normal; text-align:center; color:#1E1A32; }
   .mp-colc { display:flex; align-items:center; justify-content:space-between; gap:2px; padding:5px; border-top:1.5px solid var(--line); } .mp-colc button { width:36px; height:40px; }
   @media (max-width:640px) { .mp-discs.six { gap:4px; } .mp-discs.six .mp-colc { flex-direction:column-reverse; gap:4px; } .mp-discs.six .mp-colc button { width:100%; height:38px; } .mp-discs.six .mp-colh { font-size:10px; } }
+  .mp-paper { display:flex; align-items:center; gap:10px; width:100%; text-align:left; border:2px solid var(--violet-2); background:var(--lilac); border-radius:18px; padding:14px; margin-bottom:10px; font:inherit; color:var(--ink); cursor:pointer; } .mp-paper .mp-ic { font-size:26px; }
+  .mp-tools-row { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 0; } .mp-tools-row .btn { min-height:42px; padding:8px 14px; font-size:14.5px; }
+  .mp-prog { height:6px; border-radius:3px; background:var(--line); margin:8px 0 2px; overflow:hidden; } .mp-prog i { display:block; height:100%; background:var(--violet-2); }
+  .mp-map { display:grid; grid-template-columns:repeat(auto-fill,minmax(54px,1fr)); gap:6px; } .mp-map button { min-height:40px; border:1.5px solid var(--line); background:#fff; border-radius:10px; font:700 13px inherit; color:var(--ink); cursor:pointer; } .mp-map button.done { background:var(--lilac); border-color:var(--violet-2); } .mp-map button.now { outline:3px solid var(--violet-2); }
+  .mp-sec { margin:16px 0 0; font:800 13px/1 var(--head); letter-spacing:.08em; text-transform:uppercase; color:var(--violet-2); }
+  .mp-qh { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:15px; } .mp-marks { font-size:12.5px; font-weight:800; border-radius:999px; padding:3px 10px; background:var(--lilac); color:var(--violet-2); }
+  #mpTimer { font-variant-numeric:tabular-nums; font-weight:800; color:var(--ink); } #mpTimer.low { color:var(--danger); }
+  .mp-calc { max-width:360px; } .mp-cd { background:#1E1A32; color:#FDFAF3; border-radius:14px; padding:10px 14px; text-align:right; margin-bottom:8px; } .mp-cx { font-size:14px; opacity:.8; min-height:18px; word-break:break-all; } .mp-co { font:800 26px/1.2 var(--head); word-break:break-all; }
+  .mp-ck { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; } .mp-ck button { min-height:48px; border:1.5px solid var(--line); background:#fff; border-radius:12px; font:800 18px inherit; color:var(--ink); cursor:pointer; touch-action:manipulation; } .mp-ck .op { background:var(--lilac); } .mp-ck .eq { background:var(--violet-2); color:#fff; border-color:var(--violet-2); grid-column:span 2; }
+  .mp-tbl { width:100%; border-collapse:collapse; margin-top:8px; font-size:15px; } .mp-tbl td { padding:7px 4px; border-bottom:1px solid var(--line); } .mp-tbl td:last-child { text-align:right; font-weight:800; }
+  .mp-trow { display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid var(--line); font-size:14.5px; } .mp-trow .btn { min-height:36px; padding:4px 12px; font-size:13.5px; } .mp-trow > span { font-weight:800; white-space:nowrap; }
+  .mp-bar { height:7px; background:var(--line); border-radius:4px; margin-top:5px; overflow:hidden; } .mp-bar i { display:block; height:100%; } .mp-bar i.g { background:var(--ok); } .mp-bar i.a { background:var(--gold); } .mp-bar i.r { background:var(--danger); }
+  .mp-full, .mp-next { border:2px solid var(--violet-2); } .mp-al { display:inline-block; margin-top:10px; font:800 30px/1 var(--head); color:#fff; background:var(--violet-2); border-radius:14px; padding:10px 16px; }
+  .mp-brow { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:8px; font-size:14px; } .mp-brow button { width:38px; height:38px; border-radius:10px; border:2px solid var(--line); background:#fff; font:800 18px inherit; color:var(--ink); cursor:pointer; }
+  .mp-bn, .mp-bl { border:2px solid var(--line); border-radius:10px; padding:7px 9px; font:700 15px inherit; min-height:40px; width:96px; color:var(--ink); background:#fff; }
+  .mp-cubes { display:grid; grid-template-columns:1fr; gap:8px; } .mp-cubes label { min-width:0; display:flex; flex-direction:row; align-items:center; justify-content:space-between; } @media (min-width:640px) { .mp-cubes { grid-template-columns:repeat(3,1fr); } .mp-cubes label { flex-direction:column; align-items:flex-start; } } .mp-cubes b { white-space:nowrap; font-size:15px; color:var(--ink); }
+  .mp-cubes button { width:34px; height:38px; flex:0 0 auto; border-radius:10px; border:2px solid var(--line); background:#fff; font:800 18px inherit; color:var(--ink); cursor:pointer; }
+  .mp-ctl input[type=checkbox] { width:22px; height:22px; min-height:22px; flex:0 0 auto; accent-color:var(--violet-2); }
+  .mp-ctl .mp-bl { flex:1; min-width:90px; }
   .mp-range { width:100%; margin-top:10px; height:44px; accent-color:var(--violet-2); }
   @media (max-width:420px) { .mp-colc button { width:30px; } .mp-colb i { width:26px; height:26px; line-height:23px; font-size:8.5px; } .mp-q { font-size:18px; } }
   .en-sw.n4 { grid-template-columns:repeat(4,1fr); } .en-sw.n5 { grid-template-columns:repeat(5,1fr); } .en-sw.n4 button, .en-sw.n5 button { font-size:12px; }
@@ -931,6 +968,7 @@
     .thumbs { grid-template-columns:repeat(6,minmax(0,1fr)); }
     /* Ask: a comfortable reading width, typing box under it */
     #app[data-view="ask"] > * { max-width:860px; }
+
     .bub { max-width:min(82%, 560px); }
     .composer { left:calc(var(--gut) + var(--side) + 36px); right:auto; width:min(860px, calc(100vw - var(--gut) * 2 - var(--side) - 36px)); bottom:22px; max-width:none; margin:0; }
     /* pop-ups */
@@ -1325,6 +1363,29 @@
     body.nav .wrap > .cheer-hero, body.nav .wrap > .en-home > .cheer-hero { padding-top: 18px; }
     .empty { padding: 56px 20px; }
   }
+  /* 🖊️ Live whiteboard */
+  #app[data-view="board"] > * { max-width:1100px; }
+  .wb-head { display:flex; align-items:flex-start; gap:12px; margin-top:14px; }
+  .wb-head h2 { margin:0; font-size:22px; } .wb-prompt { margin-top:4px; font-weight:700; color:var(--violet-2); font-size:16px; line-height:1.35; }
+  .wb-tools { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:12px 0 10px; }
+  .wb-col { width:34px; height:34px; border-radius:50%; border:3px solid #fff; box-shadow:0 0 0 1.5px var(--line); padding:0; }
+  .wb-col.on { box-shadow:0 0 0 3px var(--violet-2); }
+  .wb-t { border:1.5px solid var(--line); background:#fff; border-radius:12px; min-height:40px; padding:6px 11px; font-weight:800; font-size:14px; color:var(--violet); }
+  .wb-t.on { background:var(--violet); color:#fff; border-color:var(--violet); }
+  .wb-sep { width:1px; height:28px; background:var(--line); margin:0 2px; }
+  .wb-board { position:relative; background:#fff; border:2px solid #1E1A32; border-radius:18px; box-shadow:4px 4px 0 #1E1A32; overflow:hidden; }
+  .wb-board canvas { display:block; width:100%; aspect-ratio:16/10; cursor:crosshair; }
+  .wb-tag { position:absolute; left:10px; top:8px; background:rgba(30,26,50,.78); color:#fff; font-size:12.5px; font-weight:700; padding:4px 9px; border-radius:999px; pointer-events:none; }
+  .wb-bar { margin-top:12px; border-radius:16px; padding:12px 14px; font-weight:700; line-height:1.4; display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+  .wb-bar.help { background:#E7F8F6; color:#0F5F59; } .wb-bar.offer { background:#FFF6D9; color:#6B4A00; } .wb-bar.helping { background:#EAF1FF; color:#1D4FB0; }
+  .wb-bar .grow { flex:1; min-width:160px; } .wb-bar .btn { min-height:42px; padding:8px 14px; font-size:15px; }
+  .wb-ask { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:12px; }
+  .wb-ask .btn { min-height:54px; font-size:15px; padding:8px 10px; }
+  .wb-ask .btn.on { background:var(--violet); color:#fff; }
+  @media (max-width:560px) { .wb-ask { grid-template-columns:1fr; } }
+  .wb-friends { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+  .wb-friend { display:flex; align-items:center; gap:10px; background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:8px 10px; font-weight:700; }
+  .wb-friend span { flex:1; }
 </style>
 </head>
 <body>
@@ -1337,13 +1398,14 @@
 </div><div id="workBar" class="wbar hidden"></div></header>
 <main class="wrap" id="app"><div class="spin"><i></i><i></i><i></i></div></main>
 <nav class="tabs hidden noprint" id="tabs" aria-label="Class Hub sections"><div class="tabs-in">
-  <button data-tab="wall" class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/></svg><span class="tl" data-full="Class wall" data-short="Wall">Class wall</span></button>
+  <button data-tab="board" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20l4-4 4 4"/><path d="M7 12l3-3 2 2 4-4"/></svg>Whiteboard<span class="dot gold hidden" id="boardDot"></span></button>
   <button data-tab="today" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h3v3H8z"/></svg>Today<span class="dot gold hidden" id="todayDot"></span></button>
-  <button data-tab="spot" class="hidden"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.8z"/></svg>Spotlight<span class="dot gold hidden" id="spotDot"></span></button>
-  <button data-tab="bday" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 21h16v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 16c2 1.5 4 1.5 6 0s4-1.5 6 0 3 1 4 0"/><path d="M12 11V7"/><path d="M12 3.5c.8 1 .8 2 0 2.5-.8-.5-.8-1.5 0-2.5z"/></svg>Birthdays<span class="dot gold hidden" id="bdayDot"></span></button>
-  <button data-tab="league" class="hidden"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>Groups<span class="dot gold hidden" id="leagueDot"></span></button>
   <button data-tab="compo" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h5"/></svg>English</button>
   <button data-tab="math" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 8h4M9.5 6v4M13 8h4M7.5 15.5l3 3M10.5 15.5l-3 3M13 15h4M13 18h4"/></svg>Math</button>
+  <button data-tab="wall" class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/></svg><span class="tl" data-full="Class wall" data-short="Wall">Class wall</span></button>
+  <button data-tab="spot" class="hidden"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.8z"/></svg>Spotlight<span class="dot gold hidden" id="spotDot"></span></button>
+  <button data-tab="league" class="hidden"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>Groups<span class="dot gold hidden" id="leagueDot"></span></button>
+  <button data-tab="bday" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 21h16v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2z"/><path d="M4 16c2 1.5 4 1.5 6 0s4-1.5 6 0 3 1 4 0"/><path d="M12 11V7"/><path d="M12 3.5c.8 1 .8 2 0 2.5-.8-.5-.8-1.5 0-2.5z"/></svg>Birthdays<span class="dot gold hidden" id="bdayDot"></span></button>
   <button data-tab="photos"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Photos</button>
   <button data-tab="ask"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span id="askLabel">Ask</span><span class="dot hidden" id="askDot"></span></button>
 </div></nav>
@@ -1353,6 +1415,7 @@
 (function() { try {
   var s = JSON.parse(localStorage.getItem("hub_snap") || "null");
   if (!s || !s.tk || !localStorage.getItem(s.tk) || Date.now() - s.at > 7 * 864e5) return;
+  var la = +localStorage.getItem("hub_act") || 0; if (la && Date.now() - la > 30 * 60000) return;   // ⏱️ idle for 30 minutes: they'll be signed out, so show nothing
   var g = function(id) { return document.getElementById(id); }, a = g("app"), t = g("tabs"), m = g("meBtn"), wb = g("workBar");
   a.innerHTML = s.app; a.setAttribute("data-snap", "1"); if (s.view) a.setAttribute("data-view", s.view);
   t.className = s.tabs; t.innerHTML = s.tabsHtml; document.body.className = s.body;
@@ -1583,11 +1646,30 @@ function loadImages(root, fn, extra, size) {
 }
 
 // ---------------- Sign in ----------------
+/* ⏱️ IDLE SIGN-OUT: a pupil who hasn't touched, typed or scrolled for 30 minutes is signed out (the PIN is needed again).
+   The time of the last activity is kept on the device, so closing the tab and coming back later counts too. */
+var IDLE = { ms: 30 * 60000, t: 0, on: false };
+function idleMark() { var n = Date.now(); if (n - IDLE.t < 5000) return; IDLE.t = n; try { localStorage.setItem("hub_act", String(n)); } catch (e) {} }
+function idleLast() { var v = 0; try { v = +localStorage.getItem("hub_act") || 0; } catch (e) {} return Math.max(v, IDLE.t); }
+function idleOver() { var l = idleLast(); return !!(l && Date.now() - l > IDLE.ms); }
+function idleOut() {
+  if (!S.token || S.preview) return;
+  call("hubLogout").catch(function() {});
+  signOut(false, "⏱️ You were signed out because the Class Hub wasn’t used for 30 minutes. Type your PIN to carry on.");
+}
+function idleCheck() { if (S.token && !S.preview && idleOver()) idleOut(); }
+function idleStart() {
+  if (IDLE.on) return; IDLE.on = true;
+  ["pointerdown", "keydown", "touchstart", "wheel", "scroll", "input"].forEach(function(ev) { window.addEventListener(ev, idleMark, { passive: true, capture: true }); });
+  document.addEventListener("visibilitychange", function() { if (!document.hidden) idleCheck(); });
+  setInterval(idleCheck, 30000);
+}
 function start() {
   if (MODE === "slips") return startSlips();
   if (PREVIEW) { S.token = PREVIEW; S.preview = true; return loadHome(); }       // teacher's preview: no sign-in, nothing saved on the device
-  S.token = store("tok");
-  if (S.token) return loadHome();
+  S.token = store("tok"); idleStart();
+  if (S.token && idleOver()) { idleOut(); return; }
+  if (S.token) { IDLE.t = 0; idleMark(); return loadHome(); }
   showLogin();
 }
 /** The sign-in names show at once from this device's last copy, then are checked with the Class Hub quietly.
@@ -1639,7 +1721,7 @@ function showPin(err, okNote) {
   };
 }
 function drawDots() { var d = $("dots"); if (!d) return; Array.prototype.forEach.call(d.children, function(el, i) { el.classList.toggle("on", i < S.pin.length); }); }
-function pinDone(r) { document.onkeydown = null; S.token = r.token; store("tok", r.token); loadHome(); }
+function pinDone(r) { document.onkeydown = null; S.token = r.token; store("tok", r.token); IDLE.t = 0; idleMark(); loadHome(); }
 function tryPin() {
   Array.prototype.forEach.call($("pad").querySelectorAll("button"), function(b) { b.disabled = true; });
   $("pinErr").style.color = ""; $("pinErr").textContent = "Checking…";
@@ -1730,7 +1812,7 @@ function gotHome(h, refresh, fromCache) {
     if (!S.boardId || !h.boards.some(function(b) { return b.id === S.boardId; })) S.boardId = (h.boards[0] || {}).id || "";
     if (h.wall && h.wall.board && h.wall.board.id === S.boardId) S.wallPre = h.wall;     // no second trip for the wall
     stopTimers();
-    S.timers.push(setInterval(ping, 60000));
+    S.timers.push(setInterval(ping, featOn("whiteboard") ? 12000 : 60000)); if (featOn("whiteboard")) setTimeout(ping, 800);   // 🖊️ notices the whiteboard within seconds
     S.timers.push(setInterval(function() { if (S.tab === "ask" && !document.hidden) loadMsgs(true); }, 15000));
     $("app").removeAttribute("data-snap"); go(S.tab || "wall"); hubSnapLater(1500);
     if (OPEN_AT === "comp" && h.english && h.english.comp) { OPEN_AT = ""; EN.home = false; EN.sec = "comp"; go("compo"); }
@@ -1775,6 +1857,7 @@ function setDot(n) { var d = $("askDot"); d.textContent = n > 9 ? "9+" : n; d.cl
 function ping() {
   if (document.hidden || !S.token) return;
   call("hubPing", S.pingVer || "").then(function(r) {
+    if (r && "wb" in r) wbNotice(r.wb || "");
     if (r.same) return;                                   // nothing new since last time
     S.pingVer = r.ver; if (S.tab !== "ask") setDot(r.unread);
   }).catch(function() {});
@@ -1782,7 +1865,7 @@ function ping() {
 /** Which tabs show (Spotlight / Birthdays can be switched off by the teacher), and their little badges. */
 function featOn(k) { var f = S.home && S.home.features; return !f || f[k] !== false; }   // is this part of the app switched on for the class?
 function setTabs(h) {
-  var on = { today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math, photos: h.photosTab !== false, ask: h.askTab !== false }, n = 1;
+  var on = { board: !!WB.on && featOn("whiteboard") && !S.preview, today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math, photos: h.photosTab !== false, ask: h.askTab !== false }, n = 1;
   Object.keys(on).forEach(function(k) { if (on[k]) n++; });
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button[data-tab]"), function(b) { if (b.dataset.tab in on) b.classList.toggle("hidden", !on[b.dataset.tab]); });
   document.querySelector(".tabs-in").style.gridTemplateColumns = "repeat(" + n + ",1fr)";
@@ -1792,14 +1875,16 @@ function setTabs(h) {
   $("askLabel").textContent = n > 3 ? "Ask" : "Ask " + (h.teacher.length <= 12 ? h.teacher : "teacher");
   var c = h.celebrating || {};
   [["spotDot", c.spot], ["bdayDot", c.bday]].forEach(function(x) { var d = $(x[0]); d.textContent = x[1] > 9 ? "9+" : (x[1] || ""); d.classList.toggle("hidden", !x[1]); });
-  if ((S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo) || (S.tab === "math" && !on.math) || (S.tab === "photos" && !on.photos) || (S.tab === "ask" && !on.ask)) S.tab = "wall";
+  if ((S.tab === "board" && !on.board) || (S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo) || (S.tab === "math" && !on.math) || (S.tab === "photos" && !on.photos) || (S.tab === "ask" && !on.ask)) S.tab = "wall";
 }
 function go(tab) {
   stopShow(); if (typeof orStopAll === "function") orStopAll();
   S.tab = tab; $("app").setAttribute("data-view", tab);
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button"), function(b) { var on = b.dataset.tab === tab; b.classList.toggle("on", on); b.setAttribute("aria-current", on ? "page" : "false"); });
   window.scrollTo(0, 0);
+  if (tab !== "board") wbStop();
   if (tab === "wall") renderWallShell();
+  else if (tab === "board") renderBoard();
   else if (tab === "ask") renderAsk();
   else if (tab === "spot" || tab === "bday") { var dd = $(tab + "Dot"); if (dd) dd.classList.add("hidden"); renderCheers(tab); }
   else if (tab === "league") renderLeague();
@@ -3137,6 +3222,59 @@ function prCalmText(kind, p, res) {
     }).replace(/\n/g, "<br>") + '</p>';
   }).join("");
 }
+/* ----- ✅ blank by blank ----- */
+function prDone(X, n) { var r = X.st && X.st[n], t = X.tw && X.tw[n]; return !!(r && r.done && (r.ok || (t && t.st && t.st.done))); }
+function prFirstOpen(X) { var it = X.p.items.filter(function(x) { return !prDone(X, x.n); })[0]; return it ? it.n : null; }
+function prFb(r, twin) {
+  if (!r || !r.tries) return '';
+  if (!r.done) return '<div class="mp-fb try" role="status"><b>❌ Not quite. Have another go.</b>' + (r.clue ? '<p>💡 ' + esc(r.clue) + '</p>' : '') + '</div>';
+  if (r.ok) return '<div class="mp-fb ok" role="status"><b>✅ ' + (r.first ? 'Right!' : 'Right on your second try!') + '</b>' + (r.alt ? '<p>Not the word in the answer key, but it is correct too.</p>' : '') + (r.w ? '<p>' + esc(r.w) + '</p>' : '') + '</div>';
+  return '<div class="mp-fb no" role="status"><b>The answer is “' + esc(r.key) + '”' + (r.also && r.also.length ? ' (or ' + r.also.map(function(a) { return '“' + esc(a) + '”'; }).join(", ") + ')' : '') + '.</b>' + (r.w ? '<p>💡 ' + esc(r.w) + '</p>' : '') + (twin ? '' : '<p class="mp-fbn">Try one like it below.</p>') + '</div>';
+}
+function prPanel(kind) {
+  var X = PR[kind], n = X.cur != null ? X.cur : prFirstOpen(X), unit = PR_INFO[kind].unit;
+  if (n == null) return '<div class="cw-card pr-pcard"><b>🎉 All ' + unit + 's done!</b><p class="cw-tip" style="margin:4px 0 0">Tap “See my results” below.</p></div>';
+  var r = (X.st || {})[n] || {}, t = (X.tw || {})[n], out = '<div class="cw-card pr-pcard"><div class="pr-ph"><b>' + (kind === "edit" ? 'Word' : 'Blank') + ' (' + n + ')</b><span>' + X.p.items.filter(function(x) { return prDone(X, x.n); }).length + ' of ' + X.p.items.length + ' done</span></div>';
+  out += prFb(r);
+  if (!r.done) out += '<button class="btn primary mq-chk" data-prchk="' + n + '"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Checking…' : r.tries ? 'Check again' : 'Check ' + (kind === "edit" ? 'word' : 'blank') + ' (' + n + ')') + '</button><p class="cw-tip" style="margin:6px 0 0">Type in the passage, then tap Check (or press Enter).</p>';
+  if (r.done && !r.ok) {
+    if (!t || !t.q) out += '<p class="cw-tip">Getting one like it…</p>';
+    else { var ts = t.st || {}, q = t.q, parts = q.kind === "edit" ? q.text.split(/\[\[[^\]]*\]\]/) : q.text.split(/_{3,}/);
+      out += '<div class="mq-like"><div class="cw-h">🔁 Now try one like it</div><div class="pr-text" style="font-size:17px">' + esc(parts[0]) + (q.kind === "edit" ? '<span class="pr-u">' + esc(q.wrong) + '</span> ' : '') +
+        (ts.done ? '<b class="' + (ts.ok ? 'pr-okw' : 'pr-now') + '">' + esc(ts.ok ? ts.ans : ts.key) + '</b>' : '<input class="pr-in pr-tw" id="prTw" value="' + esc(t.ans || "") + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your word"' + (q.kind === "edit" ? ' placeholder="fix"' : '') + '>') + esc(parts.slice(1).join(" ")) + '</div>' +
+        prFb(ts, true) + (!ts.done ? '<button class="btn primary mq-chk" data-prtchk="' + n + '"' + (X.busy ? ' disabled' : '') + '>' + (ts.tries ? 'Check again' : 'Check') + '</button>' : '') + '</div>'; }
+  }
+  if (prDone(X, n) && prFirstOpen(X) != null) out += '<button class="btn soft mq-chk" data-prnext>Next ' + unit + ' ›</button>';
+  if (X.err) out += '<div class="msg err">' + esc(X.err) + '</div>';
+  return out + '</div>';
+}
+function prGo(kind) {
+  var X = PR[kind], left = X.p.items.filter(function(x) { return !prDone(X, x.n); }).length;
+  return '<button class="btn primary big" id="prFin"' + (left || X.busy ? ' disabled' : '') + '>' + (X.busy === "fin" ? 'Working it out…' : '✅ See my results') + '</button><p class="cw-tip" id="prNote">' + (left ? left + ' ' + PR_INFO[kind].unit + (left > 1 ? 's' : '') + ' still to check.' : 'All done!') + '</p>';
+}
+function prRedraw(kind, full) {
+  if (S.tab !== "compo" || enSec() !== kind) return;
+  if (full) { var y = window.scrollY; renderPrac(kind); window.scrollTo(0, y); return; }
+  var pn = $("prPanel"); if (pn) pn.innerHTML = prPanel(kind); var g = document.querySelector(".sy-go"); if (g && $("prFin")) { var b = $("prFin"), note = $("prNote"), tmp = document.createElement("div"); tmp.innerHTML = prGo(kind); b.replaceWith(tmp.firstChild); note.replaceWith(tmp.lastChild); }
+}
+function prCheck(kind, n, twin) {
+  var X = PR[kind]; if (X.busy) return; X.cur = n; X.st = X.st || {}; X.tw = X.tw || {}; X.answers = X.answers || {};
+  document.querySelectorAll(".pr-in[data-prn]").forEach(function(el) { X.answers[el.getAttribute("data-prn")] = el.value; });
+  var tw = $("prTw"); if (tw && X.tw[n]) X.tw[n].ans = tw.value;
+  var ans = twin ? (X.tw[n] || {}).ans : X.answers[n];
+  if (!String(ans || "").trim()) { X.err = "Write a word first."; prRedraw(kind); return; }
+  X.err = ""; X.busy = true; prRedraw(kind);
+  prCall(kind, "check", { id: X.p.id, n: n, ans: ans, twin: twin ? 1 : 0 }).then(function(r) {
+    X.busy = false; if (twin) X.tw[n].st = r; else X.st[n] = r;
+    if (r.like && !X.tw[n]) { X.tw[n] = { q: null, st: {}, ans: "" }; prCall(kind, "twin", { id: X.p.id, n: n }).then(function(d) { X.tw[n] = { q: d.q, st: d.st || {}, ans: "" }; prRedraw(kind); }).catch(function(e) { X.tw[n] = null; X.err = e.message; prRedraw(kind); }); }
+    prRedraw(kind, !twin && (r.done || r.tries === 1));
+  }).catch(function(e) { X.busy = false; X.err = e.message; prRedraw(kind); });
+}
+function prFinish(kind) {
+  var X = PR[kind]; if (X.busy) return; X.busy = "fin"; prRedraw(kind);
+  prCall(kind, "finish", { id: X.p.id }).then(function(r) { X.busy = false; X.res = r; mwRefresh(true); drDrop(kind, X.p.id); if (S.tab === "compo") renderPrac(kind); })
+    .catch(function(e) { X.busy = false; X.err = e.message; prRedraw(kind); });
+}
 function prPassageView(kind) {
   var X = PR[kind], p = X.p, res = X.res, I = PR_INFO[kind];
   var out = '<div class="sy-top"><button class="btn soft" data-prback>‹ All passages</button></div>' +
@@ -3144,7 +3282,9 @@ function prPassageView(kind) {
   if (res) {
     var rows = res.results.map(function(r) { return { id: r.sk, ok: r.ok }; }), sa = CF.starAim(rows), sk = {};
     res.results.forEach(function(r) { if (!r.sk || !LESSONS[r.sk]) return; var o = sk[r.sk] || (sk[r.sk] = { name: LESSONS[r.sk].t, got: 0, max: 0 }); o.max++; if (r.ok) o.got++; });
-    out += CF.sum({ got: res.total, max: res.max, lights: res.results.map(function(r) { return { c: r.ok ? "g" : "r", t: r.n }; }), star: sa.star || (res.total === res.max ? "Every answer right!" : ""), aim: sa.aim });
+    out += CF.sum({ got: res.total, max: res.max, lights: res.results.map(function(r) { return { c: r.ok ? (res.step && !r.first ? "y" : "g") : "r", t: r.n }; }), star: sa.star || (res.total === res.max ? "Every answer right!" : ""), aim: sa.aim }) + mqFirstLine(res);
+    var likes = res.results.filter(function(r) { return r.like; });
+    if (likes.length) out += '<details class="cf-more" open><summary>🔁 The ones like it (' + likes.filter(function(r) { return r.like.ok; }).length + ' of ' + likes.length + ' right)</summary>' + likes.map(function(r) { var L = r.like; return '<div class="mp-likeres ' + (L.ok ? 'ok' : 'no') + '"><b>' + r.n + '. ' + (L.ok ? '✓' : '✗') + '</b> ' + esc(L.text.replace(/_{3,}/, "____").replace(/\[\[([^\]]*)\]\]/, "$1")) + '<div style="font-size:14.5px">Answer: <b>' + esc(L.key) + '</b>' + (L.ok ? '' : ' · You wrote: ' + esc(L.ans || '—')) + '</div></div>'; }).join("") + '</details>';
     var skl = Object.keys(sk).map(function(k) { return sk[k]; }); if (skl.length) out += CF.skills(skl);
     out += '<div class="cw-card pr-text cf cf-sent" style="font-size:18px">' + prCalmText(kind, p, res) + '</div>';
     if (res.results.some(function(r) { return r.alt; })) out += '<p class="cf-note">✓ Some answers weren’t in the answer key but are also correct.</p>';
@@ -3160,6 +3300,7 @@ function prPassageView(kind) {
   }
   out += '<div class="sy-instr">' + esc(p.instr || X.home.instr) + '</div>';
   out += '<div class="cw-card pr-text">' + prTextHtml(kind, p, null) + '</div>';
+  if (p.step) return out + '<div class="pr-panel" id="prPanel">' + prPanel(kind) + '</div>' + '<div class="cw-card sy-go">' + prGo(kind) + drLaterBtn() + '</div>';
   out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="prMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button>' +
     '<p class="cw-tip" id="prNote">' + (X.busy ? 'Checking every answer… (about 15 seconds)' : X.confirm || 'Check your spelling: a misspelt word gets no mark.') + '</p>' + drLaterBtn() + '</div>';
   return out;
@@ -3185,7 +3326,9 @@ function synResultView() {
   var out = '<div class="sy-top"><button class="btn soft" data-syback>‹ All practice</button></div>' +
     CF.sum({ got: R.total, max: R.max, lights: st.questions.map(function(q, i) { var r = R.results.filter(function(x) { return x.id === q.id; })[0] || { awarded: 0 }; return { c: r.awarded === 2 ? "g" : r.awarded === 1 ? "y" : "r", t: i + 1 }; }), star: sa.star || (R.total === R.max ? "Every sentence right!" : ""), aim: sa.aim }) +
     CF.key([["r", "Major: 0 marks"], ["o", "Grammar"], ["b", "Spelling"], ["p", "Missing / punctuation"]]);
-  out += st.questions.map(function(q, i) { var r = R.results.filter(function(x) { return x.id === q.id; })[0]; return r ? synResOne(q, r, i + 1, SY.answers[q.id], q.id) : ''; }).join("");
+  if (R.step) out += '<p class="cw-tip" style="text-align:center;margin:6px 0">' + R.first + ' of ' + R.max + ' marks on the first try.</p>';
+  out += st.questions.map(function(q, i) { var r = R.results.filter(function(x) { return x.id === q.id; })[0]; if (!r) return '';
+    return synResOne(q, r, i + 1, SY.answers[q.id], R.step ? null : q.id) + (r.like ? '<div class="mq-like" style="margin:-4px 0 12px"><div class="cw-h">🔁 The similar one: ' + (r.like.ok ? '✓ right' : 'not yet') + '</div>' + synResOne(r.like.q, r.like.res, "★", r.like.ans, null) + '</div>' : ''); }).join("");
   out += '<div class="sy-btns" style="margin-top:14px"><button class="btn primary big" data-syagain>🔁 Another set</button><button class="btn soft big" data-syback>All practice</button></div>';
   return out;
 }
@@ -3322,18 +3465,69 @@ function mqSetView(kind) {
   out += s.items.map(function(q, i) {
     var pick = X.picks[i];
     return '<div class="cw-card mq-q"><div class="sy-qh"><span class="sy-qn">' + (i + 1) + '</span></div><div class="mq-text">' + mqQText(q.q) + '</div>' + listenBtn(q.q) + '<div class="mq-opts" role="radiogroup" aria-label="Question ' + (i + 1) + '">' +
-      q.o.map(function(o, k) { return '<button role="radio" aria-checked="' + (pick === k) + '" class="mq-opt' + (pick === k ? ' on' : '') + '" data-mqpick="' + i + ':' + k + '"><b>(' + (k + 1) + ')</b> ' + esc(o) + '</button>'; }).join("") + '</div></div>';
+      q.o.map(function(o, k) { return '<button role="radio" aria-checked="' + (pick === k) + '" class="mq-opt' + (pick === k ? ' on' : '') + mqOptX(X, i, k) + '" data-mqpick="' + i + ':' + k + '"' + (mqDone(X, i) ? ' disabled' : '') + '><b>(' + (k + 1) + ')</b> ' + esc(o) + '</button>'; }).join("") + '</div>' + mqTail(kind, i) + '</div>';
   }).join("");
   var left = s.items.filter(function(q, i) { return X.picks[i] == null; }).length;
-  out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="mqMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button><p class="cw-tip" id="mqNote">' + (X.confirm ? esc(X.confirm) : left ? left + ' question' + (left > 1 ? 's' : '') + ' still to answer.' : 'All answered. Check once more, then mark.') + '</p>' + drLaterBtn() + '</div>';
+  out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="mqMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button><p class="cw-tip" id="mqNote">' + (X.confirm ? esc(X.confirm) : left ? left + ' question' + (left > 1 ? 's' : '') + ' still to answer.' : 'All answered. Check once more, then mark.') + '</p>' + drLaterBtn() + '</div>'
+  if (s.step) out = out.replace(/<div class="cw-card sy-go">[\s\S]*$/, mqStepGo(kind));
   return out;
 }
+/* ----- ✅ question by question ----- */
+function mqLikeRes(r) { var L = r.like; if (!L) return (r.ok && r.first === false ? '<p class="cf-fb">Right on the second try.</p>' : ''); return '<div class="mp-likeres ' + (L.ok ? 'ok' : 'no') + '"><b>🔁 One like it: ' + (L.ok ? '✓ right' : '✗ not yet') + '</b>' + (L.ctx ? '<div style="font-size:14px">' + esc(L.ctx) + '</div>' : '') + '<div style="font-size:15px">' + esc(L.q) + '</div><div style="font-size:14.5px">Answer: <b>' + esc(L.key) + '</b>' + (L.ok ? '' : ' · You chose: ' + esc(L.o[L.pick] || '—')) + '</div></div>'; }
+function mqFirstLine(R) { if (!R.step) return ''; var tw = R.results.filter(function(r) { return r.like; }); return '<p class="cw-tip" style="text-align:center;margin:6px 0">' + R.first + ' right first time' + (R.total > R.first ? ', ' + (R.total - R.first) + ' on the second try' : '') + '.' + (tw.length ? ' 🔁 ' + tw.filter(function(r) { return r.like.ok; }).length + ' of ' + tw.length + ' “one like it” right.' : '') + '</p>'; }
+function mqDone(X, i) { return !!(X.st && X.st[i] && X.st[i].done); }
+function mqOptX(X, i, k) { var r = X.st && X.st[i]; if (!r || !r.done) return ''; return (k === r.a ? ' right' : k === r.pick ? ' wrong' : '') + ' locked'; }
+function enFb(r, twin) {
+  if (!r || !r.tries) return '';
+  if (!r.done) return '<div class="mp-fb try" role="status"><b>❌ Not quite. Have another go.</b>' + (r.clue ? '<p>💡 ' + esc(r.clue) + '</p>' : '') + '</div>';
+  if (r.ok) return '<div class="mp-fb ok" role="status"><b>✅ ' + (r.first ? 'Right!' : 'Right on your second try!') + '</b>' + (r.w ? '<p>' + esc(r.w) + '</p>' : '') + '</div>';
+  return '<div class="mp-fb no" role="status"><b>The answer is “' + esc(r.key) + '”.</b>' + (r.w ? '<p>💡 ' + esc(r.w) + '</p>' : '') + (twin ? '' : '<p class="mp-fbn">It’s saved in <b>My mistakes</b>.</p>') + '</div>';
+}
+function mqStepDone(X, i) { var r = X.st && X.st[i], t = X.tw && X.tw[i]; return !!(r && r.done && (r.ok || (t && t.st && t.st.done))); }
+function mqTail(kind, i) {
+  var X = MQ[kind]; if (!X.set || !X.set.step) return '';
+  var r = (X.st || {})[i] || {}, out = enFb(r) + (!r.done ? '<button class="btn primary mq-chk" data-mqchk="' + i + '"' + (X.busy ? ' disabled' : '') + '>' + (X.busy === i ? 'Checking…' : r.tries ? 'Check again' : 'Check') + '</button>' : '');
+  if (r.done && !r.ok) {
+    var t = (X.tw || {})[i];
+    if (!t || !t.q) out += '<p class="cw-tip">Getting a question like it…</p>';
+    else { var ts = t.st || {}, q = t.q;
+      out += '<div class="mq-like" id="mqLike' + i + '"><div class="cw-h">🔁 Now try one like it</div>' + (q.poster ? mqPoster(q.poster) : '') + (q.ctx ? '<div class="cf-given" style="font-size:15px">' + esc(q.ctx) + '</div>' : '') +
+        '<div class="mq-text">' + (kind === "vocab" ? 'Which is closest in meaning to <u class="vb-qw">' + esc(q.q) + '</u>?' : mqQText(q.q)) + '</div><div class="mq-opts" role="radiogroup" aria-label="One like question ' + (i + 1) + '">' +
+        q.o.map(function(o, k) { var on = t.pick === k, x = ts.done ? (k === ts.a ? ' right' : on ? ' wrong' : '') + ' locked' : ''; return '<button role="radio" aria-checked="' + on + '" class="mq-opt' + (on ? ' on' : '') + x + '" data-mqtpick="' + i + ':' + k + '"' + (ts.done ? ' disabled' : '') + '><b>(' + (k + 1) + ')</b> ' + esc(o) + '</button>'; }).join("") + '</div>' +
+        enFb(ts, true) + (!ts.done ? '<button class="btn primary mq-chk" data-mqtchk="' + i + '"' + (X.busy ? ' disabled' : '') + '>' + (ts.tries ? 'Check again' : 'Check') + '</button>' : '') + '</div>'; }
+  }
+  return out;
+}
+function mqStepGo(kind) {
+  var X = MQ[kind], n = X.set.items.length, left = X.set.items.filter(function(q, i) { return !mqStepDone(X, i); }).length;
+  return (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="mqFin"' + (left || X.busy ? ' disabled' : '') + '>' + (X.busy === "fin" ? 'Working it out…' : '✅ See my results') + '</button><p class="cw-tip" id="mqNote">' + (left ? left + ' of ' + n + ' question' + (n > 1 ? 's' : '') + ' still to check. Check each one as you go.' : 'All done!') + '</p>' + drLaterBtn() + '</div>';
+}
+function mqCheck(kind, i, twin) {
+  var X = MQ[kind]; if (X.busy != null && X.busy !== false) return; X.st = X.st || {}; X.tw = X.tw || {};
+  var pick = twin ? (X.tw[i] || {}).pick : X.picks[i];
+  if (pick == null) { X.err = "Choose an answer for question " + (i + 1) + " first."; mqRedraw(kind); return; }
+  X.err = ""; X.busy = i; mqRedraw(kind);
+  mqCall(kind, "check", { id: X.set.id, i: i, pick: pick, twin: twin ? 1 : 0 }).then(function(r) {
+    X.busy = false; if (twin) X.tw[i].st = r; else X.st[i] = r;
+    if (r.like && !X.tw[i]) { X.tw[i] = { q: null, st: {}, pick: null }; mqCall(kind, "twin", { id: X.set.id, i: i }).then(function(d) { X.tw[i] = { q: d.q, st: d.st || {}, pick: d.st ? d.st.pick : null }; mqRedraw(kind); }).catch(function(e) { X.tw[i] = null; X.err = e.message; mqRedraw(kind); }); }
+    mqRedraw(kind);
+  }).catch(function(e) { X.busy = false; X.err = e.message; mqRedraw(kind); });
+}
+function mqFinish(kind) {
+  var X = MQ[kind]; if (X.busy) return; X.busy = "fin"; X.err = ""; mqRedraw(kind);
+  mqCall(kind, "finish", { id: X.set.id, looked: Object.keys(X.looked || {}).length }).then(function(r) {
+    X.busy = false; X.res = r; mwRefresh(true); drDrop(kind, X.set.id);
+    var seen = mqSeen(kind); (kind !== "gram" ? [X.set.id] : X.set.items.map(function(q) { return q.bid; })).forEach(function(id) { if (id && seen.indexOf(id) < 0) seen.push(id); }); store("mqseen_" + kind, JSON.stringify(seen.slice(-150)));
+    if (S.tab === "compo") renderMcq(kind);
+  }).catch(function(e) { X.busy = false; X.err = e.message; mqRedraw(kind); });
+}
+function mqRedraw(kind) { if (S.tab !== "compo" || enSec() !== kind) return; var y = window.scrollY; renderMcq(kind); window.scrollTo(0, y); }
 function mqResultView(kind) {
   var X = MQ[kind], s = X.set, R = X.res, I = MQ_INFO[kind];
   if (s.passage) return vbResultView(kind);
   var rows = R.results.map(function(r) { return { id: r.c, ok: r.ok }; }), sa = CF.starAim(rows);
   var out = '<div class="sy-top"><button class="btn soft" data-mqback>‹ All practice</button></div>' +
-    CF.sum({ got: R.total, max: R.max, lights: R.results.map(function(r, i) { return { c: r.ok ? "g" : "r", t: i + 1 }; }), star: sa.star || (R.total === R.max ? "Every answer right!" : ""), aim: sa.aim });
+    CF.sum({ got: R.total, max: R.max, lights: R.results.map(function(r, i) { return { c: r.ok ? (R.step && !r.first ? "y" : "g") : "r", t: i + 1 }; }), star: sa.star || (R.total === R.max ? "Every answer right!" : ""), aim: sa.aim }) + mqFirstLine(R);
   if (s.poster) out += '<details class="cf-more"><summary>🖼️ See the visual text again</summary>' + mqPoster(s.poster) + '</details>';
   else if (s.img) out += '<details class="cf-more" open><summary>🖼️ The visual text</summary><div class="vt-img" id="mqImg">' + SPIN + '</div></details>';
   var lessons = [];
@@ -3347,7 +3541,7 @@ function mqResultView(kind) {
       body = '<div class="cf-given" style="font-size:15.5px;color:#1E1A32;font-weight:600">' + esc(r.q) + '</div>' + q.o.map(function(o, k) { var key = k === r.a, mine = k === r.pick; if (!key && !mine) return ''; return '<div class="cf-opt' + (key ? ' key' : '') + (mine ? ' mine' : '') + (mine && !key ? ' no' : '') + '"><b>' + (key ? '✓' : '✗') + '</b><span>' + esc(o) + '</span></div>'; }).join("") + (r.pick < 0 ? '<div class="cf-fb"><i>No answer</i></div>' : '');
       if (!r.ok) lessons.push({ id: r.c });
     }
-    return CF.card(r.ok ? "g" : "r", '<span class="cf-qn">Q' + (i + 1) + '</span>' + CF.chip(r.ok ? 1 : 0, 1) + (r.c && !r.ok ? '<span class="cf-tag2">' + esc((LESSONS[r.c] || {}).t || "") + '</span>' : ''), body + (!r.ok && r.w ? '<p class="cf-fb">💡 ' + esc(r.w) + '</p>' : ''));
+    return CF.card(r.ok ? "g" : "r", '<span class="cf-qn">Q' + (i + 1) + '</span>' + CF.chip(r.ok ? 1 : 0, 1) + (r.c && !r.ok ? '<span class="cf-tag2">' + esc((LESSONS[r.c] || {}).t || "") + '</span>' : ''), body + (!r.ok && r.w ? '<p class="cf-fb">💡 ' + esc(r.w) + '</p>' : '') + mqLikeRes(r));
   }).join("");
   out += CF.lessons(lessons);
   out += '<div class="sy-btns" style="margin-top:14px"><button class="btn soft big" data-mqagain>↻ Try again</button><button class="btn primary big" data-mqstart="">➡️ Another ' + (kind === "gram" ? "set" : "one") + '</button>' + (X.home.ai ? '<button class="btn soft big" data-mqfresh>✨ New one</button>' : '') + '</div>';
@@ -3357,13 +3551,13 @@ var CF_TAGS = { "t-past": "tense", "t-pres": "tense", "t-prog": "tense", "t-perf
 function mqStart(kind, opts, btn) {
   var X = MQ[kind]; if (btn) { btn.disabled = true; btn.textContent = opts.fresh ? "Writing a new one…" : "Opening…"; }
   X.err = ""; X.imgUrl = "";
-  mqCall(kind, "start", Object.assign({ seen: mqSeen(kind) }, opts)).then(function(s) { X.set = s; X.picks = {}; X.res = null; X.confirm = ""; X.looked = {}; X.defs = {}; if (S.tab === "compo") renderMcq(kind); })
+  mqCall(kind, "start", Object.assign({ seen: mqSeen(kind) }, opts)).then(function(s) { X.set = s; X.picks = {}; X.res = null; X.confirm = ""; X.looked = {}; X.defs = {}; X.st = {}; X.tw = {}; X.busy = false; if (S.tab === "compo") renderMcq(kind); })
     .catch(function(e) { X.err = e.message; X.set = null; if (S.tab === "compo") renderMcq(kind); });
 }
 function mqMark(kind) {
   var X = MQ[kind], left = X.set.items.filter(function(q, i) { return X.picks[i] == null; }).length;
-  if (left && !X.confirm) { X.confirm = left + " question" + (left > 1 ? "s are" : " is") + " not answered. Tap again to mark anyway."; var y = window.scrollY; renderMcq(kind); window.scrollTo(0, y); return; }
-  X.busy = true; var y2 = window.scrollY; renderMcq(kind); window.scrollTo(0, y2);
+  if (left) { X.confirm = ""; X.err = left + " question" + (left > 1 ? "s are" : " is") + " not answered. Answer every question, then mark."; var y = window.scrollY; renderMcq(kind); window.scrollTo(0, y); return; }   // 🚫 no blank hand-ins
+  X.busy = true; X.err = ""; var y2 = window.scrollY; renderMcq(kind); window.scrollTo(0, y2);
   mqCall(kind, "mark", { id: X.set.id, picks: X.picks, looked: Object.keys(X.looked || {}).length }).then(function(r) {
     X.busy = false; X.res = r; X.confirm = ""; mwRefresh(true); drDrop(kind, X.set.id);
     var seen = mqSeen(kind); (kind !== "gram" ? [X.set.id] : X.set.items.map(function(q) { return q.bid; })).forEach(function(id) { if (id && seen.indexOf(id) < 0) seen.push(id); }); store("mqseen_" + kind, JSON.stringify(seen.slice(-150)));
@@ -3376,8 +3570,12 @@ document.addEventListener("click", function(e) {
   if ((t = e.target.closest("[data-mqstart]"))) { mqStart(kind, t.getAttribute("data-mqstart") ? { id: t.getAttribute("data-mqstart") } : {}, t); return; }
   if ((t = e.target.closest("[data-mqfresh]"))) { mqStart(kind, { fresh: true }, t); return; }
   if ((t = e.target.closest("[data-mqback]"))) { X.set = null; X.res = null; X.err = ""; X.home = null; renderMcq(kind); return; }
-  if ((t = e.target.closest("[data-mqagain]"))) { X.res = null; X.picks = {}; X.confirm = ""; renderMcq(kind); return; }
-  if ((t = e.target.closest("[data-mqpick]"))) { var v = t.getAttribute("data-mqpick").split(":"); X.picks[+v[0]] = +v[1]; X.confirm = ""; if (X.set && !X.res) drSave(kind, X.set.id, { set: X.set, picks: X.picks, looked: X.looked || {}, label: X.set.title || MQ_INFO[kind].title }); var g = t.parentNode; g.querySelectorAll(".mq-opt").forEach(function(b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); }); var left = X.set.items.filter(function(q, i) { return X.picks[i] == null; }).length, n = $("mqNote"), mb = $("mqMark"); if (n) n.textContent = left ? left + " question" + (left > 1 ? "s" : "") + " still to answer." : "All answered. Check once more, then mark."; if (mb) mb.textContent = "✅ Mark my answers"; return; }
+  if ((t = e.target.closest("[data-mqagain]"))) { if (X.set && X.set.step) { mqStart(kind, { id: X.set.id }, t); return; } X.res = null; X.picks = {}; X.confirm = ""; renderMcq(kind); return; }
+  if ((t = e.target.closest("[data-mqchk]"))) { mqCheck(kind, +t.getAttribute("data-mqchk"), false); return; }
+  if ((t = e.target.closest("[data-mqtchk]"))) { mqCheck(kind, +t.getAttribute("data-mqtchk"), true); return; }
+  if ((t = e.target.closest("[data-mqtpick]"))) { var tv = t.getAttribute("data-mqtpick").split(":"), tt = X.tw && X.tw[+tv[0]]; if (!tt || (tt.st && tt.st.done)) return; tt.pick = +tv[1]; X.err = ""; mqRedraw(kind); return; }
+  if ((t = e.target.closest("#mqFin"))) { mqFinish(kind); return; }
+  if ((t = e.target.closest("[data-mqpick]"))) { var v = t.getAttribute("data-mqpick").split(":"); if (mqDone(X, +v[0])) return; X.picks[+v[0]] = +v[1]; X.confirm = ""; if (X.set && !X.res) drSave(kind, X.set.id, { set: X.set, picks: X.picks, looked: X.looked || {}, label: X.set.title || MQ_INFO[kind].title }); var g = t.parentNode; g.querySelectorAll(".mq-opt").forEach(function(b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-checked", on); }); var left = X.set.items.filter(function(q, i) { return X.picks[i] == null; }).length, n = $("mqNote"), mb = $("mqMark"); if (n) n.textContent = left ? left + " question" + (left > 1 ? "s" : "") + " still to answer." : "All answered. Check once more, then mark."; if (mb) mb.textContent = "✅ Mark my answers"; return; }
   if ((t = e.target.closest("#mqMark"))) { mqMark(kind); return; }
   if ((t = e.target.closest("[data-mqzoom]"))) { sheet("Visual text", '<img src="' + X.imgUrl + '" alt="The visual text" style="width:100%;border-radius:12px;display:block">'); return; }
 });
@@ -3418,22 +3616,23 @@ function vbSetView(kind) {
   out += s.items.map(function(q, i) {
     var pick = X.picks[i];
     return '<div class="cw-card mq-q"><div class="sy-qh"><span class="sy-qn">' + (i + 1) + '</span></div><div class="mq-text">Which is closest in meaning to <u class="vb-qw">' + esc(q.q) + '</u>?' + ' <button class="vb-goto" data-vbgoto="' + i + '">See it in the passage</button></div><div class="mq-opts" role="radiogroup" aria-label="Question ' + (i + 1) + '">' +
-      q.o.map(function(o, k) { return '<button role="radio" aria-checked="' + (pick === k) + '" class="mq-opt vb-opt' + (pick === k ? ' on' : '') + '" data-mqpick="' + i + ':' + k + '"><b>(' + (k + 1) + ')</b> <span class="vb-ot">' + esc(o) + '</span>' + (s.help === "test" ? '' : '<span class="vb-def" role="button" tabindex="0" data-vbopt="' + i + ':' + k + '" aria-label="What does ' + esc(o) + ' mean?">📖</span>') + '</button>'; }).join("") + '</div></div>';
+      q.o.map(function(o, k) { return '<button role="radio" aria-checked="' + (pick === k) + '" class="mq-opt vb-opt' + (pick === k ? ' on' : '') + mqOptX(X, i, k) + '" data-mqpick="' + i + ':' + k + '"><b>(' + (k + 1) + ')</b> <span class="vb-ot">' + esc(o) + '</span>' + (s.help === "test" ? '' : '<span class="vb-def" role="button" tabindex="0" data-vbopt="' + i + ':' + k + '" aria-label="What does ' + esc(o) + ' mean?">📖</span>') + '</button>'; }).join("") + '</div>' + mqTail(kind, i) + '</div>';
   }).join("");
   var left = s.items.filter(function(q, i) { return X.picks[i] == null; }).length;
-  out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="mqMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button><p class="cw-tip" id="mqNote">' + (X.confirm ? esc(X.confirm) : left ? left + ' question' + (left > 1 ? 's' : '') + ' still to answer.' : 'All answered. Check once more, then mark.') + '</p>' + drLaterBtn() + '</div>';
+  out += (X.err ? '<div class="msg err">' + esc(X.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="mqMark"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button><p class="cw-tip" id="mqNote">' + (X.confirm ? esc(X.confirm) : left ? left + ' question' + (left > 1 ? 's' : '') + ' still to answer.' : 'All answered. Check once more, then mark.') + '</p>' + drLaterBtn() + '</div>'
+  if (s.step) out = out.replace(/<div class="cw-card sy-go">[\s\S]*$/, mqStepGo(kind));
   return out;
 }
 function vbResultView(kind) {
   var X = MQ[kind], s = X.set, R = X.res, n = Object.keys(X.looked || {}).length;
   var out = '<div class="sy-top"><button class="btn soft" data-mqback>‹ All practice</button></div>' +
-    CF.sum({ got: R.total, max: R.max, lights: R.results.map(function(r, i) { return { c: r.ok ? "g" : "r", t: i + 1 }; }), star: R.total === R.max ? "Every word right!" : R.total ? R.total + " word" + (R.total > 1 ? "s" : "") + " right" : "", aim: R.total < R.max ? "Read the sentence around each word for clues." : "" });
+    mqFirstLine(R) + CF.sum({ got: R.total, max: R.max, lights: R.results.map(function(r, i) { return { c: r.ok ? (R.step && !r.first ? "y" : "g") : "r", t: i + 1 }; }), star: R.total === R.max ? "Every word right!" : R.total ? R.total + " word" + (R.total > 1 ? "s" : "") + " right" : "", aim: R.total < R.max ? "Read the sentence around each word for clues." : "" });
   if (n) out += '<p class="cw-tip" style="text-align:center">📒 You looked up ' + n + ' word' + (n > 1 ? 's' : '') + '. Look at them again tomorrow to help you remember.</p>';
   out += '<details class="cf-more" open><summary>📖 The passage</summary>' + vbPassage(s, R) + '</details>' + '<div id="vbLook">' + vbLooked(X) + '</div>';
   out += R.results.map(function(r, i) {
     var q = s.items[i];
     var body = '<div class="cf-given" style="font-size:15.5px;color:#1E1A32;font-weight:600">Closest in meaning to <u>' + esc(q.q) + '</u></div>' + q.o.map(function(o, k) { var key = k === r.a, mine = k === r.pick; if (!key && !mine) return ''; return '<div class="cf-opt' + (key ? ' key' : '') + (mine ? ' mine' : '') + (mine && !key ? ' no' : '') + '"><b>' + (key ? '✓' : '✗') + '</b><span>' + esc(o) + '</span></div>'; }).join("") + (r.pick < 0 ? '<div class="cf-fb"><i>No answer</i></div>' : '');
-    return CF.card(r.ok ? "g" : "r", '<span class="cf-qn">Q' + (i + 1) + '</span>' + CF.chip(r.ok ? 1 : 0, 1), body + (r.w ? '<p class="cf-fb">💡 ' + esc(r.w) + '</p>' : ''));
+    return CF.card(r.ok ? "g" : "r", '<span class="cf-qn">Q' + (i + 1) + '</span>' + CF.chip(r.ok ? 1 : 0, 1), body + (r.w ? '<p class="cf-fb">💡 ' + esc(r.w) + '</p>' : '') + mqLikeRes(r));
   }).join("");
   out += '<div class="sy-btns" style="margin-top:14px"><button class="btn soft big" data-mqagain>↻ Try again</button><button class="btn primary big" data-mqstart="">➡️ Another passage</button>' + (X.home.ai ? '<button class="btn soft big" data-mqfresh>✨ New passage</button>' : '') + '</div>';
   return out;
@@ -3630,6 +3829,16 @@ function exSubmit(force) {
   document.querySelectorAll("[data-exq]").forEach(function(el) { var a = X.ans[el.getAttribute("data-exq")] || (X.ans[el.getAttribute("data-exq")] = {}); a.v = el.value; });
   document.querySelectorAll("[data-exw]").forEach(function(el) { var a = X.ans[el.getAttribute("data-exw")] || (X.ans[el.getAttribute("data-exw")] = {}); a.w = el.value; });
   exSave();
+  if (!force) {   // 🚫 no blank hand-ins: every question needs an answer or working; repeated answer-only on working questions is turned back
+    var has = function(s) { return String(s == null ? "" : s).trim() !== ""; }, wk = function(q) { var a = X.ans[q.id] || {}; return has(a.w) || (sub === "math" && wpHas(q.id)); };
+    var empty = p.questions.filter(function(q) { var a = X.ans[q.id] || {}; return !has(a.v) && !wk(q); });
+    var bare = sub === "math" ? p.questions.filter(function(q) { return q.type === "long" && has((X.ans[q.id] || {}).v) && !wk(q); }) : [];
+    var stop = empty.length ? empty : bare.length >= 3 ? bare : null;
+    if (stop) { X.confirm = false; X.err = empty.length ? empty.length + " question" + (empty.length > 1 ? "s are" : " is") + " blank (" + stop.slice(0, 8).map(function(q) { return q.n; }).join(", ") + (stop.length > 8 ? "…" : "") + "). Write an answer or your working for every question before you hand in."
+        : "You wrote only the answer for " + bare.length + " questions (" + stop.slice(0, 8).map(function(q) { return q.n; }).join(", ") + (stop.length > 8 ? "…" : "") + "). Show your working for them, then hand in.";
+      exSitView(); flash(X.err, true); var el0 = $("exq_" + stop[0].id) || document.querySelector('[data-exq="' + stop[0].id + '"]'); if (el0) el0.scrollIntoView({ block: "center" }); return; }
+    X.err = "";
+  }
   if (!force && !X.confirm) { X.confirm = true; exSitView(); setTimeout(function() { if (X.confirm && !X.busy && X.sitting) { X.confirm = false; if (X.sitting && exSub() === sub) exSitView(); } }, 5000); return; }
   X.busy = true; X.err = ""; exSitView();
   var pics = sub === "math" ? wpCollect(p) : {};
@@ -4980,7 +5189,10 @@ function prTextHtml(kind, p, res) {
         if (r.ok) return '<span class="pr-r ok" data-prgo="' + n + '"><sup>' + n + '</sup>' + (kind === "edit" ? '<s>' + esc(shown) + '</s> ' : '') + '<b>' + esc(r.ans) + '</b> ✓</span>';
         return '<span class="pr-r no" data-prgo="' + n + '"><sup>' + n + '</sup>' + (kind === "edit" ? '<s>' + esc(shown) + '</s> ' : '') + (r.ans && (kind !== "edit") ? '<s class="pr-mine">' + esc(r.ans) + '</s> ' : '') + '<b>' + esc(r.key) + '</b></span>';
       }
-      var v = (PR[kind].answers || {})[n] || "";
+      var v = (PR[kind].answers || {})[n] || "", sx = p.step && PR[kind].st ? PR[kind].st[n] : null;
+      if (sx && sx.done) return '<span class="pr-r ' + (sx.ok ? 'ok' : 'no') + ' pr-sel' + (PR[kind].cur === n ? ' cur' : '') + '" data-prsel="' + n + '" role="button" tabindex="0"><sup>' + n + '</sup>' + (kind === "edit" ? '<s>' + esc(it.wrong || "") + '</s> ' : '') + (sx.ok ? '<b>' + esc(sx.ans) + '</b> ✓' : (sx.ans && kind !== "edit" ? '<s class="pr-mine">' + esc(sx.ans) + '</s> ' : '') + '<b>' + esc(sx.key) + '</b>') + '</span>';
+      if (sx && sx.tries) { var cls0 = ' pr-try'; if (kind === "edit") return '<span class="pr-b pr-eb"><sup>' + n + '</sup><span class="pr-u">' + esc(it.wrong || "") + '</span><input class="pr-in pr-fix' + cls0 + '" data-prn="' + n + '" value="' + esc(v) + '" placeholder="fix" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Correct word for ' + n + '"></span>';
+        return '<span class="pr-b"><sup>' + n + '</sup><input class="pr-in' + cls0 + '" data-prn="' + n + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Blank ' + n + '"></span>'; }
       if (kind === "edit") return '<span class="pr-b pr-eb"><sup>' + n + '</sup><span class="pr-u">' + esc(it.wrong || "") + '</span><input class="pr-in pr-fix" data-prn="' + n + '" value="' + esc(v) + '" placeholder="fix" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Correct word for ' + n + ', ' + esc(it.wrong || "") + '"></span>';
       return '<span class="pr-b"><sup>' + n + '</sup><input class="pr-in" data-prn="' + n + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Blank ' + n + '"></span>';
     }).replace(/\n/g, "<br>") + '</p>';
@@ -4989,14 +5201,14 @@ function prTextHtml(kind, p, res) {
 function prStart(kind, opts, btn) {
   var X = PR[kind]; if (btn) { btn.disabled = true; btn.textContent = opts.fresh ? "Writing a new passage…" : "Opening…"; }
   X.err = "";
-  prCall(kind, "start", Object.assign({ seen: prSeen(kind) }, opts)).then(function(p) { X.p = p; X.answers = {}; X.res = null; X.confirm = ""; if (S.tab === "compo") renderPrac(kind); })
+  prCall(kind, "start", Object.assign({ seen: prSeen(kind) }, opts)).then(function(p) { X.p = p; X.answers = {}; X.res = null; X.confirm = ""; X.st = {}; X.tw = {}; X.cur = null; X.busy = false; if (S.tab === "compo") renderPrac(kind); })
     .catch(function(e) { X.err = e.message; X.p = null; if (S.tab === "compo") renderPrac(kind); });
 }
 function prMarkAll(kind) {
   var X = PR[kind], p = X.p;
   document.querySelectorAll(".pr-in").forEach(function(el) { X.answers[el.getAttribute("data-prn")] = el.value; });
   var blank = p.items.filter(function(it) { return !String(X.answers[it.n] || "").trim(); }).length;
-  if (!X.confirm && blank) { X.confirm = blank + " " + PR_INFO[kind].unit + (blank > 1 ? "s are" : " is") + " still empty. Tap again to mark anyway."; var y = window.scrollY; renderPrac(kind); window.scrollTo(0, y); return; }
+  if (blank) { X.confirm = ""; X.err = blank + " " + PR_INFO[kind].unit + (blank > 1 ? "s are" : " is") + " still empty. Fill in every one, then mark."; var y = window.scrollY; renderPrac(kind); window.scrollTo(0, y); return; }   // 🚫 no blank hand-ins
   X.busy = true; X.err = ""; var y2 = window.scrollY; renderPrac(kind); window.scrollTo(0, y2);
   prCall(kind, "mark", { id: p.id, answers: X.answers }).then(function(r) { mwRefresh(true);
     X.busy = false; X.res = r; X.confirm = ""; drDrop(kind, p.id);
@@ -5011,19 +5223,32 @@ document.addEventListener("click", function(e) {
   if ((t = e.target.closest("[data-prstart]"))) { prStart(kind, t.getAttribute("data-prstart") ? { id: t.getAttribute("data-prstart") } : {}, t); return; }
   if ((t = e.target.closest("[data-prfresh]"))) { prStart(kind, { fresh: true }, t); return; }
   if ((t = e.target.closest("[data-prback]"))) { X.p = null; X.res = null; X.err = ""; renderPrac(kind); return; }
-  if ((t = e.target.closest("[data-pragain]"))) { X.res = null; X.answers = {}; X.confirm = ""; renderPrac(kind); return; }
+  if ((t = e.target.closest("[data-pragain]"))) { if (X.p && X.p.step) { prStart(kind, { id: X.p.id }, t); return; } X.res = null; X.answers = {}; X.confirm = ""; renderPrac(kind); return; }
+  if ((t = e.target.closest("[data-prchk]"))) { prCheck(kind, +t.getAttribute("data-prchk"), false); return; }
+  if ((t = e.target.closest("[data-prtchk]"))) { prCheck(kind, +t.getAttribute("data-prtchk"), true); return; }
+  if ((t = e.target.closest("[data-prsel]"))) { X.cur = +t.getAttribute("data-prsel"); prRedraw(kind, true); var pnl = $("prPanel"); if (pnl) pnl.scrollIntoView({ block: "nearest" }); return; }
+  if ((t = e.target.closest("[data-prnext]"))) { X.cur = prFirstOpen(X); prRedraw(kind, true); var nx = document.querySelector('.pr-in[data-prn="' + X.cur + '"]'); if (nx) { nx.scrollIntoView({ block: "center" }); nx.focus(); } return; }
+  if ((t = e.target.closest("#prFin"))) { prFinish(kind); return; }
   if ((t = e.target.closest("#prMark"))) { prMarkAll(kind); return; }
   if ((t = e.target.closest("[data-prgo]"))) { var el = $("prx" + t.getAttribute("data-prgo")); if (el) { el.scrollIntoView({ behavior: "smooth", block: "center" }); el.classList.add("flash"); setTimeout(function() { el.classList.remove("flash"); }, 1400); } return; }
 });
 document.addEventListener("input", function(e) {
-  var el = e.target; if (!el || !el.classList || !el.classList.contains("pr-in") || !el.hasAttribute("data-prn")) return;
+  var el = e.target; if (el && el.id === "prTw") { var kt = enSec(), Xt = PR[kt]; if (Xt && Xt.tw && Xt.tw[Xt.cur]) Xt.tw[Xt.cur].ans = el.value; return; }
+  if (!el || !el.classList || !el.classList.contains("pr-in") || !el.hasAttribute("data-prn")) return;
   var kind = enSec(), X = PR[kind]; if (!X) return;
   X.answers = X.answers || {}; X.answers[el.getAttribute("data-prn")] = el.value;
   if (X.p && !X.res) drSave(kind, X.p.id, { p: X.p, answers: X.answers, label: X.p.title });
   if (X.confirm) { X.confirm = ""; var b = $("prMark"); if (b) b.textContent = "✅ Mark my answers"; var n = $("prNote"); if (n) n.textContent = "Check your spelling: a misspelt word gets no mark."; }
 });
+document.addEventListener("focusin", function(e) {   // ✅ the panel follows the blank being typed in
+  var el = e.target; if (!el || !el.classList || !el.classList.contains("pr-in") || !el.hasAttribute("data-prn")) return;
+  var kind = enSec(), X = PR[kind]; if (!X || !X.p || !X.p.step || X.res) return;
+  var n = +el.getAttribute("data-prn"); if (X.cur !== n) { X.cur = n; var pn = $("prPanel"); if (pn) pn.innerHTML = prPanel(kind); }
+});
 document.addEventListener("keydown", function(e) {   // Enter in a blank jumps to the next blank
   var el = e.target; if (e.key !== "Enter" || !el || !el.classList || !el.classList.contains("pr-in")) return;
+  var kind0 = enSec(), X0 = PR[kind0];
+  if (X0 && X0.p && X0.p.step && !X0.res) { e.preventDefault(); if (el.id === "prTw") prCheck(kind0, X0.cur, true); else prCheck(kind0, +el.getAttribute("data-prn"), false); return; }
   e.preventDefault(); var all = [].slice.call(document.querySelectorAll(".pr-in")), i = all.indexOf(el); if (all[i + 1]) all[i + 1].focus(); else el.blur();
 });
 
@@ -5093,6 +5318,7 @@ function synSetView() {
   var st = SY.set, out = '<div class="sy-top"><button class="btn soft" data-syback>‹ All practice</button></div>' +
     '<div class="cheer-hero" style="padding-top:8px"><span class="hand">' + esc(st.label || "Practice") + '</span><h1>' + st.questions.length + ' question' + (st.questions.length === 1 ? '' : 's') + '</h1></div>' +
     '<div class="sy-instr">' + esc(st.instr) + '</div>';
+  if (st.step) return out + st.questions.map(function(q, i) { return synStepCard(q, i + 1); }).join("") + synStepGo();
   out += st.questions.map(function(q, i) { return synQCard(q, i + 1, SY.answers[q.id], "syA_"); }).join("");
   out += (SY.err ? '<div class="msg err">' + esc(SY.err) + '</div>' : '') +
     '<div class="cw-card sy-go"><button class="btn primary big" id="syMark"' + (SY.busy ? ' disabled' : '') + '>' + (SY.busy ? 'Marking…' : SY.confirm ? 'Tap again to mark' : '✅ Mark my answers') + '</button>' +
@@ -5101,6 +5327,7 @@ function synSetView() {
 }
 /** "Try a similar one": a new question of the same type, answered and marked right here. */
 function synExtraHtml(q, key) {
+  if (key == null) return '';   // question by question: the similar question is part of the flow
   var x = SY.extra[key];
   if (!x) return '<button class="btn soft" data-sysim="' + esc(key) + '" data-syqid="' + esc(q.id) + '">🔁 Try a similar one</button>';
   if (x.busy && !x.q) return '<p class="cw-tip">Finding a similar question…</p>';
@@ -5109,17 +5336,57 @@ function synExtraHtml(q, key) {
   return '<div class="sy-sim"><div class="sy-simh">🔁 Try a similar one</div>' + synQCard(x.q, "★", x.ans, "syX_") +
     (x.err ? '<div class="msg err">' + esc(x.err) + '</div>' : '') + '<button class="btn primary" data-symark1="' + esc(key) + '"' + (x.busy ? ' disabled' : '') + '>' + (x.busy ? 'Marking…' : '✅ Mark this one') + '</button></div>';
 }
+/* ----- ✅ one sentence at a time ----- */
+function synDoneQ(id) { var r = (SY.st || {})[id], t = (SY.tw || {})[id]; return !!(r && r.done && (r.ok || (t && t.st && t.st.done))); }
+function synFb(r) {
+  if (!r || !r.tries || r.done) return '';
+  return '<div class="mp-fb try" role="status"><b>❌ ' + (r.awarded === 1 ? 'Nearly! 1 of 2 marks.' : 'Not quite.') + ' Have another go.</b>' + (r.clue ? '<p>💡 ' + esc(r.clue) + '</p>' : '') + '</div>';
+}
+function synStepCard(q, i) {
+  var r = (SY.st || {})[q.id] || {}, t = (SY.tw || {})[q.id], out;
+  if (r.done) out = synResOne(q, r.res, i, r.ans, null) + (r.ok ? '<p class="cw-tip" style="margin:-4px 4px 10px">' + (r.first ? '✅ Right first time.' : '✅ Right on your second try.') + '</p>' : '');
+  else out = synQCard(q, i, SY.answers[q.id], "syA_").replace(/<\/div>$/, synFb(r) + '<button class="btn primary mq-chk" data-sychk="' + esc(q.id) + '"' + (SY.busy ? ' disabled' : '') + '>' + (SY.busy === q.id ? 'Checking… (a few seconds)' : r.tries ? 'Check again' : 'Check') + '</button></div>');
+  if (r.done && !r.ok) {
+    if (!t || !t.q) out += '<p class="cw-tip">Getting a similar question…</p>';
+    else { var ts = t.st || {};
+      out += '<div class="mq-like"><div class="cw-h">🔁 Now try a similar one</div>' + (ts.done ? synResOne(t.q, ts.res, "★", ts.ans, null) :
+        synQCard(t.q, "★", t.ans, "syT_").replace(/<\/div>$/, synFb(ts) + '<button class="btn primary mq-chk" data-sytchk="' + esc(q.id) + '"' + (SY.busy ? ' disabled' : '') + '>' + (SY.busy === "t" + q.id ? 'Checking… (a few seconds)' : ts.tries ? 'Check again' : 'Check') + '</button></div>')) + '</div>'; }
+  }
+  return out;
+}
+function synStepGo() {
+  var st = SY.set, left = st.questions.filter(function(q) { return !synDoneQ(q.id); }).length;
+  return (SY.err ? '<div class="msg err">' + esc(SY.err) + '</div>' : '') + '<div class="cw-card sy-go"><button class="btn primary big" id="syFin"' + (left || SY.busy ? ' disabled' : '') + '>' + (SY.busy === "fin" ? 'Working it out…' : '✅ See my results') + '</button><p class="cw-tip" id="syNote">' + (left ? left + ' question' + (left > 1 ? 's' : '') + ' still to check. Check each one as you go.' : 'All done!') + '</p>' + drLaterBtn() + '</div>';
+}
+function synCheck(qid, twin) {
+  if (SY.busy) return; SY.st = SY.st || {}; SY.tw = SY.tw || {};
+  document.querySelectorAll('.sy-ans[id^="syA_"]').forEach(function(ta) { SY.answers[ta.getAttribute("data-syq")] = ta.value; });
+  var t = (SY.tw || {})[qid]; if (twin && t && t.q) { var tt = $("syT_" + t.q.id); if (tt) t.ans = tt.value; }
+  var ans = twin ? (t || {}).ans : SY.answers[qid];
+  if (!String(ans || "").trim()) { SY.err = "Write your sentence first."; synRedrawKeepScroll(); return; }
+  SY.err = ""; SY.busy = twin ? "t" + qid : qid; synRedrawKeepScroll();
+  synCall("check", { att: SY.set.att, qid: qid, ans: ans, twin: twin ? 1 : 0 }).then(function(r) {
+    SY.busy = false; if (twin) SY.tw[qid].st = r; else SY.st[qid] = r;
+    if (r.like && !SY.tw[qid]) { SY.tw[qid] = { q: null, st: {}, ans: "" }; synCall("twin", { att: SY.set.att, qid: qid }).then(function(d) { SY.tw[qid] = { q: d.q, st: d.st || {}, ans: "" }; synRedrawKeepScroll(); }).catch(function(e) { SY.tw[qid] = null; SY.err = e.message; synRedrawKeepScroll(); }); }
+    synRedrawKeepScroll();
+  }).catch(function(e) { SY.busy = false; SY.err = e.message; synRedrawKeepScroll(); });
+}
+function synFinish() {
+  if (SY.busy) return; SY.busy = "fin"; synRedrawKeepScroll();
+  synCall("finish", { att: SY.set.att }).then(function(r) { mwRefresh(true); drDrop("syn", synDid()); SY.busy = false; SY.res = r; synMarkSeen(SY.set.questions.map(function(q) { return q.id; })); if (S.tab === "compo") renderSyn(); })
+    .catch(function(e) { SY.busy = false; SY.err = e.message; synRedrawKeepScroll(); });
+}
 function synStart(opts, btn) {
   if (btn) { btn.disabled = true; btn.textContent = opts.fresh ? "Writing new questions…" : "Getting questions…"; }
   SY.err = ""; SY.last = opts;
   synCall("start", Object.assign({ seen: synSeen() }, opts)).then(function(st) {
-    SY.set = st; SY.answers = {}; SY.res = null; SY.extra = {}; SY.confirm = ""; if (S.tab === "compo") renderSyn();
+    SY.set = st; SY.answers = {}; SY.res = null; SY.extra = {}; SY.confirm = ""; SY.st = {}; SY.tw = {}; SY.busy = false; if (S.tab === "compo") renderSyn();
   }).catch(function(e) { SY.err = e.message; SY.set = null; if (S.tab === "compo") renderSyn(); });
 }
 function synMarkAll() {
   var st = SY.set; document.querySelectorAll('.sy-ans[id^="syA_"]').forEach(function(t) { SY.answers[t.getAttribute("data-syq")] = t.value; });
   var blank = st.questions.filter(function(q) { return !String(SY.answers[q.id] || "").trim(); }).length;
-  if (!SY.confirm && blank) { SY.confirm = blank + " question" + (blank > 1 ? "s are" : " is") + " still blank. Tap again to mark anyway."; renderSyn(); var b = $("syMark"); if (b) b.scrollIntoView({ block: "center" }); return; }
+  if (blank) { SY.confirm = ""; SY.err = blank + " question" + (blank > 1 ? "s are" : " is") + " still blank. Write an answer for every question, then mark."; renderSyn(); var b = $("syMark"); if (b) b.scrollIntoView({ block: "center" }); return; }
   SY.busy = true; SY.err = ""; renderSyn(); var b2 = $("syMark"); if (b2) b2.scrollIntoView({ block: "center" });
   synCall("mark", { questions: st.questions, answers: SY.answers, label: st.label }).then(function(r) { mwRefresh(true);
     drDrop("syn", synDid()); SY.busy = false; SY.res = r; SY.confirm = ""; synMarkSeen(st.questions.map(function(q) { return q.id; })); if (S.tab === "compo") renderSyn();
@@ -5135,6 +5402,9 @@ document.addEventListener("click", function(e) {
   if ((t = e.target.closest("[data-syback]"))) { SY.set = null; SY.res = null; SY.extra = {}; SY.err = ""; renderSyn(); return; }
   if ((t = e.target.closest("[data-syagain]"))) { synStart(SY.last || { topic: "" }, t); return; }
   if ((t = e.target.closest("#syMark"))) { synMarkAll(); return; }
+  if ((t = e.target.closest("[data-sychk]"))) { synCheck(t.getAttribute("data-sychk"), false); return; }
+  if ((t = e.target.closest("[data-sytchk]"))) { synCheck(t.getAttribute("data-sytchk"), true); return; }
+  if ((t = e.target.closest("#syFin"))) { synFinish(); return; }
   if ((t = e.target.closest("[data-sysim]"))) {
     var key = t.getAttribute("data-sysim"), qid = t.getAttribute("data-syqid"), x = SY.extra[key] = { busy: true };
     synRedrawKeepScroll();
@@ -5362,22 +5632,40 @@ function mpCall(action, d) { return call("mathPracApi", action, JSON.stringify(d
 function mpOn(k) { return featOn(k) && !(MP.home && MP.home.on && MP.home.on[k] === false); }
 function mpDraw() { if (S.tab === "math" && MA.sec === "prac") renderMath(); }
 function mpView() {
-  if (!MP.lv) MP.lv = store("mplv") || (/^P[1-6]/.test((S.home && S.home.className) || "") ? S.home.className.slice(0, 2) : "P5");
-  if (MP.view === "round" && MP.round) return mpRoundView();
+  if (!MP.lv) { var slv = store("mplv") || (/^P[1-6]/.test((S.home && S.home.className) || "") ? S.home.className.slice(0, 2) : "P5"); MP.fd = /F$/.test(slv); MP.lv = slv.slice(0, 2); if (MP_LV.indexOf(MP.lv) < 0) MP.lv = "P5"; }
+  if (MP.view === "round" && MP.round) return MP.round.step ? mpStepView() : mpRoundView();
   if (MP.view === "sprint" && MP.sp) return mpSprintView();
   if (MP.view === "result" && MP.res) return mpResultView();
   if (MP.view === "tool" && MP.tool) return mpToolView();
-  if (!MP.home && !MP.busy && (featOn("mathprac") || featOn("maththink"))) { MP.busy = true; mpCall("home").then(function(d) { MP.home = d; MP.busy = false; MP.err = ""; mpDraw(); }).catch(function(e) { MP.busy = false; MP.err = e.message || String(e); MP.home = { topics: [], sprint: [], heur: [], on: {} }; mpDraw(); }); }
+  if (!MP.home && !(S.home && S.home.preview)) { var mpc = devGet("mp"); if (mpc && mpc.topics && mpc.on) { MP.home = mpc; MP.stale = true; } }   // ⚡ this device's copy at once; the fresh one follows
+  if ((!MP.home || MP.stale) && !MP.hb && (featOn("mathprac") || featOn("maththink"))) { MP.hb = true;   // MP.hb (not MP.busy): a pupil can start a round from the device copy while the fresh one is on its way
+    mpCall("home").then(function(d) { MP.home = d; MP.stale = false; MP.hb = false; MP.err = ""; if (!(S.home && S.home.preview)) devPut("mp", d); if (!MP.view || MP.view === "home") mpDraw(); })
+      .catch(function(e) { MP.hb = false; if (MP.home && MP.stale) { MP.stale = false; return; } MP.err = e.message || String(e); MP.home = { topics: [], sprint: [], heur: [], on: {} }; mpDraw(); }); }
   if (!MP.home && !featOn("mathprac") && !featOn("maththink")) MP.home = { topics: [], sprint: [], heur: [], on: {} };   // only the tools are switched on
   return mpHomeView();
 }
+/** 🌱 The level being practised: "P5F" / "P6F" when Foundation is chosen (only P5 and P6 have it). */
+function mpLvNow() { return MP.lv + (MP.fd && (MP.lv === "P5" || MP.lv === "P6") ? "F" : ""); }
+function mpLvLabel(lv) { return /F$/.test(String(lv)) ? String(lv).slice(0, 2) + " Foundation" : String(lv || ""); }
 function mpBest(b, sprint) { return b ? '<span class="mp-best' + (!sprint && b.max && b.got === b.max ? ' full' : '') + '">' + (sprint ? 'Best: ' + b.got : b.got + '/' + b.max) + '</span>' : ''; }
 function mpHomeView() {
   var H = MP.home, n = MP_LV.indexOf(MP.lv) + 1, out = '<div class="cheer-hero"><span class="hand">A little every day</span><h1>Maths practice</h1><p>Choose your level, then pick something to practise. New numbers every time.</p></div>' +
-    '<div class="mp-lv" role="group" aria-label="Level">' + MP_LV.map(function(l) { return '<button class="' + (l === MP.lv ? 'on' : '') + '" data-mplv="' + l + '" aria-pressed="' + (l === MP.lv) + '">' + l + '</button>'; }).join("") + '</div>';
+    '<div class="mp-lv" role="group" aria-label="Level">' + MP_LV.map(function(l) { return '<button class="' + (l === MP.lv ? 'on' : '') + '" data-mplv="' + l + '" aria-pressed="' + (l === MP.lv) + '">' + l + '</button>'; }).join("") + '</div>' +
+    (n >= 5 ? '<div class="mp-track" role="group" aria-label="Standard or Foundation"><button class="' + (!MP.fd ? 'on' : '') + '" data-mptrack="s" aria-pressed="' + !MP.fd + '">Standard</button><button class="' + (MP.fd ? 'on' : '') + '" data-mptrack="f" aria-pressed="' + !!MP.fd + '">🌱 Foundation</button></div>' : '');
+  var LV = mpLvNow(), fd = /F$/.test(LV);
   if (MP.err) out += '<div class="msg err">' + esc(MP.err) + '</div>';
   if (!H) return out + '<div class="cw-card"><p class="cw-tip" style="margin:0">Getting your practice ready…</p></div>';
-  var sp = (H.sprint || []).filter(function(x) { return x.lv === MP.lv; })[0], topics = (H.topics || []).filter(function(t) { return t.lv === MP.lv; }), heur = (H.heur || []).filter(function(h) { return h.lv <= n; });
+  var sp = (H.sprint || []).filter(function(x) { return x.lv === LV; })[0], topics = (H.topics || []).filter(function(t) { return t.lv === LV; }), heur = (H.heur || []).filter(function(h) { return h.lv <= (fd ? 4 : n); });
+  var pp = (H.papers || []).filter(function(x) { return x.lv === LV; })[0], chl = (H.challenge || []).filter(function(x) { return x.lv === LV; })[0];
+  if (fd && !topics.length && !sp) out += '<div class="cw-card"><p class="cw-tip" style="margin:0">Foundation practice is getting ready… If this stays, ask your teacher to update the app.</p></div>';
+  if ((pp && pp.kinds.length) || chl) {
+    out += '<div class="cw-card mp-papers"><div class="mp-h">📝 Exam practice</div><p class="cw-tip" style="margin:2px 0 10px">' + (fd ? 'Papers in the PSLE Foundation Maths format, with new questions every time.' : n >= 5 ? 'Papers in the PSLE format (from 2026), with new questions every time.' : 'Papers like your school exams, with new questions every time.') + '</p>';
+    if (fd && pp && pp.kinds.some(function(k) { return k.k === "fp1"; })) out += '<button class="mp-paper full" data-mpfull><span class="mp-ic" aria-hidden="true">🎓</span><span class="mp-tn">Full PSLE Foundation paper<small>Paper 1 (1 h, no calculator), then Paper 2 (45 min, calculator) · 42 questions · 80 marks</small></span></button>';
+    if (!fd && n >= 5 && pp && pp.kinds.some(function(k) { return k.k === "p1"; })) out += '<button class="mp-paper full" data-mpfull><span class="mp-ic" aria-hidden="true">🎓</span><span class="mp-tn">Full PSLE paper<small>Paper 1 (70 min, no calculator), then Paper 2 (80 min, calculator) · 45 questions · 100 marks</small></span></button>';
+    out += '<div class="mp-topics">' + (pp ? pp.kinds : []).map(function(k) {
+      return '<button class="mp-topic" data-mppaper="' + k.k + '"><span class="mp-ic" aria-hidden="true">' + (k.k === "mini" ? "⏱️" : "📝") + '</span><span class="mp-tn">' + esc(k.name) + '<small>' + k.qn + ' questions · ' + k.marks + ' marks · ' + k.mins + ' min · ' + (k.calc ? 'calculator' : 'no calculator') + '</small></span>' + mpBest(k.best) + '</button>'; }).join("") +
+      (chl && mpOn("maththink") ? '<button class="mp-topic" data-mpstart="challenge"><span class="mp-ic" aria-hidden="true">🏆</span><span class="mp-tn">Challenge problems<small>5 long problems with parts (a), (b)… No time limit.</small></span>' + mpBest(chl.best) + '</button>' : '') + '</div></div>';
+  }
   if (mpOn("mathprac") && sp) out += '<div class="cw-card mp-sprint"><div><div class="mp-h">⚡ Number facts sprint</div><p class="cw-tip" style="margin:2px 0 0">2 minutes. How many can you get right?</p></div><div class="mp-go">' + mpBest(sp.best, 1) + '<button class="btn primary" data-mpstart="sprint">Start</button></div></div>';
   if (mpOn("mathprac") && topics.length) out += '<div class="cw-card"><div class="mp-h">📚 Topic practice</div><p class="cw-tip" style="margin:2px 0 10px">10 questions on one topic.</p><div class="mp-topics">' + topics.map(function(t) {
     return '<button class="mp-topic" data-mptopic="' + esc(t.id) + '"><span class="mp-ic" aria-hidden="true">' + esc(t.icon || "🔢") + '</span><span class="mp-tn">' + esc(t.name) + '</span>' + mpBest(t.best) + '</button>'; }).join("") + '</div></div>';
@@ -5389,64 +5677,257 @@ function mpHomeView() {
       return '<button class="mp-topic" data-mpheur="' + esc(h.id) + '"><span class="mp-ic" aria-hidden="true">🧩</span><span class="mp-tn">' + esc(h.name) + '</span>' + mpBest(h.best) + '</button>'; }).join("") + '</div></div>';
   }
   if (featOn("mathtools")) out += '<div class="cw-card"><div class="mp-h">🧰 Show-me tools</div><p class="cw-tip" style="margin:2px 0 10px">Move things around to see how the maths works.</p><div class="mp-tools">' +
-    [["frac", "🍫", "Fraction bars"], ["line", "📏", "Number line"], ["clock", "🕒", "Clock"], ["discs", "🔵", "Place-value discs"], ["angle", "📐", "Protractor"]].map(function(t) { return '<button class="mp-tool" data-mptool="' + t[0] + '"><span aria-hidden="true">' + t[1] + '</span>' + t[2] + '</button>'; }).join("") + '</div></div>';
+    [["bar", "🟪", "Bar model builder"], ["frac", "🍫", "Fraction bars"], ["line", "📏", "Number line"], ["grid", "⬛", "Area and perimeter grid"], ["cubes", "🧊", "Cube builder"], ["clock", "🕒", "Clock"], ["discs", "🔵", "Place-value discs"], ["angle", "📐", "Protractor"], ["calc", "🧮", "Calculator"]].map(function(t) { return '<button class="mp-tool" data-mptool="' + t[0] + '"><span aria-hidden="true">' + t[1] + '</span>' + t[2] + '</button>'; }).join("") + '</div></div>';
   return out + '<div style="height:24px"></div>';
 }
 function mpStart(p) {
   if (MP.busy) return; MP.busy = true; MP.err = ""; MP.last = p; flash("Getting your questions…");
   mpCall("start", p).then(function(d) {
-    MP.busy = false; MP.round = d; MP.i = 0; MP.ans = d.items.map(function() { return ""; }); MP.res = null;
+    MP.busy = false; MP.round = d; MP.i = 0; MP.ans = d.items.map(function() { return ""; }); MP.work = d.items.map(function() { return ""; }); MP.stop = ""; MP.res = null; MP.st = []; MP.tw = {};
     if (d.mode === "sprint") { MP.sp = { i: 0, cur: "", right: 0, done: 0, left: d.secs || 120, ok: null, answers: [], t: null, started: false }; MP.view = "sprint"; }
-    else MP.view = "round";
+    else { MP.view = "round"; MP.map = false; MP.calcOpen = false; MP.armed = false; mpTimerStart(d.secs); }
     mpDraw(); window.scrollTo(0, 0);
   }).catch(function(e) { MP.busy = false; flash(e.message || String(e), true); });
 }
+/* ----- ⏱️ the paper's clock: counts down; at 0 the paper is handed in by itself ----- */
+function mpTimerStop() { if (MP.tick) clearInterval(MP.tick); MP.tick = null; MP.tEnd = 0; }
+function mpTimerStart(secs) {
+  mpTimerStop(); if (!secs) return;
+  MP.tEnd = Date.now() + secs * 1000;
+  MP.tick = setInterval(function() {
+    var left = Math.max(0, Math.round((MP.tEnd - Date.now()) / 1000)), el = $("mpTimer");
+    if (el) { el.textContent = mpClock(left); el.className = left <= 300 ? "low" : ""; }
+    if (left === 300) flash("5 minutes left.");
+    if (left <= 0) { mpTimerStop(); if (MP.view === "round") { flash("Time’s up! Handing in your paper…"); mpMark(true); } }
+  }, 1000);
+}
+function mpClock(left) { var h = Math.floor(left / 3600), m = Math.floor(left % 3600 / 60), s = left % 60; return (h ? h + ":" + ("0" + m).slice(-2) : m) + ":" + ("0" + s).slice(-2); }
+function mpLabel(R, i) { var q = R.items[i]; if (!q.grp) return "Q" + (i + 1); var part = /^\(([a-f])\)/.exec(q.q); return "Q" + q.grp + (part ? "(" + part[1] + ")" : ""); }
 function mpHint(q) { return q.kind === "frac" ? 'Type a fraction like 3/4, or a mixed number like 1 1/2.' + (q.simp ? ' Give it in its simplest form.' : '') : q.kind === "ratio" ? 'Type a ratio like 2:3.' : q.kind === "digits" ? 'Type the 4 digits, like 0915.' : q.kind === "alg" ? 'Type it like 3a + 2.' : ''; }
-function mpQBody(q, val, idp) {
+function mpHas(s) { return String(s == null ? "" : s).trim() !== ""; }
+/** Working counts when it shows some maths: a number, and more than just the answer copied in. */
+function mpWorkOk(w, a) { w = String(w || "").trim(); return w.length >= 3 && /\d/.test(w) && w.replace(/\s/g, "") !== String(a || "").replace(/\s/g, ""); }
+function mpQBody(q, val, idp, work, lock) {   // idp "mp" = the question, "mt" = its "try one like it"; lock = {a: right choice} once finished
   var out = (q.ctx ? '<div class="mp-ctx">' + esc(q.ctx) + '</div>' : '') + (q.fig ? '<div class="mp-figbox">' + q.fig + '</div>' : '') + '<div class="mp-q" id="' + idp + 'q">' + esc(q.q) + '</div>';
-  if (q.kind === "pick") return out + '<div class="mp-opts" role="group" aria-labelledby="' + idp + 'q">' + q.o.map(function(o, k) { return '<button class="mp-opt' + (String(val) === String(k) ? ' on' : '') + '" data-mpopt="' + k + '" aria-pressed="' + (String(val) === String(k)) + '">' + esc(o) + '</button>'; }).join("") + '</div>';
-  var num = q.kind === "num";
-  return out + '<div class="mp-inrow">' + (q.pre ? '<span class="mp-unit">' + esc(q.pre) + '</span>' : '') + '<input class="mp-in" id="mpIn" aria-labelledby="' + idp + 'q" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="' + (num ? 'decimal' : 'text') + '" value="' + esc(val) + '" placeholder="Your answer">' + (q.unit ? '<span class="mp-unit">' + esc(q.unit) + '</span>' : '') + '</div>' +
+  if (q.kind === "pick") return out + '<div class="mp-opts" role="group" aria-labelledby="' + idp + 'q">' + q.o.map(function(o, k) { var on = String(val) === String(k), cls = lock ? (lock.a === k ? ' right' : on ? ' wrong' : '') : '';
+    return '<button class="mp-opt' + (on ? ' on' : '') + cls + '" data-' + (idp === "mt" ? 'mtopt' : 'mpopt') + '="' + k + '" aria-pressed="' + on + '"' + (lock ? ' disabled' : '') + '>' + esc(o) + '</button>'; }).join("") + '</div>';
+  var num = q.kind === "num", inId = idp === "mt" ? "mtIn" : "mpIn", wkId = idp === "mt" ? "mtWk" : "mpWk";
+  if (q.wk && (idp === "mp" || idp === "mt")) out += '<label class="mp-wkl" for="' + wkId + '">Working <span>(show how you got it)</span></label><textarea class="mp-wk" id="' + wkId + '" rows="3" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. 3 units = 24, 1 unit = 24 ÷ 3 = 8"' + (lock ? ' readonly' : '') + '>' + esc(work || "") + '</textarea><div class="mp-wkl" style="margin-top:10px">Answer</div>';
+  return out + '<div class="mp-inrow">' + (q.pre ? '<span class="mp-unit">' + esc(q.pre) + '</span>' : '') + '<input class="mp-in" id="' + inId + '" aria-labelledby="' + idp + 'q" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="' + (num ? 'decimal' : 'text') + '" value="' + esc(val) + '" placeholder="Your answer"' + (lock ? ' readonly' : '') + '>' + (q.unit ? '<span class="mp-unit">' + esc(q.unit) + '</span>' : '') + '</div>' +
     (mpHint(q) ? '<p class="cw-tip" style="margin:8px 0 0">' + mpHint(q) + '</p>' : '');
 }
-function mpRoundView() {
-  var R = MP.round, q = R.items[MP.i], n = R.items.length, last = MP.i === n - 1, blank = MP.ans.filter(function(a) { return String(a).trim() === ""; }).length;
-  return '<button class="mp-back" data-mpquit>‹ Stop and go back</button><div class="mp-top"><b>' + esc(R.title || "Practice") + '</b><span>Question ' + (MP.i + 1) + ' of ' + n + '</span></div>' +
-    '<div class="mp-dots" aria-hidden="true">' + R.items.map(function(x, k) { return '<i class="' + (k === MP.i ? 'now' : String(MP.ans[k]).trim() !== "" ? 'done' : '') + '"></i>'; }).join("") + '</div>' +
-    (R.how && MP.i === 0 ? '<div class="mp-how">💡 ' + esc(R.how) + '</div>' : '') +
-    '<div class="cw-card mp-card">' + mpQBody(q, MP.ans[MP.i], "mp") + '</div>' +
-    '<div class="mp-nav">' + (MP.i > 0 ? '<button class="btn soft" data-mpgo="-1">‹ Back</button>' : '<span></span>') +
-    (last ? '<button class="btn primary big" data-mpmark' + (MP.busy ? ' disabled' : '') + '>' + (MP.busy ? 'Marking…' : 'Check my answers') + '</button>' : '<button class="btn primary big" data-mpgo="1">Next ›</button>') + '</div>' +
-    (last && blank ? '<p class="cw-tip" style="text-align:center">' + blank + ' question' + (blank === 1 ? ' has' : 's have') + ' no answer yet. You can go back.</p>' : '') + '<div style="height:24px"></div>';
+/* ----- ✅ Question by question (topic practice, problem sums, spot the mistake, read the question, challenge problems) ----- */
+function mpStepDone(i) { var s = MP.st[i], t = MP.tw[i]; return !!(s && s.done && (s.ok || (t && t.st && t.st.done))); }
+function mpFb(s, twin) {
+  if (!s || !s.tries) return "";
+  if (!s.done) return '<div class="mp-fb try" role="status"><b>❌ Not quite. Have another go.</b>' + (s.clue ? '<p>💡 ' + esc(s.clue) + '</p>' : '') + '</div>';
+  if (s.ok) return '<div class="mp-fb ok" role="status"><b>✅ ' + (s.first ? 'Right!' : 'Right on your second try!') + '</b>' + (s.w ? '<p>' + esc(s.w) + '</p>' : '') + '</div>';
+  return '<div class="mp-fb no" role="status"><b>The answer is ' + esc(s.right) + '.</b>' + (s.note ? '<p>' + esc(s.note) + '</p>' : '') + (s.w ? '<p>💡 ' + esc(s.w) + '</p>' : '') + (twin ? '' : '<p class="mp-fbn">It’s saved in <b>My mistakes</b> so you can try it again later.</p>') + '</div>';
 }
-function mpKeep() { var el = $("mpIn"); if (el && MP.view === "round") MP.ans[MP.i] = el.value; }
-function mpMark() {
-  if (MP.busy) return; mpKeep(); MP.busy = true; mpDraw();
-  mpCall("mark", { id: MP.round.id, answers: MP.ans }).then(function(d) { MP.busy = false; MP.res = d; MP.view = "result"; MP.home = null; mpDraw(); window.scrollTo(0, 0); })
-    .catch(function(e) { MP.busy = false; mpDraw(); flash(e.message || String(e), true); });
+function mpStepView() {
+  var R = MP.round, i = MP.i, q = R.items[i], n = R.items.length, s = MP.st[i] || {}, t = MP.tw[i], last = i === n - 1, marked = !!q.m;
+  var out = '<button class="mp-back" data-mpquit>‹ Stop and go back</button><div class="mp-top"><b>' + esc(R.title || "Practice") + '</b><span>' + (marked ? mpLabel(R, i) + ' of ' + R.items[n - 1].grp : 'Question ' + (i + 1) + ' of ' + n) + '</span></div>' +
+    '<div class="mp-dots" aria-hidden="true">' + R.items.map(function(x, k) { var sk = MP.st[k] || {}; return '<i class="' + (k === i ? 'now ' : '') + (sk.done ? (sk.ok ? 'done' : 'miss') : '') + '"></i>'; }).join("") + '</div>' +
+    (R.calc ? '<div class="mp-tools-row"><button class="btn soft" data-mpcalc aria-expanded="' + !!MP.calcOpen + '">🧮 Calculator</button></div>' : '') + (MP.calcOpen ? mpCalcHtml() : '') +
+    (R.how && i === 0 && !s.tries ? '<div class="mp-how">💡 ' + esc(R.how) + '</div>' : '') +
+    '<div class="cw-card mp-card">' + (marked ? '<div class="mp-qh"><b>' + mpLabel(R, i) + '</b><span class="mp-marks">' + q.m + ' mark' + (q.m === 1 ? '' : 's') + '</span></div>' : '') +
+    mpQBody(q, MP.ans[i], "mp", MP.work[i], s.done ? { a: s.a } : null) + mpFb(s) +
+    (!s.done ? '<button class="btn primary big mp-chk" data-mpchk' + (MP.busy ? ' disabled' : '') + '>' + (MP.busy ? 'Checking…' : s.tries ? 'Check again' : 'Check') + '</button>' : '') + '</div>';
+  if (s.done && !s.ok) {
+    if (!t || t.loading) out += '<div class="cw-card"><p class="cw-tip" style="margin:0">Getting a question like it…</p></div>';
+    else { var ts = t.st || {};
+      out += '<div class="cw-card mp-card mp-like" id="mpLike"><div class="mp-qh"><b>🔁 Now try one like it</b></div>' + mpQBody(t.q, t.ans, "mt", t.work, ts.done ? { a: ts.a } : null) + mpFb(ts, true) +
+        (!ts.done ? '<button class="btn primary big mp-chk" data-mpchk2' + (MP.busy ? ' disabled' : '') + '>' + (MP.busy ? 'Checking…' : ts.tries ? 'Check again' : 'Check') + '</button>' : '') + '</div>'; }
+  }
+  if (MP.stop) out += '<div class="msg err" role="alert">' + esc(MP.stop) + '</div>';
+  out += '<div class="mp-nav">' + (i > 0 ? '<button class="btn soft" data-mpgo="-1">‹ Back</button>' : '<span></span>') +
+    (mpStepDone(i) ? (last ? '<button class="btn primary big" data-mpfin' + (MP.busy ? ' disabled' : '') + '>' + (MP.busy ? 'Working it out…' : 'See my results') + '</button>' : '<button class="btn primary big" data-mpgo="1">Next ›</button>') : '<span></span>') + '</div>';
+  return out + '<div style="height:24px"></div>';
+}
+function mpCheckQ(twin) {
+  if (MP.busy) return; mpKeep();
+  var i = MP.i, t = MP.tw[i], ans = twin ? (t && t.ans) : MP.ans[i], work = twin ? (t && t.work) : MP.work[i];
+  if (!mpHas(ans)) { MP.stop = (MP.round.items[i].kind === "pick" && !twin) || (twin && t.q.kind === "pick") ? "Choose an answer first." : "Write your answer first."; mpDraw(); return; }
+  MP.stop = ""; MP.busy = true; mpDraw();
+  mpCall("check", { id: MP.round.id, i: i, twin: twin ? 1 : 0, answer: ans, work: work || "" }).then(function(r) {
+    MP.busy = false;
+    if (twin) MP.tw[i].st = r; else MP.st[i] = r;
+    if (r.like && !MP.tw[i]) mpTwinLoad(i);
+    mpDraw();
+    var box = twin ? $("mpLike") : null; if (box && box.scrollIntoView) box.scrollIntoView({ block: "nearest" });
+  }).catch(function(e) { MP.busy = false; MP.stop = e.message || String(e); mpDraw(); });
+}
+function mpTwinLoad(i) {
+  MP.tw[i] = { loading: true, st: {}, ans: "", work: "" };
+  mpCall("twin", { id: MP.round.id, i: i }).then(function(d) { MP.tw[i] = { q: d.q, st: d.st || {}, ans: "", work: "" }; if (MP.i === i) { mpDraw(); var b = $("mpLike"); if (b && b.scrollIntoView) b.scrollIntoView({ block: "start" }); } })
+    .catch(function(e) { MP.tw[i] = null; MP.stop = e.message || String(e); mpDraw(); });
+}
+function mpFinish() {
+  if (MP.busy) return; MP.busy = true; MP.stop = ""; mpDraw();
+  mpCall("finish", { id: MP.round.id }).then(function(d) { MP.busy = false; MP.res = d; MP.view = "result"; MP.home = null; mpDraw(); window.scrollTo(0, 0); })
+    .catch(function(e) { MP.busy = false; MP.stop = e.message || String(e); mpDraw(); });
+}
+function mpRoundView() {
+  var R = MP.round, q = R.items[MP.i], n = R.items.length, last = MP.i === n - 1, blank = MP.ans.filter(function(a, k) { return !mpHas(a) && !mpHas(MP.work[k]); }).length, marked = !!q.m;
+  var groups = marked ? R.items[n - 1].grp : n, left = MP.tEnd ? Math.max(0, Math.round((MP.tEnd - Date.now()) / 1000)) : 0;
+  var prevSec = MP.i > 0 ? R.items[MP.i - 1].sec : "", newSec = q.sec && q.sec !== prevSec;
+  return '<button class="mp-back" data-mpquit>‹ Stop and go back</button><div class="mp-top"><b>' + esc(R.title || "Practice") + '</b><span>' + (marked ? mpLabel(R, MP.i) + ' of ' + groups : 'Question ' + (MP.i + 1) + ' of ' + n) + (MP.tEnd ? ' · <span id="mpTimer" class="' + (left <= 300 ? 'low' : '') + '">' + mpClock(left) + '</span>' : '') + '</span></div>' +
+    (n > 12 ? '<div class="mp-prog" aria-hidden="true"><i style="width:' + Math.round(100 * (n - blank) / n) + '%"></i></div>' : '<div class="mp-dots" aria-hidden="true">' + R.items.map(function(x, k) { return '<i class="' + (k === MP.i ? 'now' : (mpHas(MP.ans[k]) || mpHas(MP.work[k]) ? 'done' : '')) + '"></i>'; }).join("") + '</div>') +
+    '<div class="mp-tools-row">' + (n > 5 ? '<button class="btn soft" data-mpmap aria-expanded="' + !!MP.map + '">🗺️ All questions' + (blank ? ' · ' + blank + ' to do' : '') + '</button>' : '') + (R.calc ? '<button class="btn soft" data-mpcalc aria-expanded="' + !!MP.calcOpen + '">🧮 Calculator</button>' : '') + '</div>' +
+    (MP.map ? '<div class="cw-card mp-map">' + R.items.map(function(x, k) { return '<button class="' + (k === MP.i ? 'now ' : '') + (mpHas(MP.ans[k]) || mpHas(MP.work[k]) ? 'done' : '') + '" data-mpjump="' + k + '">' + mpLabel(R, k).replace(/^Q/, "") + '</button>'; }).join("") + '</div>' : '') +
+    (MP.calcOpen ? mpCalcHtml() : '') +
+    (R.how && MP.i === 0 ? '<div class="mp-how">💡 ' + esc(R.how) + '</div>' : '') +
+    (newSec ? '<div class="mp-sec">' + esc(q.sec) + '</div>' : '') +
+    '<div class="cw-card mp-card">' + (marked ? '<div class="mp-qh"><b>' + mpLabel(R, MP.i) + '</b><span class="mp-marks">' + q.m + ' mark' + (q.m === 1 ? '' : 's') + '</span></div>' : '') + mpQBody(q, MP.ans[MP.i], "mp", MP.work[MP.i]) + '</div>' + (MP.stop ? '<div class="msg err" role="alert">' + esc(MP.stop) + '</div>' : '') +
+    '<div class="mp-nav">' + (MP.i > 0 ? '<button class="btn soft" data-mpgo="-1">‹ Back</button>' : '<span></span>') +
+    (last ? '<button class="btn primary big" data-mpmark' + (MP.busy ? ' disabled' : '') + '>' + (MP.busy ? 'Marking…' : marked ? 'Hand in' : 'Check my answers') + '</button>' : '<button class="btn primary big" data-mpgo="1">Next ›</button>') + '</div>' +
+    (last && blank ? '<p class="cw-tip" style="text-align:center">' + blank + ' question' + (blank === 1 ? ' has' : 's have') + ' nothing written yet. Every question needs an answer or working.' + (n > 5 ? ' Tap 🗺️ All questions to find ' + (blank === 1 ? 'it' : 'them') + '.' : ' You can go back.') + '</p>' : '') + '<div style="height:24px"></div>';
+}
+function mpKeep() { var el = $("mpIn"), wk = $("mpWk"), t2 = $("mtIn"), w2 = $("mtWk"), tw = MP.tw && MP.tw[MP.i]; if (MP.view !== "round") return; if (el && !el.readOnly) MP.ans[MP.i] = el.value; if (wk && !wk.readOnly) MP.work[MP.i] = wk.value; if (tw && t2 && !t2.readOnly) tw.ans = t2.value; if (tw && w2 && !w2.readOnly) tw.work = w2.value; }
+function mpMark(force) {
+  if (MP.busy) return; mpKeep();
+  if (!force) {   // 🚫 no blank hand-ins; and working must be shown where it is asked for
+    var R = MP.round, empty = [], bare = [];
+    R.items.forEach(function(q, k) { var a = mpHas(MP.ans[k]), w = mpHas(MP.work[k]); if (!a && !w) empty.push(k); else if (q.wk && a && !mpWorkOk(MP.work[k], MP.ans[k])) bare.push(k); });
+    var stop = empty.length ? empty : bare.length >= 3 ? bare : null;
+    if (stop) { var names = stop.slice(0, 8).map(function(k) { return mpLabel(R, k); }).join(", ") + (stop.length > 8 ? "…" : "");
+      MP.stop = empty.length ? empty.length + " question" + (empty.length > 1 ? "s have" : " has") + " nothing written (" + names + "). Write an answer or your working for every question."
+        : "You gave only the answer for " + bare.length + " questions (" + names + "). Show your working for them, then hand in.";
+      MP.i = stop[0]; MP.map = false; mpDraw(); window.scrollTo(0, 0); return; }
+  }
+  MP.stop = "";
+  MP.armed = false; mpTimerStop(); MP.busy = true; mpDraw();
+  mpCall("mark", { id: MP.round.id, answers: MP.ans, work: MP.work, timeup: !!force }).then(function(d) { MP.busy = false; MP.res = d; MP.view = "result"; MP.home = null; if (/p1$/.test(d.paper || "") && MP.full) MP.p1 = { got: d.got, max: d.max }; mpDraw(); window.scrollTo(0, 0); })
+    .catch(function(e) { MP.busy = false; MP.stop = e.message || String(e); mpDraw(); flash(MP.stop, true); });
 }
 function mpResultView() {
   var D = MP.res, R = MP.round, sprint = D.mode === "sprint", pct = D.max ? D.got / D.max : 0;
   var head = sprint ? (D.got >= 30 ? "Lightning fast!" : D.got >= 15 ? "Great sprint!" : "Good start!") : pct === 1 ? "Full marks!" : pct >= 0.7 ? "Well done!" : pct >= 0.4 ? "Good try!" : "Keep going!";
   var beat = D.best && (sprint ? D.got > D.best.got : (D.best.max && pct > D.best.got / D.best.max));
-  var out = '<div class="cw-card mp-score"><div class="mp-big">' + (sprint ? D.got : D.got + '<small>/' + D.max + '</small>') + '</div><div><div class="mp-h">' + head + '</div><p class="cw-tip" style="margin:2px 0 0">' +
-    (sprint ? D.got + ' right out of ' + D.max + ' tried in 2 minutes.' : esc(R.title || "") + (beat || D.best ? "." : "")) + (beat ? ' 🎉 A new best!' : D.best ? ' Your best before: ' + (sprint ? D.best.got : D.best.got + '/' + D.best.max) + '.' : '') + '</p></div></div>' +
-    '<div class="mp-nav"><button class="btn soft" data-mphome>‹ All practice</button><button class="btn primary" data-mpagain>Try again (new numbers)</button></div>';
+  var marked = D.mode === "paper" || D.mode === "challenge";
+  var out = '<div class="cw-card mp-score"><div class="mp-big">' + (sprint ? D.got : D.got + '<small>/' + D.max + '</small>') + '</div><div><div class="mp-h">' + head + (marked ? ' · ' + Math.round(100 * pct) + '%' : '') + '</div><p class="cw-tip" style="margin:2px 0 0">' +
+    (D.step ? D.first + ' right first time' + (D.got > D.first ? ', ' + (D.got - D.first) + ' on the second try' : '') + '. ' : '') + (sprint ? D.got + ' right out of ' + D.max + ' tried in 2 minutes.' : esc(R.title || "") + (beat || D.best ? "." : "")) + (beat ? ' 🎉 A new best!' : D.best ? ' Your best before: ' + (sprint ? D.best.got : D.best.got + '/' + D.best.max) + '.' : '') + '</p></div></div>' +
+    (/p1$/.test(D.paper || "") && MP.full ? '<div class="cw-card mp-next"><div class="mp-h">Paper 1 done: ' + D.got + '/' + D.max + '</div><p class="cw-tip" style="margin:4px 0 10px">Take a short break, then go on to Paper 2 (' + (D.paper === "fp1" ? '45' : '80') + ' minutes, calculator allowed).</p><button class="btn primary big" data-mpp2>Go on to Paper 2 ›</button></div>' : '') +
+    (/p2$/.test(D.paper || "") && MP.full && MP.p1 ? mpFullCard(MP.p1, D) : '') +
+    '<div class="mp-nav"><button class="btn soft" data-mphome>‹ All practice</button><button class="btn primary" data-mpagain>Try again (new numbers)</button></div>' +
+    (marked ? mpBreakdown(D, R) : '');
   var wrong = 0;
   out += R.items.map(function(q, i) {
     var r = D.results[i]; if (!r) return ''; if (sprint && r.ok) return ''; if (!r.ok) wrong++;
-    return '<div class="mp-res ' + (r.ok ? 'ok' : 'no') + '"><div class="mp-rh"><span class="mp-mark" aria-hidden="true">' + (r.ok ? '✓' : '✗') + '</span><span>Q' + (i + 1) + (r.ok ? ' · correct' : ' · not yet') + '</span></div>' +
-      (!sprint && q.ctx ? '<div class="mp-ctx">' + esc(q.ctx) + '</div>' : '') + (!sprint && q.fig ? '<div class="mp-figbox">' + q.fig + '</div>' : '') + '<div class="mp-q" style="font-size:16px">' + esc(q.q) + '</div>' +
+    var showStory = !sprint && q.ctx && (!marked || i === 0 || R.items[i - 1].grp !== q.grp);
+    return (marked && q.sec && (i === 0 || R.items[i - 1].sec !== q.sec) ? '<div class="mp-sec">' + esc(q.sec) + '</div>' : '') + '<div class="mp-res ' + (r.ok ? 'ok' : 'no') + '"><div class="mp-rh"><span class="mp-mark" aria-hidden="true">' + (r.ok ? '✓' : '✗') + '</span><span>' + (marked ? mpLabel(R, i) + ' · ' + (r.ok ? r.m : 0) + '/' + r.m + ' mark' + (r.m === 1 ? '' : 's') : 'Q' + (i + 1) + (r.ok ? ' · correct' : ' · not yet')) + (D.step && r.ok && !r.first ? ' (second try)' : '') + '</span></div>' +
+      (showStory ? '<div class="mp-ctx">' + esc(q.ctx) + '</div>' : '') + (!sprint && q.fig && (!marked || showStory) ? '<div class="mp-figbox">' + q.fig + '</div>' : '') + '<div class="mp-q" style="font-size:16px">' + esc(q.q) + '</div>' +
       '<div class="mp-ra">' + (r.ok ? '<span>Your answer: <b>' + esc(r.right) + '</b></span>' : '<span>Your answer: <b>' + (r.mine ? esc(q.kind === "pick" && q.o && q.o[r.mine] != null ? q.o[r.mine] : r.mine) : '(blank)') + '</b></span><span>Answer: <b>' + esc(r.right) + '</b></span>') + '</div>' +
-      (r.note ? '<p class="mp-w">' + esc(r.note) + '</p>' : '') + (r.w && !r.ok ? '<p class="mp-w">💡 ' + esc(r.w) + '</p>' : '') + '</div>';
+      (mpHas(MP.work && MP.work[i]) ? '<p class="mp-w mp-myw"><b>Your working:</b> ' + esc(MP.work[i]) + '</p>' : '') + (r.note ? '<p class="mp-w">' + esc(r.note) + '</p>' : '') + (r.w && !r.ok ? '<p class="mp-w">💡 ' + esc(r.w) + '</p>' : '') +
+      (r.like ? '<div class="mp-likeres ' + (r.like.ok ? 'ok' : 'no') + '"><b>🔁 One like it: ' + (r.like.ok ? '✓ right' : '✗ not yet') + '</b><div class="mp-q" style="font-size:15px">' + esc(r.like.q) + '</div><div class="mp-ra"><span>Your answer: <b>' + esc(r.like.mine || "(blank)") + '</b></span>' + (r.like.ok ? '' : '<span>Answer: <b>' + esc(r.like.right) + '</b></span>') + '</div></div>' : '') + '</div>';
   }).join("");
   if (sprint && !wrong) out += '<div class="cw-card"><p class="cw-tip" style="margin:0">Every one you tried was right. 👏</p></div>';
   return out + '<div style="height:24px"></div>';
 }
+/** How the paper went: by section and by topic, weakest topics first, with a button to practise each. */
+function mpBreakdown(D, R) {
+  var sec = {}, top = {}, order = [];
+  R.items.forEach(function(q, i) { var r = D.results[i]; if (!r) return; var g = r.ok ? r.m : 0;
+    if (q.sec) { if (!sec[q.sec]) { sec[q.sec] = { got: 0, max: 0 }; order.push(q.sec); } sec[q.sec].got += g; sec[q.sec].max += r.m; }
+    var t = q.t || "Other", o = top[t] || (top[t] = { got: 0, max: 0, tp: q.tp || "", hp: q.hp || "" }); o.got += g; o.max += r.m; });
+  var tl = Object.keys(top).map(function(k) { return { t: k, got: top[k].got, max: top[k].max, tp: top[k].tp, hp: top[k].hp }; }).sort(function(a, b) { return a.got / a.max - b.got / b.max || b.max - a.max; });
+  return '<div class="cw-card"><div class="mp-h">How it went</div>' + (order.length > 1 ? '<table class="mp-tbl"><tbody>' + order.map(function(k) { return '<tr><td>' + esc(k) + '</td><td>' + sec[k].got + ' / ' + sec[k].max + '</td></tr>'; }).join("") + '</tbody></table>' : '') +
+    '<div class="mp-h" style="font-size:16px;margin-top:12px">By topic</div>' + tl.map(function(x) { var pc = Math.round(100 * x.got / x.max);
+      return '<div class="mp-trow"><div><b>' + esc(x.t) + '</b><div class="mp-bar"><i style="width:' + pc + '%" class="' + (pc >= 80 ? 'g' : pc >= 50 ? 'a' : 'r') + '"></i></div></div><span>' + x.got + '/' + x.max + '</span>' +
+        (pc < 80 && (x.tp || x.hp) ? '<button class="btn soft" ' + (x.tp ? 'data-mptopic="' + esc(x.tp) + '"' : 'data-mpheur="' + esc(x.hp) + '"') + '>Practise</button>' : '<span></span>') + '</div>'; }).join("") +
+    '<p class="cw-tip" style="margin:10px 0 0">In a real exam, your working can earn marks even when the final answer is wrong. Here only answers are marked, so compare your working with the worked answer under each question.</p></div>';
+}
+/** Paper 1 + Paper 2: out of 100, with a rough guide to the PSLE Achievement Level (SEAB's AL bands). */
+function mpFullCard(p1, p2) {
+  if (p2.paper === "fp2") {   // 🌱 Foundation: out of 80; grades are AL A (75% and above), AL B (30% to 74%), AL C (below 30%)
+    var ft = p1.got + p2.got, fm = p1.max + p2.max, pc = Math.round(100 * ft / fm), g = pc >= 75 ? "A" : pc >= 30 ? "B" : "C";
+    return '<div class="cw-card mp-full"><div class="mp-h">🎓 Full Foundation paper: ' + ft + ' / ' + fm + '</div><table class="mp-tbl"><tbody><tr><td>Paper 1</td><td>' + p1.got + ' / ' + p1.max + '</td></tr><tr><td>Paper 2</td><td>' + p2.got + ' / ' + p2.max + '</td></tr></tbody></table>' +
+      '<div class="mp-al">AL ' + g + '</div><p class="cw-tip" style="margin:6px 0 0">A rough guide only: ' + pc + '% of the marks, using the PSLE Foundation bands (AL A is 75% and above, AL B is 30% to 74%). The real exam also gives marks for working.</p></div>';
+  }
+  var tot = p1.got + p2.got, al = tot >= 90 ? 1 : tot >= 85 ? 2 : tot >= 80 ? 3 : tot >= 75 ? 4 : tot >= 65 ? 5 : tot >= 45 ? 6 : tot >= 20 ? 7 : 8;
+  return '<div class="cw-card mp-full"><div class="mp-h">🎓 Full paper: ' + tot + ' / 100</div><table class="mp-tbl"><tbody><tr><td>Paper 1</td><td>' + p1.got + ' / 50</td></tr><tr><td>Paper 2</td><td>' + p2.got + ' / 50</td></tr></tbody></table>' +
+    '<div class="mp-al">AL ' + al + '</div><p class="cw-tip" style="margin:6px 0 0">A rough guide only, from your score out of 100 using the PSLE Achievement Level bands (AL 1 is 90 and above). The real exam also gives marks for working.</p></div>';
+}
+/* ----- 🟪 Bar model builder: bars made of equal units, with labels, a total and a difference ----- */
+function mpBarTool() {
+  var B = MP.T.b = MP.T.b || { bars: [{ n: "Ali", u: 3, l: "" }, { n: "Ben", u: 1, l: "" }], total: true, tl: "240", diff: false, dl: "", ul: "" };
+  var maxU = Math.max.apply(null, B.bars.map(function(b) { return b.u; }).concat([1])), uw = Math.min(56, Math.floor(360 / maxU)), x0 = 90, rowH = 54, H = B.bars.length * rowH + 30, s = "";
+  B.bars.forEach(function(b, i) {
+    var y = 18 + i * rowH; s += '<text x="' + (x0 - 10) + '" y="' + (y + 22) + '" text-anchor="end" font-size="15" font-weight="700" fill="currentColor" stroke="none">' + esc(b.n || "Bar " + (i + 1)) + '</text>';
+    for (var k = 0; k < b.u; k++) s += '<rect x="' + (x0 + k * uw) + '" y="' + y + '" width="' + uw + '" height="32" fill="' + ["#E1D8FF", "#FFE995", "#C9F2E1", "#F9D1EC"][i % 4] + '" stroke="currentColor" stroke-width="2"/>' + (B.ul && k === 0 ? '<text x="' + (x0 + uw / 2) + '" y="' + (y + 21) + '" text-anchor="middle" font-size="12" fill="currentColor" stroke="none">' + esc(B.ul) + '</text>' : '');
+    if (b.l) s += '<text x="' + (x0 + b.u * uw + 8) + '" y="' + (y + 22) + '" font-size="15" font-weight="700" fill="currentColor" stroke="none">' + esc(b.l) + '</text>';
+  });
+  if (B.diff && B.bars.length >= 2) { var a = B.bars[0].u, c = B.bars[1].u, lo = Math.min(a, c), hi = Math.max(a, c), yr = 18 + (a < c ? 0 : 1) * rowH; if (hi > lo) s += '<rect x="' + (x0 + lo * uw) + '" y="' + yr + '" width="' + (hi - lo) * uw + '" height="32" fill="none" stroke="#C43A3A" stroke-width="2" stroke-dasharray="6 4"/><text x="' + (x0 + (lo + hi) / 2 * uw) + '" y="' + (yr + 50) + '" text-anchor="middle" font-size="13" font-weight="700" fill="#C43A3A" stroke="none">' + esc(B.dl || "difference") + '</text>'; }
+  var W = x0 + maxU * uw + 80;
+  if (B.total) { var bx = x0 + maxU * uw + 18, y1 = 18, y2 = 18 + (B.bars.length - 1) * rowH + 32; s += '<path d="M' + bx + ' ' + y1 + ' q8 0 8 8 V' + ((y1 + y2) / 2 - 6) + ' l6 6 l-6 6 V' + (y2 - 8) + ' q0 8 -8 8" fill="none" stroke="currentColor" stroke-width="2"/><text x="' + (bx + 18) + '" y="' + ((y1 + y2) / 2 + 5) + '" font-size="15" font-weight="800" fill="currentColor" stroke="none">' + esc(B.tl || "?") + '</text>'; W = bx + 70; }
+  var units = B.bars.reduce(function(t, b) { return t + b.u; }, 0), tv = Number(String(B.tl).replace(/[^\d.]/g, ""));
+  return '<p class="cw-tip" style="margin-top:0">Make one bar for each person or thing. Use equal units, then label what you know and put ? on what you need to find.</p>' +
+    '<div class="mp-scroll"><svg viewBox="0 0 ' + W + ' ' + H + '" class="mp-wide" style="min-width:' + Math.min(W, 520) + 'px;color:var(--ink)" role="img" aria-label="A bar model">' + s + '</svg></div>' +
+    B.bars.map(function(b, i) { return '<div class="mp-brow"><input class="mp-bn" data-mpbn="' + i + '" value="' + esc(b.n) + '" maxlength="12" aria-label="Name of bar ' + (i + 1) + '"><span>Units</span><button data-mpbu="' + i + ':-1" aria-label="Fewer units">−</button><b>' + b.u + '</b><button data-mpbu="' + i + ':1" aria-label="More units">+</button><input class="mp-bl" data-mpbl="' + i + '" value="' + esc(b.l) + '" maxlength="10" placeholder="label, e.g. ?" aria-label="Label for bar ' + (i + 1) + '">' + (B.bars.length > 1 ? '<button data-mpbx="' + i + '" aria-label="Remove this bar">✕</button>' : '') + '</div>'; }).join("") +
+    '<div class="mp-ctl">' + (B.bars.length < 4 ? '<button class="btn soft" data-mpbadd>+ Add a bar</button>' : '') + '<label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" data-mpbt' + (B.total ? ' checked' : '') + '> Total</label><input class="mp-bl" data-mpbtl value="' + esc(B.tl) + '" maxlength="10" placeholder="total" aria-label="Total label">' +
+    '<label style="flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" data-mpbd' + (B.diff ? ' checked' : '') + '> Difference</label><input class="mp-bl" data-mpbdl value="' + esc(B.dl) + '" maxlength="10" placeholder="difference" aria-label="Difference label"></div>' +
+    (B.total && tv > 0 && units ? '<div class="mp-say">' + units + ' units = ' + esc(B.tl) + ' → 1 unit = ' + (Math.round(tv / units * 1000) / 1000) + '</div>' : '');
+}
+/* ----- ⬛ Area and perimeter grid: colour squares; it counts the area and the perimeter ----- */
+function mpGridTool() {
+  var G = MP.T.g = MP.T.g || { w: 12, h: 8, on: {} }, c = 30, s = "", area = 0, per = 0;
+  for (var y = 0; y < G.h; y++) for (var x = 0; x < G.w; x++) {
+    var k = x + "," + y, on = !!G.on[k];
+    if (on) { area++; [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function(d) { if (!G.on[(x + d[0]) + "," + (y + d[1])]) per++; }); }
+    s += '<rect data-mpcell="' + k + '" x="' + x * c + '" y="' + y * c + '" width="' + c + '" height="' + c + '" fill="' + (on ? '#C9B8F5' : '#fff') + '" stroke="#C9C2E0" stroke-width="1"/>';
+  }
+  return '<p class="cw-tip" style="margin-top:0">Tap or drag over squares to colour a shape. Each square is 1 cm by 1 cm.</p>' +
+    '<div class="mp-scroll"><svg viewBox="-1 -1 ' + (G.w * c + 2) + ' ' + (G.h * c + 2) + '" class="mp-wide" id="mpGrid" style="min-width:300px;touch-action:none;cursor:pointer" role="img" aria-label="A grid of squares">' + s + '</svg></div>' +
+    '<div class="mp-say">Area = <b>' + area + ' cm²</b> · Perimeter = <b>' + per + ' cm</b></div>' +
+    (area ? '<p class="cw-tip" style="text-align:center">' + (per === 2 * (area + 1) ? 'A shape this long and thin has the biggest perimeter for its area.' : 'Try: keep the area the same and make the perimeter bigger or smaller.') + '</p>' : '') +
+    '<div class="mp-nav" style="justify-content:center;flex-wrap:wrap"><button class="btn soft" data-mpgrect>Make a 4 cm × 3 cm rectangle</button><button class="btn soft" data-mpgclear>Clear</button></div>';
+}
+/* ----- 🧊 Cube builder: a cuboid made of 1 cm cubes ----- */
+function mpCubeTool() {
+  var C = MP.T.c = MP.T.c || { l: 4, b: 3, h: 2 }, u = 22, dx = u * 0.6, dy = u * 0.35, s = "", W = C.l * u + C.b * dx + 20, Ht = C.h * u + C.b * dy + 20;
+  for (var z = 0; z < C.h; z++) for (var y = C.b - 1; y >= 0; y--) for (var x = 0; x < C.l; x++) {
+    var px = 10 + x * u + y * dx, py = Ht - 10 - (z + 1) * u - y * dy;
+    s += '<path d="M' + px + ' ' + py + ' h' + u + ' v' + u + ' h-' + u + ' Z" fill="#E1D8FF"/><path d="M' + px + ' ' + py + ' l' + dx + ' -' + dy + ' h' + u + ' l-' + dx + ' ' + dy + ' Z" fill="#F4F0FF"/><path d="M' + (px + u) + ' ' + py + ' l' + dx + ' -' + dy + ' v' + u + ' l-' + dx + ' ' + dy + ' Z" fill="#C9B8F5"/>';
+  }
+  var V = C.l * C.b * C.h, row = function(k, lab) { return '<label>' + lab + '<span style="display:flex;gap:8px;align-items:center"><button data-mpcu="' + k + ':-1" aria-label="Less">−</button><b>' + C[k] + ' cm</b><button data-mpcu="' + k + ':1" aria-label="More">+</button></span></label>'; };
+  return '<p class="cw-tip" style="margin-top:0">Change the length, breadth and height. Each small cube is 1 cm³.</p>' +
+    '<div class="mp-scroll" style="text-align:center"><svg viewBox="0 0 ' + W + ' ' + Ht + '" style="width:min(100%,' + Math.round(W * 1.6) + 'px);height:auto;color:#1E1A32" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" role="img" aria-label="A cuboid made of ' + V + ' cubes">' + s + '</svg></div>' +
+    '<div class="mp-ctl mp-cubes">' + row("l", "Length") + row("b", "Breadth") + row("h", "Height") + '</div>' +
+    '<div class="mp-say">Volume = ' + C.l + ' × ' + C.b + ' × ' + C.h + ' = <b>' + V + ' cm³</b><br>Each layer has ' + C.l + ' × ' + C.b + ' = ' + C.l * C.b + ' cubes, and there ' + (C.h === 1 ? 'is 1 layer' : 'are ' + C.h + ' layers') + '.</div>';
+}
+/* ----- 🧮 calculator (Paper 2, challenge problems and the tools): the device works it out, nothing is sent anywhere ----- */
+var CALC = { x: "", out: "" };
+function mpCalcEval(src) {
+  var t = String(src).replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-").replace(/π/g, "(" + Math.PI + ")"), i = 0;
+  function num() { var m = /^\d*\.?\d+(e[+-]?\d+)?/.exec(t.slice(i)); if (!m) throw new Error("x"); i += m[0].length; return Number(m[0]); }
+  function atom() { while (t[i] === " ") i++; if (t[i] === "(") { i++; var v = expr(); if (t[i] !== ")") throw new Error("x"); i++; return v; } if (t[i] === "-") { i++; return -atom(); } return num(); }
+  function power() { var v = atom(); while (t[i] === "^") { i++; v = Math.pow(v, atom()); } return v; }
+  function term() { var v = power(); for (;;) { while (t[i] === " ") i++; var c = t[i]; if (c === "*" || c === "/") { i++; var r = power(); v = c === "*" ? v * r : v / r; } else if (c === "(") { v *= power(); } else return v; } }
+  function expr() { var v = term(); for (;;) { while (t[i] === " ") i++; var c = t[i]; if (c === "+" || c === "-") { i++; var r = term(); v = c === "+" ? v + r : v - r; } else return v; } }
+  var v = expr(); if (i < t.length || !isFinite(v)) throw new Error("x");
+  return Number(v.toPrecision(10));
+}
+function mpCalcHtml() {
+  var keys = ["(", ")", "⌫", "C", "7", "8", "9", "÷", "4", "5", "6", "×", "1", "2", "3", "−", "0", ".", "π", "+", "^2", "="];
+  return '<div class="cw-card mp-calc" role="group" aria-label="Calculator"><div class="mp-cd"><div class="mp-cx" id="mpCx">' + (esc(CALC.x) || '&nbsp;') + '</div><div class="mp-co" id="mpCo" aria-live="polite">' + (esc(CALC.out) || '0') + '</div></div>' +
+    '<div class="mp-ck">' + keys.map(function(k) { return '<button data-mpkk="' + k + '" class="' + (k === "=" ? 'eq' : /[÷×−+^]/.test(k) ? 'op' : '') + '"' + (k === "⌫" ? ' aria-label="Delete"' : '') + '>' + (k === "^2" ? 'x²' : k) + '</button>'; }).join("") + '</div></div>';
+}
+function mpCalcKey(k) {
+  if (k === "C") { CALC.x = ""; CALC.out = ""; }
+  else if (k === "⌫") CALC.x = CALC.x.slice(0, -1);
+  else if (k === "=") { try { CALC.out = String(mpCalcEval(CALC.x)); CALC.done = true; return mpCalcShow(); } catch (e) { CALC.out = "Check the sum"; } }
+  else if (k === "^2") CALC.x = (CALC.done && CALC.out ? CALC.out : CALC.x) + "^2";
+  else if (CALC.done) CALC.x = /^[÷×−+]$/.test(k) && CALC.out !== "Check the sum" ? CALC.out + k : k;   // after =: an operation carries on from the answer, a number starts a new sum
+  else CALC.x = (CALC.x + k).slice(0, 60);
+  CALC.done = false; mpCalcShow();
+}
+function mpCalcShow() {
+  var a = $("mpCx"), b = $("mpCo"); if (a) a.innerHTML = esc(CALC.x) || "&nbsp;"; if (b) b.textContent = CALC.out || "0";
+}
 /* ----- ⚡ sprint: one fact at a time, with its own number pad ----- */
 function mpSprintView() {
   var P = MP.sp, q = MP.round.items[P.i], m = Math.floor(P.left / 60), s = ("0" + (P.left % 60)).slice(-2);
-  return '<button class="mp-back" data-mpquit>‹ Stop and go back</button><div class="mp-top"><b>⚡ Number facts sprint · ' + esc(MP.round.lv) + '</b><span id="mpClock" class="' + (P.left <= 10 ? 'low' : '') + '">' + m + ':' + s + '</span></div>' +
+  return '<button class="mp-back" data-mpquit>‹ Stop and go back</button><div class="mp-top"><b>⚡ Number facts sprint · ' + esc(mpLvLabel(MP.round.lv)) + '</b><span id="mpClock" class="' + (P.left <= 10 ? 'low' : '') + '">' + m + ':' + s + '</span></div>' +
     '<div class="cw-card mp-card mp-spc' + (P.ok === true ? ' good' : P.ok === false ? ' bad' : '') + '" id="mpSpCard"><div class="mp-spq" id="mpSpQ">' + esc(q ? q.q : "") + '</div><div class="mp-spa" id="mpSpA" aria-live="polite">' + (P.cur ? esc(P.cur) : '<i>?</i>') + '</div>' +
     '<div class="mp-spn"><span id="mpSpN">✓ ' + P.right + '</span></div></div>' +
     (P.started ? '' : '<p class="cw-tip" style="text-align:center">The clock starts when you tap your first number. You can use the keyboard too.</p>') +
@@ -5478,7 +5959,9 @@ function mpSprintKey(k) {
 }
 document.addEventListener("keydown", function(e) {
   if (S.tab !== "math" || MA.sec !== "prac") return;
+  if (MP.calcOpen && e.target && e.target.id !== "mpIn" && (/^[\d.()+\-*/^]$/.test(e.key) || e.key === "Enter" || e.key === "Backspace")) { e.preventDefault(); mpCalcKey(e.key === "Enter" ? "=" : e.key === "Backspace" ? "⌫" : e.key === "*" ? "×" : e.key === "/" ? "÷" : e.key === "-" ? "−" : e.key); return; }
   if (MP.view === "sprint" && MP.sp) { var k = e.key === "Enter" ? "ok" : e.key === "Backspace" ? "⌫" : e.key; if (k === "ok" || k === "⌫" || k === "." || /^\d$/.test(k)) { e.preventDefault(); mpSprintKey(k); } return; }
+  if (MP.view === "round" && MP.round && MP.round.step && e.key === "Enter" && e.target && (e.target.id === "mpIn" || e.target.id === "mtIn")) { e.preventDefault(); if (e.target.readOnly) return; mpCheckQ(e.target.id === "mtIn"); return; }
   if (MP.view === "round" && e.key === "Enter" && e.target && e.target.id === "mpIn") { e.preventDefault(); mpKeep(); if (MP.i < MP.round.items.length - 1) { MP.i++; mpDraw(); var el = $("mpIn"); if (el) el.focus(); } else mpMark(); }
 });
 
@@ -5487,7 +5970,11 @@ function mpSvgT(x, y, t, size, bold, anchor) { return '<text x="' + x + '" y="' 
 function mpPolar(cx, cy, r, deg) { var a = deg * Math.PI / 180; return [Math.round((cx + r * Math.cos(a)) * 10) / 10, Math.round((cy - r * Math.sin(a)) * 10) / 10]; }
 function mpGcd(a, b) { while (b) { var t = a % b; a = b; b = t; } return a || 1; }
 function mpToolView() {
-  var t = MP.tool, T = MP.T, name = { frac: "Fraction bars", line: "Number line", clock: "Clock", discs: "Place-value discs", angle: "Protractor" }[t], body = "";
+  var t = MP.tool, T = MP.T, name = { frac: "Fraction bars", line: "Number line", clock: "Clock", discs: "Place-value discs", angle: "Protractor", calc: "Calculator", bar: "Bar model builder", grid: "Area and perimeter grid", cubes: "Cube builder" }[t], body = "";
+  if (t === "calc") body = '<p class="cw-tip" style="margin-top:0">Type with the keys or your keyboard. π is the calculator’s value; PSLE questions often say “take π = 3.14”, so type 3.14 then.</p>' + mpCalcHtml();
+  else if (t === "bar") body = mpBarTool();
+  else if (t === "grid") body = mpGridTool();
+  else if (t === "cubes") body = mpCubeTool();
   if (t === "frac") {
     T.f = T.f || [{ d: 2, n: 1 }, { d: 4, n: 2 }];
     var val = function(b) { return b.n / b.d; }, a = T.f[0], b = T.f[1], cmp = Math.abs(val(a) - val(b)) < 1e-9 ? "is equal to" : val(a) > val(b) ? "is greater than" : "is smaller than";
@@ -5536,28 +6023,44 @@ function mpToolView() {
     var A = T.a, cx = 160, cy = 170, r = 130, arc = "", end2 = mpPolar(cx, cy, r + 12, A);
     for (var d2 = 0; d2 <= 180; d2 += 5) { var q1 = mpPolar(cx, cy, r, d2), q2 = mpPolar(cx, cy, r - (d2 % 10 ? 6 : 12), d2); arc += '<line x1="' + q1[0] + '" y1="' + q1[1] + '" x2="' + q2[0] + '" y2="' + q2[1] + '" stroke="currentColor" stroke-width="1"/>'; if (d2 % 30 === 0) { var q3 = mpPolar(cx, cy, r - 26, d2); arc += mpSvgT(q3[0], q3[1] + 4, d2, 11); } }
     var sweep = mpPolar(cx, cy, 40, A);
-    body = '<p class="cw-tip" style="margin-top:0">Drag the slider to open the angle. Guess the size first, then show the number.</p><svg viewBox="0 0 320 190" class="mp-wide" id="mpAngSvg" role="img" aria-label="A protractor with an angle' + (T.ah ? '' : ' of ' + A + ' degrees') + '" style="touch-action:none">' +
+    body = '<p class="cw-tip" style="margin-top:0">Drag the slider to open the angle. Or play “Guess the angle”: guess, then check how close you were.</p><svg viewBox="0 0 320 190" class="mp-wide" id="mpAngSvg" role="img" aria-label="A protractor with an angle' + (T.ah ? '' : ' of ' + A + ' degrees') + '" style="touch-action:none">' +
       '<path d="M' + (cx - r) + ' ' + cy + ' A' + r + ' ' + r + ' 0 0 1 ' + (cx + r) + ' ' + cy + ' Z" fill="rgba(140,110,220,.10)" stroke="currentColor" stroke-width="2"/>' + arc +
       '<path d="M' + (cx + 40) + ' ' + cy + ' A40 40 0 0 0 ' + sweep[0] + ' ' + sweep[1] + '" fill="none" stroke="var(--mp-ink)" stroke-width="3"/>' +
       '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + r + 12) + '" y2="' + cy + '" stroke="var(--mp-ink)" stroke-width="4" stroke-linecap="round"/><line x1="' + cx + '" y1="' + cy + '" x2="' + end2[0] + '" y2="' + end2[1] + '" stroke="var(--mp-ink)" stroke-width="4" stroke-linecap="round"/><circle cx="' + cx + '" cy="' + cy + '" r="5" fill="currentColor"/></svg>' +
       '<input type="range" min="0" max="180" step="1" value="' + A + '" id="mpAng" class="mp-range" aria-label="Size of the angle in degrees">' +
       '<div class="mp-say">' + (T.ah ? 'How big is this angle? <b>?</b>' : 'The angle is <b>' + A + '°</b> · ' + (A === 0 ? "no turn" : A < 90 ? "smaller than a right angle (acute)" : A === 90 ? "a right angle" : A < 180 ? "greater than a right angle (obtuse)" : "a straight line")) + '</div>' +
-      '<div class="mp-nav" style="justify-content:center;flex-wrap:wrap"><button class="btn soft" data-mpahide>' + (T.ah ? "Show the number" : "Hide the number") + '</button><button class="btn soft" data-mparand>Give me a new angle</button></div>';
+      (T.ah ? '<div class="mp-ctl" style="justify-content:center"><label style="max-width:180px">Your guess (°)<input type="number" inputmode="numeric" id="mpAGuess" min="0" max="180"></label></div><div class="mp-nav" style="justify-content:center"><button class="btn primary" data-mpaguess>Check my guess</button></div>' : '') +
+      (T.ag ? '<div class="mp-say">' + esc(T.ag) + '</div>' : '') + (T.agN ? '<p class="cw-tip" style="text-align:center">Guesses: ' + T.agN + ' · within 10°: ' + T.agOk + '</p>' : '') +
+      '<div class="mp-nav" style="justify-content:center;flex-wrap:wrap"><button class="btn soft" data-mpahide>' + (T.ah ? "Show the number" : "Hide the number") + '</button><button class="btn soft" data-mparand>Guess the angle: a new one</button></div>';
   }
   return '<button class="mp-back" data-mphome>‹ All practice</button><div class="cheer-hero" style="padding-top:8px"><h1 style="font-size:30px">' + name + '</h1></div><div class="cw-card mp-toolcard">' + body + '</div><div style="height:24px"></div>';
 }
 document.addEventListener("click", function(e) {
   var t, p; if (!e.target.closest || S.tab !== "math" || MA.sec !== "prac") return;
-  if ((t = e.target.closest("[data-mplv]"))) { MP.lv = t.getAttribute("data-mplv"); store("mplv", MP.lv); mpDraw(); return; }
-  if ((t = e.target.closest("[data-mptopic]"))) { mpStart({ mode: "topic", topic: t.getAttribute("data-mptopic"), lv: MP.lv }); return; }
-  if ((t = e.target.closest("[data-mpheur]"))) { mpStart({ mode: "heur", heur: t.getAttribute("data-mpheur"), lv: MP.lv }); return; }
-  if ((t = e.target.closest("[data-mpstart]"))) { mpStart({ mode: t.getAttribute("data-mpstart"), lv: MP.lv }); return; }
+  if ((t = e.target.closest("[data-mplv]"))) { MP.lv = t.getAttribute("data-mplv"); store("mplv", mpLvNow()); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mptrack]"))) { MP.fd = t.getAttribute("data-mptrack") === "f"; store("mplv", mpLvNow()); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mptopic]"))) { MP.full = false; mpStart({ mode: "topic", topic: t.getAttribute("data-mptopic"), lv: mpLvNow() }); return; }
+  if ((t = e.target.closest("[data-mpheur]"))) { MP.full = false; mpStart({ mode: "heur", heur: t.getAttribute("data-mpheur"), lv: mpLvNow() }); return; }
+  if ((t = e.target.closest("[data-mpstart]"))) { MP.full = false; mpStart({ mode: t.getAttribute("data-mpstart"), lv: mpLvNow() }); return; }
+  if ((t = e.target.closest("[data-mppaper]"))) { MP.full = false; mpStart({ mode: "paper", paper: t.getAttribute("data-mppaper"), lv: mpLvNow() }); return; }
+  if ((t = e.target.closest("[data-mpfull]"))) { MP.full = true; MP.p1 = null; mpStart({ mode: "paper", paper: MP.fd && (MP.lv === "P5" || MP.lv === "P6") ? "fp1" : "p1", lv: mpLvNow() }); return; }
+  if ((t = e.target.closest("[data-mpp2]"))) { mpStart({ mode: "paper", paper: MP.round.paper === "fp1" ? "fp2" : "p2", lv: MP.round.lv || mpLvNow() }); return; }
+  if ((t = e.target.closest("[data-mpmap]"))) { mpKeep(); MP.map = !MP.map; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpjump]"))) { mpKeep(); MP.i = Number(t.getAttribute("data-mpjump")); MP.map = false; mpDraw(); window.scrollTo(0, 0); return; }
+  if ((t = e.target.closest("[data-mpcalc]"))) { mpKeep(); MP.calcOpen = !MP.calcOpen; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpkk]"))) { mpCalcKey(t.getAttribute("data-mpkk")); return; }
   if ((t = e.target.closest("[data-mptool]"))) { MP.tool = t.getAttribute("data-mptool"); MP.view = "tool"; mpDraw(); window.scrollTo(0, 0); return; }
   if ((t = e.target.closest("[data-mphome]"))) { MP.view = "home"; MP.round = null; MP.res = null; mpDraw(); window.scrollTo(0, 0); return; }
   if ((t = e.target.closest("[data-mpagain]"))) { if (MP.last) mpStart(MP.last); return; }
-  if ((t = e.target.closest("[data-mpquit]"))) { if (MP.sp && MP.sp.t) clearInterval(MP.sp.t); MP.sp = null; MP.view = "home"; MP.round = null; mpDraw(); return; }
-  if ((t = e.target.closest("[data-mpopt]"))) { MP.ans[MP.i] = t.getAttribute("data-mpopt"); mpDraw(); return; }
-  if ((t = e.target.closest("[data-mpgo]"))) { mpKeep(); MP.i = Math.max(0, Math.min(MP.round.items.length - 1, MP.i + Number(t.getAttribute("data-mpgo")))); mpDraw(); var el = $("mpIn"); if (el && window.innerWidth > 700) el.focus(); window.scrollTo(0, 0); return; }
+  if ((t = e.target.closest("[data-mpquit]"))) {
+    if (MP.view === "round" && MP.round && MP.round.items[0].m && !t.dataset.armed) { t.dataset.armed = "1"; t.textContent = "Tap again to stop: this paper won’t be marked"; setTimeout(function() { if (t.isConnected) { t.dataset.armed = ""; t.textContent = "‹ Stop and go back"; } }, 4000); return; }
+    mpTimerStop(); if (MP.sp && MP.sp.t) clearInterval(MP.sp.t); MP.sp = null; MP.view = "home"; MP.round = null; MP.full = false; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpopt]"))) { if (MP.round && MP.round.step && MP.st[MP.i] && MP.st[MP.i].done) return; mpKeep(); MP.ans[MP.i] = t.getAttribute("data-mpopt"); MP.stop = ""; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mtopt]"))) { var tw1 = MP.tw[MP.i]; if (!tw1 || (tw1.st && tw1.st.done)) return; mpKeep(); tw1.ans = t.getAttribute("data-mtopt"); MP.stop = ""; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpchk]"))) { mpCheckQ(false); return; }
+  if ((t = e.target.closest("[data-mpchk2]"))) { mpCheckQ(true); return; }
+  if ((t = e.target.closest("[data-mpfin]"))) { mpFinish(); return; }
+  if ((t = e.target.closest("[data-mpgo]"))) { mpKeep(); MP.stop = ""; MP.i = Math.max(0, Math.min(MP.round.items.length - 1, MP.i + Number(t.getAttribute("data-mpgo")))); mpDraw(); var el = $("mpIn"); if (el && window.innerWidth > 700) el.focus(); window.scrollTo(0, 0); return; }
   if ((t = e.target.closest("[data-mpmark]"))) { mpMark(); return; }
   if ((t = e.target.closest("[data-mpkey]"))) { mpSprintKey(t.getAttribute("data-mpkey")); return; }
   var T = MP.T;
@@ -5571,21 +6074,41 @@ document.addEventListener("click", function(e) {
   if ((t = e.target.closest("[data-mpdec]"))) { T.d.dec = !T.d.dec; if (!T.d.dec) { T.d.v[4] = 0; T.d.v[5] = 0; } mpDraw(); return; }
   if ((t = e.target.closest("[data-mpclear]"))) { T.d.v = [0, 0, 0, 0, 0, 0]; mpDraw(); return; }
   if ((t = e.target.closest("[data-mpahide]"))) { T.ah = !T.ah; mpDraw(); return; }
-  if ((t = e.target.closest("[data-mparand]"))) { T.a = 5 * (1 + Math.floor(Math.random() * 35)); T.ah = true; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mparand]"))) { T.a = 5 * (1 + Math.floor(Math.random() * 35)); T.ah = true; T.ag = ""; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpaguess]"))) { var gv = Number(($("mpAGuess") || {}).value); if (!isFinite(gv) || ($("mpAGuess") || {}).value === "") { flash("Type your guess first."); return; } var off = Math.abs(gv - T.a); T.agN = (T.agN || 0) + 1; if (off <= 10) T.agOk = (T.agOk || 0) + 1; else T.agOk = T.agOk || 0; T.ag = 'It was ' + T.a + '°. You were ' + (off === 0 ? 'exactly right! 🎯' : off + '° away' + (off <= 5 ? ' — brilliant!' : off <= 10 ? ' — very close!' : off <= 20 ? ' — close.' : '. Use 90° (a square corner) to help you.')); T.ah = false; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpbu]"))) { p = t.getAttribute("data-mpbu").split(":"); var bb = T.b.bars[+p[0]]; bb.u = Math.max(1, Math.min(12, bb.u + Number(p[1]))); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpbx]"))) { T.b.bars.splice(Number(t.getAttribute("data-mpbx")), 1); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpbadd]"))) { T.b.bars.push({ n: ["Ali", "Ben", "Chen", "Dev"][T.b.bars.length] || "", u: 2, l: "" }); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpcu]"))) { p = t.getAttribute("data-mpcu").split(":"); T.c[p[0]] = Math.max(1, Math.min(6, T.c[p[0]] + Number(p[1]))); mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpgclear]"))) { T.g.on = {}; mpDraw(); return; }
+  if ((t = e.target.closest("[data-mpgrect]"))) { T.g.on = {}; for (var gy = 2; gy < 5; gy++) for (var gx = 2; gx < 6; gx++) T.g.on[gx + "," + gy] = 1; mpDraw(); return; }
 });
 document.addEventListener("input", function(e) {
   var el = e.target; if (!el || S.tab !== "math" || MA.sec !== "prac") return;
   if (el.id === "mpIn") { MP.ans[MP.i] = el.value; return; }
+  if (el.id === "mtIn" || el.id === "mtWk") { var tw0 = MP.tw && MP.tw[MP.i]; if (tw0) tw0[el.id === "mtIn" ? "ans" : "work"] = el.value; return; }
   if (el.id === "mpAng") { MP.T.a = Number(el.value); mpDraw(); var s = $("mpAng"); if (s) s.focus(); return; }
+  var bk = el.getAttribute && (el.hasAttribute("data-mpbn") ? "n" : el.hasAttribute("data-mpbl") ? "l" : el.hasAttribute("data-mpbtl") ? "tl" : el.hasAttribute("data-mpbdl") ? "dl" : "");
+  if (bk && MP.T.b) { if (bk === "n" || bk === "l") MP.T.b.bars[Number(el.getAttribute(bk === "n" ? "data-mpbn" : "data-mpbl"))][bk] = el.value; else MP.T.b[bk] = el.value; var keep = el.getAttribute("data-mpbn") != null ? '[data-mpbn="' + el.getAttribute("data-mpbn") + '"]' : el.getAttribute("data-mpbl") != null ? '[data-mpbl="' + el.getAttribute("data-mpbl") + '"]' : el.hasAttribute("data-mpbtl") ? "[data-mpbtl]" : "[data-mpbdl]", pos = el.selectionStart; mpDraw(); var again = document.querySelector(keep); if (again) { again.focus(); try { again.setSelectionRange(pos, pos); } catch (x) {} } return; }
 });
 document.addEventListener("change", function(e) {
-  var el = e.target, k = el && el.getAttribute && el.getAttribute("data-mpl"); if (!k || S.tab !== "math" || MA.sec !== "prac") return;
+  var el = e.target; if (!el || !el.hasAttribute || S.tab !== "math" || MA.sec !== "prac") return;
+  if (el.hasAttribute("data-mpbt")) { MP.T.b.total = el.checked; mpDraw(); return; }
+  if (el.hasAttribute("data-mpbd")) { MP.T.b.diff = el.checked; mpDraw(); return; }
+  var k = el.getAttribute("data-mpl"); if (!k) return;
   var L = MP.T.l, v = Math.round(Number(el.value)); if (!isFinite(v)) return;
   if (k === "max") { L.max = v; L.start = Math.min(L.start, v); L.step = Math.min(L.step, v); }
   else if (k === "start") L.start = Math.max(0, Math.min(L.max, v));
   else L.step = Math.max(1, Math.min(L.max, v));
   L.hops = 0; mpDraw();
 });
+/* the area grid: tap or drag to colour (or clear) squares */
+(function() {
+  var mode = null, cellAt = function(e) { var el = document.elementFromPoint(e.clientX, e.clientY); return el && el.getAttribute && el.getAttribute("data-mpcell"); };
+  document.addEventListener("pointerdown", function(e) { var k = e.target.getAttribute && e.target.getAttribute("data-mpcell"); if (!k || !MP.T.g) return; e.preventDefault(); mode = MP.T.g.on[k] ? 0 : 1; if (mode) MP.T.g.on[k] = 1; else delete MP.T.g.on[k]; mpDraw(); });
+  document.addEventListener("pointermove", function(e) { if (mode == null || !MP.T.g) return; var k = cellAt(e); if (!k || (!!MP.T.g.on[k]) === !!mode) return; if (mode) MP.T.g.on[k] = 1; else delete MP.T.g.on[k]; mpDraw(); });
+  ["pointerup", "pointercancel"].forEach(function(ev) { document.addEventListener(ev, function() { mode = null; }); });
+})();
 /* the protractor arm can also be dragged */
 (function() {
   var drag = false, move = function(e) { var svg = $("mpAngSvg"); if (!drag || !svg) return; var r = svg.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * 320 - 160, y = 170 - (e.clientY - r.top) / r.height * 190; var a = Math.round(Math.atan2(Math.max(0, y), x) * 180 / Math.PI); MP.T.a = Math.max(0, Math.min(180, a)); mpDraw(); };
@@ -5997,6 +6520,202 @@ function gotAlbums(list) {
     if (!a.coverData || S.imgs["s" + a.cover]) return null;
     return toUrl(a.coverData).then(function(u) { S.imgs["s" + a.cover] = u; });
   })).then(function() { return list; });
+}
+/* 🖊️ WHITEBOARD KIT (the same in the Class Hub and the Dashboard): draws strokes on a canvas, and lets a finger, pen or mouse write.
+   A board is 1600 × 1000 units, whatever the screen size. Each person's strokes are kept in their own layer; layers are merged by time. */
+var WBK = (function() {
+  var W = 1600, H = 1000, COLS = ["#1E1A32", "#2F7BFF", "#E5484D", "#12A150", "#FF7A1A", "#7B2FF7"];
+  function strokeOn(ctx, s, sx, sy) {
+    var p = s.p; if (!p || p.length < 2) return;
+    ctx.globalCompositeOperation = s.e ? "destination-out" : "source-over";
+    ctx.strokeStyle = COLS[s.c] || COLS[0]; ctx.lineWidth = Math.max(1, (s.w || 5) * sx); ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.beginPath(); ctx.moveTo(p[0] * sx, p[1] * sy);
+    if (p.length === 2) ctx.lineTo(p[0] * sx + 0.1, p[1] * sy + 0.1);
+    for (var i = 2; i < p.length; i += 2) ctx.lineTo(p[i] * sx, p[i + 1] * sy);
+    ctx.stroke();
+  }
+  function merge(layers) {
+    var all = []; Object.keys(layers || {}).forEach(function(k) { (layers[k] || []).forEach(function(s) { all.push(s); }); });
+    all.sort(function(a, b) { return (a.t || 0) - (b.t || 0); }); return all;
+  }
+  /** Sizes the canvas to its box (sharp on any screen) and draws every stroke. */
+  function paint(cv, strokes) {
+    if (!cv) return;
+    var r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1), w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.width * H / W * dpr));
+    if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+    var ctx = cv.getContext("2d"); ctx.globalCompositeOperation = "source-over"; ctx.clearRect(0, 0, w, h);
+    var sx = w / W, sy = h / H; (strokes || []).forEach(function(s) { strokeOn(ctx, s, sx, sy); });
+    ctx.globalCompositeOperation = "source-over";
+  }
+  /** Lets someone write on a canvas. o: { layer (my strokes), others() → strokes of everyone else, onChange(), tool: {c, w, e} } */
+  function pad(cv, o) {
+    var cur = null, id = 0;
+    function pt(ev) { var r = cv.getBoundingClientRect(); return [Math.round(Math.max(0, Math.min(W, (ev.clientX - r.left) / r.width * W))), Math.round(Math.max(0, Math.min(H, (ev.clientY - r.top) / r.width * W)))]; }
+    function redraw() { paint(cv, merge({ a: o.others ? o.others() : [], b: o.layer }).concat(cur ? [cur] : [])); }
+    cv.style.touchAction = "none";
+    cv.addEventListener("pointerdown", function(ev) {
+      if (o.off && o.off()) return; if (ev.button > 0) return;
+      ev.preventDefault(); try { cv.setPointerCapture(ev.pointerId); } catch (e) {}
+      var t = o.tool || {}, q = pt(ev); cur = { i: Date.now().toString(36) + (id++), t: Date.now(), c: t.e ? 0 : (t.c || 0), w: t.e ? 46 : (t.w || 5), p: q };
+      if (t.e) cur.e = 1; redraw();
+    });
+    cv.addEventListener("pointermove", function(ev) {
+      if (!cur) return; ev.preventDefault();
+      var evs = ev.getCoalescedEvents ? ev.getCoalescedEvents() : [ev]; if (!evs.length) evs = [ev];
+      evs.forEach(function(e2) { var q = pt(e2), n = cur.p.length; if (Math.abs(q[0] - cur.p[n - 2]) + Math.abs(q[1] - cur.p[n - 1]) >= 3) cur.p.push(q[0], q[1]); });
+      redraw();
+    });
+    function end() { if (!cur) return; if (cur.p.length > 4000) cur.p = cur.p.slice(0, 4000); o.layer.push(cur); cur = null; redraw(); if (o.onChange) o.onChange(); }
+    cv.addEventListener("pointerup", end); cv.addEventListener("pointercancel", end); cv.addEventListener("lostpointercapture", end);
+    return { redraw: redraw, undo: function() { if (o.layer.length) { o.layer.pop(); redraw(); if (o.onChange) o.onChange(); } } };
+  }
+  /** Saves a layer when it changes: one save at a time, the newest always wins. */
+  function saver(send) {
+    var busy = false, again = false, t = 0;
+    function go() { if (busy) { again = true; return; } busy = true; again = false; Promise.resolve(send()).catch(function() {}).then(function() { busy = false; if (again) setTimeout(go, 150); }); }
+    return { soon: function(ms) { clearTimeout(t); t = setTimeout(go, ms == null ? 700 : ms); }, now: go, busy: function() { return busy || again; } };
+  }
+  return { W: W, H: H, COLS: COLS, merge: merge, paint: paint, pad: pad, saver: saver };
+})();
+
+/* 🖊️ LIVE WHITEBOARD (pupils). It appears when the teacher switches it on. Pupils write with a finger, pen or mouse.
+   🙋 Ask a friend: a classmate can offer to help, you accept, and they write on your board with you. ✋ Ask the teacher.
+   🤝 Help a friend: see who is asking, offer to help. One helper per board at a time. Drawings never leave Google, and are wiped when the lesson ends. */
+var WB = { on: "", d: null, boards: {}, mine: {}, gen: {}, revs: {}, view: "", timer: 0, tool: { c: 0, w: 4, e: 0 }, pad: null, sv: null, busy: false, clearArm: 0, seenOn: "" };
+function wbNotice(sid) {
+  if (!featOn("whiteboard") || S.preview) return;
+  if (sid === WB.on) return;
+  var was = WB.on; WB.on = sid;
+  if (S.home) setTabs(S.home);
+  if (sid && sid !== WB.seenOn) {
+    WB.seenOn = sid; WB.boards = {}; WB.mine = {}; WB.gen = {}; WB.revs = {}; WB.view = ""; WB.loaded = {}; WB.padFor = "";
+    if (["wall", "today", "photos", "spot", "bday", "league", "ask"].indexOf(S.tab) > -1) { go("board"); flash("🖊️ " + S.home.teacher + " opened the whiteboard."); }
+    else { var d = $("boardDot"); if (d) { d.textContent = "!"; d.classList.remove("hidden"); } flash("🖊️ " + S.home.teacher + " opened the whiteboard. Tap Whiteboard when you’re ready."); }
+  }
+  if (!sid && was && S.tab === "board") { go("wall"); flash("The whiteboard is closed now."); }
+}
+function wbStop() { clearTimeout(WB.timer); WB.timer = 0; }
+function wbMe() { return (WB.d && WB.d.me) || ""; }
+function wbLayer(board) { var k = board + "|" + (WB.gen[board] || 0); return WB.mine[k] || (WB.mine[k] = []); }
+function wbOthers(board) {
+  var b = WB.boards[board]; if (!b) return [];
+  var me = wbMe(), l = {}; Object.keys(b.layers || {}).forEach(function(w) { if (w !== me) l[w] = b.layers[w]; });
+  return WBK.merge(l);
+}
+function renderBoard() {
+  $("topTitle").textContent = "Whiteboard";
+  var bd = $("boardDot"); if (bd) bd.classList.add("hidden");
+  $("app").innerHTML = '<div class="wb-head"><div style="flex:1"><h2>🖊️ Whiteboard</h2><div class="wb-prompt" id="wbPrompt"></div></div></div>' +
+    '<div id="wbTop"></div>' +
+    '<div class="wb-tools" id="wbTools" role="toolbar" aria-label="Pens">' +
+      WBK.COLS.map(function(col, i) { return '<button class="wb-col" data-wbc="' + i + '" style="background:' + col + '" aria-label="Pen colour ' + (i + 1) + '"></button>'; }).join("") +
+      '<span class="wb-sep"></span><button class="wb-t" data-wbw="4">Thin</button><button class="wb-t" data-wbw="10">Thick</button><button class="wb-t" data-wbe="1">🧽 Rubber</button>' +
+      '<span class="wb-sep"></span><button class="wb-t" data-wbundo>↶ Undo</button><button class="wb-t" data-wbclear>🗑 Clear</button></div>' +
+    '<div class="wb-board"><canvas id="wbCv" aria-label="Your whiteboard"></canvas><span class="wb-tag" id="wbTag"></span></div>' +
+    '<div id="wbHelp"></div>';
+  WB.pad = null; WB.padFor = "";
+  WB.sv = WBK.saver(wbSave);
+  wbTools();
+  if (!WB.click) { WB.click = 1; $("app").addEventListener("click", wbClick); }
+  if (!WB.rs) { WB.rs = 1; window.addEventListener("resize", function() { if (S.tab === "board" && WB.pad) WB.pad.redraw(); }); }
+  WB.d ? wbDraw() : ($("wbHelp").innerHTML = SPIN);
+  wbPoll(true);
+}
+function wbSave() {
+  var b = WB.view || wbMe(); if (!b || !WB.d || !WB.d.on) return Promise.resolve();
+  var gen = WB.gen[b] || 0, layer = wbLayer(b);
+  return call("wbApi", "save", JSON.stringify({ board: b, gen: gen, strokes: layer })).then(function(r) {
+    if (r && r.stale) { WB.gen[b] = r.gen; delete WB.mine[b + "|" + gen]; wbRepad(); }
+    else if (r && r.ok) WB.revs[b] = r.rev;
+    else if (r && r.notHelping) { WB.view = ""; wbPoll(true); }
+  }).catch(function(e) { if (/full/i.test(e.message)) flash(e.message, true); throw e; });
+}
+function wbPoll(now) {
+  wbStop();
+  if (S.tab !== "board" || !S.token) return;
+  if (document.hidden && !now) { WB.timer = setTimeout(wbPoll, 3000); return; }
+  if (WB.busy) { WB.timer = setTimeout(wbPoll, 800); return; }
+  WB.busy = true;
+  call("wbApi", "state", JSON.stringify({ revs: WB.revs })).then(function(r) { WB.busy = false; wbApply(r); }, function(e) { WB.busy = false; if (/LOGIN/.test(e.message)) return; if (S.tab === "board") WB.timer = setTimeout(wbPoll, 4000); });
+}
+function wbApply(r) {
+  if (S.tab !== "board") return;
+  WB.d = r;
+  if (!r || !r.on) { WB.on = ""; if (S.home) setTabs(S.home); $("app").innerHTML = '<div class="card" style="text-align:center"><div style="font-size:44px">🖊️</div><h2 style="margin:6px 0">The whiteboard is closed</h2><p class="muted">It opens here when ' + esc(S.home.teacher) + ' switches it on.</p><button class="btn soft big" onclick="go(\'wall\')">Back to the Class wall</button></div>'; return; }
+  if (r.preview) { $("wbHelp").innerHTML = '<div class="msg ok">Teacher view: pupils write here, and you see every board on the Dashboard.</div>'; $("wbPrompt").textContent = r.prompt || ""; return; }
+  var me = r.me;
+  Object.keys(r.gens || {}).forEach(function(b) { if ((WB.gen[b] || 0) !== r.gens[b]) { WB.gen[b] = r.gens[b]; WB.boards[b] = null; delete WB.revs[b]; } });
+  Object.keys(r.boards || {}).forEach(function(b) {
+    var x = r.boards[b]; WB.boards[b] = x; WB.revs[b] = x.rev;
+    var k = b + "|" + (x.gen || 0); WB.loaded = WB.loaded || {};
+    if (!WB.loaded[k]) { WB.loaded[k] = 1; WB.gen[b] = x.gen || 0; var arr = wbLayer(b); if (!arr.length && x.layers && x.layers[me]) Array.prototype.push.apply(arr, x.layers[me]); }   // my own writing, back after a reload
+  });
+  if (WB.view && WB.view !== me && WB.view !== r.helping) WB.view = "";
+  wbDraw();
+  WB.timer = setTimeout(wbPoll, 2000);
+}
+function wbRepad() { if (!WB.pad) return; var b = WB.view || wbMe(); WB.padLayerFix(b); }
+function wbDraw() {
+  var r = WB.d; if (!r || !$("wbCv")) return;
+  var me = r.me, b = WB.view || me, mineView = b === me;
+  WB.padLayerFix(b); if (!WB.pad) return;
+  $("wbPrompt").textContent = r.prompt || "Write or draw anything your teacher asks for.";
+  $("wbTag").textContent = mineView ? "My board" + (r.helper ? " · " + r.helper + " is helping" : "") : b + "’s board · you’re helping";
+  var cb = document.querySelector("[data-wbclear]"); if (cb) cb.classList.toggle("hidden", !mineView);
+  var top = "", help = "";
+  if (r.helping) top += '<div class="wb-bar helping"><span class="grow">🤝 You’re helping <b>' + esc(r.helping) + '</b>. Write on their board to show them.</span>' +
+    '<button class="btn ' + (mineView ? 'primary' : 'soft') + '" data-wbview="' + esc(r.helping) + '">' + (mineView ? 'Go to ' + esc(r.helping) + '’s board' : 'Back to my board') + '</button><button class="btn soft" data-wbend>Finish helping</button></div>';
+  if (r.helper) top += '<div class="wb-bar help"><span class="grow">🤝 <b>' + esc(r.helper) + '</b> is helping you. You can both write on your board.</span><button class="btn soft" data-wbend>Finish</button></div>';
+  (r.offers || []).forEach(function(o) { top += '<div class="wb-bar offer"><span class="grow">🙋 <b>' + esc(o.from) + '</b> wants to help you.</span><button class="btn primary" data-wbacc="' + esc(o.from) + '">Yes please</button><button class="btn soft" data-wbdec>No thanks</button></div>'; });
+  if (r.myOffer) top += '<div class="wb-bar offer"><span class="grow">⏳ Waiting for <b>' + esc(r.myOffer) + '</b> to say yes…</span><button class="btn soft" data-wbwd>Cancel</button></div>';
+  $("wbTop").innerHTML = top;
+  var t = esc(S.home.teacher);
+  if (!r.helper) help += '<div class="wb-ask">' +
+    '<button class="btn ' + (r.hand === 'friend' ? 'on' : 'soft') + '" data-wbhand="friend">' + (r.hand === 'friend' ? '🙋 Asking a friend… (tap to stop)' : '🙋 Ask a friend for help') + '</button>' +
+    '<button class="btn ' + (r.hand === 'teacher' ? 'on' : 'soft') + '" data-wbhand="teacher">' + (r.hand === 'teacher' ? '✋ Asked ' + t + ' (tap to stop)' : '✋ Ask ' + t) + '</button>' +
+    '<button class="btn soft" data-wbfr>🤝 Help a friend' + (r.friends.length ? ' (' + r.friends.length + ')' : '') + '</button></div>';
+  else help += '<div class="wb-ask"><button class="btn ' + (r.hand === 'teacher' ? 'on' : 'soft') + '" data-wbhand="teacher">' + (r.hand === 'teacher' ? '✋ Asked ' + t + ' (tap to stop)' : '✋ Ask ' + t) + '</button></div>';
+  if (WB.showFriends && !r.helping) help += '<div class="wb-friends">' + (r.friends.length ? r.friends.map(function(n) { return '<div class="wb-friend"><span>🙋 ' + esc(n) + '</span><button class="btn primary" style="min-height:42px" data-wboffer="' + esc(n) + '"' + (r.myOffer ? ' disabled' : '') + '>Offer help</button></div>'; }).join("") : '<div class="muted" style="padding:6px 2px">No one is asking for a friend’s help right now.</div>') + '</div>';
+  $("wbHelp").innerHTML = help;
+  WB.pad.redraw();
+}
+/** The pad must always write into the layer of the board on screen. */
+WB.padLayerFix = function(b) {
+  if (!$("wbCv")) return;
+  var l = wbLayer(b);
+  if (WB.pad && WB.padFor === b + "|" + (WB.gen[b] || 0)) return;
+  WB.padFor = b + "|" + (WB.gen[b] || 0);
+  var cv = $("wbCv"), nc = cv.cloneNode(false); cv.parentNode.replaceChild(nc, cv);   // a fresh canvas, so old listeners go
+  WB.pad = WBK.pad(nc, { layer: l, tool: WB.tool, off: function() { return !WB.d || !WB.d.on || WB.d.preview; }, others: function() { return wbOthers(b); }, onChange: function() { WB.sv.soon(); } });
+};
+function wbTools() {
+  Array.prototype.forEach.call(document.querySelectorAll("[data-wbc]"), function(x) { x.classList.toggle("on", !WB.tool.e && +x.getAttribute("data-wbc") === WB.tool.c); });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-wbw]"), function(x) { x.classList.toggle("on", !WB.tool.e && +x.getAttribute("data-wbw") === WB.tool.w); });
+  var e = document.querySelector("[data-wbe]"); if (e) e.classList.toggle("on", !!WB.tool.e);
+}
+function wbAct(action, extra, btn) {
+  var done = busy(btn);
+  return call("wbApi", action, JSON.stringify(extra || {})).then(function(r) { done(); WB.showFriends = action === "offer" ? false : WB.showFriends; wbApply(r); }, function(e) { done(); flash(e.message, true, $("wbHelp")); });
+}
+function wbClick(e) {
+  var t = e.target.closest("button"); if (!t || S.tab !== "board") return;
+  if (t.hasAttribute("data-wbc")) { WB.tool.c = +t.getAttribute("data-wbc"); WB.tool.e = 0; return wbTools(); }
+  if (t.hasAttribute("data-wbw")) { WB.tool.w = +t.getAttribute("data-wbw"); WB.tool.e = 0; return wbTools(); }
+  if (t.hasAttribute("data-wbe")) { WB.tool.e = WB.tool.e ? 0 : 1; return wbTools(); }
+  if (t.hasAttribute("data-wbundo")) return WB.pad && WB.pad.undo();
+  if (t.hasAttribute("data-wbclear")) {
+    if (Date.now() - WB.clearArm > 4000) { WB.clearArm = Date.now(); t.textContent = "Tap again to clear"; setTimeout(function() { if (t.isConnected) t.textContent = "🗑 Clear"; }, 4000); return; }
+    WB.clearArm = 0; t.textContent = "🗑 Clear"; var me = wbMe(); delete WB.mine[me + "|" + (WB.gen[me] || 0)];
+    return wbAct("clear", {}, t);
+  }
+  if (t.hasAttribute("data-wbhand")) { var k = t.getAttribute("data-wbhand"); return wbAct("hand", { kind: WB.d && WB.d.hand === k ? "" : k }, t); }
+  if (t.hasAttribute("data-wbfr")) { WB.showFriends = !WB.showFriends; return wbDraw(); }
+  if (t.hasAttribute("data-wboffer")) return wbAct("offer", { to: t.getAttribute("data-wboffer") }, t);
+  if (t.hasAttribute("data-wbwd")) return wbAct("withdraw", {}, t);
+  if (t.hasAttribute("data-wbacc")) return wbAct("accept", { from: t.getAttribute("data-wbacc") }, t);
+  if (t.hasAttribute("data-wbdec")) return wbAct("decline", {}, t);
+  if (t.hasAttribute("data-wbend")) { WB.view = ""; return wbAct("endhelp", {}, t); }
+  if (t.hasAttribute("data-wbview")) { var v = t.getAttribute("data-wbview"); WB.view = WB.view === v ? "" : v; return wbPoll(true); }
 }
 function renderPhotos() {
   $("topTitle").textContent = "Photos";
