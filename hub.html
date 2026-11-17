@@ -3883,7 +3883,7 @@ function exSitView() {
     for (var j = 0; j < (q.imgs || 0); j++) h += exImgSlot("q", q.id, j);
     if (q.type === "mcq") h += '<div class="mq-opts" role="radiogroup" aria-label="Question ' + esc(q.n) + '">' + q.options.map(function(o, k2) { var on = String(v) === String(k2); return '<button role="radio" aria-checked="' + on + '" class="mq-opt' + (on ? ' on' : '') + '" data-expick="' + esc(q.id) + ':' + k2 + '"><b>(' + (k2 + 1) + ')</b> ' + MT(o) + '</button>'; }).join("") + '</div>';
     else if (sub === "math" && q.type !== "open") {   // ➗ fraction boxes and a working editor where "/" makes a fraction
-      var fq = hasFrac(q.prompt) || q.topic === "fr" || /^fr/.test(q.skill || "");
+      var fq = q.frac || hasFrac(q.prompt) || q.topic === "fr" || /^fr/.test(q.skill || "");   // ➗ q.frac: the answer is a fraction
       if (q.type === "long") h += '<div class="ex-lab">Working <span class="cw-tip" style="font-weight:600">(needed: type, write or add a photo of how you got it; it can earn method marks)</span></div>' + workBox(q, a);
       h += '<div class="ex-lab">Answer</div>' + ansField('data-exq="' + esc(q.id) + '"', v, fq);
     }
