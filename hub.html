@@ -1462,7 +1462,7 @@
 .mbr-em { display: flex; flex-wrap: wrap; gap: 8px; } .mbr-em button { width: 48px; height: 48px; border-radius: 14px; border: 2px solid var(--line); background: #fff; font-size: 24px; line-height: 1; padding: 0; }
 .mbr-em button.on { border-color: var(--violet-2); background: #F6EEF5; box-shadow: 0 0 0 2px var(--violet-2) inset; }
 .mbr textarea { margin-top: 10px; min-height: 72px; } .mbr-f { display: flex; gap: 8px; align-items: center; margin-top: 8px; } .mbr-f .muted { flex: 1; font-size: 13px; } .mbr-f .btn { min-height: 46px; }
-.mbr-done { display: flex; gap: 10px; align-items: flex-start; } .mbr-done .big { font-size: 26px; letter-spacing: 2px; line-height: 1.1; } .mbr-done p { margin: 2px 0 0; line-height: 1.45; } .mbr-done .grow { flex: 1; min-width: 0; }
+.mbr-done { display: flex; gap: 10px; align-items: flex-start; } .mbr-done .big { width: auto; min-height: 0; flex: none; font-size: 26px; letter-spacing: 2px; line-height: 1.1; } .mbr-done p { margin: 2px 0 0; line-height: 1.45; } .mbr-done .grow { flex: 1; min-width: 0; }
 .mbr-done button { border: 0; background: none; color: var(--violet-2); font-weight: 800; text-decoration: underline; padding: 6px; font-size: 14px; }
 /* ✉️ pupils send cards */
 .pm-send { width: 100%; margin-top: 12px; min-height: 56px; font-size: 17px; }
@@ -1474,6 +1474,8 @@
 .pm-bday { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; } .pm-bday button { border: 2px dashed #E8B400; background: #FFF8E1; border-radius: 999px; padding: 8px 12px; font-weight: 700; font-size: 14px; color: #4A3200; }
 .pm-lbl { font-weight: 800; margin: 14px 0 6px; font-size: 15px; }
 .mb-allbtn { width: 100%; margin: 0 0 12px; }
+.pm-reply { margin: 10px 0 2px; background: #EEF6FF; border: 1.5px solid #BFD8F7; border-radius: 14px; padding: 10px 12px; } .pm-reply.new { background: #FFF8E1; border-color: #E8B400; }
+.pm-reply p { margin: 6px 0 0; line-height: 1.5; } .pm-rh { font-size: 14px; } .pm-rem { font-size: 26px; margin-top: 4px; letter-spacing: 2px; }
 .pm-st { display: inline-block; border-radius: 999px; padding: 2px 9px; font-size: 12.5px; font-weight: 800; } .pm-st.Waiting { background: #FFF1C2; color: #6E4A00; } .pm-st.Sent { background: #DDF1E5; color: #1B5E3B; } .pm-st.no { background: #F1EEF4; color: #4A4560; }
 .pm-row { background: #fff; border: 1.5px solid var(--line); border-radius: 16px; padding: 10px 12px; margin-top: 8px; } .pm-row b { font-size: 15px; } .pm-row p { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .pcard.has-img { aspect-ratio: auto; } .pc-doodle { display: block; width: 100%; max-width: 420px; max-height: 260px; object-fit: contain; margin: 8px 0 4px; border-radius: 10px; background: #fff; border: 1px solid rgba(30,26,50,.12); } .pc-dwait { padding: 18px; text-align: center; color: #615D73; font-size: 13px; }
@@ -1883,7 +1885,7 @@ function clearBoots() {
    older version even after signing out and in. The server says which version is current (HUB_BUILD in Code.gs); when this
    page is older, it reloads itself past any saved copy (?v=…). In the middle of a paper it asks first: answers are saved,
    and after the update the paper opens again (tap "Carry on"). Tried once per version, so it can never loop. */
-var HUB_BUILD = "2026-11-18d";
+var HUB_BUILD = "2026-11-18e";
 function hubCheckBuild(b) {
   if (!b || b === HUB_BUILD || S.preview || store("upd_" + b)) return;
   var sitting = (EX.math && EX.math.sitting && EX.math.paper) || (EX.english && EX.english.sitting && EX.english.paper);
@@ -6783,16 +6785,19 @@ document.addEventListener("click", function(e) {
    the Mailbox tab keeps everything, and each one can be saved as a PDF. */
 var PCH = { list: [], certs: [], loaded: false, emojis: ["❤️", "😊", "🥹", "🙏", "🎉", "🌟", "😄", "💪"], draft: {}, edit: {} };
 /* 💬 Reply to a card or certificate: tap up to 3 emojis and/or write a few words. Only the teacher sees it. */
-function mbItem(kind, id) { return (kind === "cert" ? PCH.certs : PCH.list).filter(function(x) { return x.id === id; })[0]; }
+function mbItem(kind, id) {
+  if (kind === "pm") { var g = PM.d && PM.d.got.filter(function(x) { return x.id === id; })[0]; return g ? { reply: g.myReply || null, from: g.from } : null; }   // 💬 a classmate's card
+  return (kind === "cert" ? PCH.certs : PCH.list).filter(function(x) { return x.id === id; })[0];
+}
 function mbReplyHtml(kind, id) {
-  var it = mbItem(kind, id) || {}, key = kind + "|" + id, r = it.reply, T = esc((S.home && S.home.teacher) || "your teacher");
+  var it = mbItem(kind, id) || {}, key = kind + "|" + id, r = it.reply, TT = esc((S.home && S.home.teacher) || "your teacher"), T = kind === "pm" ? esc(it.from || "your friend") : TT;
   if (S.preview) return "";
-  if (r && !PCH.edit[key]) return '<div class="mbr" data-mbrk="' + esc(key) + '"><div class="mbr-done">' + (r.emoji.length ? '<div class="big" aria-label="Your emojis">' + r.emoji.join(" ") + '</div>' : '') + '<div class="grow"><b>💬 You replied</b> <span class="muted">· ' + esc(r.when) + '</span>' + (r.text ? '<p>' + esc(r.text) + '</p>' : '') + '</div><button data-mbredit="' + esc(key) + '">Change</button></div></div>';
+  if (r && !PCH.edit[key]) return '<div class="mbr" data-mbrk="' + esc(key) + '"><div class="mbr-done">' + (r.emoji.length ? '<div class="big" aria-label="Your emojis">' + r.emoji.join(" ") + '</div>' : '') + '<div class="grow"><b>💬 You replied</b> <span class="muted">· ' + esc(r.when) + '</span>' + (r.text ? '<p>' + esc(r.text) + '</p>' : '') + (kind === "pm" && r.status === "Waiting" ? '<div class="muted" style="font-size:13px">⏳ ' + TT + ' will check your words, then ' + T + ' sees them.</div>' : kind === "pm" && r.status === "Not shown" ? '<div class="muted" style="font-size:13px">' + TT + ' didn’t pass this one on.</div>' : '') + '</div><button data-mbredit="' + esc(key) + '">Change</button></div></div>';
   var dr = PCH.draft[key] || (PCH.draft[key] = { emoji: r ? r.emoji.slice() : [], text: r ? r.text : "" });
   return '<div class="mbr" data-mbrk="' + esc(key) + '"><div class="mbr-h">💬 Reply to ' + T + '</div><div class="mbr-em" role="group" aria-label="Pick up to 3 emojis">' +
     PCH.emojis.map(function(e) { var on = dr.emoji.indexOf(e) > -1; return '<button data-mbre="' + esc(key) + '" data-e="' + e + '" class="' + (on ? 'on' : '') + '" aria-pressed="' + on + '">' + e + '</button>'; }).join("") + '</div>' +
     '<textarea class="input" data-mbrt="' + esc(key) + '" maxlength="300" placeholder="Write something back (you can just send emojis)" aria-label="Your reply">' + esc(dr.text) + '</textarea>' +
-    '<div class="mbr-f"><span class="muted">Only ' + T + ' sees this.</span>' + (r ? '<button class="btn soft" data-mbrcancel="' + esc(key) + '">Cancel</button>' : '') + '<button class="btn primary" data-mbrsend="' + esc(key) + '"' + (dr.emoji.length || dr.text.trim() ? '' : ' disabled') + '>Send</button></div></div>';
+    '<div class="mbr-f"><span class="muted">' + (kind === "pm" ? 'Emojis go straight to ' + T + '. Words are checked by ' + TT + ' first.' : 'Only ' + T + ' sees this.') + '</span>' + (r ? '<button class="btn soft" data-mbrcancel="' + esc(key) + '">Cancel</button>' : '') + '<button class="btn primary" data-mbrsend="' + esc(key) + '"' + (dr.emoji.length || dr.text.trim() ? '' : ' disabled') + '>Send</button></div></div>';
 }
 function mbReplyRedraw(key) { var k = key.split("|"); Array.prototype.forEach.call(document.querySelectorAll('.mbr[data-mbrk="' + key.replace(/"/g, '\\"') + '"]'), function(el) { el.outerHTML = mbReplyHtml(k[0], k.slice(1).join("|")); }); }
 document.addEventListener("input", function(e) { var t = e.target; if (!t || !t.hasAttribute || !t.hasAttribute("data-mbrt")) return; var key = t.getAttribute("data-mbrt"), dr = PCH.draft[key]; if (!dr) return; dr.text = t.value; var b = document.querySelector('[data-mbrsend="' + key + '"]'); if (b) b.disabled = !(dr.emoji.length || dr.text.trim()); });
@@ -6807,6 +6812,11 @@ document.addEventListener("click", function(e) {
   }
   var ks = t.getAttribute("data-mbrsend"), k = ks.split("|"), d2 = PCH.draft[ks]; if (!d2) return;
   var done = busy(t, "Sending…");
+  if (k[0] === "pm") return call("pmApi", "reply", JSON.stringify({ id: k.slice(1).join("|"), emoji: d2.emoji, text: d2.text })).then(function(r) {   // 💬 to a classmate
+    done(); PM.d = r; delete PCH.draft[ks]; PCH.edit[ks] = false; pmDraw(); mbReplyRedraw(ks);
+    var g = r.got.filter(function(x) { return "pm|" + x.id === ks; })[0], st = g && g.myReply && g.myReply.status;
+    flash(st === "Waiting" ? "💬 Sent! " + S.home.teacher + " will check it first." : "💬 Sent to " + (g ? g.from : "your friend") + "!");
+  }, function(err) { done(); flash(err.message, true); });
   call("mailApi", "reply", JSON.stringify({ kind: k[0], id: k.slice(1).join("|"), emoji: d2.emoji, text: d2.text })).then(function(r) {
     done(); PCH.list = r.cards || PCH.list; PCH.certs = r.certs || PCH.certs; if (r.emojis) PCH.emojis = r.emojis; delete PCH.draft[ks]; PCH.edit[ks] = false;
     mbReplyRedraw(ks); flash("💬 Sent to " + S.home.teacher + ". Thank you!");
@@ -6832,6 +6842,11 @@ function renderMail() {
 var PM = { d: null, f: null };
 function pmLoad(after) { return call("pmApi", "home", "{}").then(function(r) { PM.d = r; pmDraw(); PCH.gotUnread = r.got.filter(function(c) { return c.unread; }).length; pcHome(PCH.list); if (after) after(); }).catch(function(e) { var el = $("pmList"); if (el) el.innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; }); }
 function pmStatus(c) { if (c.status === "Ready") return '<span class="pm-st Sent">✅ Approved: it’s in the next email to ' + esc(c.to) + '</span>'; return c.status === "Sent" ? '<span class="pm-st Sent">' + (c.kind === "teacher" ? "✉️ Emailed" : "✅ Delivered") + '</span>' : c.status === "Waiting" ? '<span class="pm-st Waiting">⏳ Waiting for ' + esc(PM.d.teacher) + ' to check</span>' : '<span class="pm-st no">Not sent</span>'; }
+/** 💬 Replies to a card this pupil sent (from the teacher it was emailed to, or the classmate). */
+function pmRepliesHtml(c) {
+  return (c.replies || []).map(function(x) { return '<div class="pm-reply' + (x.unread ? ' new' : '') + '"><div class="pm-rh">💬 <b>' + esc(x.from) + '</b> replied <span class="muted">· ' + esc(x.when) + '</span>' + (x.unread ? ' <b class="mb-new">NEW</b>' : '') + '</div>' +
+    (x.emoji && x.emoji.length ? '<div class="pm-rem" aria-label="Emojis">' + x.emoji.map(esc).join(" ") + '</div>' : '') + (x.text ? '<p>' + esc(x.text).replace(/\n/g, "<br>") + '</p>' : '') + '</div>'; }).join("");
+}
 function pmMyFirst() { return String((S.home && S.home.me) || ""); }   // 📛 cards are signed with the full name
 function pmGotCard(c) { var im = c.img ? (PM.imgs || {})[c.id] : ""; return { design: c.design, occasion: c.occasion, first: pmMyFirst(), message: c.message, img: im || "", imgWait: c.img && !im, signed: c.from, love: "From your friend,", when: c.when }; }
 function pmLoadImgs() {
@@ -6842,8 +6857,8 @@ function pmLoadImgs() {
 function pmDraw() {
   var el = $("pmList"), d = PM.d; if (!el || !d) return;
   var got = d.got.map(function(c, i) { return '<div class="mb-item"><div class="mb-kind">💌 From ' + esc(c.from) + ' · ' + esc(c.when) + (c.unread ? ' <b class="mb-new">NEW</b>' : '') + '</div>' +
-    '<button class="mb-open" data-pmopen="' + i + '" aria-label="Open the card from ' + esc(c.from) + '">' + pcCardHtml(pmGotCard(c), esc) + '</button></div>'; }).join("");
-  var sent = d.sent.length ? '<div class="pm-sec">✉️ Cards you sent</div>' + d.sent.map(function(c) { return '<div class="pm-row"><b>' + esc(c.occasion) + '</b> to ' + esc(c.to) + ' · <span class="muted">' + esc(c.when) + '</span><div style="margin-top:4px">' + pmStatus(c) + (c.img ? ' <span class="pm-st no">🎨 with a drawing</span>' : '') + '</div>' + (c.edited ? '<div class="muted" style="font-size:13px;margin-top:4px">✏️ ' + esc(d.teacher) + ' changed a few words before sending.</div>' : '') + (c.message ? '<p>' + esc(c.message) + '</p>' : '') + '</div>'; }).join("") : '';
+    '<button class="mb-open" data-pmopen="' + i + '" aria-label="Open the card from ' + esc(c.from) + '">' + pcCardHtml(pmGotCard(c), esc) + '</button>' + mbReplyHtml("pm", c.id) + '</div>'; }).join("");
+  var sent = d.sent.length ? '<div class="pm-sec">✉️ Cards you sent</div>' + d.sent.map(function(c) { return '<div class="pm-row"><b>' + esc(c.occasion) + '</b> to ' + esc(c.to) + ' · <span class="muted">' + esc(c.when) + '</span><div style="margin-top:4px">' + pmStatus(c) + (c.img ? ' <span class="pm-st no">🎨 with a drawing</span>' : '') + '</div>' + (c.edited ? '<div class="muted" style="font-size:13px;margin-top:4px">✏️ ' + esc(d.teacher) + ' changed a few words before sending.</div>' : '') + (c.message ? '<p>' + esc(c.message) + '</p>' : '') + pmRepliesHtml(c) + '</div>'; }).join("") : '';
   el.innerHTML = got + sent; pmLoadImgs(); mbAllDraw();
   var mb = $("mbList"); if (mb && !PCH.list.length && !PCH.certs.length && !d.got.length && !mb.querySelector(".spin")) mb.innerHTML = '<div class="card" style="text-align:center"><div style="font-size:40px">📭</div><p class="muted">Nothing here yet. Why not send someone a card?</p></div>';
 }
