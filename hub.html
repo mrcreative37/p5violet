@@ -1100,7 +1100,7 @@
   .wf-n:empty, .wf-d:empty { background:#EDE8FF; }
   .wf-n:focus, .wf-d:focus { background:#E4DCFF; }
   .wk-tools { display:flex; gap:6px; margin:6px 0 0; flex-wrap:wrap; }
-  .wk-tools button { min-width:44px; min-height:40px; border:1.5px solid var(--line); background:#fff; border-radius:10px; font:inherit; font-size:17px; font-weight:800; color:var(--ink); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:0 10px; }
+  .wk-tools button { min-width:40px; min-height:40px; border:1.5px solid var(--line); background:#fff; border-radius:10px; font:inherit; font-size:17px; font-weight:800; color:var(--ink); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:0 10px; }
   .wk-tools button:first-child { font-size:13.5px; }
   .ex-wl-t .fr-v, .cf-given .fr-v, .ex-prompt .fr-v { font-family:inherit; }
   /* ✏️📷 Working: type, write or photo */
@@ -1468,6 +1468,8 @@
 .rt-sc { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 18px; font-weight: 800; margin: 6px 0 8px; } .rt-sc span { font-weight: 600; font-size: 14px; color: var(--muted); }
 .rt-tag { display: inline-block; border-radius: 999px; padding: 1px 8px; font-size: 12px; font-weight: 800; background: #EEE9FB; color: #3B2E9E; margin-left: 6px; vertical-align: middle; }
 .ex-retry-bar { background: #FFF8E1; border: 2px solid #E8B400; border-radius: 16px; padding: 10px 14px; margin: 10px 0; font-weight: 700; line-height: 1.45; }
+.hub-upd { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(86px + env(safe-area-inset-bottom)); z-index: 90; width: min(560px, calc(100% - 24px)); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: space-between; background: #FFF8E1; border: 2px solid #1E1A32; border-radius: 16px; padding: 10px 12px; box-shadow: 3px 4px 0 #1E1A32; font-weight: 700; line-height: 1.4; }
+.hub-upd span { flex: 1; min-width: 180px; }
 </style>
 </head>
 <body>
@@ -1852,13 +1854,47 @@ function clearBoots() {
   try { Object.keys(localStorage).forEach(function(k) { if (k.indexOf(STORE + "boot") === 0 || k.indexOf(STORE + "dc_") === 0 || k.indexOf(STORE + "pf") === 0 || k.indexOf(STORE + "ensec") === 0) localStorage.removeItem(k); }); } catch (e) {}
   imgDbClear();
 }
+
+/* 🔄 KEEPING EVERY DEVICE ON THE NEWEST HUB. A tablet that keeps the Hub open (or a browser that kept an old copy) can run an
+   older version even after signing out and in. The server says which version is current (HUB_BUILD in Code.gs); when this
+   page is older, it reloads itself past any saved copy (?v=…). In the middle of a paper it asks first: answers are saved,
+   and after the update the paper opens again (tap "Carry on"). Tried once per version, so it can never loop. */
+var HUB_BUILD = "2026-11-18b";
+function hubCheckBuild(b) {
+  if (!b || b === HUB_BUILD || S.preview || store("upd_" + b)) return;
+  var sitting = (EX.math && EX.math.sitting && EX.math.paper) || (EX.english && EX.english.sitting && EX.english.paper);
+  if (!sitting && !busyOnScreen()) return hubUpdate(b);
+  if ($("hubUpd")) return;
+  var d = document.createElement("div"); d.id = "hubUpd"; d.className = "hub-upd noprint"; d.setAttribute("role", "status");
+  d.innerHTML = '<span>🔄 A newer Hub is ready.' + (sitting ? ' Your answers are saved, and your paper opens again after.' : '') + '</span><button class="btn primary" data-hubupd="' + esc(b) + '">Update now</button>';
+  document.body.appendChild(d);
+}
+function hubUpdate(b) {
+  try { store("upd_" + b, "1"); } catch (e) {}
+  ["math", "english"].forEach(function(k) { var X = EX[k]; if (!(X && X.sitting && X.paper && !X.paper.retry)) return;
+    if (exSub() === k) { document.querySelectorAll("[data-exq]").forEach(function(el) { var q = el.getAttribute("data-exq"), a = X.ans[q] || (X.ans[q] = {}); a.v = el.value; }); document.querySelectorAll("[data-exw]").forEach(function(el) { var q = el.getAttribute("data-exw"), a = X.ans[q] || (X.ans[q] = {}); a.w = el.value; }); }
+    var keep = S.tab; S.tab = k === "math" ? "math" : "compo"; try { exSave(); } catch (e) {} S.tab = keep; store("resume", k + "|" + X.paper.id); });
+  var went = false, go2 = function() { if (went) return; went = true; var u = location.href.split("#")[0].replace(/([?&])v=[^&]*(&|$)/, "$1").replace(/[?&]$/, ""); location.replace(u + (u.indexOf("?") > -1 ? "&" : "?") + "v=" + encodeURIComponent(b)); };
+  if (typeof drFlush === "function") { try { var r = drFlush(); if (r && r.then) { r.then(go2, go2); setTimeout(go2, 4000); return; } } catch (e) {} }
+  go2();
+}
+document.addEventListener("click", function(e) { var t = e.target.closest && e.target.closest("[data-hubupd]"); if (t) { t.disabled = true; t.textContent = "Updating…"; hubUpdate(t.getAttribute("data-hubupd")); } });
+/** After the start-up load: open the paper a pupil was in before an update. */
+function hubResume() {
+  var k = store("resume"); if (!k) return; store("resume", null);
+  var sub = k.split("|")[0], id = k.slice(sub.length + 1), X = EX[sub]; if (!X || !id) return;
+  setTimeout(function() { try {
+    X.res = null; X.intro = null; X.home = null; X.openId = id;   // opens the paper's page: "▶ Carry on" brings the saved answers back
+    if (sub === "math") { MA.sec = "exam"; go("math"); } else { EN.home = false; EN.sec = "exam"; try { store("ensec", "exam"); } catch (e) {} go("compo"); }
+  } catch (e) {} }, 300);
+}
 function loadHome() {
   var cached = readBoot();
   if (cached) { if (!S.boardId) S.boardId = store("board") || ""; gotHome(cached, false, true); }
   else $("app").innerHTML = SPIN;
   call("getHubStart", S.boardId || store("board") || "").then(function(h) {
     saveBoot(h);
-    gotHome(h, !!cached);
+    gotHome(h, !!cached); hubCheckBuild(h.build); hubResume();
   }).catch(function(e) { if (!cached) fatal(e.message); });
 }
 /** Is the student busy with something on screen (writing, a pop-up open)? Then a quiet refresh waits. */
@@ -1945,6 +1981,7 @@ function ping() {
   call("hubPing", S.pingVer || "").then(function(r) {
     if (r && "wb" in r) wbNotice(r.wb || "");
     if (r && "poll" in r) pollNotice(r.poll || "");
+    if (r && r.build) hubCheckBuild(r.build);   // 🔄 a newer Hub went online while this page was open
     if (r.same) return;                                   // nothing new since last time
     S.pingVer = r.ver; if (S.tab !== "ask") setDot(r.unread);
   }).catch(function() {});
@@ -3899,6 +3936,7 @@ function exSitView() {
     }
     else if (q.type === "short" && oneBlank) { /* answered in the blank above */ }
     else if (q.type === "short") h += '<label class="ex-lab">Answer <input class="ex-in" data-exq="' + esc(q.id) + '" value="' + esc(v) + '" autocomplete="off" autocapitalize="off" spellcheck="false"></label>';
+    else if (q.type === "open" && sub === "math") h += '<div class="ex-lab">Working <span class="cw-tip" style="font-weight:600">(type, write or add a photo' + (Number(q.marks) >= 2 ? '; it can earn method marks' : '') + ')</span></div>' + workBox(q, a) + '<div class="ex-lab">Answer</div><textarea class="ex-ta" rows="3" data-exq="' + esc(q.id) + '" aria-label="Answer to ' + esc(q.n) + '" spellcheck="false">' + esc(v) + '</textarea>';
     else if (q.type === "open") h += '<textarea class="ex-ta" rows="3" data-exq="' + esc(q.id) + '" aria-label="Answer to ' + esc(q.n) + '" spellcheck="false">' + esc(v) + '</textarea>';
     else h += '<label class="ex-lab">Working <span class="cw-tip" style="font-weight:600">(shows how you got it: can earn method marks)</span><textarea class="ex-ta" rows="3" data-exw="' + esc(q.id) + '" spellcheck="false">' + esc(a.w || "") + '</textarea></label><label class="ex-lab">Answer <input class="ex-in" data-exq="' + esc(q.id) + '" value="' + esc(v) + '" autocomplete="off" spellcheck="false"></label>';
     h += '</div>';
@@ -4384,7 +4422,7 @@ function wkHtml(t) {
 function workEditor(attrs, text, label) {
   return '<div class="wk"><textarea hidden ' + attrs + '>' + esc(text || '') + '</textarea>' +
     '<div class="wk-ed" contenteditable="true" role="textbox" aria-multiline="true" aria-label="' + esc(label || 'Your working') + '" spellcheck="false" autocapitalize="off" data-ph="Write your working here. To write a fraction, type the top number, then /">' + wkHtml(text) + '</div>' +
-    '<div class="wk-tools"><button type="button" data-wkins="frac" aria-label="Add a fraction"><span class="ff-ic">' + frBox('', '1', '2') + '</span> Fraction</button><button type="button" data-wkins="×" aria-label="Times">×</button><button type="button" data-wkins="÷" aria-label="Divide">÷</button><button type="button" data-wkins="=" aria-label="Equals">=</button></div></div>';
+    '<div class="wk-tools"><button type="button" data-wkins="frac" aria-label="Add a fraction"><span class="ff-ic">' + frBox('', '1', '2') + '</span> Fraction</button>' + [["+", "Plus"], ["−", "Minus"], ["×", "Times"], ["÷", "Divide"], ["=", "Equals"], ["(", "Open bracket"], [")", "Close bracket"]].map(function(o) { return '<button type="button" data-wkins="' + o[0] + '" aria-label="' + o[1] + '">' + o[0] + '</button>'; }).join("") + '</div></div>';
 }
 function wkText(ed) {
   var out = '';
@@ -4468,7 +4506,7 @@ document.addEventListener('click', function(e) {
   if (what === 'frac') {
     var r = s.getRangeAt(0); r.deleteContents(); var x = wkMake('', ''), frag = document.createDocumentFragment(), z0 = document.createTextNode(ZW);
     frag.appendChild(z0); frag.appendChild(x.wf); frag.appendChild(x.zw); r.insertNode(frag); wkInto(x.wf.querySelector('.wf-n'), true);
-  } else document.execCommand('insertText', false, ' ' + what + ' ');
+  } else document.execCommand('insertText', false, what === '(' ? '(' : what === ')' ? ')' : ' ' + what + ' ');
   wkSync(ed);
 });
 
