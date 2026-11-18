@@ -1460,6 +1460,14 @@
 .pm-col { width: 34px; height: 34px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 1.5px var(--line); padding: 0; } .pm-col.on { box-shadow: 0 0 0 3px var(--violet-2); }
 .pm-t { border: 1.5px solid var(--line); background: #fff; border-radius: 12px; min-height: 38px; padding: 4px 10px; font-weight: 800; font-size: 14px; color: var(--ink); } .pm-t.on { background: var(--violet); color: #fff; border-color: var(--violet); }
 .pm-sep { width: 1px; height: 26px; background: var(--line); }
+/* 🔁 retry when not passed */
+.rt-card { background: #FFF8E1; border: 2px solid #E8B400; border-radius: 20px; padding: 16px; margin: 12px 0; box-shadow: 3px 4px 0 #1E1A32; }
+.rt-card h3 { margin: 0 0 6px; font-size: 19px; line-height: 1.3; } .rt-card p { margin: 0 0 10px; line-height: 1.5; }
+.rt-card .btn { width: 100%; margin-top: 8px; } .rt-card .btn.soft { background: #fff; }
+.rt-done { background: #E9F7EF; border-color: #1B8A4C; } .rt-done.no { background: #F4F2FF; border-color: #6250d6; }
+.rt-sc { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 18px; font-weight: 800; margin: 6px 0 8px; } .rt-sc span { font-weight: 600; font-size: 14px; color: var(--muted); }
+.rt-tag { display: inline-block; border-radius: 999px; padding: 1px 8px; font-size: 12px; font-weight: 800; background: #EEE9FB; color: #3B2E9E; margin-left: 6px; vertical-align: middle; }
+.ex-retry-bar { background: #FFF8E1; border: 2px solid #E8B400; border-radius: 16px; padding: 10px 14px; margin: 10px 0; font-weight: 700; line-height: 1.45; }
 </style>
 </head>
 <body>
@@ -3867,7 +3875,8 @@ function exSitView() {
   var left = exLeft(), answered = p.questions.filter(function(q) { var a = X.ans[q.id]; return a && String(a.v == null ? "" : a.v).trim() !== ""; }).length;
   var wm = esc(p.mark + " · " + p.today), wmSvg = "url(\"data:image/svg+xml;utf8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200"><text x="10" y="110" transform="rotate(-24 160 100)" font-family="Arial" font-size="17" fill="rgba(62,18,57,0.07)">' + wm + '</text></svg>') + "\")";
   var h = '<div class="ex-bar"><div class="ex-bar-in"><b>' + esc(p.title) + '</b><span class="ex-cnt">' + answered + ' / ' + p.questions.length + ' answered</span>' + (left != null ? '<span class="ex-time"><span aria-hidden="true">⏱️</span> <span id="exTime">' + Math.floor(left / 60) + ':' + ('0' + (left % 60)).slice(-2) + '</span></span>' : '') +
-    '<button class="btn soft" data-exlater>' + (X.laterArm ? (left != null ? 'Tap again (clock keeps running)' : 'Tap again to save and leave') : '💾 Later') + '</button><button class="btn primary" id="exHand"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to hand in' : 'Hand in') + '</button></div></div>';
+    (p.retry ? '<button class="btn soft" data-exretrycancel>‹ Back to results</button>' : '<button class="btn soft" data-exlater>' + (X.laterArm ? (left != null ? 'Tap again (clock keeps running)' : 'Tap again to save and leave') : '💾 Later') + '</button>') + '<button class="btn primary" id="exHand"' + (X.busy ? ' disabled' : '') + '>' + (X.busy ? 'Marking…' : X.confirm ? 'Tap again to hand in' : p.retry ? 'Hand in my retry' : 'Hand in') + '</button></div></div>';
+  if (p.retry) h += '<div class="ex-retry-bar">🔁 Your retry: just the ' + p.questions.length + ' question' + (p.questions.length === 1 ? '' : 's') + ' you didn’t get full marks on. Take your time; there’s no timer. For each question, your better mark counts.</div>';
   h += '<div class="ex-paper" style="background-image:' + wmSvg + '" oncopy="return false" oncut="return false" oncontextmenu="return false" ondragstart="return false">';
   p.questions.forEach(function(q) {
     if (q.group && !gdone[q.group]) {
@@ -3885,6 +3894,7 @@ function exSitView() {
     else if (sub === "math" && q.type !== "open") {   // ➗ fraction boxes and a working editor where "/" makes a fraction
       var fq = q.frac || hasFrac(q.prompt) || q.topic === "fr" || /^fr/.test(q.skill || "");   // ➗ q.frac: the answer is a fraction
       if (q.type === "long") h += '<div class="ex-lab">Working <span class="cw-tip" style="font-weight:600">(needed: type, write or add a photo of how you got it; it can earn method marks)</span></div>' + workBox(q, a);
+      else h += '<div class="ex-lab">Working <span class="cw-tip" style="font-weight:600">(type, write or add a photo' + (Number(q.marks) >= 2 ? '; it can earn method marks' : '') + ')</span></div>' + workBox(q, a);   // ✍️ short answers too
       h += '<div class="ex-lab">Answer</div>' + ansField('data-exq="' + esc(q.id) + '"', v, fq);
     }
     else if (q.type === "short" && oneBlank) { /* answered in the blank above */ }
@@ -3925,11 +3935,47 @@ function exSubmit(force) {
   X.busy = true; X.err = ""; exSitView();
   var pics = sub === "math" ? wpCollect(p) : {};
   Object.keys(pics).forEach(function(qid) { pics[qid].forEach(function(x, k) { WP_SHOWN[p.id + ":" + qid + ":" + k] = x.data; }); });   // show them on the result straight away
-  exCall("submit", { id: p.id, answers: X.ans, seconds: Math.round((Date.now() - X.t0) / 1000), away: X.away, pics: pics, final: !!force }).then(function(r) {
+  var R0 = X.retryOf, call0 = p.retry ? exCall("retry", { id: p.id, answers: X.ans, pics: pics, ids: R0 ? R0.retry.ids : [], before: R0 ? R0.total : 0, marks: R0 ? R0.marks : [] })
+    : exCall("submit", { id: p.id, answers: X.ans, seconds: Math.round((Date.now() - X.t0) / 1000), away: X.away, pics: pics, final: !!force });
+  call0.then(function(r) { X.retryOf = null;
     store(exKey(p.id), null); drDrop("exam", p.id); if (sub === "math") wpClearPaper(p); X.busy = false; X.sitting = false; X.confirm = false; X.res = r; X.home = null; document.body.classList.remove("ex-on"); mwRefresh(true);
     if (exSub() === sub) renderExam();
   }).catch(function(e) { X.busy = false; X.confirm = false; X.err = e.message + " Your answers are still saved. Try again."; if (exSub() === sub) exSitView(); });
 }
+
+/* 🔁 RETRY WHEN NOT PASSED: below the pass mark, the pupil can retry (once) every question that didn't get full marks.
+   The answers stay hidden until they retry or choose not to. The first score stays; the retry shows as "after retry". */
+function exRetryCard(R) {
+  var rt = R.retry; if (!rt) return '';
+  if (rt.status === "open") {
+    var n = rt.ids.length, pct = R.max ? Math.round(R.total / R.max * 100) : 0;
+    return '<div class="rt-card" role="region" aria-label="Retry"><h3>🔁 Have another go</h3><p>You scored <b>' + R.total + ' / ' + R.max + '</b> (' + pct + '%). The pass mark is <b>' + rt.pass + '%</b>, so you can retry the <b>' + n + ' question' + (n === 1 ? '' : 's') + '</b> you didn’t get full marks on. Below you can see which questions were right ✅ and which weren’t ❌. The answers stay hidden until you’ve had your retry, so have a good think about the ❌ ones. You get one retry.</p>' +
+      '<button class="btn primary big" data-exretry>🔁 Retry ' + n + ' question' + (n === 1 ? '' : 's') + '</button><button class="btn soft" data-exretryskip>No thanks, show my results</button></div>';
+  }
+  if (rt.status === "done") {
+    var up = rt.after - rt.before;
+    return '<div class="rt-card rt-done' + (rt.passed ? '' : ' no') + '"><h3>' + (rt.passed ? '🎉 You passed after your retry!' : up > 0 ? '👏 Your retry earned more marks' : '🔁 Your retry is marked') + '</h3>' +
+      '<div class="rt-sc">' + rt.before + ' <span>first try</span> → ' + rt.after + ' <span>after retry, out of ' + rt.max + '</span></div><p>' + (up > 0 ? 'That’s ' + up + ' more mark' + (up === 1 ? '' : 's') + '. ' : '') + 'Your first try is still your mark for the paper; your teacher sees both.</p></div>';
+  }
+  return '';
+}
+function exRetryStart() {
+  var sub = exSub(), X = EX[sub], R = X.res; if (!R || !R.retry || R.retry.status !== "open") return;
+  var p = JSON.parse(JSON.stringify(R.paper)); p.questions = p.questions.filter(function(q) { return R.retry.ids.indexOf(q.id) > -1; }); p.minutes = 0; p.retry = true;
+  p.mark = (S.home && (S.home.short || S.home.me)) || ""; p.today = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  var groups = {}; p.questions.forEach(function(q) { if (q.group) groups[q.group] = 1; }); p.groups = (p.groups || []).filter(function(g) { return groups[g.id]; });
+  X.retryOf = R; X.paper = p; X.ans = {}; X.t0 = Date.now(); X.away = 0; X.sitting = true; X.confirm = false; X.err = ""; X.res = null;
+  if (sub === "math") p.questions.forEach(function(q) { delete WP[q.id]; });
+  document.body.classList.add("ex-on"); exSitView(); window.scrollTo(0, 0);
+}
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-exretry],[data-exretryskip],[data-exretrycancel]"); if (!t) return;
+  var sub = exSub(), X = EX[sub];
+  if (t.hasAttribute("data-exretry")) return exRetryStart();
+  if (t.hasAttribute("data-exretrycancel")) { if (X.paper) store(exKey(X.paper.id), null); X.paper = null; X.sitting = false; X.res = X.retryOf; X.retryOf = null; document.body.classList.remove("ex-on"); renderExam(); return; }
+  var R = X.res; if (!R) return; var done = busy(t, "Opening your results…");
+  exCall("retryskip", { id: R.paper.id, ids: R.retry.ids, before: R.total, marks: R.marks }).then(function(r) { done(); X.res = r; renderExam(); window.scrollTo(0, 0); }, function(err) { done(); flash(err.message, true); });
+});
 function exAnsText(q, a) {
   if (!a || a.v == null || String(a.v).trim() === "") return "";
   return q.type === "mcq" ? "(" + (Number(a.v) + 1) + ") " + (q.options[Number(a.v)] || "") : String(a.v);
@@ -3951,12 +3997,15 @@ function exResultView() {
   var out = '<div class="sy-top"><button class="btn soft" data-exback>‹ All papers</button></div><div class="cheer-hero" style="padding-top:6px"><span class="hand">' + esc(R.when ? "Handed in " + R.when : "Mock exam") + '</span><h1>' + esc(p.title) + '</h1></div>' +
     CF.sum({ got: R.total, max: R.max, lights: p.questions.map(function(q) { var m = M[q.id] || {}; return { c: m.pending ? "n" : m.ok ? "g" : m.aw > 0 ? "y" : "r", t: q.n }; }), star: strongS[0] ? "Strong: " + CF.short(strongS[0].name, 40) : "", aim: weakS[0] ? "Revise: " + CF.short(weakS[0].name, 40) : (R.total === R.max ? "Full marks!" : "") });
   if (R.late) out += '<div class="msg">⏱️ This paper was handed in after the time limit.</div>';
+  out += exRetryCard(R);
   out += '<div class="cf-lab" style="margin-left:4px">Skills in this paper</div>' + CF.skills(R.skills.map(function(s) { return { name: s.name, got: s.got, max: s.max }; }));
   if (sub === "math") out += exPlanHtml(R.plan, "What to practise on KooBits");
-  if (!R.keys) out += '<div class="msg">🔒 ' + esc((S.home && S.home.teacher) || "Your teacher") + ' will show the answers later, so you can see which ones were right, but not the answers yet.</div>';
+  var rtOpen = R.retry && R.retry.status === "open";
+  if (!R.keys && !rtOpen) out += '<div class="msg">🔒 ' + esc((S.home && S.home.teacher) || "Your teacher") + ' will show the answers later, so you can see which ones were right, but not the answers yet.</div>';
   var lessons = [];
   out += p.questions.map(function(q) {
     var m = M[q.id] || { aw: 0, max: q.marks }, a = R.answers[q.id] || {}, mine = exAnsText(q, a), lv = m.pending ? "" : CF.lvl(m.aw, m.max), body = "";
+    if (m.retried) body += '<div class="rt-tag">🔁 Retried' + (m.keptFirst ? ': your first try scored more, so it was kept' : '') + '</div>';
     body += '<div class="cf-given">' + MT(CF.short(q.prompt, 160)) + '</div>';
     if (q.imgs) body += '<details class="cf-more"><summary>🖼️ Picture</summary>' + exImgSlot("q", q.id, 0) + '</details>';
     if (q.type === "mcq") body += q.options.map(function(o, k) { var key = R.keys && k === m.key, me = String(a.v) === String(k); if (!key && !me) return ''; return '<div class="cf-opt' + (key ? ' key' : '') + (me ? ' mine' : '') + (me && !m.ok ? ' no' : '') + '"><b>' + (key || (me && m.ok) ? '✓' : '✗') + '</b><span>' + MT(o) + '</span></div>'; }).join("") + (mine ? '' : '<div class="cf-fb"><i>No answer</i></div>');
@@ -3966,6 +4015,7 @@ function exResultView() {
     if (m.read && m.read.length) body += exWorkHtml(m.read.join("\n"), m.notes, true);
     else if (a.w) body += exWorkHtml(a.w, m.notes);
     if (!m.ok && R.keys && q.type !== "mcq" && m.key) body += sub === "math" && hasFrac(m.key) ? '<div class="cf-ok"><b>✓</b><div><small>Answer</small><div style="font-size:19px">' + fracHtml(m.key) + '</div></div></div>' : CF.ok(m.key, "Answer");
+    if (!m.ok && m.aw > 0 && sub === "math") body += '<p class="cf-fb" style="color:#1B5E3B"><b>✍️ ' + m.aw + ' method mark' + (m.aw === 1 ? '' : 's') + ' for your working.</b> The final answer wasn’t right, but these steps were.</p>';
     if (!m.ok && m.fb) body += '<p class="cf-fb">💡 ' + MT(m.fb) + '</p>';
     if (!m.ok && m.solution) body += '<details class="cf-more"><summary>✏️ See the working</summary><p class="cf-fb" style="white-space:pre-wrap;line-height:2">' + MT(m.solution) + '</p></details>';
     if (m.gap) body += '<div class="cf-plan"><b>↩️ This mistake comes from an earlier skill</b><div class="kb">' + esc(m.gapName) + ' · KooBits Mission mode: ' + esc(m.gapKb) + '</div></div>';
@@ -3973,7 +4023,7 @@ function exResultView() {
     if (!m.ok && sub === "english" && q.skill && LESSONS[q.skill]) lessons.push({ id: q.skill, mine: q.type !== "mcq" && mine && R.keys && m.key ? [mine, m.key] : null });
     return CF.card(lv, '<span class="cf-qn">' + esc(q.n) + '</span>' + (m.pending ? '<span class="cf-chip">to check</span>' : CF.chip(m.aw, m.max)) + (q.skill && !m.ok ? '<span class="cf-tag2">' + esc(CF.short((sub === "math" ? ((R.skills || []).filter(function(k) { return k.id === q.skill; })[0] || {}).name : (LESSONS[q.skill] || {}).t) || "", 34)) + '</span>' : ''), body);
   }).join("");
-  if (sub === "english") out += CF.lessons(lessons);
+  if (sub === "english" && !rtOpen) out += CF.lessons(lessons);
   out += '<div class="sy-btns" style="margin-top:14px"><button class="btn primary big" data-exback>📝 All papers</button></div>';
   return out;
 }
@@ -4429,10 +4479,10 @@ var WP_PEN = false;     // a stylus has been used on this device: fingers then s
 function wpKey(qid, kind) { var X = EX.math, p = X.paper || {}; return "exw:" + hh((S.home && S.home.me) || "") + ":" + (p.id || "") + ":" + qid + ":" + kind; }
 function wpGet(qid) { return WP[qid] || (WP[qid] = { strokes: [], h: 380, tool: "pen", photo: "", undo: [] }); }
 function wpHas(qid) { var w = WP[qid]; return !!(w && (w.strokes.some(function(s) { return !s.e; }) || w.photo)); }
-function wpSave(qid) { var w = wpGet(qid), m = {}; m[wpKey(qid, "d")] = JSON.stringify({ s: w.strokes, h: w.h }); m[wpKey(qid, "p")] = w.photo || ""; imgDbPut(m); var a = EX.math.ans[qid] || (EX.math.ans[qid] = {}); a.wp = wpHas(qid) ? 1 : 0; if (typeof exSave === "function") exSave(); }
+function wpSave(qid) { var w = wpGet(qid), m = {}; m[wpKey(qid, "d")] = JSON.stringify({ s: w.strokes, h: w.h }); m[wpKey(qid, "p")] = w.photo || ""; imgDbPut(m); EX.math.ans = EX.math.ans || {}; var a = EX.math.ans[qid] || (EX.math.ans[qid] = {}); a.wp = wpHas(qid) ? 1 : 0; if (typeof exSave === "function") exSave(); }
 /** Brings back drawings and photos kept on this device for this paper. */
 function wpLoad(p) {
-  var keys = []; p.questions.forEach(function(q) { if (q.type === "long") { keys.push(wpKey(q.id, "d"), wpKey(q.id, "p")); } });
+  var keys = []; p.questions.forEach(function(q) { if (q.type !== "mcq" && q.type !== "open") { keys.push(wpKey(q.id, "d"), wpKey(q.id, "p")); } });
   return imgDbGet(keys).then(function(got) {
     p.questions.forEach(function(q) {
       var d = got[wpKey(q.id, "d")], ph = got[wpKey(q.id, "p")]; if (!d && !ph) return;
@@ -4556,7 +4606,7 @@ document.addEventListener("click", function(e) {
   var t = e.target.closest && e.target.closest("[data-wkmode],[data-padtool],[data-padundo],[data-padmore],[data-padclear],[data-wkrot],[data-wkphdel]"); if (!t) return;
   var v;
   if ((v = t.getAttribute("data-wkmode"))) {
-    var sp = v.split("|"), qid = sp[1], box = t.closest(".wkx"); (EX.math.ans[qid] = EX.math.ans[qid] || {}).wm = sp[0]; exSave();
+    var sp = v.split("|"), qid = sp[1], box = t.closest(".wkx"); EX.math.ans = EX.math.ans || {}; (EX.math.ans[qid] = EX.math.ans[qid] || {}).wm = sp[0]; exSave();
     box.querySelectorAll(".wk-tab").forEach(function(b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
     box.querySelectorAll(".wk-pane").forEach(function(p) { p.hidden = p.getAttribute("data-pane") !== sp[0]; });
     if (sp[0] === "draw") padSetup(box.querySelector("canvas.pad"));
@@ -4577,7 +4627,7 @@ document.addEventListener("input", function(e) { var ta = e.target; if (ta && ta
 /** Pictures to hand in with the paper: { qid: [{kind, mime, data}] }. */
 function wpCollect(p) {
   var out = {}; p.questions.forEach(function(q) {
-    if (q.type !== "long") return; var L = [], d = padExport(q.id), w = WP[q.id];
+    if (q.type === "mcq" || q.type === "open") return; var L = [], d = padExport(q.id), w = WP[q.id];
     if (d) L.push({ kind: "draw", mime: "image/jpeg", data: d });
     if (w && w.photo) L.push({ kind: "photo", mime: "image/jpeg", data: w.photo });
     if (L.length) out[q.id] = L;
@@ -5712,7 +5762,7 @@ var MP = { home: null, lv: "", view: "home", round: null, i: 0, ans: [], res: nu
 var MP_LV = ["P1", "P2", "P3", "P4", "P5", "P6"];
 function mpCall(action, d) { return call("mathPracApi", action, JSON.stringify(d || {})).then(function(r) { var o = JSON.parse(r); if (!o.ok) throw new Error(o.error); return o.data; }); }
 function mpOn(k) { return featOn(k) && !(MP.home && MP.home.on && MP.home.on[k] === false); }
-function mpDraw() { if (S.tab === "math" && MA.sec === "prac") renderMath(); }
+function mpDraw() { if (S.tab === "math" && MA.sec === "prac") { renderMath(); if (mpPaperOn()) padsInit(); } }
 function mpView() {
   if (!MP.lv) { var slv = store("mplv") || (/^P[1-6]/.test((S.home && S.home.className) || "") ? S.home.className.slice(0, 2) : "P5"); MP.fd = /F$/.test(slv); MP.lv = slv.slice(0, 2); if (MP_LV.indexOf(MP.lv) < 0) MP.lv = "P5"; }
   if (MP.view === "round" && MP.round) return MP.round.step ? mpStepView() : mpRoundView();
@@ -5794,7 +5844,11 @@ function mpQBody(q, val, idp, work, lock) {   // idp "mp" = the question, "mt" =
   if (q.kind === "pick") return out + '<div class="mp-opts" role="group" aria-labelledby="' + idp + 'q">' + q.o.map(function(o, k) { var on = String(val) === String(k), cls = lock ? (lock.a === k ? ' right' : on ? ' wrong' : '') : '';
     return '<button class="mp-opt' + (on ? ' on' : '') + cls + '" data-' + (idp === "mt" ? 'mtopt' : 'mpopt') + '="' + k + '" aria-pressed="' + on + '"' + (lock ? ' disabled' : '') + '>' + esc(o) + '</button>'; }).join("") + '</div>';
   var num = q.kind === "num", inId = idp === "mt" ? "mtIn" : "mpIn", wkId = idp === "mt" ? "mtWk" : "mpWk";
-  if (q.wk && (idp === "mp" || idp === "mt")) out += '<label class="mp-wkl" for="' + wkId + '">Working <span>(show how you got it)</span></label><textarea class="mp-wk" id="' + wkId + '" rows="3" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. 3 units = 24, 1 unit = 24 ÷ 3 = 8"' + (lock ? ' readonly' : '') + '>' + esc(work || "") + '</textarea><div class="mp-wkl" style="margin-top:10px">Answer</div>';
+  if (idp === "mp" && mpPaperOn()) {   // ✍️ exam papers: working typed, written or photographed, and marked (method marks)
+    var wid = mpWid(MP.i), m2 = Number(q.m) || 1; EX.math.ans = EX.math.ans || {};
+    out += '<div class="mp-wkl">Working <span>(' + (q.wk ? 'needed: ' : '') + 'type, ✏️ write or 📷 take a photo' + (m2 >= 2 ? '; it can earn method marks' : '') + ')</span></div>' + workBox({ id: wid, n: mpLabel(MP.round, MP.i) }, { w: work || "", wm: (EX.math.ans[wid] || {}).wm }) + '<div class="mp-wkl" style="margin-top:10px">Answer</div>';
+  }
+  else if (q.wk && (idp === "mp" || idp === "mt")) out += '<label class="mp-wkl" for="' + wkId + '">Working <span>(show how you got it)</span></label><textarea class="mp-wk" id="' + wkId + '" rows="3" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="e.g. 3 units = 24, 1 unit = 24 ÷ 3 = 8"' + (lock ? ' readonly' : '') + '>' + esc(work || "") + '</textarea><div class="mp-wkl" style="margin-top:10px">Answer</div>';
   return out + '<div class="mp-inrow">' + (q.pre ? '<span class="mp-unit">' + esc(q.pre) + '</span>' : '') + '<input class="mp-in" id="' + inId + '" aria-labelledby="' + idp + 'q" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="' + (num ? 'decimal' : 'text') + '" value="' + esc(val) + '" placeholder="Your answer"' + (lock ? ' readonly' : '') + '>' + (q.unit ? '<span class="mp-unit">' + esc(q.unit) + '</span>' : '') + '</div>' +
     (mpHint(q) ? '<p class="cw-tip" style="margin:8px 0 0">' + mpHint(q) + '</p>' : '');
 }
@@ -5865,12 +5919,24 @@ function mpRoundView() {
     (last ? '<button class="btn primary big" data-mpmark' + (MP.busy ? ' disabled' : '') + '>' + (MP.busy ? 'Marking…' : marked ? 'Hand in' : 'Check my answers') + '</button>' : '<button class="btn primary big" data-mpgo="1">Next ›</button>') + '</div>' +
     (last && blank ? '<p class="cw-tip" style="text-align:center">' + blank + ' question' + (blank === 1 ? ' has' : 's have') + ' nothing written yet. Every question needs an answer or working.' + (n > 5 ? ' Tap 🗺️ All questions to find ' + (blank === 1 ? 'it' : 'them') + '.' : ' You can go back.') + '</p>' : '') + '<div style="height:24px"></div>';
 }
-function mpKeep() { var el = $("mpIn"), wk = $("mpWk"), t2 = $("mtIn"), w2 = $("mtWk"), tw = MP.tw && MP.tw[MP.i]; if (MP.view !== "round") return; if (el && !el.readOnly) MP.ans[MP.i] = el.value; if (wk && !wk.readOnly) MP.work[MP.i] = wk.value; if (tw && t2 && !t2.readOnly) tw.ans = t2.value; if (tw && w2 && !w2.readOnly) tw.work = w2.value; }
+/** A practice exam paper is open (its working is written, drawn or photographed, and marked). */
+function mpPaperOn() { return !!(MP.round && MP.round.mode === "paper" && MP.view === "round"); }
+function mpWid(i) { return "mpw" + String(MP.round && MP.round.id || "").replace(/[^\w]/g, "").slice(-10) + "_" + i; }
+function mpPicOk(i) { var w = WP[mpWid(i)]; return !!(w && (w.photo || (w.strokes && w.strokes.length))); }
+/** The written and photographed working to hand in: { index: [{kind, mime, data}] }. */
+function mpPics() {
+  var out = {}; if (!MP.round) return out;
+  MP.round.items.forEach(function(q, i) { if (q.kind === "pick") return; var id = mpWid(i), L = [], d = WP[id] && WP[id].strokes && WP[id].strokes.length ? padExport(id) : "", w = WP[id];
+    if (d) L.push({ kind: "draw", mime: "image/jpeg", data: d }); if (w && w.photo) L.push({ kind: "photo", mime: "image/jpeg", data: w.photo }); if (L.length) out[i] = L; });
+  return out;
+}
+function mpKeep() { var tw0 = document.querySelector('[data-exw="' + (MP.round ? mpWid(MP.i) : '') + '"]'); if (tw0 && MP.view === "round") MP.work[MP.i] = tw0.value;
+  var el = $("mpIn"), wk = $("mpWk"), t2 = $("mtIn"), w2 = $("mtWk"), tw = MP.tw && MP.tw[MP.i]; if (MP.view !== "round") return; if (el && !el.readOnly) MP.ans[MP.i] = el.value; if (wk && !wk.readOnly) MP.work[MP.i] = wk.value; if (tw && t2 && !t2.readOnly) tw.ans = t2.value; if (tw && w2 && !w2.readOnly) tw.work = w2.value; }
 function mpMark(force) {
   if (MP.busy) return; mpKeep();
   if (!force) {   // 🚫 no blank hand-ins; and working must be shown where it is asked for
     var R = MP.round, empty = [], bare = [];
-    R.items.forEach(function(q, k) { var a = mpHas(MP.ans[k]), w = mpHas(MP.work[k]); if (!a && !w) empty.push(k); else if (q.wk && a && !mpWorkOk(MP.work[k], MP.ans[k])) bare.push(k); });
+    R.items.forEach(function(q, k) { var a = mpHas(MP.ans[k]), pic = R.mode === "paper" && mpPicOk(k), w = mpHas(MP.work[k]) || pic; if (!a && !w) empty.push(k); else if (q.wk && a && !pic && !mpWorkOk(MP.work[k], MP.ans[k])) bare.push(k); });
     var stop = empty.length ? empty : bare.length >= 3 ? bare : null;
     if (stop) { var names = stop.slice(0, 8).map(function(k) { return mpLabel(R, k); }).join(", ") + (stop.length > 8 ? "…" : "");
       MP.stop = empty.length ? empty.length + " question" + (empty.length > 1 ? "s have" : " has") + " nothing written (" + names + "). Write an answer or your working for every question."
@@ -5878,8 +5944,9 @@ function mpMark(force) {
       MP.i = stop[0]; MP.map = false; mpDraw(); window.scrollTo(0, 0); return; }
   }
   MP.stop = "";
-  MP.armed = false; mpTimerStop(); MP.busy = true; mpDraw();
-  mpCall("mark", { id: MP.round.id, answers: MP.ans, work: MP.work, timeup: !!force }).then(function(d) { MP.busy = false; MP.res = d; MP.view = "result"; MP.home = null; if (/p1$/.test(d.paper || "") && MP.full) MP.p1 = { got: d.got, max: d.max }; mpDraw(); window.scrollTo(0, 0); })
+  MP.armed = false; mpTimerStop(); MP.busy = true; var picsOut = MP.round.mode === "paper" ? mpPics() : {}; MP.picN = {}; Object.keys(picsOut).forEach(function(k) { MP.picN[k] = picsOut[k]; }); mpDraw();
+  if (MP.round.mode === "paper") flash("✍️ Marking your answers and checking your working… this can take a minute.");
+  mpCall("mark", { id: MP.round.id, answers: MP.ans, work: MP.work, pics: picsOut, timeup: !!force }).then(function(d) { MP.busy = false; MP.res = d; MP.view = "result"; MP.home = null; if (/p1$/.test(d.paper || "") && MP.full) MP.p1 = { got: d.got, max: d.max }; mpDraw(); window.scrollTo(0, 0); })
     .catch(function(e) { MP.busy = false; MP.stop = e.message || String(e); mpDraw(); flash(MP.stop, true); });
 }
 function mpResultView() {
@@ -5897,19 +5964,27 @@ function mpResultView() {
   out += R.items.map(function(q, i) {
     var r = D.results[i]; if (!r) return ''; if (sprint && r.ok) return ''; if (!r.ok) wrong++;
     var showStory = !sprint && q.ctx && (!marked || i === 0 || R.items[i - 1].grp !== q.grp);
-    return (marked && q.sec && (i === 0 || R.items[i - 1].sec !== q.sec) ? '<div class="mp-sec">' + esc(q.sec) + '</div>' : '') + '<div class="mp-res ' + (r.ok ? 'ok' : 'no') + '"><div class="mp-rh"><span class="mp-mark" aria-hidden="true">' + (r.ok ? '✓' : '✗') + '</span><span>' + (marked ? mpLabel(R, i) + ' · ' + (r.ok ? r.m : 0) + '/' + r.m + ' mark' + (r.m === 1 ? '' : 's') : 'Q' + (i + 1) + (r.ok ? ' · correct' : ' · not yet')) + (D.step && r.ok && !r.first ? ' (second try)' : '') + '</span></div>' +
+    return (marked && q.sec && (i === 0 || R.items[i - 1].sec !== q.sec) ? '<div class="mp-sec">' + esc(q.sec) + '</div>' : '') + '<div class="mp-res ' + (r.ok ? 'ok' : 'no') + '"><div class="mp-rh"><span class="mp-mark" aria-hidden="true">' + (r.ok ? '✓' : '✗') + '</span><span>' + (marked ? mpLabel(R, i) + ' · ' + (r.ok ? r.m : (r.aw || 0)) + '/' + r.m + ' mark' + (r.m === 1 ? '' : 's') : 'Q' + (i + 1) + (r.ok ? ' · correct' : ' · not yet')) + (D.step && r.ok && !r.first ? ' (second try)' : '') + '</span></div>' +
       (showStory ? '<div class="mp-ctx">' + esc(q.ctx) + '</div>' : '') + (!sprint && q.fig && (!marked || showStory) ? '<div class="mp-figbox">' + q.fig + '</div>' : '') + '<div class="mp-q" style="font-size:16px">' + esc(q.q) + '</div>' +
       '<div class="mp-ra">' + (r.ok ? '<span>Your answer: <b>' + esc(r.right) + '</b></span>' : '<span>Your answer: <b>' + (r.mine ? esc(q.kind === "pick" && q.o && q.o[r.mine] != null ? q.o[r.mine] : r.mine) : '(blank)') + '</b></span><span>Answer: <b>' + esc(r.right) + '</b></span>') + '</div>' +
-      (mpHas(MP.work && MP.work[i]) ? '<p class="mp-w mp-myw"><b>Your working:</b> ' + esc(MP.work[i]) + '</p>' : '') + (r.note ? '<p class="mp-w">' + esc(r.note) + '</p>' : '') + (r.w && !r.ok ? '<p class="mp-w">💡 ' + esc(r.w) + '</p>' : '') +
+      mpWorkRes(i, r) + (r.note ? '<p class="mp-w">' + esc(r.note) + '</p>' : '') + (!r.ok && r.aw ? '<p class="mp-w" style="color:#1B5E3B"><b>✍️ ' + r.aw + ' method mark' + (r.aw === 1 ? '' : 's') + ' for your working.</b> The final answer wasn’t right, but these steps were.</p>' : '') + (!r.ok && r.fb ? '<p class="mp-w">💡 ' + esc(r.fb) + '</p>' : '') + (r.w && !r.ok ? '<p class="mp-w">✏️ <b>Worked answer:</b> ' + esc(r.w) + '</p>' : '') +
       (r.like ? '<div class="mp-likeres ' + (r.like.ok ? 'ok' : 'no') + '"><b>🔁 One like it: ' + (r.like.ok ? '✓ right' : '✗ not yet') + '</b><div class="mp-q" style="font-size:15px">' + esc(r.like.q) + '</div><div class="mp-ra"><span>Your answer: <b>' + esc(r.like.mine || "(blank)") + '</b></span>' + (r.like.ok ? '' : '<span>Answer: <b>' + esc(r.like.right) + '</b></span>') + '</div></div>' : '') + '</div>';
   }).join("");
   if (sprint && !wrong) out += '<div class="cw-card"><p class="cw-tip" style="margin:0">Every one you tried was right. 👏</p></div>';
   return out + '<div style="height:24px"></div>';
 }
+/** Result: the pupil's working, checked line by line (✓ / ✗ and a note), and the pictures they handed in. */
+function mpWorkRes(i, r) {
+  var out = '', pics = (MP.picN || {})[i] || [];
+  if (pics.length) out += '<div class="mp-w mp-myw"><b>✏️ Your handwritten working</b></div>' + pics.map(function(pc) { return '<div class="wk-rpic"><img alt="Your working" src="data:' + pc.mime + ';base64,' + pc.data + '"></div>'; }).join("");
+  if (r.read && r.read.length) out += exWorkHtml(r.read.join("\n"), r.notes, true);
+  else if (mpHas(MP.work && MP.work[i])) out += r.notes ? exWorkHtml(MP.work[i], r.notes) : '<p class="mp-w mp-myw"><b>Your working:</b> ' + fracHtml(MP.work[i]) + '</p>';
+  return out;
+}
 /** How the paper went: by section and by topic, weakest topics first, with a button to practise each. */
 function mpBreakdown(D, R) {
   var sec = {}, top = {}, order = [];
-  R.items.forEach(function(q, i) { var r = D.results[i]; if (!r) return; var g = r.ok ? r.m : 0;
+  R.items.forEach(function(q, i) { var r = D.results[i]; if (!r) return; var g = r.ok ? r.m : (r.aw || 0);
     if (q.sec) { if (!sec[q.sec]) { sec[q.sec] = { got: 0, max: 0 }; order.push(q.sec); } sec[q.sec].got += g; sec[q.sec].max += r.m; }
     var t = q.t || "Other", o = top[t] || (top[t] = { got: 0, max: 0, tp: q.tp || "", hp: q.hp || "" }); o.got += g; o.max += r.m; });
   var tl = Object.keys(top).map(function(k) { return { t: k, got: top[k].got, max: top[k].max, tp: top[k].tp, hp: top[k].hp }; }).sort(function(a, b) { return a.got / a.max - b.got / b.max || b.max - a.max; });
@@ -5917,14 +5992,14 @@ function mpBreakdown(D, R) {
     '<div class="mp-h" style="font-size:16px;margin-top:12px">By topic</div>' + tl.map(function(x) { var pc = Math.round(100 * x.got / x.max);
       return '<div class="mp-trow"><div><b>' + esc(x.t) + '</b><div class="mp-bar"><i style="width:' + pc + '%" class="' + (pc >= 80 ? 'g' : pc >= 50 ? 'a' : 'r') + '"></i></div></div><span>' + x.got + '/' + x.max + '</span>' +
         (pc < 80 && (x.tp || x.hp) ? '<button class="btn soft" ' + (x.tp ? 'data-mptopic="' + esc(x.tp) + '"' : 'data-mpheur="' + esc(x.hp) + '"') + '>Practise</button>' : '<span></span>') + '</div>'; }).join("") +
-    '<p class="cw-tip" style="margin:10px 0 0">In a real exam, your working can earn marks even when the final answer is wrong. Here only answers are marked, so compare your working with the worked answer under each question.</p></div>';
+    '<p class="cw-tip" style="margin:10px 0 0">' + (D.workNote ? '⚠️ ' + esc(D.workNote) : 'Your working was marked too, like in a real exam: right steps can earn method marks even when the final answer is wrong. Compare it with the worked answer under each question.') + '</p></div>';
 }
 /** Paper 1 + Paper 2: out of 100, with a rough guide to the PSLE Achievement Level (SEAB's AL bands). */
 function mpFullCard(p1, p2) {
   if (p2.paper === "fp2") {   // 🌱 Foundation: out of 80; grades are AL A (75% and above), AL B (30% to 74%), AL C (below 30%)
     var ft = p1.got + p2.got, fm = p1.max + p2.max, pc = Math.round(100 * ft / fm), g = pc >= 75 ? "A" : pc >= 30 ? "B" : "C";
     return '<div class="cw-card mp-full"><div class="mp-h">🎓 Full Foundation paper: ' + ft + ' / ' + fm + '</div><table class="mp-tbl"><tbody><tr><td>Paper 1</td><td>' + p1.got + ' / ' + p1.max + '</td></tr><tr><td>Paper 2</td><td>' + p2.got + ' / ' + p2.max + '</td></tr></tbody></table>' +
-      '<div class="mp-al">AL ' + g + '</div><p class="cw-tip" style="margin:6px 0 0">A rough guide only: ' + pc + '% of the marks, using the PSLE Foundation bands (AL A is 75% and above, AL B is 30% to 74%). The real exam also gives marks for working.</p></div>';
+      '<div class="mp-al">AL ' + g + '</div><p class="cw-tip" style="margin:6px 0 0">A rough guide only: ' + pc + '% of the marks, using the PSLE Foundation bands (AL A is 75% and above, AL B is 30% to 74%), with method marks for working.</p></div>';
   }
   var tot = p1.got + p2.got, al = tot >= 90 ? 1 : tot >= 85 ? 2 : tot >= 80 ? 3 : tot >= 75 ? 4 : tot >= 65 ? 5 : tot >= 45 ? 6 : tot >= 20 ? 7 : 8;
   return '<div class="cw-card mp-full"><div class="mp-h">🎓 Full paper: ' + tot + ' / 100</div><table class="mp-tbl"><tbody><tr><td>Paper 1</td><td>' + p1.got + ' / 50</td></tr><tr><td>Paper 2</td><td>' + p2.got + ' / 50</td></tr></tbody></table>' +
