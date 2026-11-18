@@ -1473,6 +1473,7 @@
 .pm-des { display: flex; gap: 8px; } .pm-des button { flex: 1; font-size: 14px; }
 .pm-bday { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; } .pm-bday button { border: 2px dashed #E8B400; background: #FFF8E1; border-radius: 999px; padding: 8px 12px; font-weight: 700; font-size: 14px; color: #4A3200; }
 .pm-lbl { font-weight: 800; margin: 14px 0 6px; font-size: 15px; }
+.mb-allbtn { width: 100%; margin: 0 0 12px; }
 .pm-st { display: inline-block; border-radius: 999px; padding: 2px 9px; font-size: 12.5px; font-weight: 800; } .pm-st.Waiting { background: #FFF1C2; color: #6E4A00; } .pm-st.Sent { background: #DDF1E5; color: #1B5E3B; } .pm-st.no { background: #F1EEF4; color: #4A4560; }
 .pm-row { background: #fff; border: 1.5px solid var(--line); border-radius: 16px; padding: 10px 12px; margin-top: 8px; } .pm-row b { font-size: 15px; } .pm-row p { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .pcard.has-img { aspect-ratio: auto; } .pc-doodle { display: block; width: 100%; max-width: 420px; max-height: 260px; object-fit: contain; margin: 8px 0 4px; border-radius: 10px; background: #fff; border: 1px solid rgba(30,26,50,.12); } .pc-dwait { padding: 18px; text-align: center; color: #615D73; font-size: 13px; }
@@ -1882,7 +1883,7 @@ function clearBoots() {
    older version even after signing out and in. The server says which version is current (HUB_BUILD in Code.gs); when this
    page is older, it reloads itself past any saved copy (?v=…). In the middle of a paper it asks first: answers are saved,
    and after the update the paper opens again (tap "Carry on"). Tried once per version, so it can never loop. */
-var HUB_BUILD = "2026-11-18c";
+var HUB_BUILD = "2026-11-18d";
 function hubCheckBuild(b) {
   if (!b || b === HUB_BUILD || S.preview || store("upd_" + b)) return;
   var sitting = (EX.math && EX.math.sitting && EX.math.paper) || (EX.english && EX.english.sitting && EX.english.paper);
@@ -6822,7 +6823,7 @@ function renderMail() {
   $("topTitle").textContent = "Mailbox";
   var canSend = !!(S.home.mailbox && S.home.mailbox.send);
   $("app").innerHTML = '<div class="mb-head"><h2>📬 Mailbox</h2><p class="muted">Cards and certificates from ' + esc(S.home.teacher) + ' and your friends. Tap ⬇ PDF to keep a copy.</p>' +
-    (canSend ? '<button class="btn primary pm-send" data-pmnew>✉️ Send a card to a friend or teacher</button>' : '') + '</div><div id="mbList">' + SPIN + '</div><div id="pmList"></div>';
+    (canSend ? '<button class="btn primary pm-send" data-pmnew>✉️ Send a card to a friend or teacher</button>' : '') + '</div><div id="mbAll"></div><div id="mbList">' + SPIN + '</div><div id="pmList"></div>';
   call("mailApi", "list", "{}").then(function(r) { PCH.list = r.cards || []; PCH.certs = r.certs || []; if (r.emojis) PCH.emojis = r.emojis; pcHome(PCH.list); mbDraw(); pmDraw(); }).catch(function(e) { $("mbList").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
   if (canSend) pmLoad();
 }
@@ -6830,8 +6831,8 @@ function renderMail() {
    The teacher may check cards first. Cards from friends show here too. */
 var PM = { d: null, f: null };
 function pmLoad(after) { return call("pmApi", "home", "{}").then(function(r) { PM.d = r; pmDraw(); PCH.gotUnread = r.got.filter(function(c) { return c.unread; }).length; pcHome(PCH.list); if (after) after(); }).catch(function(e) { var el = $("pmList"); if (el) el.innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; }); }
-function pmStatus(c) { return c.status === "Sent" ? '<span class="pm-st Sent">' + (c.kind === "teacher" ? "✉️ Emailed" : "✅ Delivered") + '</span>' : c.status === "Waiting" ? '<span class="pm-st Waiting">⏳ Waiting for ' + esc(PM.d.teacher) + ' to check</span>' : '<span class="pm-st no">Not sent</span>'; }
-function pmMyFirst() { return String((S.home && (S.home.short || S.home.me)) || "").split(" ")[0]; }
+function pmStatus(c) { if (c.status === "Ready") return '<span class="pm-st Sent">✅ Approved: it’s in the next email to ' + esc(c.to) + '</span>'; return c.status === "Sent" ? '<span class="pm-st Sent">' + (c.kind === "teacher" ? "✉️ Emailed" : "✅ Delivered") + '</span>' : c.status === "Waiting" ? '<span class="pm-st Waiting">⏳ Waiting for ' + esc(PM.d.teacher) + ' to check</span>' : '<span class="pm-st no">Not sent</span>'; }
+function pmMyFirst() { return String((S.home && S.home.me) || ""); }   // 📛 cards are signed with the full name
 function pmGotCard(c) { var im = c.img ? (PM.imgs || {})[c.id] : ""; return { design: c.design, occasion: c.occasion, first: pmMyFirst(), message: c.message, img: im || "", imgWait: c.img && !im, signed: c.from, love: "From your friend,", when: c.when }; }
 function pmLoadImgs() {
   PM.imgs = PM.imgs || {}; PM.imgBusy = PM.imgBusy || {};
@@ -6843,10 +6844,10 @@ function pmDraw() {
   var got = d.got.map(function(c, i) { return '<div class="mb-item"><div class="mb-kind">💌 From ' + esc(c.from) + ' · ' + esc(c.when) + (c.unread ? ' <b class="mb-new">NEW</b>' : '') + '</div>' +
     '<button class="mb-open" data-pmopen="' + i + '" aria-label="Open the card from ' + esc(c.from) + '">' + pcCardHtml(pmGotCard(c), esc) + '</button></div>'; }).join("");
   var sent = d.sent.length ? '<div class="pm-sec">✉️ Cards you sent</div>' + d.sent.map(function(c) { return '<div class="pm-row"><b>' + esc(c.occasion) + '</b> to ' + esc(c.to) + ' · <span class="muted">' + esc(c.when) + '</span><div style="margin-top:4px">' + pmStatus(c) + (c.img ? ' <span class="pm-st no">🎨 with a drawing</span>' : '') + '</div>' + (c.edited ? '<div class="muted" style="font-size:13px;margin-top:4px">✏️ ' + esc(d.teacher) + ' changed a few words before sending.</div>' : '') + (c.message ? '<p>' + esc(c.message) + '</p>' : '') + '</div>'; }).join("") : '';
-  el.innerHTML = got + sent; pmLoadImgs();
+  el.innerHTML = got + sent; pmLoadImgs(); mbAllDraw();
   var mb = $("mbList"); if (mb && !PCH.list.length && !PCH.certs.length && !d.got.length && !mb.querySelector(".spin")) mb.innerHTML = '<div class="card" style="text-align:center"><div style="font-size:40px">📭</div><p class="muted">Nothing here yet. Why not send someone a card?</p></div>';
 }
-function pmWho(f) { var d = PM.d, who = f.kind === "teacher" ? (d.teachers.filter(function(t) { return t.id === f.to; })[0] || {}).name || "" : f.to; return f.kind === "teacher" ? who.replace(/\s*\(your form teacher\)$/, "") : String(who).split(" ")[0]; }
+function pmWho(f) { var d = PM.d, who = f.kind === "teacher" ? (d.teachers.filter(function(t) { return t.id === f.to; })[0] || {}).name || "" : f.to; return f.kind === "teacher" ? who.replace(/\s*\(your form teacher\)$/, "") : String(who); }   // 📛 full name
 function pmPrevCard(f) { return pcCardHtml({ design: f.design, occasion: (f.occasion || "Your card").replace(/^\S+\s/, ""), first: pmWho(f) || "…", message: f.message || (f.img ? "" : "Your message will appear here."), img: f.img || "", signed: (S.home.short || S.home.me), love: "From,", cls: S.home.className }, esc); }
 /* 🎨 The drawing pad: strokes are kept, so the drawing survives when the form redraws. Exported as a PNG (600 × 400). */
 var PM_COLS = ["#1E1A32", "#E5484D", "#F2A900", "#1BA672", "#2A78D6", "#8B5CF6"];
@@ -6892,7 +6893,7 @@ function pmForm() {
     '<div class="pm-lbl"><label for="pmMsg">Your message</label></div><textarea class="input" id="pmMsg" maxlength="400" rows="4" placeholder="Write something kind… (or just draw below)">' + esc(f.message) + '</textarea><div class="muted" style="text-align:right;font-size:13px"><span id="pmLeft">' + f.message.length + '</span> / 400</div>' +
     '<div class="pm-lbl">🎨 Draw on your card <span class="muted" style="font-weight:600">(you can draw, write, or both)</span></div>' + pmPadHtml() +
     '<div class="pm-lbl">Preview</div><div id="pmPrev">' + pmPrevCard(f) + '</div>' +
-    '<p class="muted" style="font-size:13.5px;margin:10px 0 0">' + '👀 ' + esc(d.teacher) + ' will check your card before it is sent. ' + 'Be kind: your name is on it. You can send up to ' + d.max + ' cards a day.</p>' +
+    '<p class="muted" style="font-size:13.5px;margin:10px 0 0">' + '👀 ' + esc(d.teacher) + ' will check your card before it is sent. ' + 'Be kind: your name is on it.' + (d.max ? ' You can send up to ' + d.max + ' cards a day.' : '') + '</p>' +
     '<button class="btn primary big" id="pmGo" style="width:100%;margin-top:12px">Send my card ✉️</button>';
   pmPadWire();
 }
@@ -6936,13 +6937,19 @@ document.addEventListener("click", function(e) {
 });
 function mbDraw() {
   var el = $("mbList"); if (!el) return;
-  var first = (S.home && (S.home.short || S.home.me)) || "";
+  var first = (S.home && S.home.me) || "";   // 📛 full name
   var cards = PCH.list.map(function(c, i) { return '<div class="mb-item"><div class="mb-kind">💌 Card · ' + esc(c.when) + (c.unread ? ' <b class="mb-new">NEW</b>' : '') + '</div>' +
-      '<button class="mb-open" data-mbcard="' + i + '" aria-label="Open the card">' + pcCardHtml({ design: c.design, occasion: c.occasion, first: c.first || String(first).split(" ")[0], message: c.message, signed: c.signed, cls: S.home.className, when: c.when }, esc) + '</button>' +
+      '<button class="mb-open" data-mbcard="' + i + '" aria-label="Open the card">' + pcCardHtml({ design: c.design, occasion: c.occasion, first: c.first || String(first), message: c.message, signed: c.signed, cls: S.home.className, when: c.when }, esc) + '</button>' +
       '<div class="mb-acts"><button class="btn soft" data-mbcard="' + i + '">Open</button><button class="btn primary" data-mbpdf="card" data-id="' + esc(c.id) + '">⬇ PDF</button></div>' + mbReplyHtml("card", c.id) + '</div>'; }).join("");
   var certs = PCH.certs.map(function(x) { return '<div class="mb-item"><div class="mb-kind">🏅 Certificate · ' + esc(x.when) + '</div><div class="mb-cert"><div class="mb-medal">🏅</div><div><b>Certificate of Appreciation</b><div class="mb-roles">' + x.roles.map(function(r) { return '<span>★ ' + esc(r) + '</span>'; }).join("") + '</div>' + (x.message ? '<p>' + esc(x.message) + '</p>' : '') + '<div class="muted">' + esc(x.term) + '</div></div></div>' +
       '<div class="mb-acts"><button class="btn primary" data-mbpdf="cert" data-id="' + esc(x.id) + '">⬇ Download PDF</button></div>' + mbReplyHtml("cert", x.id) + '</div>'; }).join("");
+  mbAllDraw();
   el.innerHTML = cards + certs || (S.home.mailbox && S.home.mailbox.send ? '' : '<div class="card" style="text-align:center"><div style="font-size:40px">📭</div><p class="muted">Nothing here yet.</p></div>');
+}
+/** 📄 Two or more cards: all of them (from the teacher and from friends) in one PDF. */
+function mbAllDraw() {
+  var el = $("mbAll"); if (!el) return; var n = (PCH.list || []).length + (PM.d && PM.d.got ? PM.d.got.length : 0);
+  el.innerHTML = n >= 2 ? '<button class="btn soft mb-allbtn" data-mbpdf="all" data-id="">📄 All ' + n + ' cards in one PDF</button>' : '';
 }
 /** Saves a PDF the app sends (base64) on this device. */
 function mbSave(name, b64) {
@@ -6961,7 +6968,7 @@ function pcShow(i) {
   var list = PCH.list; if (!list.length) return; i = Math.max(0, Math.min(list.length - 1, i));
   var c = list[i], first = (S.home && S.home.short) || (S.home && S.home.me) || "";
   if (!document.getElementById("pcFonts")) { var l = document.createElement("link"); l.id = "pcFonts"; l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;800&family=Nothing+You+Could+Do&display=swap"; document.head.appendChild(l); }
-  sheet("A card from " + (c.signed || S.home.teacher), '<div class="pc-wrap">' + pcCardHtml({ design: c.design, occasion: c.occasion, first: c.first || String(first).split(" ")[0], message: c.message, signed: c.signed, cls: S.home.className, when: c.when }, esc) + '</div>' +
+  sheet("A card from " + (c.signed || S.home.teacher), '<div class="pc-wrap">' + pcCardHtml({ design: c.design, occasion: c.occasion, first: c.first || String(first), message: c.message, signed: c.signed, cls: S.home.className, when: c.when }, esc) + '</div>' +
     (list.length > 1 ? '<div class="pc-more">' + list.map(function(x, k) { return '<button class="chip' + (k === i ? ' on' : '') + '" data-pcone="' + k + '">' + esc(x.occasion) + (x.unread ? ' •' : '') + '</button>'; }).join("") + '</div>' : '') +
     '<div class="mb-acts" style="margin-top:12px"><button class="btn soft" data-close>Close</button><button class="btn primary" id="pcSheetPdf">⬇ PDF</button></div>' + mbReplyHtml("card", c.id));
   Array.prototype.forEach.call(document.querySelectorAll("[data-pcone]"), function(b) { b.onclick = function() { pcShow(+b.getAttribute("data-pcone")); }; });
