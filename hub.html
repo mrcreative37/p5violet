@@ -1496,6 +1496,25 @@
 .ex-retry-bar { background: #FFF8E1; border: 2px solid #E8B400; border-radius: 16px; padding: 10px 14px; margin: 10px 0; font-weight: 700; line-height: 1.45; }
 .hub-upd { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(86px + env(safe-area-inset-bottom)); z-index: 90; width: min(560px, calc(100% - 24px)); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: space-between; background: #FFF8E1; border: 2px solid #1E1A32; border-radius: 16px; padding: 10px 12px; box-shadow: 3px 4px 0 #1E1A32; font-weight: 700; line-height: 1.4; }
 .hub-upd span { flex: 1; min-width: 180px; }
+/* 📷 photos from pupils */
+#puBar { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 12px; } #puBar .pu-add { flex: 1 1 220px; } #puBar .pu-mine { flex: 0 1 auto; }
+.pu-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; } .pu-pick .btn { width: 100%; cursor: pointer; text-align: center; justify-content: center; }
+@media (max-width: 380px) { .pu-pick { grid-template-columns: 1fr; } }
+.pu-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.pu-it { position: relative; background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 6px; } .pu-it img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; display: block; }
+.pu-it .input { margin-top: 6px; min-height: 40px; font-size: 14px; } .pu-x { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; border-radius: 50%; border: 0; background: rgba(30,26,50,.78); color: #fff; font-size: 16px; }
+.pu-st { font-size: 13px; font-weight: 800; margin-top: 4px; } .pu-st.ok { color: #1B8A4C; } .pu-st.no { color: #B3261E; }
+.pu-alb { font-weight: 800; margin: 4px 0; } .pu-l { font-weight: 800; display: block; margin: 0 0 6px; } .pu-left { margin: 8px 0; font-size: 14px; }
+.pu-rules ul { padding-left: 4px; list-style: none; } .pu-rules li { margin: 0 0 10px; line-height: 1.5; }
+.pu-m { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line); } .pu-m img { width: 72px; height: 72px; object-fit: cover; border-radius: 10px; background: #EEE; flex: none; } .pu-mt { font-weight: 700; margin-bottom: 2px; }
+.vcap { position: absolute; left: 50%; transform: translateX(-50%); bottom: 64px; max-width: min(92vw, 640px); background: rgba(20,16,36,.72); color: #fff; font-size: 14px; font-weight: 700; padding: 6px 12px; border-radius: 999px; text-align: center; z-index: 3; }
+.pc-pic { display: block; max-width: 100%; max-height: 240px; object-fit: contain; margin: 8px 0 2px; border-radius: 10px; } .pc-credit { font-size: 10.5px; color: #7A7590; margin: 0 0 4px; }
+.pm-picbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; } .pm-picbtns .btn { width: 100%; justify-content: center; cursor: pointer; min-height: 48px; }
+.pm-picnow { display: flex; gap: 10px; align-items: center; background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 8px; margin: 0 0 8px; } .pm-picnow img { width: 84px; height: 84px; object-fit: cover; border-radius: 10px; }
+.pm-pick { background: #fff; border: 2px solid var(--line); border-radius: 16px; padding: 10px; margin-top: 8px; }
+.pm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 6px; margin-top: 8px; max-height: 360px; overflow: auto; } .pm-grid button { border: 0; padding: 0; background: #EEE; border-radius: 10px; overflow: hidden; aspect-ratio: 1; cursor: pointer; } .pm-grid img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pm-albs { display: flex; gap: 6px; flex-wrap: wrap; } .pm-albs button { border: 2px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 12px; font: inherit; font-weight: 700; font-size: 14px; } .pm-albs button.on { border-color: var(--violet-2); background: #F6EEF5; }
+.pm-giphy { font-size: 11px; font-weight: 800; color: #5E5A70; text-align: right; margin-top: 4px; letter-spacing: .02em; }
 </style>
 </head>
 <body>
@@ -1885,7 +1904,7 @@ function clearBoots() {
    older version even after signing out and in. The server says which version is current (HUB_BUILD in Code.gs); when this
    page is older, it reloads itself past any saved copy (?v=…). In the middle of a paper it asks first: answers are saved,
    and after the update the paper opens again (tap "Carry on"). Tried once per version, so it can never loop. */
-var HUB_BUILD = "2026-11-18e";
+var HUB_BUILD = "2026-11-18g";
 function hubCheckBuild(b) {
   if (!b || b === HUB_BUILD || S.preview || store("upd_" + b)) return;
   var sitting = (EX.math && EX.math.sitting && EX.math.paper) || (EX.english && EX.english.sitting && EX.english.paper);
@@ -6678,9 +6697,9 @@ function sheet(title, html) {
 function pcCardHtml(c, esc2) {
   var e = esc2 || function(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); };
   var d = /^(bright|classic|sky)$/.test(c.design) ? c.design : "bright", L = String(c.message || "").length;
-  return '<div class="pcard pc-' + d + (c.img || c.imgWait ? ' has-img' : '') + '"><div class="pc-panel"><span class="pc-b1"></span><span class="pc-b2"></span><span class="pc-b3"></span><span class="pc-star">★</span>' +
+  return '<div class="pcard pc-' + d + (c.img || c.imgWait || c.pic || c.picWait ? ' has-img' : '') + '"><div class="pc-panel"><span class="pc-b1"></span><span class="pc-b2"></span><span class="pc-b3"></span><span class="pc-star">★</span>' +
     '<div class="pc-occ">' + e(c.occasion || "") + '</div><div class="pc-for">for ' + e(c.first || "") + '</div></div>' +
-    '<div class="pc-letter"><div class="pc-dear">Dear ' + e(c.first || "") + ',</div><div class="pc-msg' + (L > 420 ? ' s2' : L > 260 ? ' s1' : '') + '">' + e(c.message || "").replace(/\n/g, "<br>") + '</div>' +
+    '<div class="pc-letter"><div class="pc-dear">Dear ' + e(c.first || "") + ',</div><div class="pc-msg' + (L > 420 ? ' s2' : L > 260 ? ' s1' : '') + '">' + e(c.message || "").replace(/\n/g, "<br>") + '</div>' + (c.pic && /^(data:image\/(png|jpeg|gif|webp);base64,|blob:|https:\/\/(media\d*\.giphy\.com|i\.giphy\.com|api\.openverse\.org)\/)/.test(c.pic) ? '<img class="pc-pic" src="' + e(c.pic) + '" alt="A picture">' + (c.picCredit ? '<div class="pc-credit">' + e(c.picCredit) + '</div>' : '') : c.picWait ? '<div class="pc-pic pc-dwait">🖼️ Loading the picture…</div>' : '') + 
     (c.img && /^data:image\/(png|jpeg);base64,[A-Za-z0-9+\/=]+$/.test(c.img) ? '<img class="pc-doodle" src="' + c.img + '" alt="A drawing">' : c.imgWait ? '<div class="pc-doodle pc-dwait">🎨 Loading the drawing…</div>' : '') + '<div class="pc-love">' + e(c.love || "With love and pride,") + '</div><div class="pc-sign">' + e(c.signed || "") + '</div>' + (c.cls || c.when ? '<div class="pc-meta">' + e([c.cls, c.when].filter(Boolean).join(" · ")) + '</div>' : '') + '</div></div>';
 }
 
@@ -6848,11 +6867,12 @@ function pmRepliesHtml(c) {
     (x.emoji && x.emoji.length ? '<div class="pm-rem" aria-label="Emojis">' + x.emoji.map(esc).join(" ") + '</div>' : '') + (x.text ? '<p>' + esc(x.text).replace(/\n/g, "<br>") + '</p>' : '') + '</div>'; }).join("");
 }
 function pmMyFirst() { return String((S.home && S.home.me) || ""); }   // 📛 cards are signed with the full name
-function pmGotCard(c) { var im = c.img ? (PM.imgs || {})[c.id] : ""; return { design: c.design, occasion: c.occasion, first: pmMyFirst(), message: c.message, img: im || "", imgWait: c.img && !im, signed: c.from, love: "From your friend,", when: c.when }; }
+function pmGotCard(c) { var im = c.img ? (PM.imgs || {})[c.id] : "", pi = c.pic ? (PM.pics || {})[c.id] : ""; return { design: c.design, pic: pi || "", picWait: c.pic && !pi, picCredit: c.picCredit || "", occasion: c.occasion, first: pmMyFirst(), message: c.message, img: im || "", imgWait: c.img && !im, signed: c.from, love: "From your friend,", when: c.when }; }
 function pmLoadImgs() {
   PM.imgs = PM.imgs || {}; PM.imgBusy = PM.imgBusy || {};
-  PM.d.got.forEach(function(c) { if (!c.img || PM.imgs[c.id] || PM.imgBusy[c.id]) return; PM.imgBusy[c.id] = 1;
-    call("pmApi", "img", JSON.stringify({ id: c.id })).then(function(r) { PM.imgs[c.id] = r.img || ""; delete PM.imgBusy[c.id]; pmDraw(); var sc = document.querySelector("#sheet [data-pmcard=\"" + c.id + "\"]"); if (sc) sc.innerHTML = pcCardHtml(pmGotCard(c), esc); }).catch(function() { delete PM.imgBusy[c.id]; }); });
+  PM.pics = PM.pics || {};
+  PM.d.got.forEach(function(c) { if ((!c.img && !c.pic) || PM.imgs[c.id] != null || PM.imgBusy[c.id]) return; PM.imgBusy[c.id] = 1;
+    call("pmApi", "img", JSON.stringify({ id: c.id })).then(function(r) { PM.imgs[c.id] = r.img || ""; PM.pics[c.id] = r.pic || ""; delete PM.imgBusy[c.id]; pmDraw(); var sc = document.querySelector("#sheet [data-pmcard=\"" + c.id + "\"]"); if (sc) sc.innerHTML = pcCardHtml(pmGotCard(c), esc); }).catch(function() { delete PM.imgBusy[c.id]; }); });
 }
 function pmDraw() {
   var el = $("pmList"), d = PM.d; if (!el || !d) return;
@@ -6863,7 +6883,79 @@ function pmDraw() {
   var mb = $("mbList"); if (mb && !PCH.list.length && !PCH.certs.length && !d.got.length && !mb.querySelector(".spin")) mb.innerHTML = '<div class="card" style="text-align:center"><div style="font-size:40px">📭</div><p class="muted">Nothing here yet. Why not send someone a card?</p></div>';
 }
 function pmWho(f) { var d = PM.d, who = f.kind === "teacher" ? (d.teachers.filter(function(t) { return t.id === f.to; })[0] || {}).name || "" : f.to; return f.kind === "teacher" ? who.replace(/\s*\(your form teacher\)$/, "") : String(who); }   // 📛 full name
-function pmPrevCard(f) { return pcCardHtml({ design: f.design, occasion: (f.occasion || "Your card").replace(/^\S+\s/, ""), first: pmWho(f) || "…", message: f.message || (f.img ? "" : "Your message will appear here."), img: f.img || "", signed: (S.home.short || S.home.me), love: "From,", cls: S.home.className }, esc); }
+
+/* 🖼️ A PICTURE ON A CARD: a photo (camera or device; redrawn here, so no location data), a class photo, a G-rated GIF
+   (GIPHY, searched on this device as GIPHY asks) or an openly licensed picture (Openverse). Searches are checked first. */
+function pmPicHtml(f) {
+  var d = PM.d, P = PM.pick || {}, pic = f.pic;
+  var out = '<div class="pm-lbl">🖼️ Add a picture <span class="muted" style="font-weight:600">(optional)</span></div>';
+  if (pic) out += '<div class="pm-picnow"><img src="' + esc(pic.preview) + '" alt="Your picture"><div><b>' + (pic.kind === "gif" ? "A GIF" : pic.kind === "web" ? "A picture from the internet" : pic.kind === "album" ? "A class photo" : "Your photo") + '</b>' + (pic.credit ? '<div class="muted" style="font-size:12px">' + esc(pic.credit) + '</div>' : '') + '<button class="link-btn" data-pmpicx>Take it off</button></div></div>';
+  out += '<div class="pm-picbtns"><label class="btn soft"><input type="file" accept="image/*" capture="environment" data-pmpicfile hidden>📷 Take a photo</label><label class="btn soft"><input type="file" accept="image/*" data-pmpicfile hidden>📱 From my device</label>' +
+    (d.photos ? '<button class="btn soft" data-pmpick="album">🏫 Class photos</button>' : '') + (d.web ? '<button class="btn soft" data-pmpick="search">🔎 ' + (d.gifKey ? 'GIFs & pictures' : 'Pictures') + '</button>' : '') + '</div>';
+  if (P.mode === "album") {
+    out += '<div class="pm-pick">' + (P.albums ? '<div class="pm-albs">' + P.albums.map(function(a) { return '<button class="' + (a.id === P.album ? 'on' : '') + '" data-pmalb="' + esc(a.id) + '">' + esc(a.name) + '</button>'; }).join("") + '</div>' : '<p class="muted">Loading the albums…</p>') +
+      (P.photos ? (P.photos.length ? '<div class="pm-grid">' + P.photos.map(function(x) { return '<button data-pmalbpic="' + esc(x.id) + '" aria-label="Choose this photo"><img src="' + esc(x.url) + '" alt=""></button>'; }).join("") + '</div>' : '<p class="muted">No photos here.</p>') : P.album ? '<p class="muted">Loading…</p>' : '') + '</div>';
+  }
+  if (P.mode === "search") {
+    out += '<div class="pm-pick"><div style="display:flex;gap:6px"><input class="input" id="pmQ" maxlength="40" placeholder="e.g. birthday cake, thank you, dog" value="' + esc(P.q || "") + '" enterkeyhint="search"><button class="btn primary" data-pmsearch>Search</button></div>' +
+      (d.gifKey ? '<div class="pm-seg" role="tablist" style="margin-top:8px"><button data-pmtab="gif" class="' + (P.tab !== "web" ? "on" : "") + '">GIFs</button><button data-pmtab="web" class="' + (P.tab === "web" ? "on" : "") + '">Pictures</button></div>' : '') +
+      (P.err ? '<div class="msg err">' + esc(P.err) + '</div>' : '') + (P.busy ? '<p class="muted">Searching…</p>' : '');
+    var tab = d.gifKey && P.tab !== "web" ? "gif" : "web", L = tab === "gif" ? P.gifs : P.web;
+    if (L && !P.busy) out += L.length ? '<div class="pm-grid">' + L.map(function(x, i) { return '<button data-pmres="' + tab + '|' + i + '" aria-label="Choose"><img src="' + esc(x.thumb) + '" alt="' + esc(x.title || "") + '" loading="lazy"></button>'; }).join("") + '</div>' : '<p class="muted">Nothing found. Try other words.</p>';
+    out += tab === "gif" && L ? '<div class="pm-giphy">Powered by GIPHY</div>' : (L && tab === "web" ? '<div class="pm-giphy">Openly licensed pictures from Openverse</div>' : '');
+    out += '<p class="muted" style="font-size:12.5px;margin:6px 0 0">Search for kind, happy things. ' + esc(d.teacher) + ' sees every picture before the card goes.</p></div>';
+  }
+  return out;
+}
+function pmPickDraw() { var el = $("pmForm"); if (!el) return; var sh = $("sheet"), y = sh ? sh.scrollTop : 0; pmForm(); if (sh) sh.scrollTop = y; }
+function pmSearch() {
+  var P = PM.pick, q = ($("pmQ") || {}).value || ""; P.q = q.trim(); if (!P.q) return;
+  P.busy = true; P.err = ""; P.gifs = null; P.web = null; pmPickDraw();
+  call("pmApi", "search", JSON.stringify({ q: P.q })).then(function(r) {
+    var jobs = [];
+    if (r.web) P.web = r.web;
+    else jobs.push(fetch("https://api.openverse.org/v1/images/?q=" + encodeURIComponent(r.q) + "&page_size=24&mature=false").then(function(x) { return x.json(); }).then(function(j) { P.web = (j.results || []).filter(function(x) { return !x.mature; }).map(function(x) { return { id: x.id, thumb: "https://api.openverse.org/v1/images/" + x.id + "/thumb/", title: x.title || "", creator: x.creator || "", license: String(x.license || "").toUpperCase() + (x.license_version ? " " + x.license_version : "") }; }); }).catch(function() { P.web = []; }));
+    if (PM.d.gifKey) jobs.push(fetch("https://api.giphy.com/v1/gifs/search?api_key=" + encodeURIComponent(PM.d.gifKey) + "&q=" + encodeURIComponent(r.q) + "&limit=24&rating=g&lang=en").then(function(x) { return x.json(); }).then(function(j) {
+      P.gifs = (j.data || []).filter(function(g) { return g.rating === "g" && g.images && g.images.fixed_width_small; }).map(function(g) { return { id: g.id, thumb: g.images.fixed_width_small.url, big: (g.images.fixed_height || g.images.fixed_width_small).url, title: g.title || "" }; });
+    }).catch(function() { P.gifs = []; P.err = "GIFs couldn’t be searched just now."; }));
+    return Promise.all(jobs).then(function() { P.busy = false; pmPickDraw(); });
+  }, function(e) { P.busy = false; P.err = e.message; pmPickDraw(); });
+}
+document.addEventListener("change", function(e) {
+  var t = e.target; if (!t || !t.hasAttribute || !t.hasAttribute("data-pmpicfile") || !PM.f) return;
+  var f0 = t.files && t.files[0]; t.value = ""; if (!f0) return;
+  puPrep(f0).then(function(r) { PM.f.pic = { kind: "photo", data: r.photo, preview: r.thumb }; PM.pick = null; pmPickDraw(); }, function(x) { flash(x.message, true); });
+});
+document.addEventListener("keydown", function(e) { if (e.target && e.target.id === "pmQ" && e.key === "Enter") { e.preventDefault(); pmSearch(); } });
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-pmpick],[data-pmpicx],[data-pmalb],[data-pmalbpic],[data-pmsearch],[data-pmtab],[data-pmres]"); if (!t || !PM.f) return;
+  var P = PM.pick = PM.pick || {};
+  if (t.hasAttribute("data-pmpicx")) { PM.f.pic = null; return pmPickDraw(); }
+  if (t.hasAttribute("data-pmpick")) {
+    var m = t.getAttribute("data-pmpick"); if (P.mode === m) { PM.pick = null; return pmPickDraw(); }
+    PM.pick = P = { mode: m, tab: "gif" }; pmPickDraw();
+    if (m === "album") call("hubAlbums").then(function(all) { P.albums = all.filter(function(a) { return a.count > 0; }).map(function(a) { return { id: a.id, name: a.me ? "📸 Photos of me" : a.name }; }); pmPickDraw(); }, function(x) { P.albums = []; flash(x.message, true); });
+    else setTimeout(function() { var q = $("pmQ"); if (q) q.focus(); }, 50);
+    return;
+  }
+  if (t.hasAttribute("data-pmalb")) {
+    P.album = t.getAttribute("data-pmalb"); P.photos = null; pmPickDraw();
+    call("hubAlbum", P.album).then(function(a) {
+      var first = a.first || {}, ids = (a.photos || []).slice(0, 18).filter(function(id) { return first[id]; });
+      return Promise.all(ids.map(function(id) { return toUrl(first[id]).then(function(u) { return { id: id, url: u }; }); })).then(function(L) { P.photos = L; pmPickDraw(); });
+    }, function(x) { P.photos = []; flash(x.message, true); pmPickDraw(); });
+    return;
+  }
+  if (t.hasAttribute("data-pmalbpic")) { var aid = t.getAttribute("data-pmalbpic"), ph = P.photos.filter(function(x) { return x.id === aid; })[0]; PM.f.pic = { kind: "album", album: P.album, id: aid, preview: ph.url }; PM.pick = null; return pmPickDraw(); }
+  if (t.hasAttribute("data-pmsearch")) return pmSearch();
+  if (t.hasAttribute("data-pmtab")) { P.tab = t.getAttribute("data-pmtab"); return pmPickDraw(); }
+  if (t.hasAttribute("data-pmres")) {
+    var sp = t.getAttribute("data-pmres").split("|"), x2 = (sp[0] === "gif" ? P.gifs : P.web)[+sp[1]]; if (!x2) return;
+    PM.f.pic = sp[0] === "gif" ? { kind: "gif", id: x2.id, preview: x2.big, credit: "GIF via GIPHY" } : { kind: "web", id: x2.id, preview: x2.thumb, credit: "Picture" + (x2.creator ? " by " + x2.creator : "") + (x2.license ? " (" + x2.license + ")" : "") + " via Openverse" };
+    PM.pick = null; return pmPickDraw();
+  }
+});
+function pmPrevCard(f) { return pcCardHtml({ design: f.design, occasion: (f.occasion || "Your card").replace(/^\S+\s/, ""), first: pmWho(f) || "…", message: f.message || (f.img || f.pic ? "" : "Your message will appear here."), img: f.img || "", pic: f.pic ? f.pic.preview : "", picCredit: f.pic ? f.pic.credit : "", signed: S.home.me, love: "From,", cls: S.home.className }, esc); }
 /* 🎨 The drawing pad: strokes are kept, so the drawing survives when the form redraws. Exported as a PNG (600 × 400). */
 var PM_COLS = ["#1E1A32", "#E5484D", "#F2A900", "#1BA672", "#2A78D6", "#8B5CF6"];
 function pmPadHtml() {
@@ -6906,6 +6998,7 @@ function pmForm() {
     '<div class="pm-lbl">What is it for?</div><div class="pm-occ">' + d.occasions.map(function(o) { return '<button data-pmocc="' + esc(o) + '" class="' + (o === f.occasion ? "on" : "") + '" aria-pressed="' + (o === f.occasion) + '">' + esc(o) + '</button>'; }).join("") + '</div>' +
     '<div class="pm-lbl">Colours</div><div class="pm-des">' + [["bright", "🌈 Bright"], ["classic", "⭐ Navy & gold"], ["sky", "☁️ Sky"]].map(function(x) { return '<button data-pmdes="' + x[0] + '" class="' + (x[0] === f.design ? "on" : "") + '" aria-pressed="' + (x[0] === f.design) + '">' + x[1] + '</button>'; }).join("") + '</div>' +
     '<div class="pm-lbl"><label for="pmMsg">Your message</label></div><textarea class="input" id="pmMsg" maxlength="400" rows="4" placeholder="Write something kind… (or just draw below)">' + esc(f.message) + '</textarea><div class="muted" style="text-align:right;font-size:13px"><span id="pmLeft">' + f.message.length + '</span> / 400</div>' +
+    pmPicHtml(f) +
     '<div class="pm-lbl">🎨 Draw on your card <span class="muted" style="font-weight:600">(you can draw, write, or both)</span></div>' + pmPadHtml() +
     '<div class="pm-lbl">Preview</div><div id="pmPrev">' + pmPrevCard(f) + '</div>' +
     '<p class="muted" style="font-size:13.5px;margin:10px 0 0">' + '👀 ' + esc(d.teacher) + ' will check your card before it is sent. ' + 'Be kind: your name is on it.' + (d.max ? ' You can send up to ' + d.max + ' cards a day.' : '') + '</p>' +
@@ -6942,9 +7035,9 @@ document.addEventListener("click", function(e) {
   if (t.id === "pmGo") {
     if (!f.to) return flash(f.kind === "teacher" ? "Choose a teacher." : "Choose a classmate.", true, $("sheetBody"));
     if (!f.occasion) return flash("Choose what the card is for.", true, $("sheetBody"));
-    if (f.message.replace(/\s/g, "").length < 2 && !f.img) return flash("Write a message or draw something on your card.", true, $("sheetBody"));
+    if (f.message.replace(/\s/g, "").length < 2 && !f.img && !f.pic) return flash("Write a message, draw something or add a picture.", true, $("sheetBody"));
     var done = busy(t, "Sending…");
-    call("pmApi", "send", JSON.stringify({ kind: f.kind, to: f.to, occasion: f.occasion, design: f.design, message: f.message, img: f.img || "" })).then(function(r) {
+    call("pmApi", "send", JSON.stringify({ kind: f.kind, to: f.to, occasion: f.occasion, design: f.design, message: f.message, img: f.img || "", pic: f.pic ? { kind: f.pic.kind, data: f.pic.data, id: f.pic.id, album: f.pic.album } : null })).then(function(r) {
       done(); PM.d = r; PM.f = null; closeSheet(); pmDraw();
       flash("✉️ Sent to " + r.teacher + " to check first. It will say “Delivered” when it goes.");
     }, function(err) { done(); flash(err.message, true, $("sheetBody")); });
@@ -7370,11 +7463,12 @@ function renderPhotos() {
     var me = all.filter(function(a) { return a.me; })[0], list = all.filter(function(a) { return !a.me; });
     // 📸 two tabs: the class albums, and only the photos this pupil is in
     var tabs = me ? '<div class="en-sw ph-sw" role="tablist" style="margin:0 0 12px"><button role="tab" class="on" aria-selected="true">🖼️ Class albums</button><button role="tab" data-phme aria-selected="false">📸 Photos of me' + (me.count ? ' · ' + me.count : '') + '</button></div>' : '';
-    $("app").innerHTML = '<div class="cheer-hero"><span class="hand">Our memories</span><h1>Photos</h1><p>Class albums, and the photos you are in.</p></div>' + tabs + (list.length ? '<div class="albums" id="albums">' + list.map(function(a, i) {
+    $("app").innerHTML = '<div class="cheer-hero"><span class="hand">Our memories</span><h1>Photos</h1><p>Class albums, and the photos you are in.</p></div><div id="puBar"></div>' + tabs + (list.length ? '<div class="albums" id="albums">' + list.map(function(a, i) {
       return '<button class="album" data-al="' + esc(a.id) + '" style="--r:' + [-2, 1.5, -1, 2, -1.5, 1][i % 6] + 'deg"><div class="stack"><div class="pol"><img class="cv" alt="" data-img="' + esc(a.cover) + '"></div></div>' +
         '<b>' + esc(a.name) + '</b><small>' + a.count + ' photo' + (a.count === 1 ? "" : "s") + '</small></button>';
     }).join("") + '</div>' : '<div class="empty"><span class="e">🖼️</span><span class="hand">No photos yet</span>' + esc(S.home.teacher) + ' will add class photos here.</div>');
     var meb = document.querySelector("[data-phme]"); if (meb) meb.onclick = function() { openAlbum("__me"); };
+    puLoad();
     var al = $("albums");
     if (al) {
       al.onclick = function(e) { var b = e.target.closest("[data-al]"); if (!b) return; openAlbum(b.getAttribute("data-al")); };
@@ -7382,6 +7476,85 @@ function renderPhotos() {
       list.forEach(function(a) { if (a.cover && !S.imgs["s" + a.cover]) wantImgs([a.cover], "s", "hubGalleryImages", [a.id]); });
     }
   }).catch(function(e) { $("app").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+}
+
+/* 📷 PHOTOS FROM PUPILS: only when the teacher has switched it on. Take a photo (Android phone or iPad camera) or choose
+   some; each is redrawn on this device first (about 1600 px, JPEG), which also drops hidden details such as GPS location.
+   Every photo waits for the teacher, who adds it to the album. */
+var PU = { d: null, files: [], busy: false };
+function puLoad() {
+  if (S.preview) return;
+  call("puApi", "home", "{}").then(function(d) { PU.d = d; puBar(); }).catch(function() {});
+}
+function puLeft() { var d = PU.d; return d && d.max ? Math.max(0, d.max - d.today) : 99; }
+function puBar() {
+  var el = $("puBar"), d = PU.d; if (!el || !d) return;
+  var mine = d.mine.length, wait = d.mine.filter(function(x) { return x.status === "Waiting"; }).length;
+  el.innerHTML = (d.on ? '<button class="btn primary big pu-add" data-puadd>📷 Add photos</button>' : '') +
+    (mine ? '<button class="btn soft pu-mine" data-pumine>🗂️ My photos' + (wait ? ' · ' + wait + ' waiting' : '') + '</button>' : '');
+}
+function puRules() {
+  sheet("📷 Before you add photos", '<div class="pu-rules"><p>Photos you add go to <b>' + esc(PU.d.teacher) + '</b> first. When they’re added to the album, everyone in our class can see them.</p><ul>' +
+    '<li>📸 Only kind photos of <b>our class</b> and our learning.</li><li>🙋 Ask your friends before you take their photo.</li><li>🚫 No photos of other people, homes, screens or anything private.</li><li>🔒 Photos are for our class only. Don’t share them anywhere else.</li></ul>' +
+    '<button class="btn primary big" data-puok style="width:100%">I understand</button></div>');
+}
+function puCompose() {
+  var d = PU.d, left = puLeft(), at = PU.album || (d.albums[0] || {}).id;
+  if (!d.on) { flash("Adding photos is closed right now."); return; }
+  if (!left) { flash("That’s " + d.max + " photos today, the most for one day. Try again tomorrow!"); return; }
+  var html = '<div class="pu-form">' + (d.albums.length > 1 ? '<label class="pu-l" for="puAlb">Which album?</label><select class="input" id="puAlb">' + d.albums.map(function(a) { return '<option value="' + esc(a.id) + '"' + (a.id === at ? ' selected' : '') + '>' + esc(a.name) + '</option>'; }).join("") + '</select>' : '<div class="pu-alb">🖼️ ' + esc(d.albums[0].name) + '</div>') +
+    '<div class="pu-pick"><label class="btn primary big"><input type="file" accept="image/*" capture="environment" data-pufile hidden>📷 Take a photo</label><label class="btn soft big"><input type="file" accept="image/*" multiple data-pufile hidden>🖼️ Choose photos</label></div>' +
+    '<div id="puList" class="pu-list"></div><p class="muted pu-left" id="puLeft"></p><div id="puErr"></div>' +
+    '<button class="btn primary big" id="puGo" disabled style="width:100%">Send</button><p class="muted" style="font-size:13px;margin:8px 0 0">' + esc(d.teacher) + ' checks every photo before it goes in the album.' + (d.credit ? ' Your name shows under photos that are added.' : '') + '</p></div>';
+  sheet("📷 Add photos", html); PU.files = []; puDraw();
+  var sel = $("puAlb"); if (sel) sel.onchange = function() { PU.album = sel.value; };
+}
+function puDraw() {
+  var el = $("puList"); if (!el) return; var left = puLeft();
+  el.innerHTML = PU.files.map(function(f, i) { return '<div class="pu-it"><img src="' + f.thumb + '" alt="Your photo ' + (i + 1) + '"><button class="pu-x" data-pux="' + i + '" aria-label="Take this photo out">✕</button>' +
+    '<input class="input" data-pucap="' + i + '" maxlength="120" placeholder="Say what it is (optional)" value="' + esc(f.cap || "") + '" aria-label="Caption for photo ' + (i + 1) + '">' + (f.st ? '<div class="pu-st ' + f.st + '">' + (f.st === "ok" ? "✅ Sent" : f.st === "go" ? "⏳ Sending…" : "⚠️ " + esc(f.err || "Not sent")) + '</div>' : '') + '</div>'; }).join("");
+  var n = PU.files.filter(function(f) { return f.st !== "ok"; }).length, go = $("puGo");
+  if (go) { go.disabled = !n || PU.busy; go.textContent = PU.busy ? "Sending…" : n ? "📤 Send " + n + " photo" + (n === 1 ? "" : "s") + " to " + PU.d.teacher : "Send"; }
+  var lf = $("puLeft"); if (lf) lf.textContent = PU.d.max ? "You can add " + Math.max(0, left - n) + " more photo" + (left - n === 1 ? "" : "s") + " today." : "";
+}
+/** A photo, redrawn on this device: the big copy (≤ 1600 px) and a small one, both JPEG (no location or other hidden details). */
+function puPrep(file) {
+  var draw = function(src, w, h, max, q) { var k = Math.min(1, max / Math.max(w, h)), c = document.createElement("canvas"); c.width = Math.max(1, Math.round(w * k)); c.height = Math.max(1, Math.round(h * k)); var x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(src, 0, 0, c.width, c.height); return c.toDataURL("image/jpeg", q); };
+  var finish = function(src, w, h) { var big = draw(src, w, h, 1600, 0.85), q = 0.8; while (big.length > 3800000 && q > 0.45) { big = draw(src, w, h, 1600, q); q -= 0.1; } return { photo: big, thumb: draw(src, w, h, 360, 0.72) }; };
+  var viaImg = function() { return new Promise(function(res, rej) { var u = URL.createObjectURL(file), im = new Image(); im.onload = function() { try { var r = finish(im, im.naturalWidth, im.naturalHeight); URL.revokeObjectURL(u); res(r); } catch (e) { rej(e); } }; im.onerror = function() { URL.revokeObjectURL(u); rej(new Error("This photo can’t be opened. Try taking it again, or choose another.")); }; im.src = u; }); };
+  if (window.createImageBitmap) return createImageBitmap(file, { imageOrientation: "from-image" }).then(function(b) { var r = finish(b, b.width, b.height); try { b.close(); } catch (e) {} return r; }, viaImg);   // turned the right way up (phone photos)
+  return viaImg();
+}
+document.addEventListener("change", function(e) {
+  var t = e.target; if (!t || !t.hasAttribute || !t.hasAttribute("data-pufile")) return;
+  var files = Array.prototype.slice.call(t.files || []).filter(function(f) { return /^image\//.test(f.type || "image/"); }); t.value = "";
+  var room = Math.min(10, puLeft()) - PU.files.length; if (room <= 0) { flash(PU.d.max ? "That’s as many as you can add today." : "Send these first, then add more."); return; }
+  if (files.length > room) { flash("Only " + room + " more can go in this time."); files = files.slice(0, room); }
+  var err = $("puErr"); if (err) err.innerHTML = '<p class="muted">Getting your photos ready…</p>';
+  files.reduce(function(p, f) { return p.then(function() { return puPrep(f).then(function(r) { PU.files.push(r); puDraw(); }, function(x) { flash(x.message, true); }); }); }, Promise.resolve()).then(function() { if (err) err.innerHTML = ""; });
+});
+document.addEventListener("input", function(e) { var t = e.target; if (t && t.hasAttribute && t.hasAttribute("data-pucap")) { var f = PU.files[+t.getAttribute("data-pucap")]; if (f) f.cap = t.value; } });
+document.addEventListener("click", function(e) {
+  var t = e.target.closest && e.target.closest("[data-puadd],[data-pumine],[data-puok],[data-pux],#puGo,[data-pudel]"); if (!t) return;
+  if (t.hasAttribute("data-puadd")) { if (!PU.d.rules) return puRules(); return puCompose(); }
+  if (t.hasAttribute("data-puok")) { var done0 = busy(t, "…"); call("puApi", "rules", "{}").then(function(d) { done0(); PU.d = d; puBar(); puCompose(); }, function(x) { done0(); flash(x.message, true); }); return; }
+  if (t.hasAttribute("data-pux")) { PU.files.splice(+t.getAttribute("data-pux"), 1); return puDraw(); }
+  if (t.hasAttribute("data-pumine")) return puMine();
+  if (t.hasAttribute("data-pudel")) { var dd = busy(t, "…"); call("puApi", "del", JSON.stringify({ id: t.getAttribute("data-pudel") })).then(function(d) { dd(); PU.d = d; puBar(); puMine(); flash("Taken out."); }, function(x) { dd(); flash(x.message, true); }); return; }
+  if (t.id === "puGo") {   // one photo at a time, so a slow connection still gets each one through
+    var album = ($("puAlb") || {}).value || PU.album || (PU.d.albums[0] || {}).id; PU.busy = true; puDraw();
+    var list = PU.files.filter(function(f) { return f.st !== "ok"; });
+    list.reduce(function(p, f) { return p.then(function() { f.st = "go"; puDraw(); return call("puApi", "send", JSON.stringify({ album: album, photo: f.photo, thumb: f.thumb, caption: f.cap || "" })).then(function(d) { f.st = "ok"; PU.d = d; puDraw(); }, function(x) { f.st = "no"; f.err = x.message; puDraw(); }); }); }, Promise.resolve()).then(function() {
+      PU.busy = false; puBar(); puDraw(); var ok = list.filter(function(f) { return f.st === "ok"; }).length;
+      if (ok === list.length) { closeSheet(); flash("📤 " + ok + " photo" + (ok === 1 ? "" : "s") + " sent! " + PU.d.teacher + " will check " + (ok === 1 ? "it" : "them") + " first."); PU.files = []; }
+    });
+  }
+});
+function puMine() {
+  var d = PU.d, T = esc(d.teacher);
+  sheet("🗂️ My photos", d.mine.length ? '<div class="pu-mine-list">' + d.mine.map(function(x) {
+    return '<div class="pu-m"><img src="' + (x.img || "") + '" alt=""><div><div class="pu-mt">' + (x.caption ? esc(x.caption) : '<span class="muted">No caption</span>') + '</div><div class="muted" style="font-size:13px">🖼️ ' + esc(x.album) + ' · ' + esc(x.when) + '</div>' +
+      (x.status === "Waiting" ? '<span class="pm-st Waiting">⏳ Waiting for ' + T + '</span> <button class="link-btn" data-pudel="' + esc(x.id) + '">Take it out</button>' : x.status === "Added" ? '<span class="pm-st Sent">✅ In the album</span>' : '<span class="pm-st no">Not added</span>' + (x.note ? '<div class="muted" style="font-size:13px;margin-top:4px">' + T + ': ' + esc(x.note) + '</div>' : '')) + '</div></div>'; }).join("") + '</div>' : '<p class="muted">No photos yet.</p>');
 }
 function openAlbum(id) {
   var known = (S.albums || []).filter(function(a) { return a.id === id; })[0];
@@ -7428,7 +7601,7 @@ function openViewer(i, play) {
   v.innerHTML = '<div class="vbg" id="vBg"></div><div class="vbar" aria-hidden="true"><i id="vBar"></i></div><div class="viewer-top"><span><em id="vCount"></em></span>' +
     '<button id="vPlay" aria-label="Play slideshow">▶</button>' + (canFs() ? '<button id="vFs" aria-label="Full screen">⛶</button>' : '') +
     '<a id="vDl" class="hidden" download="photo.jpg">⬇ Save</a><button id="vX" aria-label="Close">✕</button></div>' +
-    '<div class="stage"><div class="wm"><img id="vImg" alt="Class photo"></div></div><div class="turnhint hidden" id="vTurn">↻ Turn your phone sideways for a bigger photo</div><div class="protect-note">Class photos are for our class only. Please don’t screenshot or share them.</div><div class="nav"><button id="vPrev">‹ Back</button><button id="vNext">Next ›</button></div>';
+    '<div class="stage"><div class="wm"><img id="vImg" alt="Class photo"></div></div><div class="vcap hidden" id="vCap"></div><div class="turnhint hidden" id="vTurn">↻ Turn your phone sideways for a bigger photo</div><div class="protect-note">Class photos are for our class only. Please don’t screenshot or share them.</div><div class="nav"><button id="vPrev">‹ Back</button><button id="vNext">Next ›</button></div>';
   document.body.appendChild(v); document.body.style.overflow = "hidden";
   $("vX").onclick = closeViewer; $("vPrev").onclick = function() { showView(VIEW.i - 1); }; $("vNext").onclick = function() { showView(VIEW.i + 1); };
   $("vPlay").onclick = function() { setPlay(!VIEW.play); };
@@ -7477,6 +7650,7 @@ function showView(i) {
   var a = S.album, n = a.photos.length; if (!n || !$("vImg")) return;
   VIEW.i = (i + n) % n; var id = a.photos[VIEW.i];
   $("vCount").textContent = (VIEW.i + 1) + " of " + n;
+  var cap = (a.caps || {})[id] || "", vc = $("vCap"); if (vc) { vc.textContent = cap; vc.classList.toggle("hidden", !cap); }   // 📷 "by Bella Tan"
   var img = $("vImg"), small = S.imgs["t" + id] || S.imgs["s" + id], big = S.imgs[VIEW.big + id];
   img.setAttribute("data-want", id);
   img.src = big || small || ""; img.classList.toggle("soft", !big && !!small);
