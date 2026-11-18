@@ -1108,11 +1108,34 @@
   .wk-tab { flex:1; min-height:42px; border:0; border-radius:9px; background:transparent; font:inherit; font-weight:800; font-size:14.5px; color:var(--muted); cursor:pointer; position:relative; }
   .wk-tab.on { background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(30,26,50,.15); }
   .wk-dot { display:inline-block; width:8px; height:8px; border-radius:50%; background:#1E9E62; margin-left:6px; vertical-align:middle; }
-  .pad-wrap { border:2px solid var(--line); border-radius:12px; overflow:hidden; background:#fff repeating-linear-gradient(#fff 0 39px, #E6E1F5 39px 40px); }
+  .pad-wrap { border:2px solid var(--line); border-radius:12px; overflow:hidden; background-color:#fff; background-image:linear-gradient(to bottom, transparent calc(100% - 1px), #E3DEF3 calc(100% - 1px)); background-size:100% 40px; }
   canvas.pad { display:block; width:100%; cursor:crosshair; touch-action:none; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
+  /* the PIN keypad is also called .pad: none of its sizing may reach the writing canvas (it made the ink land away from the pen) */
+  .pad-wrap canvas.pad { max-width:none !important; margin:0 !important; padding:0 !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; gap:0 !important; width:100% !important; }
   .pad-tools { display:flex; gap:6px; flex-wrap:wrap; margin:6px 0 0; }
   .pad-tools button, .pad-tools .btn { min-height:40px; border:1.5px solid var(--line); background:#fff; border-radius:10px; font:inherit; font-size:14px; font-weight:800; color:var(--ink); cursor:pointer; padding:0 11px; display:inline-flex; align-items:center; gap:4px; }
   .pad-tools button.on { background:var(--violet-2); border-color:var(--violet-2); color:#fff; }
+  .pad-tools { align-items:center; }
+  .pt-grp { display:inline-flex; gap:0; border:1.5px solid var(--line); border-radius:12px; overflow:hidden; background:#fff; }
+  .pt-grp button { border:0 !important; border-radius:0 !important; min-width:42px; justify-content:center; }
+  .pt-grp button + button { border-left:1.5px solid var(--line) !important; }
+  .pt-col i { width:20px; height:20px; border-radius:50%; display:block; box-shadow:inset 0 0 0 2px rgba(255,255,255,.5); }
+  .pad-tools .pt-col.on { background:#EEE9FB; border-color:var(--line); color:var(--ink); } .pt-col.on i { box-shadow:0 0 0 3px #fff, 0 0 0 5px #1E1A32; }
+  .pt-sz i { display:block; border-radius:50%; background:#1E1A32; } .pad-tools .pt-sz.on { background:#EEE9FB; color:var(--ink); }
+  .pad-tools .pt-big { background:#FFF4D6; }
+  body.pf-on { overflow:hidden; }
+  .pad-full { position:fixed; inset:0; z-index:300; background:#F6F3FC; display:flex; flex-direction:column; padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+  .pf-top { display:flex; gap:10px; align-items:flex-start; padding:10px 14px 6px; }
+  .pf-q { flex:1; min-width:0; background:#fff; border:2px solid var(--line); border-radius:14px; padding:6px 12px; }
+  .pf-q summary { font-weight:800; cursor:pointer; padding:2px 0; }
+  .pf-qb { max-height:26vh; overflow:auto; font-size:17px; line-height:1.5; -webkit-user-select:none; user-select:none; }
+  .pf-qb .ex-prompt { margin:4px 0; } .pf-img { max-width:100%; max-height:22vh; display:block; margin:6px 0; border-radius:8px; }
+  .pf-top .btn { min-height:48px; flex:none; }
+  .pf-bar { padding:0 14px 8px; } .pf-bar .pad-tools { margin:0; }
+  .pf-body { flex:1; overflow:auto; padding:0 14px 14px; -webkit-overflow-scrolling:touch; }
+  .pf-body .pad-wrap { box-shadow:0 2px 0 var(--line); }
+  .pad-full .pt-big { display:none; } .pf-qb .sy-qn { margin-right:8px; vertical-align:middle; } .pf-qb .ex-prompt { display:inline; }
+  @media (max-width:600px) { .pf-qb { max-height:15vh; font-size:15px; } .pf-top { padding:8px 10px 4px; } .pf-bar, .pf-body { padding-left:10px; padding-right:10px; } .pf-bar .pad-tools button { min-height:38px; padding:0 9px; } }
   .wk-shot { width:100%; justify-content:center; cursor:pointer; }
   .wk-ph img, .wk-rpic img { display:block; width:100%; max-height:560px; object-fit:contain; border:2px solid var(--line); border-radius:12px; background:#fff; }
   .wk-rpics { display:grid; gap:8px; margin:6px 0 4px; }
@@ -1859,7 +1882,7 @@ function clearBoots() {
    older version even after signing out and in. The server says which version is current (HUB_BUILD in Code.gs); when this
    page is older, it reloads itself past any saved copy (?v=…). In the middle of a paper it asks first: answers are saved,
    and after the update the paper opens again (tap "Carry on"). Tried once per version, so it can never loop. */
-var HUB_BUILD = "2026-11-18b";
+var HUB_BUILD = "2026-11-18c";
 function hubCheckBuild(b) {
   if (!b || b === HUB_BUILD || S.preview || store("upd_" + b)) return;
   var sitting = (EX.math && EX.math.sitting && EX.math.paper) || (EX.english && EX.english.sitting && EX.english.paper);
@@ -4517,14 +4540,14 @@ var WP_PEN = false;     // a stylus has been used on this device: fingers then s
 function wpKey(qid, kind) { var X = EX.math, p = X.paper || {}; return "exw:" + hh((S.home && S.home.me) || "") + ":" + (p.id || "") + ":" + qid + ":" + kind; }
 function wpGet(qid) { return WP[qid] || (WP[qid] = { strokes: [], h: 380, tool: "pen", photo: "", undo: [] }); }
 function wpHas(qid) { var w = WP[qid]; return !!(w && (w.strokes.some(function(s) { return !s.e; }) || w.photo)); }
-function wpSave(qid) { var w = wpGet(qid), m = {}; m[wpKey(qid, "d")] = JSON.stringify({ s: w.strokes, h: w.h }); m[wpKey(qid, "p")] = w.photo || ""; imgDbPut(m); EX.math.ans = EX.math.ans || {}; var a = EX.math.ans[qid] || (EX.math.ans[qid] = {}); a.wp = wpHas(qid) ? 1 : 0; if (typeof exSave === "function") exSave(); }
+function wpSave(qid) { var w = wpGet(qid), m = {}; m[wpKey(qid, "d")] = JSON.stringify({ s: w.strokes, h: w.h, cw: w.cw || 0 }); m[wpKey(qid, "p")] = w.photo || ""; imgDbPut(m); EX.math.ans = EX.math.ans || {}; var a = EX.math.ans[qid] || (EX.math.ans[qid] = {}); a.wp = wpHas(qid) ? 1 : 0; if (typeof exSave === "function") exSave(); }
 /** Brings back drawings and photos kept on this device for this paper. */
 function wpLoad(p) {
-  var keys = []; p.questions.forEach(function(q) { if (q.type !== "mcq" && q.type !== "open") { keys.push(wpKey(q.id, "d"), wpKey(q.id, "p")); } });
+  var keys = []; p.questions.forEach(function(q) { if (q.type !== "mcq") { keys.push(wpKey(q.id, "d"), wpKey(q.id, "p")); } });
   return imgDbGet(keys).then(function(got) {
     p.questions.forEach(function(q) {
       var d = got[wpKey(q.id, "d")], ph = got[wpKey(q.id, "p")]; if (!d && !ph) return;
-      var w = wpGet(q.id); try { var j = JSON.parse(d || "{}"); w.strokes = j.s || []; w.h = j.h || 380; } catch (e) {} w.photo = ph || "";
+      var w = wpGet(q.id); try { var j = JSON.parse(d || "{}"); w.strokes = j.s || []; w.h = j.h || 380; if (j.cw) w.cw = j.cw; } catch (e) {} w.photo = ph || "";
     });
   });
 }
@@ -4538,7 +4561,7 @@ function workBox(q, a) {
     tab("type", "⌨️", "Type", !!(a.w && a.w.trim())) + tab("draw", "✏️", "Write", w.strokes.length > 0) + tab("photo", "📷", "Photo", !!w.photo) + '</div>' +
     '<div class="wk-pane"' + (mode === "type" ? '' : ' hidden') + ' data-pane="type">' + workEditor('data-exw="' + id + '"', a.w || "", "Working for question " + q.n) + '</div>' +
     '<div class="wk-pane"' + (mode === "draw" ? '' : ' hidden') + ' data-pane="draw"><div class="pad-wrap"><canvas class="pad" data-pad="' + id + '" aria-label="Writing space for question ' + esc(q.n) + '. Write with a stylus or your finger."></canvas></div>' +
-      '<div class="pad-tools"><button type="button" class="on" data-padtool="pen|' + id + '" aria-pressed="true">✏️ Pen</button><button type="button" data-padtool="erase|' + id + '" aria-pressed="false">🧽 Rubber</button><button type="button" data-padundo="' + id + '">↶ Undo</button><button type="button" data-padmore="' + id + '">➕ More space</button><button type="button" data-padclear="' + id + '">🗑️ Clear</button></div>' +
+      padToolsHtml(id, w) +
       '<p class="cw-tip">Write one step on each line. A stylus works best. Don’t write your name.</p></div>' +
     '<div class="wk-pane"' + (mode === "photo" ? '' : ' hidden') + ' data-pane="photo">' + wpPhotoHtml(q.id) + '</div></div>';
 }
@@ -4548,67 +4571,163 @@ function wpPhotoHtml(qid) {
   return '<div class="wk-ph"><img src="' + w.photo + '" alt="Photo of your working" draggable="false"></div><div class="pad-tools"><label class="btn soft"><input type="file" accept="image/*" capture="environment" data-wkphoto="' + id + '" hidden>📷 Retake</label><button type="button" data-wkrot="' + id + '">↻ Turn</button><button type="button" data-wkphdel="' + id + '">🗑️ Remove</button></div>';
 }
 
-/* ---- Writing pad ---- */
+/* ---- ✏️ Writing pad ----
+   Strokes are kept in the pad's own units (w.cw wide, w.h high: the width it was first used at), so the writing scales with the
+   screen (and the full-screen page) and always lands exactly under the pen. Ink is drawn as a smooth filled outline:
+   a stylus's pressure (or a finger's speed) makes it thicker or thinner, like a real pen. Committed strokes live on a
+   second canvas, so only the stroke being written is redrawn each frame (with predicted points, for a pen that keeps up). */
+var PAD_COLS = [["#1E1A32", "Black"], ["#1D5FD0", "Blue"], ["#C62828", "Red"], ["#16804A", "Green"]], PAD_SZ = [[2.2, "Thin"], [3.4, "Medium"], [5.4, "Thick"]];
+function padToolsHtml(id, w) {
+  var col = w.col || 0, sz = w.sz == null ? 1 : w.sz, er = w.tool === "erase";
+  return '<div class="pad-tools" data-padbar="' + id + '">' +
+    '<div class="pt-grp" role="group" aria-label="Pen or rubber"><button type="button" class="' + (er ? '' : 'on') + '" data-padtool="pen|' + id + '" aria-pressed="' + !er + '">✏️ Pen</button><button type="button" class="' + (er ? 'on' : '') + '" data-padtool="erase|' + id + '" aria-pressed="' + er + '">🧽 Rubber</button></div>' +
+    '<div class="pt-grp" role="group" aria-label="Colour">' + PAD_COLS.map(function(c, i) { return '<button type="button" class="pt-col' + (i === col ? ' on' : '') + '" data-padcol="' + i + '|' + id + '" aria-pressed="' + (i === col) + '" aria-label="' + c[1] + '" title="' + c[1] + '"><i style="background:' + c[0] + '"></i></button>'; }).join('') + '</div>' +
+    '<div class="pt-grp" role="group" aria-label="Pen size">' + PAD_SZ.map(function(z, i) { return '<button type="button" class="pt-sz' + (i === sz ? ' on' : '') + '" data-padsz="' + i + '|' + id + '" aria-pressed="' + (i === sz) + '" aria-label="' + z[1] + '" title="' + z[1] + '"><i style="width:' + (4 + i * 4) + 'px;height:' + (4 + i * 4) + 'px"></i></button>'; }).join('') + '</div>' +
+    '<div class="pt-grp"><button type="button" data-padundo="' + id + '" aria-label="Undo">↶</button><button type="button" data-padredo="' + id + '" aria-label="Redo">↷</button></div>' +
+    '<button type="button" data-padmore="' + id + '">➕ More space</button><button type="button" class="pt-big" data-padfull="' + id + '">⤢ Big page</button><button type="button" data-padclear="' + id + '">🗑️ Clear</button></div>';
+}
 function padSetup(c) {
-  var qid = c.getAttribute("data-pad"), w = wpGet(qid), dpr = Math.min(window.devicePixelRatio || 1, 2.5), cw = c.parentNode.clientWidth || 320;
-  c.style.height = w.h + "px"; c.width = Math.round(cw * dpr); c.height = Math.round(w.h * dpr); c.__dpr = dpr; c.__cw = cw;
+  if (!c) return;
+  var qid = c.getAttribute("data-pad"), w = wpGet(qid), dpr = Math.min(window.devicePixelRatio || 1, 3), cw = c.parentNode.clientWidth || 320;
+  if (!w.cw) w.cw = cw;
+  var u = cw / w.cw, hc = Math.max(120, Math.round(w.h * u));
+  c.style.height = hc + "px"; c.width = Math.round(cw * dpr); c.height = Math.round(hc * dpr); c.__cw = cw;
   c.style.touchAction = WP_PEN ? "pan-y" : "none";
+  c.parentNode.style.backgroundSize = "100% " + (40 * u).toFixed(2) + "px";   // ruled lines scale with the writing
   padDraw(c);
 }
-function padStroke(ctx, s, k) {
-  if (!s.p.length) return;
-  ctx.globalCompositeOperation = s.e ? "destination-out" : "source-over"; ctx.strokeStyle = "#1E1A32"; ctx.fillStyle = "#1E1A32"; ctx.lineCap = ctx.lineJoin = "round";
-  var pts = s.p, base = s.e ? 22 : 2.6;
-  if (pts.length === 1) { ctx.beginPath(); ctx.arc(pts[0].x * k, pts[0].y * k, base * k * 0.6, 0, 7); ctx.fill(); return; }
-  for (var i = 1; i < pts.length; i++) {
-    var a = pts[i - 1], b = pts[i]; ctx.lineWidth = (s.e ? base : base * (0.55 + (b.p || 0.5) * 0.9)) * k;
-    ctx.beginPath(); ctx.moveTo(a.x * k, a.y * k); ctx.lineTo(b.x * k, b.y * k); ctx.stroke();
+/** Ink outline for one stroke (points already in canvas pixels). */
+function padInk(ctx, pts, size, sim) {
+  var n = pts.length; if (!n) return;
+  if (n === 1 || pts.every(function(q) { return Math.abs(q.x - pts[0].x) + Math.abs(q.y - pts[0].y) < size * 0.3; })) { ctx.beginPath(); ctx.arc(pts[0].x, pts[0].y, size * 0.55, 0, 7); ctx.fill(); return; }
+  var S = [pts[0]], prev = pts[0];
+  for (var i = 1; i < n; i++) {   // smoothing: each point eases towards the pen, tiny jitters are dropped
+    var q = pts[i], x = prev.x + (q.x - prev.x) * 0.62, y = prev.y + (q.y - prev.y) * 0.62;
+    if (Math.abs(x - prev.x) + Math.abs(y - prev.y) < size * 0.12 && i < n - 1) continue;
+    prev = { x: x, y: y, p: q.p }; S.push(prev);
   }
+  S.push(pts[n - 1]);
+  var m = S.length, R = [], pp = sim ? 0.62 : (S[0].p || 0.5);
+  for (var j = 0; j < m; j++) {
+    var d = j ? Math.hypot(S[j].x - S[j - 1].x, S[j].y - S[j - 1].y) : 0;
+    if (sim) { var tgt = 1.05 - Math.min(1, d / (size * 2.6)) * 0.6; pp += (tgt - pp) * 0.35; }   // finger / mouse: quicker = thinner
+    else pp += ((S[j].p || 0.5) - pp) * 0.45;                                                     // stylus: real pressure
+    var r = size / 2 * (0.42 + 0.95 * pp);
+    var ta = Math.min(1, 0.55 + j * 0.15), te = Math.min(1, 0.6 + (m - 1 - j) * 0.13);           // soft taper at both ends
+    R.push(r * Math.min(ta, te));
+  }
+  var L = [], Rt = [];
+  for (var k = 0; k < m; k++) {
+    var a = S[Math.max(0, k - 1)], b = S[Math.min(m - 1, k + 1)], dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len;
+    L.push([S[k].x + nx * R[k], S[k].y + ny * R[k]]); Rt.push([S[k].x - nx * R[k], S[k].y - ny * R[k]]);
+  }
+  var poly = L.concat(Rt.reverse());
+  ctx.beginPath(); ctx.moveTo(poly[0][0], poly[0][1]);
+  for (var t = 1; t < poly.length - 1; t++) { var mx = (poly[t][0] + poly[t + 1][0]) / 2, my = (poly[t][1] + poly[t + 1][1]) / 2; ctx.quadraticCurveTo(poly[t][0], poly[t][1], mx, my); }
+  ctx.lineTo(poly[poly.length - 1][0], poly[poly.length - 1][1]); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.arc(S[0].x, S[0].y, R[0], 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.arc(S[m - 1].x, S[m - 1].y, R[m - 1], 0, 7); ctx.fill();
+}
+/** One stroke at scale k (canvas pixels per pad unit). */
+function padStroke(ctx, s, k, extra) {
+  var pts = s.p.concat(extra || []).map(function(q) { return { x: q.x * k, y: q.y * k, p: q.p }; }); if (!pts.length) return;
+  ctx.save();
+  if (s.e) {
+    ctx.globalCompositeOperation = "destination-out"; ctx.lineCap = ctx.lineJoin = "round"; ctx.lineWidth = 24 * k; ctx.strokeStyle = "#000"; ctx.fillStyle = "#000";
+    if (pts.length === 1) { ctx.beginPath(); ctx.arc(pts[0].x, pts[0].y, 12 * k, 0, 7); ctx.fill(); }
+    else { ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y); for (var i = 1; i < pts.length - 1; i++) ctx.quadraticCurveTo(pts[i].x, pts[i].y, (pts[i].x + pts[i + 1].x) / 2, (pts[i].y + pts[i + 1].y) / 2); ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y); ctx.stroke(); }
+  } else {
+    ctx.globalCompositeOperation = "source-over"; ctx.fillStyle = (PAD_COLS[s.c || 0] || PAD_COLS[0])[0];
+    padInk(ctx, pts, (s.z || 3.2) * k, s.sim !== false);
+  }
+  ctx.restore();
+}
+function padK(c) { var w = wpGet(c.getAttribute("data-pad")); return c.width / (w.cw || c.__cw || c.width); }
+function padBase(c) {
+  var b = c.__base || (c.__base = document.createElement("canvas"));
+  if (b.width !== c.width || b.height !== c.height) { b.width = c.width; b.height = c.height; }
+  return b;
+}
+function padBlit(c, cur, extra) {
+  var ctx = c.getContext("2d"); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, c.width, c.height); ctx.drawImage(padBase(c), 0, 0);
+  if (cur) padStroke(ctx, cur, padK(c), extra);
 }
 function padDraw(c) {
-  var w = wpGet(c.getAttribute("data-pad")), ctx = c.getContext("2d"), k = c.width / (c.__cw || c.width);
-  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, c.width, c.height);
-  var sx = c.__cw ? c.__cw / (w.cw || c.__cw) : 1;   // drawn on a different width: scale to fit
-  w.strokes.forEach(function(s) { padStroke(ctx, { e: s.e, p: s.p.map(function(q) { return { x: q.x * sx, y: q.y * sx, p: q.p }; }) }, k); });
-  ctx.globalCompositeOperation = "source-over";
+  var w = wpGet(c.getAttribute("data-pad")), b = padBase(c), bx = b.getContext("2d"), k = padK(c);
+  bx.setTransform(1, 0, 0, 1, 0, 0); bx.clearRect(0, 0, b.width, b.height);
+  w.strokes.forEach(function(st) { padStroke(bx, st, k); });
+  padBlit(c);
 }
 /** The drawing as a JPEG on white, trimmed to the part that was written on. */
 function padExport(qid) {
   var w = wpGet(qid); if (!w.strokes.some(function(s) { return !s.e; })) return null;
   var maxY = 0; w.strokes.forEach(function(s) { if (!s.e) s.p.forEach(function(q) { if (q.y > maxY) maxY = q.y; }); });
-  var cw = w.cw || 340, hh2 = Math.min(w.h, Math.max(160, maxY + 40)), k = Math.min(2, 1100 / cw);
+  var cw = w.cw || 340, hh2 = Math.min(w.h, Math.max(160, maxY + 40)), k = Math.min(2.5, 1200 / cw);
   var ink = document.createElement("canvas"); ink.width = Math.round(cw * k); ink.height = Math.round(hh2 * k);
   var ix = ink.getContext("2d"); w.strokes.forEach(function(s) { padStroke(ix, s, k); });
   var out = document.createElement("canvas"); out.width = ink.width; out.height = ink.height;
   var ox = out.getContext("2d"); ox.fillStyle = "#fff"; ox.fillRect(0, 0, out.width, out.height); ox.drawImage(ink, 0, 0);
-  return out.toDataURL("image/jpeg", 0.85);
+  return out.toDataURL("image/jpeg", 0.88);
 }
 var PAD_ON = null;
+function padPt(P, ev) { var r = P.r; return { x: (ev.clientX - r.left) * P.sx, y: (ev.clientY - r.top) * P.sx, p: ev.pressure > 0 ? ev.pressure : 0.5 }; }
+function padFrame() {
+  var P = PAD_ON; if (!P) return; P.raf = 0;
+  padBlit(P.c, P.s, P.pred);
+}
 document.addEventListener("pointerdown", function(e) {
   var c = e.target.closest && e.target.closest("canvas.pad"); if (!c) return;
   if (e.pointerType === "pen" && !WP_PEN) { WP_PEN = true; document.querySelectorAll("canvas.pad").forEach(function(x) { x.style.touchAction = "pan-y"; }); }
   if (WP_PEN && e.pointerType === "touch") return;             // palm or finger while using a stylus: let the page scroll
+  if (e.button > 0) return;
   e.preventDefault(); try { c.setPointerCapture(e.pointerId); } catch (x) {}
   var qid = c.getAttribute("data-pad"), w = wpGet(qid), r = c.getBoundingClientRect();
   if (!w.cw) w.cw = c.__cw || r.width;
-  var sx = w.cw / r.width, s = { e: w.tool === "erase", p: [{ x: (e.clientX - r.left) * sx, y: (e.clientY - r.top) * sx, p: e.pressure || 0.5 }] };
-  w.strokes.push(s); PAD_ON = { c: c, w: w, s: s, id: e.pointerId, r: r, sx: sx };
-  padStroke(c.getContext("2d"), s, c.width / r.width / sx);
+  var P = { c: c, w: w, id: e.pointerId, r: r, sx: w.cw / r.width, pred: null, raf: 0 };
+  P.s = { e: w.tool === "erase", c: w.col || 0, z: PAD_SZ[w.sz == null ? 1 : w.sz][0], sim: e.pointerType !== "pen", p: [] };
+  P.s.p.push(padPt(P, e)); w.strokes.push(P.s); w.redo = []; PAD_ON = P; padFrame();
 });
 document.addEventListener("pointermove", function(e) {
-  if (!PAD_ON || e.pointerId !== PAD_ON.id) return; e.preventDefault();
-  var P = PAD_ON, evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e]; if (!evs.length) evs = [e];
-  evs.forEach(function(ev) { P.s.p.push({ x: (ev.clientX - P.r.left) * P.sx, y: (ev.clientY - P.r.top) * P.sx, p: ev.pressure || 0.5 }); });
-  var ctx = P.c.getContext("2d"), k = P.c.width / P.r.width / P.sx, n = P.s.p.length;
-  padStroke(ctx, { e: P.s.e, p: P.s.p.slice(Math.max(0, n - evs.length - 1)) }, k);
-  if (P.s.p.length > 4000) P.s.p.splice(1, 1);
+  var P = PAD_ON; if (!P || e.pointerId !== P.id) return; e.preventDefault();
+  P.r = P.c.getBoundingClientRect(); P.sx = P.w.cw / P.r.width;     // the page may have moved (scrolling with a stylus)
+  var evs = e.getCoalescedEvents ? e.getCoalescedEvents() : []; if (!evs.length) evs = [e];
+  evs.forEach(function(ev) { var q = padPt(P, ev), l = P.s.p[P.s.p.length - 1]; if (Math.abs(q.x - l.x) + Math.abs(q.y - l.y) >= 0.4) P.s.p.push(q); });
+  var pr = e.getPredictedEvents ? e.getPredictedEvents() : []; P.pred = pr.length ? pr.slice(0, 2).map(function(ev) { return padPt(P, ev); }) : null;
+  if (P.s.p.length > 5000) P.s.p.splice(1, 1);
+  if (!P.raf) P.raf = requestAnimationFrame(padFrame);
 }, { passive: false });
 function padEnd(e) {
-  if (!PAD_ON || e.pointerId !== PAD_ON.id) return; var P = PAD_ON; PAD_ON = null;
+  var P = PAD_ON; if (!P || e.pointerId !== P.id) return; PAD_ON = null; if (P.raf) cancelAnimationFrame(P.raf);
   P.s.p = P.s.p.map(function(q) { return { x: Math.round(q.x * 10) / 10, y: Math.round(q.y * 10) / 10, p: Math.round((q.p || 0.5) * 100) / 100 }; });
-  var qid = P.c.getAttribute("data-pad"); padDraw(P.c); wpSave(qid); wkDot(qid);
+  var bx = padBase(P.c).getContext("2d"); bx.setTransform(1, 0, 0, 1, 0, 0); padStroke(bx, P.s, padK(P.c)); padBlit(P.c);
+  if (P.s.p.length && P.s.p[P.s.p.length - 1].y > P.w.h - 50 && P.w.h < 1800) { P.w.h = Math.min(1800, P.w.h + 200); padSetup(P.c); }   // near the bottom: more paper
+  var qid = P.c.getAttribute("data-pad"); wpSave(qid); wkDot(qid);
 }
 document.addEventListener("pointerup", padEnd); document.addEventListener("pointercancel", padEnd);
+/* ⤢ Big page: the pad and its tools move into a full-screen page with the question at the top, then back. */
+function padFull(qid) {
+  var c = document.querySelector('canvas.pad[data-pad="' + qid + '"]'); if (!c || $("padFull")) return;
+  var wrap = c.parentNode, bar = document.querySelector('[data-padbar="' + qid + '"]'), card = wrap.closest(".ex-q"), qh = "";
+  if (card) { var pr = card.querySelector(".ex-prompt"); qh = '<div class="sy-qn" style="display:inline-flex">' + esc((card.querySelector(".sy-qn") || {}).textContent || "") + '</div>' + (pr ? pr.outerHTML : ""); card.querySelectorAll(".ex-img img, .ex-fig img, img.ex-im").forEach(function(im) { qh += '<img class="pf-img" src="' + im.src + '" alt="">'; }); }
+  else ["mp-ctx", "mp-figbox", "mp-q"].forEach(function(k) { var el = document.querySelector("." + k); if (el) qh += el.outerHTML.replace(/ id="[^"]*"/, ""); });
+  var ov = document.createElement("div"); ov.id = "padFull"; ov.className = "pad-full"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-label", "Big writing page");
+  ov.innerHTML = '<div class="pf-top"><details class="pf-q" open><summary>Question</summary><div class="pf-qb" oncopy="return false">' + qh + '</div></details><button type="button" class="btn primary" data-padfullx>✓ Done</button></div><div class="pf-bar"></div><div class="pf-body"></div>';
+  ov.__home = { wrap: wrap, bar: bar, wp: wrap.parentNode, wn: wrap.nextSibling, bp: bar && bar.parentNode, bn: bar && bar.nextSibling, qid: qid };
+  document.body.appendChild(ov); document.body.classList.add("pf-on");
+  if (bar) ov.querySelector(".pf-bar").appendChild(bar);
+  ov.querySelector(".pf-body").appendChild(wrap);
+  var w = wpGet(qid), body = ov.querySelector(".pf-body"), u = (body.clientWidth - 2) / (w.cw || body.clientWidth);
+  if (w.cw && w.h * u < body.clientHeight - 8) w.h = Math.ceil((body.clientHeight - 8) / u);   // fill the screen with paper
+  padSetup(c);
+}
+function padFullClose() {
+  var ov = $("padFull"); if (!ov) return; var H = ov.__home;
+  if (H.wn && H.wn.parentNode === H.wp) H.wp.insertBefore(H.wrap, H.wn); else H.wp.appendChild(H.wrap);
+  if (H.bar) { if (H.bn && H.bn.parentNode === H.bp) H.bp.insertBefore(H.bar, H.bn); else H.bp.appendChild(H.bar); }
+  ov.remove(); document.body.classList.remove("pf-on");
+  padSetup(H.wrap.querySelector("canvas.pad")); wpSave(H.qid);
+}
+document.addEventListener("keydown", function(e) { if (e.key === "Escape" && $("padFull")) padFullClose(); });
 function wkDot(qid) {
   var box = document.querySelector('.wkx[data-wkq="' + qid + '"]'); if (!box) return; var w = wpGet(qid), a = EX.math.ans[qid] || {};
   [["type", !!(a.w && a.w.trim())], ["draw", w.strokes.length > 0], ["photo", !!w.photo]].forEach(function(x) {
@@ -4641,7 +4760,8 @@ document.addEventListener("change", function(e) {
   }; rd.readAsDataURL(f);
 });
 document.addEventListener("click", function(e) {
-  var t = e.target.closest && e.target.closest("[data-wkmode],[data-padtool],[data-padundo],[data-padmore],[data-padclear],[data-wkrot],[data-wkphdel]"); if (!t) return;
+  var t = e.target.closest && e.target.closest("[data-wkmode],[data-padtool],[data-padundo],[data-padredo],[data-padcol],[data-padsz],[data-padfull],[data-padfullx],[data-padmore],[data-padclear],[data-wkrot],[data-wkphdel]"); if (!t) return;
+  if (t.hasAttribute("data-padfullx")) { padFullClose(); return; }
   var v;
   if ((v = t.getAttribute("data-wkmode"))) {
     var sp = v.split("|"), qid = sp[1], box = t.closest(".wkx"); EX.math.ans = EX.math.ans || {}; (EX.math.ans[qid] = EX.math.ans[qid] || {}).wm = sp[0]; exSave();
@@ -4650,13 +4770,21 @@ document.addEventListener("click", function(e) {
     if (sp[0] === "draw") padSetup(box.querySelector("canvas.pad"));
     return;
   }
-  if ((v = t.getAttribute("data-padtool"))) { var s2 = v.split("|"); wpGet(s2[1]).tool = s2[0]; t.parentNode.querySelectorAll("[data-padtool]").forEach(function(b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); }); return; }
+  var pick = function(attr) { t.parentNode.querySelectorAll("[" + attr + "]").forEach(function(b) { var on = b === t; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); }); };
+  if ((v = t.getAttribute("data-padtool"))) { var s2 = v.split("|"); wpGet(s2[1]).tool = s2[0]; pick("data-padtool"); return; }
+  if ((v = t.getAttribute("data-padcol")) || (v = t.getAttribute("data-padsz"))) {   // a colour or size also switches back to the pen
+    var s3 = v.split("|"), w5 = wpGet(s3[1]); if (t.hasAttribute("data-padcol")) { w5.col = Number(s3[0]); pick("data-padcol"); } else { w5.sz = Number(s3[0]); pick("data-padsz"); }
+    if (w5.tool === "erase") { w5.tool = "pen"; var bar = t.closest(".pad-tools"); if (bar) bar.querySelectorAll("[data-padtool]").forEach(function(b) { var on = /^pen/.test(b.getAttribute("data-padtool")); b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); }); }
+    return;
+  }
+  if ((v = t.getAttribute("data-padfull"))) { padFull(v); return; }
   var c = function(q) { return document.querySelector('canvas.pad[data-pad="' + q + '"]'); };
-  if ((v = t.getAttribute("data-padundo"))) { var w = wpGet(v); if (w.strokes.length) { w.strokes.pop(); padDraw(c(v)); wpSave(v); wkDot(v); } return; }
+  if ((v = t.getAttribute("data-padundo"))) { var w = wpGet(v); if (w.strokes.length) { (w.redo = w.redo || []).push(w.strokes.pop()); padDraw(c(v)); wpSave(v); wkDot(v); } return; }
+  if ((v = t.getAttribute("data-padredo"))) { var wr = wpGet(v); if (wr.redo && wr.redo.length) { wr.strokes.push(wr.redo.pop()); padDraw(c(v)); wpSave(v); wkDot(v); } return; }
   if ((v = t.getAttribute("data-padmore"))) { var w2 = wpGet(v); w2.h = Math.min(1800, w2.h + 260); padSetup(c(v)); wpSave(v); return; }
   if ((v = t.getAttribute("data-padclear"))) {
     if (!t.__sure) { t.__sure = true; t.textContent = "Tap again to clear"; setTimeout(function() { t.__sure = false; t.textContent = "🗑️ Clear"; }, 3000); return; }
-    var w3 = wpGet(v); w3.strokes = []; w3.h = 380; t.__sure = false; t.textContent = "🗑️ Clear"; padSetup(c(v)); wpSave(v); wkDot(v); return;
+    var w3 = wpGet(v); w3.redo = w3.strokes.slice().reverse(); w3.strokes = []; if (!$("padFull")) w3.h = 380; t.__sure = false; t.textContent = "🗑️ Clear"; padSetup(c(v)); wpSave(v); wkDot(v); return;
   }
   if ((v = t.getAttribute("data-wkrot"))) { var w4 = wpGet(v); wpShrink(w4.photo, true).then(function(u) { w4.photo = u; wpSave(v); var pane = t.closest('[data-pane="photo"]'); if (pane) pane.innerHTML = wpPhotoHtml(v); }); return; }
   if ((v = t.getAttribute("data-wkphdel"))) { wpGet(v).photo = ""; wpSave(v); var pane2 = t.closest('[data-pane="photo"]'); if (pane2) pane2.innerHTML = wpPhotoHtml(v); wkDot(v); return; }
@@ -4665,7 +4793,7 @@ document.addEventListener("input", function(e) { var ta = e.target; if (ta && ta
 /** Pictures to hand in with the paper: { qid: [{kind, mime, data}] }. */
 function wpCollect(p) {
   var out = {}; p.questions.forEach(function(q) {
-    if (q.type === "mcq" || q.type === "open") return; var L = [], d = padExport(q.id), w = WP[q.id];
+    if (q.type === "mcq") return; var L = [], d = padExport(q.id), w = WP[q.id];
     if (d) L.push({ kind: "draw", mime: "image/jpeg", data: d });
     if (w && w.photo) L.push({ kind: "photo", mime: "image/jpeg", data: w.photo });
     if (L.length) out[q.id] = L;
