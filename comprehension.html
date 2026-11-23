@@ -5,6 +5,7 @@
 <base target="_top">
 <meta charset="utf-8">
 <meta name="robots" content="noindex">
+<style>html.framed body{display:none!important}</style><script>(function(){try{if(window.top!==window.self){var ok=false;try{ok=window.parent.location.origin===window.location.origin;}catch(e){}if(!ok)document.documentElement.className+=" framed";}}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Manrope:wght@400..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Manrope:wght@400..800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap"></noscript>
@@ -136,6 +137,11 @@ input[type=number]{width:84px}
 .passage .p-head{margin-bottom:14px;font-family:var(--f-ui)}
 .passage .p-head h2{font-size:1.45rem;margin-top:4px}
 .para{display:grid;grid-template-columns:28px minmax(0,1fr);gap:6px;margin-bottom:14px}
+.passage.lined .para p{position:relative;padding-right:2.6em}
+.passage .pl{display:block;position:relative;padding-left:1.1em;text-indent:-1.1em}
+@media (max-width:520px){.passage.lined{font-size:.96rem}}
+.passage .pl::after{content:attr(data-n);position:absolute;right:-2.6em;top:.1em;width:2.1em;text-align:right;font:600 .68rem/1.9 var(--f-ui);color:#B9B0CC;font-variant-numeric:tabular-nums;pointer-events:none}
+.passage .pl.p5::after{color:#6E6488;font-weight:800}
 .pn{font-family:var(--f-ui);font-size:.75rem;color:var(--muted);font-weight:700;padding-top:.45em;text-align:right;font-variant-numeric:tabular-nums}
 .para p{-webkit-user-select:text;user-select:text}
 
@@ -800,7 +806,8 @@ function findClue(paras, quote){
   return bs>=0.3 ? best : null;
 }
 
-function paraHTML(text, ranges){
+function paraHTML(text, ranges, lines){
+  if(lines) return paraLinesHTML(text, ranges, lines);
   var pts={0:1}; pts[text.length]=1;
   ranges.forEach(function(r){ pts[Math.max(0,Math.min(text.length,r.start))]=1; pts[Math.max(0,Math.min(text.length,r.end))]=1; });
   var arr=Object.keys(pts).map(Number).sort(function(a,b){ return a-b; });
@@ -817,6 +824,36 @@ function paraHTML(text, ranges){
   return out;
 }
 
+/* 📏 Printed lines (an uploaded paper): each printed line on its own row with its line number, exactly like the paper.
+   Highlights and clues still work, because they are worked out on the whole paragraph. */
+function joinLines(arr){ return arr.reduce(function(out,l,i){ return i===0 ? l : out+(/-$/.test(out)?'':' ')+l; },''); }
+function paraLinesHTML(text, ranges, L){
+  var starts=[], pos=0;
+  L.lines.forEach(function(l,i){ if(i) pos+=(/-$/.test(L.lines[i-1])?0:1); starts.push(pos); pos+=l.length; });
+  var pts={0:1}; pts[text.length]=1; starts.forEach(function(x){ pts[x]=1; });
+  ranges.forEach(function(r){ pts[Math.max(0,Math.min(text.length,r.start))]=1; pts[Math.max(0,Math.min(text.length,r.end))]=1; });
+  var arr=Object.keys(pts).map(Number).sort(function(a,b){ return a-b; }), out='', li=0, open=function(k){ var n=L.first+k; return '<span class="pl'+(n%5===0?' p5':'')+'" data-n="'+n+'">'; };
+  out+=open(0);
+  for(var i=0;i<arr.length-1;i++){
+    var a=arr[i], b=arr[i+1]; if(b<=a) continue;
+    while(li+1<starts.length && starts[li+1]<=a){ li++; out+='</span>'+open(li); }
+    var seg=text.slice(a,b); if(li && a===starts[li] && seg.charAt(0)===' ') seg=seg.slice(1);
+    seg=esc(seg); if(!seg) continue;
+    var cov=ranges.filter(function(r){ return r.start<=a && r.end>=b; });
+    if(!cov.length){ out+=seg; continue; }
+    var cls=[], ids=[];
+    cov.forEach(function(r){ cls.push(r.cls); ids.push(r.id); if(r.end===b && r.marker) cls.push(r.marker); });
+    out+='<span class="mk '+cls.join(' ')+'" data-mk="'+esc(ids.join(' '))+'">'+seg+'</span>';
+  }
+  return out+'</span>';
+}
+/** The printed lines of each paragraph with their line numbers, or null when the passage has none (or no longer fits them). */
+function passageLines(p){
+  if(!p.lines || p.lines.length!==p.paragraphs.length) return null;
+  var n=Number(p.lineStart)||1, out=[];
+  for(var i=0;i<p.lines.length;i++){ if(joinLines(p.lines[i])!==p.paragraphs[i]) return null; out.push({lines:p.lines[i], first:n}); n+=p.lines[i].length; }
+  return out;
+}
 function passageHTML(p, o){
   o=o||{};
   var per=p.paragraphs.map(function(){ return []; });
@@ -832,9 +869,10 @@ function passageHTML(p, o){
   });
   if(o.word && per[o.word.p]) per[o.word.p].push({start:o.word.start,end:o.word.end,cls:'wq',id:'w:0'});
   if(o.clue && per[o.clue.p]) per[o.clue.p].push({start:o.clue.start,end:o.clue.end,cls:'clue'+(o.flash?' flash':''),id:'c:0'});
-  return '<article class="passage" id="passage">'+
-    '<div class="p-head"><span class="eyebrow">'+esc(p.level)+' · '+esc(p.genre||'Comprehension')+'</span><h2>'+esc(p.title)+'</h2></div>'+
-    p.paragraphs.map(function(t,i){ return '<div class="para"><span class="pn">'+(i+1)+'</span><p data-p="'+i+'">'+paraHTML(t, per[i])+'</p></div>'; }).join('')+
+  var LN=passageLines(p);
+  return '<article class="passage'+(LN?' lined':'')+'" id="passage">'+
+    '<div class="p-head"><span class="eyebrow">'+esc(p.level)+' · '+esc(p.genre||'Comprehension')+'</span><h2>'+esc(p.title)+'</h2>'+(LN?'<div class="muted small" style="margin-top:4px">The small numbers on the right are the line numbers, as on the paper.</div>':'')+'</div>'+
+    p.paragraphs.map(function(t,i){ return '<div class="para"><span class="pn">'+(i+1)+'</span><p data-p="'+i+'">'+paraHTML(t, per[i], LN&&LN[i])+'</p></div>'; }).join('')+
     '</article>'+
     '<div class="legend"><span><i style="background:none;border-bottom:2px solid var(--pen)"></i>AI pen notes</span><span><i style="background:var(--clue-bg)"></i>Clue for an answer</span><span><i style="background:var(--hl-y)"></i>Your highlights</span><span><i style="background:#FFE08A"></i>Tap a word for its meaning</span></div>';
 }
