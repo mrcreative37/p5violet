@@ -765,6 +765,8 @@
   .sls { background:#fff; border:2px solid #1E1A32; border-radius:22px; box-shadow:3px 4px 0 #1E1A32; padding:16px; margin:10px 0; max-width:640px; } .sls-top { display:flex; gap:12px; align-items:center; margin-bottom:14px; } .sls-top b { display:block; font:800 18px/1.2 var(--head); } .sls-top span { color:var(--muted); font-size:13.5px; }
   .sls-logo { width:56px; height:56px; flex:none; border-radius:16px; background:linear-gradient(135deg,#1565C0,#26A69A); color:#fff; font-weight:900; font-size:17px; letter-spacing:.04em; display:flex; align-items:center; justify-content:center; }
   .sls-go { display:flex; flex-direction:column; align-items:center; gap:2px; text-decoration:none; background:#FFC93C; color:#1E1A32; border:2px solid #1E1A32; border-radius:16px; box-shadow:3px 4px 0 #1E1A32; padding:14px; font-weight:800; font-size:18px; } .sls-go span { font-size:12px; font-weight:600; opacity:.75; }
+  .sls-logo.kb { background:linear-gradient(135deg,#FF8A00,#FFB300); font-size:13px; line-height:1.05; text-align:center; }
+  .ch-tag { display:inline-block; font:800 11px/1 var(--head); letter-spacing:.14em; color:#39D5FF; margin-bottom:6px; }
   .sls-steps { margin:14px 0 4px; padding-left:20px; line-height:1.6; font-size:14.5px; }
   .kb-frame { width:100%; border:0; border-radius:16px; background:#fff; display:block; box-shadow:0 6px 18px rgba(62,18,57,.08); }
   .ma-empty { min-height:120px; display:grid; place-items:center; text-align:center; color:var(--muted,#6B6489); font-weight:700; padding:16px; }
@@ -2012,7 +2014,7 @@
   <button data-tab="today" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h3v3H8z"/></svg>Today<span class="dot gold hidden" id="todayDot"></span></button>
   <button data-tab="compo" class="hidden"><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2z"/><path d="M8 7h7M8 11h5"/></svg>English</button>
   <button data-tab="math" class="hidden"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 8h4M9.5 6v4M13 8h4M7.5 15.5l3 3M10.5 15.5l-3 3M13 15h4M13 18h4"/></svg>Math</button>
-  <button data-tab="mission" class="hidden"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5.5 5.5M8 10.5h5M10.5 8v5"/></svg>Missions</button>
+  <button data-tab="games" class="hidden"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="11" rx="5.5"/><path d="M7.5 10.5v4M5.5 12.5h4"/><circle cx="15.5" cy="11.5" r="1"/><circle cx="17.5" cy="14" r="1"/></svg>Games</button>
   <button data-tab="wall" class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/></svg><span class="tl" data-full="Class wall" data-short="Wall">Class wall</span></button>
   <button data-tab="spot" class="hidden"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.8z"/></svg>Spotlight<span class="dot gold hidden" id="spotDot"></span></button>
   <button data-tab="league" class="hidden"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>Groups<span class="dot gold hidden" id="leagueDot"></span></button>
@@ -2645,7 +2647,7 @@ function pdDraw(r) {
 var PD = null;
 function setTabs(h) {
   setTimeout(pdChip, 0);
-  var on = { home: !!(h.looks && h.looks.on), board: !!WB.on && featOn("whiteboard") && !S.preview, mail: !!(h.mailbox && (h.mailbox.on || h.mailbox.n || h.mailbox.send)) && !S.preview, slides: !!h.slides, mission: !!h.missions, poll: !!(h.polls && h.polls.n) && featOn("polls"), today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math, photos: h.photosTab !== false, ask: h.askTab !== false }, n = 1;
+  var on = { home: !!(h.looks && h.looks.on), board: !!WB.on && featOn("whiteboard") && !S.preview, mail: !!(h.mailbox && (h.mailbox.on || h.mailbox.n || h.mailbox.send)) && !S.preview, slides: !!h.slides, games: gmHas().mission || gmHas().hack, poll: !!(h.polls && h.polls.n) && featOn("polls"), today: !!h.todayTab, spot: !!h.spotlight, bday: !!h.birthdays, league: !!h.league || !!h.leader, compo: !!h.compo, math: !!h.math, photos: h.photosTab !== false, ask: h.askTab !== false }, n = 1;
   Object.keys(on).forEach(function(k) { if (on[k]) n++; });
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button[data-tab]"), function(b) { if (b.dataset.tab in on) b.classList.toggle("hidden", !on[b.dataset.tab]); });
   document.querySelector(".tabs-in").style.gridTemplateColumns = "repeat(" + n + ",1fr)";
@@ -2656,11 +2658,12 @@ function setTabs(h) {
   var pd = $("pollDot"), pt = (h.polls && h.polls.todo) || 0; if (pd) { pd.textContent = pt > 9 ? "9+" : (pt || ""); pd.classList.toggle("hidden", !pt); }
   var c = h.celebrating || {};
   [["spotDot", c.spot], ["bdayDot", c.bday]].forEach(function(x) { var d = $(x[0]); d.textContent = x[1] > 9 ? "9+" : (x[1] || ""); d.classList.toggle("hidden", !x[1]); });
-  if ((S.tab === "home" && !on.home) || (S.tab === "mission" && !on.mission) || (S.tab === "board" && !on.board) || (S.tab === "mail" && !on.mail) || (S.tab === "poll" && !on.poll) || (S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo) || (S.tab === "math" && !on.math) || (S.tab === "photos" && !on.photos) || (S.tab === "ask" && !on.ask)) S.tab = "wall";
+  if ((S.tab === "home" && !on.home) || (S.tab === "games" && !on.games) || (S.tab === "board" && !on.board) || (S.tab === "mail" && !on.mail) || (S.tab === "poll" && !on.poll) || (S.tab === "spot" && !on.spot) || (S.tab === "bday" && !on.bday) || (S.tab === "league" && !on.league) || (S.tab === "today" && !on.today) || (S.tab === "compo" && !on.compo) || (S.tab === "math" && !on.math) || (S.tab === "photos" && !on.photos) || (S.tab === "ask" && !on.ask)) S.tab = "wall";
 }
 function go(tab) {
   stopShow(); if (typeof orStopAll === "function") orStopAll();
   if (S.tab === "slides" && tab !== "slides" && SLE.deck) { slFlush(); slStop(); if (!S.preview) slRun("lock", { id: SLE.deck.id, sid: "" }).catch(function() {}); SLE.deck = null; }
+  if (tab === "mission") { GM.sec = "mission"; tab = "games"; }
   S.tab = tab; $("app").setAttribute("data-view", tab); document.body.classList.toggle("wmpage", /^(photos|spot|bday|mail)$/.test(tab));
   Array.prototype.forEach.call(document.querySelectorAll("#tabs button"), function(b) { var on = b.dataset.tab === tab; b.classList.toggle("on", on); b.setAttribute("aria-current", on ? "page" : "false"); });
   window.scrollTo(0, 0);
@@ -2677,7 +2680,7 @@ function go(tab) {
   else if (tab === "compo") renderCompo();
   else if (tab === "math") renderMath();
   else if (tab === "slides") renderSlides();
-  else if (tab === "mission") renderMissions();
+  else if (tab === "games") renderGames();
   else renderPhotos();
   var tb = document.querySelector('#tabs button[data-tab="' + tab + '"]');
   if (tb && $("tabs").classList.contains("t9") && tb.scrollIntoView) try { tb.scrollIntoView({ block: "nearest", inline: "nearest" }); } catch (e) {}
@@ -4259,8 +4262,7 @@ function maSections() {
     if (featOn("modeldraw")) L.push({ k: "model", t: '<span class="i">📊</span> <span>Model drawing</span>' });
   }
   if (S.home && S.home.mathExam && featOn("mathexam")) L.push({ k: "exam", t: '<span class="i">📝</span> <span>Mock Exam</span>' });
-  if (featOn("mathprac")) L.push({ k: "hack", t: '<span class="i">🕹️</span> <span>Cyber Hack</span>' });
-  if (featOn("koobits")) L.push({ k: "sls", t: '<span class="i">🏫</span> <span>SLS</span>' });
+  if (featOn("koobits")) L.push({ k: "sls", t: '<span class="i">🏫</span> <span>SLS &amp; KooBits</span>' });
   return L;
 }
 function maSwitch() { var L = maSections(); return L.length > 1 ? '<div class="en-sw' + (L.length >= 3 ? ' n3' : '') + (L.length >= 5 ? ' n5' : L.length === 4 ? ' n4' : '') + '" role="tablist" aria-label="Math Assistant">' + L.map(function(x) { return '<button role="tab" aria-selected="' + (MA.sec === x.k) + '" class="' + (MA.sec === x.k ? 'on' : '') + '" data-masec="' + x.k + '">' + x.t + '</button>'; }).join("") + '</div>' : ''; }
@@ -5801,12 +5803,12 @@ var CW_EMO = { cw: "📖", sw: "✉️" };
 // ---------------- English Assistant: ✍️ Compo and 📖 Comprehension ----------------
 var EN = { sec: "", home: true }, CMX = { html: null, route: "home" };
 var AI_NOTE = '<p class="ai-note">🤖 An AI helps check your work. It never sees your name.</p>';
-function enHas() { var h = S.home || {}, e = h.english || { compo: !!h.compo, comp: false }; return { compo: !!e.compo, story: !!e.story, comp: !!e.comp, syn: !!e.syn, cloze: !!e.cloze, edit: !!e.edit, oral: !!e.oral, gram: !!e.gram, vt: !!e.vt, vocab: !!e.vocab, exam: !!e.exam, dict: e.dict !== false && !!h.english, hack: !!h.english && (featOn("gram") || featOn("vocab")) }; }
+function enHas() { var h = S.home || {}, e = h.english || { compo: !!h.compo, comp: false }; return { compo: !!e.compo, story: !!e.story, comp: !!e.comp, syn: !!e.syn, cloze: !!e.cloze, edit: !!e.edit, oral: !!e.oral, gram: !!e.gram, vt: !!e.vt, vocab: !!e.vocab, exam: !!e.exam, dict: e.dict !== false && !!h.english }; }
 function enSec() {
   var e = enHas(), s = EN.sec || store("ensec");
   if (s === "comp" && e.comp) return "comp";
   if (s === "compo" && e.compo) return "compo";
-  if ((s === "story" || s === "hack" || s === "syn" || s === "cloze" || s === "edit" || s === "oral" || s === "gram" || s === "vt" || s === "vocab" || s === "exam" || s === "dict") && e[s]) return s;
+  if ((s === "story" || s === "syn" || s === "cloze" || s === "edit" || s === "oral" || s === "gram" || s === "vt" || s === "vocab" || s === "exam" || s === "dict") && e[s]) return s;
   return e.compo ? "compo" : e.story ? "story" : e.comp ? "comp" : e.syn ? "syn" : e.cloze ? "cloze" : e.edit ? "edit" : e.gram ? "gram" : e.vocab ? "vocab" : e.vt ? "vt" : e.exam ? "exam" : e.oral ? "oral" : "dict";
 }
 function enSwitch() {
@@ -5827,10 +5829,9 @@ var EN_INFO = {
   vt: ["Visual Text", "Read posters and adverts", "M3 5h18v14H3zM7 9h6M7 13h10"],
   oral: ["Oral", "Reading aloud and conversation", "M12 3a3 3 0 013 3v6a3 3 0 01-6 0V6a3 3 0 013-3zM5 11a7 7 0 0014 0M12 18v3"],
   exam: ["Mock exams", "Full English papers", "M6 3h9l4 4v14H6zM9 12h7M9 16h7"],
-  dict: ["Dictionary", "Look up any word", "M4 4h11a4 4 0 014 4v12H8a4 4 0 01-4-4zM8 8h7M8 12h5"],
-  hack: ["Cyber Hack", "A quiz game: bots or classmates", "M4 5h16v11H4zM8 20h8M12 16v4M7 9l3 2-3 2M12 13h4"]
+  dict: ["Dictionary", "Look up any word", "M4 4h11a4 4 0 014 4v12H8a4 4 0 01-4-4zM8 8h7M8 12h5"]
 };
-var EN_ORDER = ["compo", "story", "comp", "syn", "cloze", "edit", "gram", "vocab", "vt", "oral", "exam", "hack", "dict"];
+var EN_ORDER = ["compo", "story", "comp", "syn", "cloze", "edit", "gram", "vocab", "vt", "oral", "exam", "dict"];
 function enCount() { var e = enHas(); return EN_ORDER.filter(function(k) { return e[k]; }).length; }
 function svgI(d, sz) { return '<svg width="' + (sz || 22) + '" height="' + (sz || 22) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"/></svg>'; }
 function renderEnHome() {
@@ -6131,7 +6132,7 @@ function hmSecs(A) {
   if (hmTabOn("today")) L.push(["today", "Today", it.length ? todo(function() { return true; }) + " to do" : "Homework and news", "today"]);
   if (hmTabOn("compo")) L.push(["english", "English", en ? en + " to do" : "Practise", "compo"]);
   if (hmTabOn("math")) L.push(["maths", "Maths", ma ? ma + " to do" : "Practise", "math"]);
-  if (hmTabOn("mission")) L.push(["mission", "Missions", "Escape rooms", "mission"]);
+  if (hmTabOn("games")) L.push(["mission", "Games", "Missions and Cyber Hack", "games"]);
   if (hmTabOn("math") && h.mathExam && featOn("mathexam")) L.push(["exam", "Mock exam", "Maths papers", "mexam"]);
   if (hmTabOn("slides")) L.push(["slides", "Slides", "Make slides", "slides"]);
   if (hmTabOn("mail")) L.push(["mail", "Mailbox", h.mailbox && h.mailbox.unread ? h.mailbox.unread + " new" : "Cards", "mail"]);
@@ -7213,14 +7214,16 @@ function slPrint() {
    English letters), and "Escaped!". Pupils play any time; the server makes and checks every question. */
 var MS = { h: null, view: "hq", brief: null, room: null, torch: 0, last: null, esc: null, busy: false, pickAgent: false };
 var MS_PINS = [[13, 80], [33, 63], [26, 35], [50, 24], [71, 40], [83, 70], [61, 84]];
+function msApp() { return gmBody() || $("app"); }
+function msOn() { return S.tab === "games" && GM.sec === "mission" && !!gmBody(); }
 function msRun(action, data) { return call("missionApi", action, JSON.stringify(data || {})); }
 function renderMissions() {
-  $("topTitle").textContent = "Missions";
+  $("topTitle").textContent = "Games";
   if (MS.view === "room" && MS.room) return msDrawRoom();
   if (MS.view === "brief" && MS.brief) return msDrawBrief();
   if (MS.view === "esc" && MS.esc) return msDrawEsc();
-  $("app").innerHTML = SPIN;
-  msRun("home").then(function(h) { MS.h = h; MS.view = "hq"; if (S.tab === "mission") msDrawHq(); }, function(e) { $("app").innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+  msApp().innerHTML = SPIN;
+  msRun("home").then(function(h) { MS.h = h; MS.view = "hq"; if (msOn()) msDrawHq(); }, function(e) { msApp().innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
 }
 function msIsland() {
   var trees = [[150, 260], [330, 230], [430, 300], [300, 380], [600, 180], [120, 200], [520, 380]].map(function(p) { return '<g transform="translate(' + p[0] + ',' + p[1] + ')"><rect x="-3" y="0" width="6" height="22" fill="#8D6E63"/><circle r="16" cy="-2" fill="#43A047"/><circle r="11" cx="10" cy="6" fill="#5CB85C"/></g>'; }).join("");
@@ -7243,7 +7246,7 @@ function msDrawHq() {
   var cur = h.cur, nowCase = h.cases.filter(function(c) { return c.open && !c.done; })[0];
   var go = cur ? '<button class="ms-big" data-msgo="' + esc(String(cur.c)) + '">▶ Carry on · ' + esc(cur.title) + ', room ' + cur.r + '</button>'
     : nowCase ? '<button class="ms-big" data-msgo="' + nowCase.i + '">▶ ' + (h.done ? 'Next case: ' : 'Start: ') + esc(nowCase.title) + '</button>' : '<div class="ms-alldone">🏆 Every case this season is solved! A new season starts next month. Replay any case, or try a quick case.</div>';
-  $("app").innerHTML = '<div class="ms ms-hq"><div class="ms-head"><div><small>' + esc(h.season.name.toUpperCase()) + '</small><h1>Mission HQ</h1></div><span class="ms-chip" title="Torch batteries">🔦 ' + h.torch + '/' + h.torchMax + '</span><span class="ms-chip" title="Stars">⭐ ' + h.stars + '</span><span class="ms-chip" title="XP">⚡ ' + h.xp + '</span></div>' +
+  msApp().innerHTML = '<div class="ms ms-hq"><div class="ms-head"><div><small>' + esc(h.season.name.toUpperCase()) + '</small><h1>Mission HQ</h1></div><span class="ms-chip" title="Torch batteries">🔦 ' + h.torch + '/' + h.torchMax + '</span><span class="ms-chip" title="Stars">⭐ ' + h.stars + '</span><span class="ms-chip" title="XP">⚡ ' + h.xp + '</span></div>' +
     '<div class="ms-grid"><div class="ms-mapw"><div class="ms-map">' + msIsland() + pins + '</div></div><div class="ms-side">' +
     '<button class="ms-agent" data-msagent><span class="b">' + h.agent.e + '</span><span class="t"><b>Agent ' + esc(h.agent.a + " " + h.agent.n) + '</b><small>Rank ' + rk.n + ' · ' + esc(rk.name) + '</small><span class="bar"><i style="width:' + pct + '%"></i></span><small>' + (rk.next ? h.xp + ' / ' + rk.to + ' XP to ' + esc(rk.next) : h.xp + ' XP · top rank!') + '</small></span></button>' +
     tags + go + (h.preview ? '<div class="ms-note">👀 Teacher preview: you can play, nothing is saved.</div>' : '') +
@@ -7257,13 +7260,13 @@ function msAgentSheet() {
   var h = MS.h; sheet("Choose your agent", '<div class="ms-agents">' + h.agents.map(function(a) { return '<button data-msag="' + esc(a.n) + '" class="' + (a.n === h.agent.n ? 'on' : '') + '"><span>' + a.e + '</span><b>' + esc(a.a + " " + a.n) + '</b></button>'; }).join("") + '</div>');
 }
 function msStart(c, fresh) {
-  if (MS.busy) return; MS.busy = true; $("app").innerHTML = SPIN;
+  if (MS.busy) return; MS.busy = true; msApp().innerHTML = SPIN;
   msRun("start", { c: c, fresh: fresh ? 1 : 0 }).then(function(r) { MS.busy = false; MS.brief = r.brief; MS.brief.c = c; MS.room = r.room; MS.torch = r.torch; MS.last = null; MS.clue = ""; MS.view = r.brief.resumed ? "room" : "brief"; renderMissions(); },
     function(e) { MS.busy = false; flash(e.message, true); MS.view = "hq"; renderMissions(); });
 }
 function msDrawBrief() {
   var b = MS.brief;
-  $("app").innerHTML = '<div class="ms ms-brief"><div class="ms-sky"><button class="btn soft" data-msback>‹ HQ</button><button class="btn soft" data-mssay>🔊 Listen</button></div>' +
+  msApp().innerHTML = '<div class="ms ms-brief"><div class="ms-sky"><button class="btn soft" data-msback>‹ HQ</button><button class="btn soft" data-mssay>🔊 Listen</button></div>' +
     '<div class="ms-briefin"><div class="ms-speak"><span class="ms-bigemo">' + b.e + '</span><p>' + esc(b.story) + '</p></div>' +
     '<div class="ms-file"><span class="ms-ftag">CASE FILE</span><span class="ms-stamp">TOP SECRET</span><h2>🗝️ ' + esc(b.title) + '</h2><p>Each lock is a puzzle. Get it right first time for ⭐. Stuck? Use a 🔦 torch for a clue, and you can always finish.</p>' +
     '<div class="ms-rooms">' + b.rooms.map(function(r, i) { return '<span>' + r.e + ' ' + (i + 1) + '. ' + esc(r.name) + '</span>'; }).join("") + '</div><small>You can stop any time and carry on later.</small></div>' +
@@ -7301,13 +7304,13 @@ function msDrawRoom() {
     body += '<div class="ms-qcard ms-open"><div class="ms-qn">🔓 ' + (word ? 'The letters are mixed up. What’s the password?' : 'Every dial is set. Type the code, from dial 1 to dial ' + R.len + '.') + '</div>' +
       '<form class="ms-ans" data-msunlock><input class="input" id="msCode" autocomplete="off" autocapitalize="characters" maxlength="' + R.len + '" placeholder="' + (word ? "The password" : "The code") + '" aria-label="' + (word ? "Password" : "Code") + '" style="text-transform:uppercase;letter-spacing:.3em;font-weight:800"><button class="btn primary" type="submit">🔓 Open</button></form><div id="msHint"></div></div>';
   }
-  $("app").innerHTML = '<div class="ms ms-roomv"><div class="ms-hud"><button class="btn soft" data-msback>‹ HQ</button><span class="ms-chip">' + R.e + ' Room ' + (R.r + 1) + ' of ' + R.n + '</span><span class="ms-chip">⭐ ' + stars + '</span><span class="ms-chip">🔦 <span class="ms-batt">' + [0, 1, 2, 3, 4].map(function(i) { return '<i class="' + (i < MS.torch ? 'on' : '') + '"></i>'; }).join("") + '</span></span></div>' +
+  msApp().innerHTML = '<div class="ms ms-roomv"><div class="ms-hud"><button class="btn soft" data-msback>‹ HQ</button><span class="ms-chip">' + R.e + ' Room ' + (R.r + 1) + ' of ' + R.n + '</span><span class="ms-chip">⭐ ' + stars + '</span><span class="ms-chip">🔦 <span class="ms-batt">' + [0, 1, 2, 3, 4].map(function(i) { return '<i class="' + (i < MS.torch ? 'on' : '') + '"></i>'; }).join("") + '</span></span></div>' +
     '<div class="ms-roomg"><div class="ms-scene"><h2>' + esc(R.name) + '<small>' + esc(b.title || "") + '</small></h2><svg viewBox="0 0 400 250" aria-hidden="true">' + (MS_SCENE[R.kind] || MS_SCENE.dial)(b.e) + '</svg>' + lock + '</div><div class="ms-work">' + body + '</div></div></div>';
   var a = $("msAns") || $("msCode"); if (a && window.innerWidth > 700) a.focus();
 }
 function msDrawEsc() {
   var r = MS.esc, st = r.stars ? '<div class="ms-stars">' + "⭐⭐⭐".slice(0, r.stars * 2) + '<span class="dim">' + "⭐⭐⭐".slice(0, (3 - r.stars) * 2) + '</span></div>' : '';
-  $("app").innerHTML = '<div class="ms ms-esc"><div class="ms-conf"></div><div class="ms-escin"><div class="ms-trophy">' + r.e + '🎉</div><div class="ms-ecard">' + st + '<h2>Escaped! ' + esc(r.title) + '</h2><p>' + esc(r.win) + '</p>' +
+  msApp().innerHTML = '<div class="ms ms-esc"><div class="ms-conf"></div><div class="ms-escin"><div class="ms-trophy">' + r.e + '🎉</div><div class="ms-ecard">' + st + '<h2>Escaped! ' + esc(r.title) + '</h2><p>' + esc(r.win) + '</p>' +
     '<div class="ms-rew"><div><b>+' + r.xp + '</b>bonus XP</div><div><b>' + r.firsts + '/' + r.total + '</b>right first time</div>' + (r.stamp ? '<div><b>+1</b>group stamp</div>' : '<div><b>' + esc(r.rank.name.split(" ")[0]) + '</b>' + 'rank</div>') + '</div>' +
     (r.next ? '<div class="ms-next">🔓 <b>Unlocked:</b> ' + esc(r.next.e + " " + r.next.title) + '. Play now, or come back any time.</div>' : '') +
     (r.total > r.firsts ? '<div class="ms-next">📒 Locks you missed are in <b>My mistakes</b>, ready to try again.</div>' : '') +
@@ -7315,10 +7318,10 @@ function msDrawEsc() {
 }
 function msAfter(res) {
   if (res.room) MS.room = res.room; if (res.torch != null) MS.torch = res.torch;
-  if (S.tab === "mission") msDrawRoom();
+  if (msOn()) msDrawRoom();
 }
 document.addEventListener("click", function(ev) {
-  if (S.tab !== "mission") return;
+  if (!msOn()) return;
   var t = ev.target.closest && ev.target.closest("[data-msgo],[data-msback],[data-msenter],[data-mspick],[data-mstorch],[data-msagent],[data-msag],[data-mssay]"); if (!t || t.disabled) return;
   if (t.hasAttribute("data-msag")) { var d0 = busy(t); return msRun("agent", { n: t.getAttribute("data-msag") }).then(function(h) { d0(); closeSheet(); MS.h = h; msDrawHq(); }, function(e) { d0(); flash(e.message, true); }); }
   if (t.hasAttribute("data-msagent")) return msAgentSheet();
@@ -7331,7 +7334,7 @@ document.addEventListener("click", function(ev) {
     msRun("check", { pick: t.getAttribute("data-mspick"), answer: t.getAttribute("data-mspick") }).then(function(r) { MS.busy = false; MS.last = r.done ? r : null; if (r.done) MS.clue = ""; msAfter(r); }, function(e) { MS.busy = false; flash(e.message, true); }); }
 });
 document.addEventListener("submit", function(ev) {
-  if (S.tab !== "mission") return; var f = ev.target;
+  if (!msOn()) return; var f = ev.target;
   if (f.hasAttribute("data-msform")) { ev.preventDefault(); var v = ($("msAns") || {}).value || ""; if (!v.trim() || MS.busy) return; MS.busy = true; var b0 = busy(f.querySelector("button"));
     msRun("check", { answer: v }).then(function(r) { MS.busy = false; b0(); MS.last = r.done ? r : null; if (r.done) MS.clue = ""; msAfter(r); }, function(e) { MS.busy = false; b0(); flash(e.message, true); }); }
   if (f.hasAttribute("data-msunlock")) { ev.preventDefault(); var c = ($("msCode") || {}).value || ""; if (!c.trim() || MS.busy) return; MS.busy = true; var b1 = busy(f.querySelector("button"));
@@ -7342,12 +7345,30 @@ document.addEventListener("submit", function(ev) {
       flash("🔓 The door opens…"); msAfter(r);
     }, function(e) { MS.busy = false; b1(); flash(e.message, true); }); }
 });
-/* 🕹️ CYBER HACK SG: answer, open a loot box, hack a classmate or a bot. Play with bots any time, or host a class game.
-   The server makes and checks every question (no AI); this page polls every few seconds while a game is on. */
-var CH = { subj: "math", view: "home", home: null, room: null, my: null, av: "", pw: "", pend: null, reveal: null, res: null, hack: null, timer: 0, left: 0, tick: 0, busy: false, hostMins: 5, hostBots: 0, botMins: 3, botN: 4, hostSubj: "" };
+/* 🎮 GAMES tab: 🕵️ Missions and 🕹️ Cyber Hack in one place. */
+var GM = { sec: "" };
+function gmHas() { var h = S.home || {}; return { mission: !!h.missions, hack: (!!h.math && featOn("mathprac")) || (!!h.english && (featOn("gram") || featOn("vocab"))) }; }
+function gmSecs() { var g = gmHas(), L = []; if (g.mission) L.push({ k: "mission", t: '<span class="i">🕵️</span> <span>Missions</span>' }); if (g.hack) L.push({ k: "hack", t: '<span class="i">🕹️</span> <span>Cyber Hack</span>' }); return L; }
+function gmBody() { return $("gmBody"); }
+function renderGames() {
+  $("topTitle").textContent = "Games"; var L = gmSecs();
+  if (!L.length) { $("app").innerHTML = '<div class="msg">No games are switched on right now.</div>'; return; }
+  if (!GM.sec) GM.sec = store("gmsec"); if (!L.some(function(x) { return x.k === GM.sec; })) GM.sec = L[0].k;
+  $("app").innerHTML = (L.length > 1 ? '<div class="en-sw gm-sw" role="tablist" aria-label="Games">' + L.map(function(x) { return '<button role="tab" aria-selected="' + (GM.sec === x.k) + '" class="' + (GM.sec === x.k ? 'on' : '') + '" data-gmsec="' + x.k + '">' + x.t + '</button>'; }).join("") + '</div>' : '') + '<div id="gmBody"></div>';
+  if (GM.sec === "mission") renderMissions(); else renderCyber();
+}
+document.addEventListener("click", function(ev) { if (S.tab !== "games") return; var t = ev.target.closest && ev.target.closest("[data-gmsec]"); if (!t) return; GM.sec = t.getAttribute("data-gmsec"); store("gmsec", GM.sec); renderGames(); });
+/* 🕹️ CYBER HACK SG (Games tab): answer, open a loot box, hack a classmate or a bot. ⚡ The game plays on this device:
+   the questions come once with "home" (Maths AO1 facts, English Grammar and Vocabulary), so answers and loot boxes are
+   instant. Bot games never wait for the server. Class games send the score every 2 seconds; only hacks go to the server,
+   so nobody's password ever reaches another pupil's page until they're the one being hacked. */
+var CH = { view: "home", home: null, subj: "", av: "", pw: "", pwOpts: [], pend: null, room: null, G: null, timer: 0, busy: false, hostMins: 5, hostBots: 0, botMins: 3, botN: 4, hostSubj: "", di: { m: 0, e: 0 } };
 var CH_BOXES = [["🧧", "Red packet"], ["☕", "Kopi cup"], ["🍱", "Tingkat"]];
+var CH_LBOTS = [["Kaya Bot", "🥥"], ["Satay Bot", "🍢"], ["Laksa Bot", "🍜"], ["Kopi Bot", "☕"], ["Chendol Bot", "🍧"], ["Otah Bot", "🐟"], ["Prata Bot", "🫓"], ["Rojak Bot", "🥗"]];
 function chRun(action, data) { return call("cyberApi", action, JSON.stringify(data || {})); }
 function chStore(k, v) { try { if (v === undefined) return localStorage.getItem(STORE + "ch_" + k) || ""; localStorage.setItem(STORE + "ch_" + k, v); } catch (e) { return ""; } }
+function chR(L) { return L[Math.floor(Math.random() * L.length)]; }
+function chShuf(L) { L = L.slice(); for (var i = L.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = L[i]; L[i] = L[j]; L[j] = t; } return L; }
 function chSkyline() {
   return '<svg class="ch-sky" viewBox="0 0 800 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><g fill="#0E3B6E">' +
     '<rect x="0" y="70" width="40" height="50"/><rect x="44" y="55" width="34" height="65"/><rect x="82" y="78" width="28" height="42"/>' +
@@ -7358,120 +7379,202 @@ function chSkyline() {
     '<rect x="540" y="50" width="36" height="70"/><rect x="580" y="64" width="30" height="56"/><rect x="614" y="44" width="40" height="76"/><rect x="658" y="72" width="30" height="48"/><rect x="692" y="58" width="44" height="62"/><rect x="740" y="76" width="60" height="44"/></g>' +
     '<g fill="#3CFFA0" opacity=".55">' + [[50, 64], [58, 80], [620, 54], [630, 70], [700, 66], [712, 84], [548, 60], [590, 74]].map(function(p) { return '<rect x="' + p[0] + '" y="' + p[1] + '" width="5" height="5"/>'; }).join("") + '</g></svg>';
 }
-function renderCyber(subj) {
-  CH.subj = subj; if (!CH.hostSubj) CH.hostSubj = subj;
-  var head = subj === "math" ? maSwitch() : enSwitch();
-  $("app").innerHTML = head + '<div class="ch" id="chBox">' + SPIN + '</div>';
-  if (CH.room && (CH.view === "play" || CH.view === "lobby" || CH.view === "over")) { chDraw(); chPoll(true); return; }
-  chRun("home").then(function(h) { CH.home = h; if (!CH.av) CH.av = chStore("av") || h.avatars[0]; CH.view = "home"; chDraw(); }, function(e) { var b = $("chBox"); if (b) b.innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
+function chOn() { return !!$("chBox") && S.tab === "games" && GM.sec === "hack"; }
+function chSubOpts() { var H = CH.home || {}, s = H.subjects || {}, d = H.deck || { m: [], e: [] }, m = !!s.math && d.m.length > 0, e = !!(s.gram || s.vocab) && d.e.length > 0;
+  return [["math", "Maths"], ["english", "English"], ["mix", "Both"]].filter(function(x) { return x[0] === "mix" ? m && e : x[0] === "math" ? m : e; }); }
+function renderCyber() {
+  var box = gmBody(); if (!box) return;
+  box.innerHTML = '<div class="ch" id="chBox">' + SPIN + '</div>';
+  if (CH.G && (CH.view === "play" || CH.view === "lobby" || CH.view === "over")) { chDraw(); if (CH.G.live) chPoll(true); return; }
+  if (CH.home && CH.view === "setup") return chDraw();
+  chRun("home").then(function(h) {
+    CH.home = h; CH.di = { m: 0, e: 0 }; if (!CH.av) CH.av = chStore("av") || h.avatars[0];
+    var o = chSubOpts(), has = function(k) { return o.some(function(x) { return x[0] === k; }); };
+    if (!has(CH.subj)) CH.subj = has("mix") ? "mix" : o.length ? o[0][0] : "math"; if (!has(CH.hostSubj)) CH.hostSubj = CH.subj;
+    CH.view = "home"; if (chOn()) chDraw();
+  }, function(e) { var b = $("chBox"); if (b) b.innerHTML = '<div class="msg err">' + esc(e.message) + '</div>'; });
 }
-function chPwGen(n) { var H = CH.home || {}, W = H.pwWords || ["Kopi"], P = H.pwSeps || ["#"], out = [], r = function(L) { return L[Math.floor(Math.random() * L.length)]; };
-  while (out.length < n) { var p = r(W) + r(P) + (10 + Math.floor(Math.random() * 90)); if (out.indexOf(p) < 0) out.push(p); } return out; }
+function chPwGen(n) { var H = CH.home || {}, W = H.pwWords || ["Kopi"], P = H.pwSeps || ["#"], out = [];
+  while (out.length < n) { var p = chR(W) + chR(P) + (10 + Math.floor(Math.random() * 90)); if (out.indexOf(p) < 0) out.push(p); } return out; }
+/** Five look-alikes for a bot's password (the same rules the server uses for classmates). */
+function chDecoys(real) {
+  var H = CH.home || {}, W = H.pwWords || ["Kopi"], P = H.pwSeps || ["#"], m = /^([A-Za-z]+)(.)(\d\d)$/.exec(real) || ["", "Kopi", "#", "47"], w = m[1], s = m[2], d = m[3], out = [];
+  var add = function(x) { if (x !== real && out.indexOf(x) < 0) out.push(x); }, dd = function() { var n; do { n = String(10 + Math.floor(Math.random() * 90)); } while (n === d); return n; };
+  var alike = W.filter(function(x) { return x !== w && (x.charAt(0) === w.charAt(0) || Math.abs(x.length - w.length) <= 1); });
+  add(w + s + d.charAt(1) + d.charAt(0)); add(w + s + dd()); add(w + chR(P.filter(function(x) { return x !== s; })) + d); add(chR(alike.length ? alike : W) + s + d); add(chR(alike.length ? alike : W) + s + dd());
+  for (var k = 0; out.length < 5 && k < 60; k++) add(chR([w + chR(P) + dd(), chR(W) + s + d]));
+  return out.slice(0, 5);
+}
 function chSetup() { CH.pwOpts = chPwGen(4); if (CH.pwOpts.indexOf(CH.pw) < 0) CH.pw = CH.pwOpts[0]; CH.view = "setup"; chDraw(); }
-function chOn() { return !!$("chBox") && ((S.tab === "math" && MA.sec === "hack") || (S.tab === "compo" && enSec() === "hack")); }
-function chSeg(key, list, cur) { return '<div class="ch-seg">' + list.map(function(x) { return '<button data-chset="' + key + ':' + x[0] + '" class="' + (String(cur) === String(x[0]) ? 'on' : '') + '">' + x[1] + '</button>'; }).join("") + '</div>'; }
+function chSeg(key, list, cur) { return '<div class="ch-seg">' + list.map(function(x) { return '<button data-chset="' + key + ':' + x[0] + '" class="' + (String(cur) === String(x[0]) ? 'on' : '') + '" aria-pressed="' + (String(cur) === String(x[0])) + '">' + x[1] + '</button>'; }).join("") + '</div>'; }
+/* ---- the game on this device ---- */
+function chEff() { var G = CH.G; return Math.max(0, Math.round(G.c - (G.stolen || 0))); }
+function chNextQ() {
+  var G = CH.G, k = G.subj === "mix" ? (G.n % 2 ? "e" : "m") : G.subj === "english" ? "e" : "m", D = CH.home.deck, L = D[k] && D[k].length ? D[k] : D[k === "m" ? "e" : "m"];
+  if (CH.di[k] >= L.length) { CH.di[k] = 0; D[k] = L = chShuf(L); }
+  G.q = L[CH.di[k]++]; G.n++; G.phase = "q";
+}
+function chNewGame(live, subj, mins) {
+  CH.G = { live: live, subj: subj, n: 0, c: 0, stolen: 0, ok: 0, tot: 0, hacks: 0, phase: "q", feed: [], bots: [], end: Date.now() + mins * 60000, nextHack: Date.now() + 30000 + Math.random() * 15000 };
+  if (!live) CH.G.bots = chShuf(CH_LBOTS).slice(0, CH.pend.bots).map(function(b) { return { n: b[0], av: b[1], pw: chPwGen(1)[0], c: 0, every: 5 + Math.floor(Math.random() * 4), acc: 0.55 + Math.random() * 0.3, t: 0 }; });
+  chNextQ();
+}
+function chPlayers() {
+  var G = CH.G;
+  if (G.live && CH.room) { var P = CH.room.players.map(function(p) { return { n: p.n, av: p.av, c: p.me ? chEff() : p.c, bot: p.bot, me: p.me }; }); P.sort(function(a, b) { return b.c - a.c; }); P.forEach(function(p, i) { p.rank = i + 1; }); return P; }
+  var L = [{ n: "You", av: CH.av, c: chEff(), me: true }].concat(G.bots.map(function(b) { return { n: b.n, av: b.av, c: Math.round(b.c), bot: true }; }));
+  L.sort(function(a, b) { return b.c - a.c; }); L.forEach(function(p, i) { p.rank = i + 1; }); return L;
+}
+function chFeedAdd(s) { CH.G.feed.push({ s: s }); var f = $("chFeed"); if (f) f.innerHTML = chFeed(); }
+function chFeed() { var F = CH.G.live && CH.room ? CH.room.feed : CH.G.feed; return (F || []).slice(-8).reverse().map(function(f) { return '<div>' + esc(f.s) + '</div>'; }).join("") || '<div class="ch-sm">Hacks show up here.</div>'; }
+function chLb(P) { return P.slice(0, 10).map(function(p) { return '<div class="' + (p.me ? 'me' : '') + '"><i>' + p.rank + '</i><span>' + p.av + '</span><b>' + esc(p.n) + (p.bot ? ' <small>bot</small>' : '') + '</b><em>' + p.c + '</em></div>'; }).join(""); }
+function chLobbyChips() { return CH.room.players.map(function(p) { return '<span>' + p.av + ' ' + esc(p.n) + (p.bot ? ' 🤖' : '') + '</span>'; }).join(""); }
+function chOrd(n) { n = Number(n) || 0; return n % 10 === 1 && n % 100 !== 11 ? "st" : n % 10 === 2 && n % 100 !== 12 ? "nd" : n % 10 === 3 && n % 100 !== 13 ? "rd" : "th"; }
+function chClock(s) { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); }
+function chLeft() { return CH.G ? Math.max(0, Math.round((CH.G.end - Date.now()) / 1000)) : 0; }
+function chBoxText(x) { return x.k === "gain" ? "+" + x.v : x.k === "x2" ? "Double!" : x.k === "hack" ? "💻 HACK" : "Empty"; }
+function chHud() {
+  var cr = $("chCrypto"); if (cr) cr.textContent = chEff();
+  var P = chPlayers(), me = P.filter(function(p) { return p.me; })[0] || {}, rk = $("chRank"); if (rk) rk.textContent = (me.rank || "-") + "/" + P.length;
+  var lb = $("chLb"); if (lb) lb.innerHTML = CH.view === "lobby" ? chLobbyChips() : chLb(P);
+  var st = document.querySelector("[data-chstart]"); if (st && CH.room) st.textContent = "🚀 Start the game (" + CH.room.players.length + " in)";
+  var fd = $("chFeed"); if (fd) fd.innerHTML = chFeed();
+  var t = $("chTime"); if (t) { t.textContent = chClock(chLeft()); t.classList.toggle("low", chLeft() <= 30); }
+}
 function chDraw() {
-  var b = $("chBox"); if (!b) return; var v = CH.view;
+  var b = $("chBox"); if (!b) return; var v = CH.view, H = CH.home;
   if (v === "home") {
-    var h = CH.home, sub = h.subjects, rooms = h.rooms || [];
-    b.innerHTML = '<div class="ch-hero">' + chSkyline() + '<div class="ch-logo"><small>CLASS HUB ARCADE</small><b>CYBER HACK <span>SG</span></b><p>Answer right · open a loot box · hack your rivals’ passwords</p></div></div>' +
-      '<div class="ch-cards"><div class="ch-card"><h3>🤖 Play with bots</h3><p>Race Kaya Bot, Satay Bot and friends. Any time, on your own.</p>' + chSeg("botMins", [[3, "3 min"], [5, "5 min"], [8, "8 min"]], CH.botMins) + chSeg("botN", [[3, "3 bots"], [5, "5 bots"]], CH.botN) + '<button class="ch-go" data-chplay="bots">▶ Play now</button></div>' +
-      '<div class="ch-card"><h3>👥 Host a class game</h3><p>Classmates join from their Class Hub. You start it when everyone’s in.</p>' + chSeg("hostSubj", [["math", "Maths"], ["english", "English"], ["mix", "Both"]].filter(function(x) { return x[0] === "mix" ? sub.math && (sub.gram || sub.vocab) : x[0] === "math" ? sub.math : (sub.gram || sub.vocab); }), CH.hostSubj) + chSeg("hostMins", [[5, "5 min"], [8, "8 min"], [10, "10 min"]], CH.hostMins) + chSeg("hostBots", [[0, "No bots"], [2, "+2 bots"], [4, "+4 bots"]], CH.hostBots) + '<button class="ch-go" data-chplay="live">🎮 Host a game</button></div>' +
+    var rooms = H.rooms || [], so = chSubOpts();
+    b.innerHTML = '<div class="ch-hero">' + chSkyline() + '<div class="ch-logo"><small>CLASS HUB ARCADE</small><b>CYBER HACK <span>SG</span></b><p>Quick facts · open a loot box · hack your rivals’ passwords</p></div></div>' +
+      '<div class="ch-cards"><div class="ch-card"><h3>🤖 Play with bots</h3><p>Race Kaya Bot, Satay Bot and friends. Any time, on your own.</p>' + (so.length > 1 ? chSeg("subj", so, CH.subj) : '') + chSeg("botMins", [[3, "3 min"], [5, "5 min"], [8, "8 min"]], CH.botMins) + chSeg("botN", [[3, "3 bots"], [5, "5 bots"]], CH.botN) + '<button class="ch-go" data-chplay="bots">▶ Play now</button></div>' +
+      '<div class="ch-card"><h3>👥 Host a class game</h3><p>Classmates join from their Class Hub. You start it when everyone’s in.</p>' + (so.length > 1 ? chSeg("hostSubj", so, CH.hostSubj) : '') + chSeg("hostMins", [[5, "5 min"], [8, "8 min"], [10, "10 min"]], CH.hostMins) + chSeg("hostBots", [[0, "No bots"], [2, "+2 bots"], [4, "+4 bots"]], CH.hostBots) + '<button class="ch-go" data-chplay="live">🎮 Host a game</button></div>' +
       '<div class="ch-card"><h3>🔑 Join a game</h3>' + (rooms.length ? '<div class="ch-rooms">' + rooms.map(function(r) { return '<button data-chjoin="' + esc(r.code) + '"><b>' + esc(r.host) + '’s game</b><small>' + esc(r.code) + ' · ' + (r.subj === "math" ? "Maths" : r.subj === "english" ? "English" : "Maths + English") + ' · ' + r.n + ' playing' + (r.started ? ' · started' : '') + '</small><span>Join ›</span></button>'; }).join("") + '</div>' : '<p>No class games open right now.</p>') +
-      '<form class="ch-code" data-chcode><input class="input" id="chCode" maxlength="6" placeholder="Game code" autocomplete="off" autocapitalize="characters" aria-label="Game code"><button class="ch-go sm" type="submit">Join</button></form><button class="ch-link" data-chrefresh>↻ Look for games again</button></div></div>';
+      '<form class="ch-code" data-chcode><input class="input" id="chCode" maxlength="6" placeholder="Game code" autocomplete="off" autocapitalize="characters" aria-label="Game code"><button class="ch-go sm" type="submit">Join</button></form><button class="ch-link" data-chrefresh>↻ Look for games again</button></div></div>' +
+      '<p class="ch-sm" style="margin-top:10px">⚡ Maths questions are quick facts to know by heart: times tables, division facts, × and ÷ by 10, 100 and 1000, changing units, fractions, decimals and percentages, and more.</p>';
     return;
   }
   if (v === "setup") {
-    var H = CH.home;
-    b.innerHTML = '<div class="ch-panel"><h2>Pick your hacker</h2><div class="ch-avs">' + H.avatars.map(function(a) { return '<button data-chav="' + a + '" class="' + (a === CH.av ? 'on' : '') + '">' + a + '</button>'; }).join("") + '</div>' +
+    b.innerHTML = '<div class="ch-panel"><h2>Pick your hacker</h2><div class="ch-avs">' + H.avatars.map(function(a) { return '<button data-chav="' + a + '" class="' + (a === CH.av ? 'on' : '') + '" aria-label="Avatar ' + a + '">' + a + '</button>'; }).join("") + '</div>' +
       '<h2>Pick your secret password</h2><p class="ch-sm">Hackers must pick your password from six that look almost the same, so look carefully and remember it!</p><div class="ch-pws">' + CH.pwOpts.map(function(p) { return '<button data-chpw="' + esc(p) + '" class="' + (p === CH.pw ? 'on' : '') + '">' + esc(p) + '</button>'; }).join("") + '</div><button class="ch-link" data-chpwnew>🎲 Show me other passwords</button>' +
       '<div class="ch-row"><button class="ch-ghost" data-chhome>‹ Back</button><button class="ch-go" data-chready>' + (CH.pend.mode === "join" ? '🔑 Join the game' : '▶ Let’s go') + '</button></div></div>';
     return;
   }
-  var R = CH.room, my = CH.my || {};
+  var R = CH.room, G = CH.G;
   if (v === "lobby") {
-    b.innerHTML = '<div class="ch-panel ch-lobby"><small>GAME CODE</small><div class="ch-bigcode">' + esc(R.code) + '</div><p class="ch-sm">Classmates: Class Hub → ' + (R.subj === "english" ? "English" : "Math") + ' → Cyber Hack → Join.</p>' +
-      '<div class="ch-chips" id="chLb">' + chLobbyChips() + '</div>' + (R.isHost ? '<button class="ch-go" data-chstart' + (R.players.length > 1 ? '' : '') + '>🚀 Start the game (' + R.players.length + ' in)</button>' : '<div class="ch-wait">⏳ Waiting for ' + esc(R.host) + ' to start…</div>') + '<button class="ch-ghost" data-chleave>Leave</button></div>';
+    b.innerHTML = '<div class="ch-panel ch-lobby"><small>GAME CODE</small><div class="ch-bigcode">' + esc(R.code) + '</div><p class="ch-sm">Classmates: Class Hub → Games → Cyber Hack → Join.</p>' +
+      '<div class="ch-chips" id="chLb">' + chLobbyChips() + '</div>' + (R.isHost ? '<button class="ch-go" data-chstart>🚀 Start the game (' + R.players.length + ' in)</button>' : '<div class="ch-wait">⏳ Waiting for ' + esc(R.host) + ' to start…</div>') + '<button class="ch-ghost" data-chleave>Leave</button></div>';
     return;
   }
   if (v === "over") {
-    var P = R.players, me = P.filter(function(p) { return p.me; })[0] || {}, top = P.slice(0, 3);
+    var P = chPlayers(), me = P.filter(function(p) { return p.me; })[0] || {}, top = P.slice(0, 3);
     b.innerHTML = '<div class="ch-panel ch-over"><h2>⏰ Time’s up!</h2><div class="ch-podium">' + [1, 0, 2].map(function(i) { var p = top[i]; return p ? '<div class="pd p' + (i + 1) + '"><span class="av">' + p.av + '</span><b>' + esc(p.n) + '</b><small>' + p.c + ' 🪙</small><i>' + (i + 1) + '</i></div>' : '<div></div>'; }).join("") + '</div>' +
-      '<p class="ch-me">You came <b>' + (me.rank || "?") + chOrd(me.rank) + '</b> with <b>' + (me.c || 0) + ' crypto</b>. ' + (my.tot ? my.ok + ' of ' + my.tot + ' answers right.' : '') + '</p><div class="ch-lb">' + chLb(P) + '</div><div class="ch-row"><button class="ch-ghost" data-chhome>🏠 Arcade</button><button class="ch-go" data-chplay="' + (R.mode === "bots" ? "bots" : "live") + '">🔁 Play again</button></div></div>';
+      '<p class="ch-me">You came <b>' + (me.rank || "?") + chOrd(me.rank) + '</b> with <b>' + (me.c || 0) + ' crypto</b>. ' + (G.tot ? G.ok + ' of ' + G.tot + ' answers right' + (G.hacks ? ', ' + G.hacks + ' hack' + (G.hacks === 1 ? '' : 's') : '') + '.' : '') + '</p><div class="ch-lb">' + chLb(P) + '</div><div class="ch-row"><button class="ch-ghost" data-chhome>🏠 Arcade</button><button class="ch-go" data-chplay="' + (G.live ? "live" : "bots") + '">🔁 Play again</button></div></div>';
     return;
   }
-  // play
-  var main = "";
-  if (CH.reveal) main = '<div class="ch-panel"><h2>' + CH.reveal.head + '</h2><div class="ch-boxes rev">' + CH.reveal.all.map(function(x, i) { return '<div class="ch-box ' + (i === CH.reveal.i ? 'pick' : 'dim') + '"><span>' + CH_BOXES[i][0] + '</span><b>' + chBoxText(x) + '</b></div>'; }).join("") + '</div><button class="ch-go" data-chnext>Next question ›</button></div>';
-  else if (CH.hack) main = '<div class="ch-panel ch-hres ' + (CH.hack.ok ? 'ok' : 'no') + '"><div class="ch-term">' + (CH.hack.ok ? 'ACCESS GRANTED' : 'ACCESS DENIED') + '</div><p>' + (CH.hack.ok ? 'You hacked ' + esc(CH.hack.av + ' ' + CH.hack.n) + ' for <b>' + CH.hack.amt + '</b> crypto!' : 'Wrong password. ' + esc(CH.hack.n) + ' kept their crypto.') + '</p><button class="ch-go" data-chnext>Next question ›</button></div>';
-  else if (CH.res && !CH.res.ok) main = '<div class="ch-panel ch-wrong"><h2>❌ Not this time</h2><p>The answer was <b>' + esc(CH.res.right) + '</b>.</p>' + (CH.res.w ? '<p class="ch-sm">' + esc(CH.res.w) + '</p>' : '') + '<button class="ch-go" data-chnext>Next question ›</button></div>';
-  else if (my.phase === "q" && my.q) { var q = my.q;
-    main = '<div class="ch-panel ch-qp">' + (q.ctx ? '<div class="ch-ctx">' + esc(q.ctx) + '</div>' : '') + (q.fig ? '<div class="mp-figbox ch-fig">' + q.fig + '</div>' : '') + '<div class="ch-q">' + (q.s === "v" ? 'Which is closest in meaning to <b>“' + esc(q.q) + '”</b>?' : esc(q.q)) + '</div>' +
-      '<div class="ch-opts">' + q.o.map(function(o, i) { return '<button class="o' + i + '" data-chans="' + i + '">' + esc(o) + '</button>'; }).join("") + '</div></div>'; }
-  else if (my.phase === "box") main = '<div class="ch-panel"><h2>✅ Correct! Choose a loot box</h2><div class="ch-boxes">' + CH_BOXES.map(function(x, i) { return '<button class="ch-box" data-chbox="' + i + '"><span>' + x[0] + '</span><b>' + x[1] + '</b></button>'; }).join("") + '</div></div>';
-  else if (my.phase === "hack") main = '<div class="ch-panel"><h2>💻 HACK! Who do you want to hack?</h2>' + (my.targets.length ? '<div class="ch-targets">' + my.targets.map(function(t) { return '<button data-chtarget="' + esc(t.id) + '"><span class="av">' + t.av + '</span><b>' + esc(t.n) + '</b><small>' + t.c + ' 🪙</small></button>'; }).join("") + '</div>' : '<p>Nobody has any crypto to take yet.</p>') + '<button class="ch-ghost" data-chskip>Skip</button></div>';
-  else if (my.phase === "guess") main = '<div class="ch-panel"><div class="ch-term sm">&gt; CRACKING ' + esc(my.guess.n.toUpperCase()) + '…</div><h2>Which is ' + esc(my.guess.av + " " + my.guess.n) + '’s password?</h2><div class="ch-pws big">' + my.guess.opts.map(function(p) { return '<button data-chguess="' + esc(p) + '">' + esc(p) + '</button>'; }).join("") + '</div></div>';
-  else main = '<div class="ch-panel">' + SPIN + '</div>';
-  var meP = R.players.filter(function(p) { return p.me; })[0] || {};
-  b.innerHTML = '<div class="ch-hud"><span class="ch-av">' + (my.av || CH.av) + '</span><span class="ch-crypto"><small>CRYPTO</small><b id="chCrypto">' + (my.c || 0) + '</b></span><span class="ch-stat"><small>RANK</small><b id="chRank">' + (meP.rank || "-") + '/' + R.players.length + '</b></span><span class="ch-stat"><small>TIME</small><b id="chTime">' + chClock(CH.left) + '</b></span></div>' +
-    '<div class="ch-play"><div class="ch-main">' + main + '</div><div class="ch-side"><h3>🏆 Leaderboard</h3><div class="ch-lb" id="chLb">' + chLb(R.players) + '</div><h3>📡 Live feed</h3><div class="ch-feed" id="chFeed">' + chFeed(R.feed) + '</div></div></div>';
+  var main = "", ph = G.phase, q = G.q;
+  if (ph === "q") main = '<div class="ch-panel ch-qp"><span class="ch-tag">' + (q.s === "m" ? "MATHS FACT" : q.s === "v" ? "VOCABULARY" : "GRAMMAR") + '</span><div class="ch-q">' + (q.s === "v" ? 'Which is closest in meaning to <b>“' + esc(q.q) + '”</b>?' : esc(q.q)) + '</div>' +
+    '<div class="ch-opts">' + q.o.map(function(o, i) { return '<button class="o' + i + '" data-chans="' + i + '">' + esc(o) + '</button>'; }).join("") + '</div></div>';
+  else if (ph === "wrong") main = '<div class="ch-panel ch-wrong"><h2>❌ Not this time</h2><p>The answer was <b>' + esc(q.o[q.a]) + '</b>.</p>' + (q.w ? '<p class="ch-sm">' + esc(q.w) + '</p>' : '') + '<button class="ch-go" data-chnext>Next question ›</button></div>';
+  else if (ph === "box") main = '<div class="ch-panel"><h2>✅ Correct! Choose a loot box</h2><div class="ch-boxes">' + CH_BOXES.map(function(x, i) { return '<button class="ch-box" data-chbox="' + i + '"><span>' + x[0] + '</span><b>' + x[1] + '</b></button>'; }).join("") + '</div></div>';
+  else if (ph === "reveal") main = '<div class="ch-panel"><h2>' + G.revHead + '</h2><div class="ch-boxes rev">' + G.boxes.map(function(x, i) { return '<div class="ch-box ' + (i === G.picked ? 'pick' : 'dim') + '"><span>' + CH_BOXES[i][0] + '</span><b>' + chBoxText(x) + '</b></div>'; }).join("") + '</div><button class="ch-go" data-chnext>Next question ›</button></div>';
+  else if (ph === "wait") main = '<div class="ch-panel"><div class="ch-term sm">&gt; ' + esc(G.waitMsg || "CONNECTING…") + '</div>' + SPIN + '</div>';
+  else if (ph === "hack") main = '<div class="ch-panel"><h2>💻 HACK! Who do you want to hack?</h2>' + (G.targets.length ? '<div class="ch-targets">' + G.targets.map(function(t) { return '<button data-chtarget="' + esc(t.id) + '"><span class="av">' + t.av + '</span><b>' + esc(t.n) + '</b><small>' + t.c + ' 🪙</small></button>'; }).join("") + '</div>' : '<p>Nobody has any crypto to take yet.</p>') + '<button class="ch-ghost" data-chskip>Skip</button></div>';
+  else if (ph === "guess") main = '<div class="ch-panel"><div class="ch-term sm">&gt; CRACKING ' + esc(G.target.n.toUpperCase()) + '…</div><h2>Which is ' + esc(G.target.av + " " + G.target.n) + '’s password?</h2><div class="ch-pws big">' + G.opts.map(function(p) { return '<button data-chguess="' + esc(p) + '">' + esc(p) + '</button>'; }).join("") + '</div></div>';
+  else if (ph === "hacked") main = '<div class="ch-panel ch-hres ' + (G.hres.ok ? 'ok' : 'no') + '"><div class="ch-term">' + (G.hres.ok ? 'ACCESS GRANTED' : 'ACCESS DENIED') + '</div><p>' + (G.hres.ok ? 'You hacked ' + esc(G.target.av + ' ' + G.target.n) + ' for <b>' + G.hres.amt + '</b> crypto!' : 'Wrong password. ' + esc(G.target.n) + ' kept their crypto.') + '</p><button class="ch-go" data-chnext>Next question ›</button></div>';
+  var P2 = chPlayers(), meP = P2.filter(function(p) { return p.me; })[0] || {};
+  b.innerHTML = '<div class="ch-hud"><span class="ch-av">' + CH.av + '</span><span class="ch-crypto"><small>CRYPTO</small><b id="chCrypto">' + chEff() + '</b></span><span class="ch-stat"><small>RANK</small><b id="chRank">' + (meP.rank || "-") + '/' + P2.length + '</b></span><span class="ch-stat"><small>TIME</small><b id="chTime">' + chClock(chLeft()) + '</b></span></div>' +
+    '<div class="ch-play"><div class="ch-main">' + main + '</div><div class="ch-side"><h3>🏆 Leaderboard</h3><div class="ch-lb" id="chLb">' + chLb(P2) + '</div><h3>📡 Live feed</h3><div class="ch-feed" id="chFeed">' + chFeed() + '</div></div></div>';
 }
-function chOrd(n) { n = Number(n) || 0; return n % 10 === 1 && n % 100 !== 11 ? "st" : n % 10 === 2 && n % 100 !== 12 ? "nd" : n % 10 === 3 && n % 100 !== 13 ? "rd" : "th"; }
-function chClock(s) { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); }
-function chBoxText(x) { return x.k === "gain" ? "+" + x.v : x.k === "x2" ? "Double!" : x.k === "hack" ? "💻 HACK" : "Empty"; }
-function chLb(P) { return P.slice(0, 10).map(function(p) { return '<div class="' + (p.me ? 'me' : '') + '"><i>' + p.rank + '</i><span>' + p.av + '</span><b>' + esc(p.n) + (p.bot ? ' <small>bot</small>' : '') + '</b><em>' + p.c + '</em></div>'; }).join(""); }
-function chFeed(F) { return (F || []).slice().reverse().map(function(f) { return '<div>' + esc(f.s) + '</div>'; }).join("") || '<div class="ch-sm">Hacks show up here.</div>'; }
-function chLobbyChips() { return CH.room.players.map(function(p) { return '<span>' + p.av + ' ' + esc(p.n) + (p.bot ? ' 🤖' : '') + '</span>'; }).join(""); }
-function chApply(r) {
-  var was = CH.room && CH.room.state; if (r.room) CH.room = r.room; if (r.my) CH.my = r.my;
-  if (CH.room) { CH.left = CH.room.left; CH.view = CH.room.state === "lobby" ? "lobby" : CH.room.state === "over" ? "over" : "play"; }
-  if (r.my && r.my.news) flash("🚨 " + r.my.news, true);
-  if (CH.view === "over" && was !== "over") { CH.reveal = null; CH.hack = null; CH.res = null; }
+/** Class games: the room from the server (players, feed, time), and this device's score sent with each poll. */
+function chApplyRoom(r) {
+  var G = CH.G, was = CH.view; if (!r || !r.room) return; CH.room = r.room;
+  if (r.my) { G.stolen = r.my.stolen || 0; if (r.my.news) { flash("🚨 " + r.my.news, true); var cr = $("chCrypto"); if (cr) { cr.classList.add("down"); setTimeout(function() { cr.classList.remove("down"); }, 900); } } }
+  if (r.room.state === "play") { G.end = Date.now() + r.room.left * 1000; if (was === "lobby") { CH.view = "play"; G.end = Date.now() + r.room.left * 1000; } }
+  else if (r.room.state === "over") CH.view = "over"; else CH.view = "lobby";
+  return CH.view !== was;
 }
 function chPoll(now) {
-  clearTimeout(CH.timer); if (!CH.room || CH.view === "over") return;
+  clearTimeout(CH.timer); var G = CH.G; if (!G || !G.live || !CH.room || CH.view === "over") return;
   CH.timer = setTimeout(function() {
-    if (!chOn() || !CH.room || document.hidden) { if (chOn()) chPoll(); return; }
-    var view0 = CH.view, phase0 = CH.my && CH.my.phase;
-    chRun("poll", { code: CH.room.code }).then(function(r) {
-      chApply(r); if (!chOn()) return;
-      if (CH.view !== view0 || (CH.my && CH.my.phase) !== phase0 && !CH.reveal && !CH.hack && !CH.res) chDraw();
-      else { var lb = $("chLb"); if (lb) lb.innerHTML = CH.view === "lobby" ? chLobbyChips() : chLb(CH.room.players); var fd = $("chFeed"); if (fd) fd.innerHTML = chFeed(CH.room.feed); var cr = $("chCrypto"); if (cr) cr.textContent = CH.my.c; var rk = $("chRank"); var me = CH.room.players.filter(function(p) { return p.me; })[0]; if (rk && me) rk.textContent = me.rank + "/" + CH.room.players.length;
-        if (CH.view === "lobby") { var st = document.querySelector("[data-chstart]"); if (st) st.textContent = "🚀 Start the game (" + CH.room.players.length + " in)"; } }
-      chPoll();
-    }, function() { chPoll(); });
-  }, now ? 50 : 2500);
+    if (!CH.G || !CH.G.live || CH.view === "over") return;
+    if (document.hidden && CH.view !== "play") return chPoll();
+    var G2 = CH.G, act = CH.view === "play" ? "sync" : "poll";
+    chRun(act, { code: CH.room.code, c: G2.c, ok: G2.ok, tot: G2.tot }).then(function(r) { if (CH.G !== G2) return; var moved = chApplyRoom(r); if (chOn()) { if (moved) chDraw(); else chHud(); } chPoll(); }, function() { chPoll(); });
+  }, now ? 30 : 2000);
 }
-setInterval(function() { if (!CH.room || CH.view !== "play" || !chOn()) return; CH.left = Math.max(0, CH.left - 1); var t = $("chTime"); if (t) { t.textContent = chClock(CH.left); t.classList.toggle("low", CH.left <= 30); } if (CH.left <= 0) chPoll(true); }, 1000);
+/** The clock, and the bots in a game with bots: they answer every few seconds and sometimes hack you. */
+setInterval(function() {
+  var G = CH.G; if (!G || CH.view !== "play") return;
+  if (!G.live) {
+    G.bots.forEach(function(b) { b.t++; if (b.t >= b.every) { b.t = 0; if (Math.random() < b.acc) { var x = Math.random(); b.c = x < 0.06 ? b.c * 2 + 20 : b.c + chR([15, 20, 30, 40, 50, 75, 100]); } } });
+    if (Date.now() >= G.nextHack) { G.nextHack = Date.now() + 22000 + Math.random() * 25000; var bot = chR(G.bots);
+      if (chEff() > 50 && Math.random() < 0.55) { var amt = Math.max(1, Math.round(chEff() * (0.08 + Math.random() * 0.12))); G.stolen += amt; bot.c += amt; chFeedAdd(bot.av + " " + bot.n + " hacked You for " + amt); if (chOn()) { flash("🚨 " + bot.av + " " + bot.n + " hacked you for " + amt + " crypto!", true); var cr = $("chCrypto"); if (cr) { cr.classList.add("down"); setTimeout(function() { cr.classList.remove("down"); }, 900); } } }
+      else { var vs = G.bots.filter(function(x) { return x !== bot && x.c > 40; }); if (vs.length) { var v = chR(vs), a2 = Math.round(v.c * 0.12); v.c -= a2; bot.c += a2; chFeedAdd(bot.av + " " + bot.n + " hacked " + v.n + " for " + a2); } } }
+    if (chLeft() <= 0) { CH.view = "over"; if (chOn()) chDraw(); return; }
+  } else if (chLeft() <= 0) { chPoll(true); }
+  if (chOn()) chHud();
+}, 1000);
 function chAct(action, data, btn) {
-  if (CH.busy) return; CH.busy = true; var done = busy(btn);
+  if (CH.busy) return Promise.reject(new Error("busy")); CH.busy = true; var done = busy(btn);
   data = data || {}; if (CH.room) data.code = data.code || CH.room.code;
   return chRun(action, data).then(function(r) { CH.busy = false; done(); return r; }, function(e) { CH.busy = false; done(); flash(e.message, true); throw e; });
 }
+function chRoll() { return [0, 1, 2].map(function() { var x = Math.random(); return x < 0.22 ? { k: "hack" } : x < 0.3 ? { k: "x2" } : x < 0.36 ? { k: "none" } : { k: "gain", v: chR([10, 20, 25, 30, 40, 50, 60, 75, 100, 125, 150]) }; }); }
+function chStop() { clearTimeout(CH.timer); CH.G = null; CH.room = null; }
 document.addEventListener("click", function(ev) {
   if (!chOn()) return;
   var t = ev.target.closest && ev.target.closest("[data-chset],[data-chplay],[data-chjoin],[data-chrefresh],[data-chav],[data-chpw],[data-chpwnew],[data-chhome],[data-chready],[data-chstart],[data-chleave],[data-chans],[data-chbox],[data-chtarget],[data-chskip],[data-chguess],[data-chnext]"); if (!t || t.disabled) return;
-  if (t.hasAttribute("data-chset")) { var kv = t.getAttribute("data-chset").split(":"); CH[kv[0]] = /^\d+$/.test(kv[1]) ? Number(kv[1]) : kv[1]; return chDraw(); }
-  if (t.hasAttribute("data-chrefresh")) return renderCyber(CH.subj);
-  if (t.hasAttribute("data-chplay")) { var m = t.getAttribute("data-chplay"); CH.pend = m === "bots" ? { mode: "bots", subj: CH.subj, mins: CH.botMins, bots: CH.botN } : { mode: "live", subj: CH.hostSubj || CH.subj, mins: CH.hostMins, bots: CH.hostBots }; CH.room = null; if (!CH.home) return renderCyber(CH.subj); return chSetup(); }
-  if (t.hasAttribute("data-chjoin")) { CH.pend = { mode: "join", code: t.getAttribute("data-chjoin") }; return chSetup(); }
-  if (t.hasAttribute("data-chpwnew")) { var keep = CH.pw; CH.pwOpts = chPwGen(4); CH.pw = CH.pwOpts[0]; return chDraw(); }
-  if (t.hasAttribute("data-chav")) { CH.av = t.getAttribute("data-chav"); chStore("av", CH.av); return chDraw(); }
-  if (t.hasAttribute("data-chpw")) { CH.pw = t.getAttribute("data-chpw"); return chDraw(); }
-  if (t.hasAttribute("data-chhome")) { clearTimeout(CH.timer); CH.room = null; CH.my = null; CH.view = "home"; CH.reveal = CH.hack = CH.res = null; return renderCyber(CH.subj); }
-  if (t.hasAttribute("data-chready")) { var P = CH.pend, req = P.mode === "join" ? chAct("join", { code: P.code, av: CH.av, pw: CH.pw }, t) : chAct("create", { mode: P.mode, subj: P.subj, mins: P.mins, bots: P.bots, av: CH.av, pw: CH.pw }, t);
-    return req.then(function(r) { CH.reveal = CH.hack = CH.res = null; chApply(r); chDraw(); chPoll(); }, function() {}); }
-  if (t.hasAttribute("data-chstart")) return chAct("start", {}, t).then(function(r) { chApply(r); chDraw(); chPoll(); }, function() {});
-  if (t.hasAttribute("data-chleave")) { chAct("leave", {}, t).catch(function() {}); clearTimeout(CH.timer); CH.room = null; CH.view = "home"; return renderCyber(CH.subj); }
-  if (t.hasAttribute("data-chans")) { var i = +t.getAttribute("data-chans"); Array.prototype.forEach.call(document.querySelectorAll("[data-chans]"), function(b) { b.disabled = true; }); t.classList.add("sel");
-    return chAct("answer", { pick: i }).then(function(r) { var res = r.res; chApply(r); var btns = document.querySelectorAll("[data-chans]"); if (btns[res.a]) btns[res.a].classList.add("right"); if (!res.ok) t.classList.add("wrong");
-      setTimeout(function() { CH.res = res.ok ? null : res; if (chOn()) chDraw(); }, res.ok ? 450 : 700); }, function() { Array.prototype.forEach.call(document.querySelectorAll("[data-chans]"), function(b) { b.disabled = false; }); }); }
-  if (t.hasAttribute("data-chbox")) { var bi = +t.getAttribute("data-chbox");
-    return chAct("box", { i: bi }, t).then(function(r) { var x = r.reveal.all[bi]; chApply(r); if (x.k === "hack") { chDraw(); return; } CH.reveal = { i: bi, all: r.reveal.all, head: x.k === "gain" ? "🪙 +" + x.v + " crypto!" : x.k === "x2" ? "🧧 Double! Your crypto doubled!" : "☕ Empty cup… better luck next time" }; chDraw(); }, function() {}); }
-  if (t.hasAttribute("data-chskip")) return chAct("hack", { skip: 1 }, t).then(function(r) { chApply(r); chDraw(); }, function() {});
-  if (t.hasAttribute("data-chtarget")) return chAct("hack", { target: t.getAttribute("data-chtarget") }, t).then(function(r) { chApply(r); chDraw(); }, function() {});
-  if (t.hasAttribute("data-chguess")) return chAct("guess", { pw: t.getAttribute("data-chguess") }, t).then(function(r) { chApply(r); CH.hack = r.hack; chDraw(); }, function() {});
-  if (t.hasAttribute("data-chnext")) { CH.reveal = CH.hack = CH.res = null; return chDraw(); }
+  var A = function(k) { return t.getAttribute(k); }, G = CH.G;
+  if (t.hasAttribute("data-chset")) { var kv = A("data-chset").split(":"); CH[kv[0]] = /^\d+$/.test(kv[1]) ? Number(kv[1]) : kv[1]; return chDraw(); }
+  if (t.hasAttribute("data-chrefresh")) { CH.view = "home"; return renderCyber(); }
+  if (t.hasAttribute("data-chplay")) { var m = A("data-chplay"); chStop(); CH.pend = m === "bots" ? { mode: "bots", subj: CH.subj, mins: CH.botMins, bots: CH.botN } : { mode: "live", subj: CH.hostSubj || CH.subj, mins: CH.hostMins, bots: CH.hostBots }; if (!CH.home) { CH.view = "home"; return renderCyber(); } return chSetup(); }
+  if (t.hasAttribute("data-chjoin")) { CH.pend = { mode: "join", code: A("data-chjoin") }; return chSetup(); }
+  if (t.hasAttribute("data-chpwnew")) { CH.pwOpts = chPwGen(4); CH.pw = CH.pwOpts[0]; return chDraw(); }
+  if (t.hasAttribute("data-chav")) { CH.av = A("data-chav"); chStore("av", CH.av); return chDraw(); }
+  if (t.hasAttribute("data-chpw")) { CH.pw = A("data-chpw"); return chDraw(); }
+  if (t.hasAttribute("data-chhome")) { if (G && G.live && CH.view === "lobby") chRun("leave", { code: CH.room.code }).catch(function() {}); chStop(); CH.view = "home"; return renderCyber(); }
+  if (t.hasAttribute("data-chready")) {
+    var P = CH.pend;
+    if (P.mode === "bots") { chNewGame(false, P.subj, P.mins); CH.view = "play"; chFeedAdd("🚀 The game has started!"); return chDraw(); }   // ⚡ no waiting: bot games play here
+    var req = P.mode === "join" ? chAct("join", { code: P.code, av: CH.av, pw: CH.pw }, t) : chAct("create", { mode: "live", subj: P.subj, mins: P.mins, bots: P.bots, av: CH.av, pw: CH.pw }, t);
+    return req.then(function(r) { chNewGame(true, r.room.subj, r.room.mins); CH.room = r.room; CH.view = "lobby"; chApplyRoom(r); chDraw(); chPoll(); }, function() {});
+  }
+  if (t.hasAttribute("data-chstart")) return chAct("start", {}, t).then(function(r) { chApplyRoom(r); chDraw(); chPoll(); }, function() {});
+  if (t.hasAttribute("data-chleave")) { chRun("leave", { code: CH.room.code }).catch(function() {}); chStop(); CH.view = "home"; return renderCyber(); }
+  if (!G || CH.view !== "play") return;
+  if (t.hasAttribute("data-chans") && G.phase === "q") {
+    var i = +A("data-chans"), ok = i === G.q.a, btns = document.querySelectorAll("[data-chans]");
+    Array.prototype.forEach.call(btns, function(x) { x.disabled = true; }); if (btns[G.q.a]) btns[G.q.a].classList.add("right"); if (!ok) t.classList.add("wrong");
+    G.tot++; if (ok) { G.ok++; G.boxes = chRoll(); }
+    setTimeout(function() { if (CH.G !== G || CH.view !== "play") return; G.phase = ok ? "box" : "wrong"; if (chOn()) chDraw(); }, ok ? 280 : 650); return;
+  }
+  if (t.hasAttribute("data-chbox") && G.phase === "box") {
+    var bi = +A("data-chbox"), bx = G.boxes[bi]; G.picked = bi;
+    if (bx.k === "hack") {
+      if (!G.live) { G.targets = G.bots.filter(function(x) { return x.c > 0; }).map(function(x) { return { id: x.n, n: x.n, av: x.av, c: Math.round(x.c), bot: true }; }); G.phase = "hack"; return chDraw(); }
+      G.phase = "wait"; G.waitMsg = "CONNECTING TO THE NETWORK…"; chDraw();
+      return chRun("hack", { code: CH.room.code, local: 1 }).then(function(r) { if (CH.G !== G) return; G.targets = r.targets || []; G.phase = "hack"; if (r.room) chApplyRoom(r); if (chOn()) chDraw(); }, function(e) { flash(e.message, true); if (CH.G !== G) return; chNextQ(); if (chOn()) chDraw(); });
+    }
+    if (bx.k === "gain") { G.c += bx.v; G.revHead = "🪙 +" + bx.v + " crypto!"; }
+    else if (bx.k === "x2") { var add = Math.max(chEff(), 20); G.c += add; G.revHead = "🧧 Double! +" + add + " crypto"; if (!G.live && add >= 200) chFeedAdd(CH.av + " You opened a 🧧 double!"); }
+    else G.revHead = "☕ Empty cup… better luck next time";
+    G.phase = "reveal"; return chDraw();
+  }
+  if (t.hasAttribute("data-chskip")) { chNextQ(); return chDraw(); }
+  if (t.hasAttribute("data-chtarget") && G.phase === "hack") {
+    var tg = G.targets.filter(function(x) { return x.id === A("data-chtarget"); })[0]; if (!tg) return;
+    if (!G.live) { var bt = G.bots.filter(function(x) { return x.n === tg.id; })[0]; G.target = { id: bt.n, n: bt.n, av: bt.av, bot: bt }; G.opts = chShuf([bt.pw].concat(chDecoys(bt.pw))); }
+    else { G.target = { id: tg.id, n: tg.n, av: tg.av }; G.opts = tg.opts; }
+    G.phase = "guess"; return chDraw();
+  }
+  if (t.hasAttribute("data-chguess") && G.phase === "guess") {
+    var g = A("data-chguess");
+    if (!G.live) { var bb = G.target.bot, hit = g === bb.pw, amt = 0; if (hit && bb.c > 0) { amt = Math.max(1, Math.round(bb.c * (0.1 + Math.random() * 0.15))); bb.c -= amt; G.c += amt; G.hacks++; chFeedAdd(CH.av + " You hacked " + bb.n + " for " + amt); } G.hres = { ok: hit && amt > 0, amt: amt }; G.phase = "hacked"; return chDraw(); }
+    G.phase = "wait"; G.waitMsg = "CRACKING " + G.target.n.toUpperCase() + "…"; chDraw();
+    return chRun("guess", { code: CH.room.code, target: G.target.id, pw: g }).then(function(r) { if (CH.G !== G) return; var h = r.hack || {}; if (h.ok) { G.c += h.amt; G.hacks++; } G.hres = { ok: !!h.ok, amt: h.amt || 0 }; G.phase = "hacked"; if (r.room) chApplyRoom(r); if (chOn()) chDraw(); },
+      function(e) { flash(e.message, true); if (CH.G !== G) return; chNextQ(); if (chOn()) chDraw(); });
+  }
+  if (t.hasAttribute("data-chnext")) { chNextQ(); return chDraw(); }
 });
 document.addEventListener("submit", function(ev) { if (!chOn() || !ev.target.hasAttribute("data-chcode")) return; ev.preventDefault(); var c = ($("chCode").value || "").trim().toUpperCase(); if (!c) return; CH.pend = { mode: "join", code: c }; chSetup(); });
 /** 📖 Comprehension: the comprehension screens (the same page the teacher uses) in a frame, signed in as this pupil. */
@@ -7520,7 +7623,6 @@ function renderCompo() {
   if (enSec() === "exam") return renderExam();
   if (enSec() === "dict") return renderDict();
   if (enSec() === "story") return renderStory();
-  if (enSec() === "hack") return renderCyber("english");
   if (!CW.st && !(S.home && S.home.preview)) { var cwc = devGet("cw"); if (cwc && cwc.tasks) CW.st = cwc; }   // ⚡ show this device's copy straight away
   if (!CW.st) $("app").innerHTML = SPIN;
   if (CW.busy) return cwWorking(CW.step || 1);
@@ -8781,7 +8883,7 @@ document.addEventListener("change", function(e) {
 })();
 
 var MA_SECTIONS = [{ k: "buddy", t: '<span class="i">🦉</span> <span>Maths Buddy</span>' }, { k: "model", t: '<span class="i">📊</span> <span>Model drawing</span>' }, { k: "sls", t: '<span class="i">🏫</span> <span>SLS</span>' }];
-var SLS_URL = "https://vle.learning.moe.edu.sg/login";
+var SLS_URL = "https://vle.learning.moe.edu.sg/login", KOOBITS_URL = "https://member.koobits.com/";
 var MA = { sec: "", model: null, shown: 1, photo: null, q: "", level: "", busy: false, status: "", revealed: false, g: 0, tries: 0, fb: null };
 var MA_SAMPLE = { sample: true, question: "Ali had 3 times as many stickers as Ben. Together they had 240 stickers. How many stickers did Ali have?", heuristic: "Part-whole (units)",
   models: [{ title: "", bars: [{ name: "Ali", parts: [{ value: 3, divisions: 3, label: "", kind: "known" }], right: "?" }, { name: "Ben", parts: [{ value: 1, divisions: 1, label: "", kind: "known" }], right: "" }], total: { label: "240", from: 0, to: 1 } }],
@@ -8796,6 +8898,7 @@ function renderMath() {
   $("topTitle").textContent = "Math Assistant";
   if (!MA.model) { try { MA.model = JSON.parse(store("mamodel") || "null"); } catch (e) {} if (!MA.model) MA.model = MA_SAMPLE; MA.shown = 0; MA.g = 0; MA.tries = 0; MA.fb = null; }
   if (!MA.level) MA.level = store("malevel") || (/^P\d/.test(S.home.className || "") ? S.home.className.slice(0, 2) : "P5");
+  if (MA.sec === "hack") { MA.sec = ""; GM.sec = "hack"; return go("games"); }
   var msl = maSections(); if (!msl.some(function(x) { return x.k === MA.sec; })) MA.sec = msl[0].k;
   if (MA.sec === "exam") return renderExam();
   var sw = maSwitch();
@@ -8803,7 +8906,6 @@ function renderMath() {
   if (MA.sec === "buddy") { $("app").innerHTML = sw + maBuddyView() + '<div style="height:24px"></div>'; return; }
   if (MA.sec === "koobits") MA.sec = "sls";
   if (MA.sec === "sls") { $("app").innerHTML = sw + maSlsView(); return; }
-  if (MA.sec === "hack") return renderCyber("math");
   $("app").innerHTML = sw + maModelView() + '<div style="height:24px"></div>';
 }
 function maModelView() {
@@ -8829,12 +8931,16 @@ function maModelView() {
       (m.answer && done ? (MA.revealed ? '<div class="ma-ans">✅ ' + esc(m.answer) + '</div>' : '<button class="btn soft" id="maAns">Check my answer</button>') : '') + '</div>' : '') +
     '<p class="cw-tip">Check the model matches the question. If something looks wrong, draw it your way and ask ' + esc(S.home.teacher || 'your teacher') + '.</p></div></div>';
 }
-/** 🏫 SLS (Student Learning Space): MOE's sign-in can't be shown inside another website, so this opens the real SLS login page. */
+/** 🏫 SLS (Student Learning Space) and KooBits: their sign-in pages can't be shown inside another website, so these buttons open the real login pages in a new tab. */
 function maSlsView() {
   return '<div class="sls"><div class="sls-top"><div class="sls-logo">SLS</div><div><b>Student Learning Space</b><span>Your lessons and assignments from MOE’s SLS.</span></div></div>' +
     '<a class="sls-go" href="' + SLS_URL + '" target="_blank" rel="noopener">🔐 Log in to SLS <span>opens in a new tab</span></a>' +
     '<ol class="sls-steps"><li>Tap <b>Log in to SLS</b>.</li><li>Log in the way your school taught you (your SLS username and password, or Singpass if your school uses it).</li><li>When you’re done, come back to this tab: your Class Hub is still here.</li></ol>' +
-    '<p class="cw-tip">Forgot your SLS password? Ask ' + esc(S.home.teacher || 'your teacher') + '. Never share your password with a friend.</p></div>';
+    '<p class="cw-tip">Forgot your SLS password? Ask ' + esc(S.home.teacher || 'your teacher') + '. Never share your password with a friend.</p></div>' +
+    '<div class="sls"><div class="sls-top"><div class="sls-logo kb">Koo<br>Bits</div><div><b>KooBits</b><span>Maths practice, quests and eBooks from KooBits.</span></div></div>' +
+    '<a class="sls-go" href="' + KOOBITS_URL + '" target="_blank" rel="noopener">🔐 Log in to KooBits <span>opens in a new tab</span></a>' +
+    '<ol class="sls-steps"><li>Tap <b>Log in to KooBits</b>.</li><li>Type the KooBits login ID and password your school gave you.</li><li>When you’re done, come back to this tab: your Class Hub is still here.</li></ol>' +
+    '<p class="cw-tip">Forgot your KooBits login? Ask ' + esc(S.home.teacher || 'your teacher') + '.</p></div>';
 }
 /** "Build the model with me": one question at a time; each right answer draws more of the model. */
 function maGuideHtml(m, lvl) {
