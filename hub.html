@@ -2257,7 +2257,9 @@
 window.SITE_COMP = true;   // 📖 Comprehension opens comprehension.html from this site
 </script>
 <script>
-var MODE = "hub", HUB_KEY = urlParam("k"), DASH_KEY = "", CLASS_NAME = "";
+var MODE = "hub", HUB_KEY = urlParam("k"), DASH_KEY = "", CLASS_NAME = "", CLASS_LABEL = "";
+if (/^<\?/.test(CLASS_LABEL)) CLASS_LABEL = "";
+function classWord() { return CLASS_LABEL || (S.home && S.home.classLabel) || "our class"; }   // the class itself (P5 Violet); CLASS_NAME is the app's name
 var PREVIEW = urlParam("pv");          // the teacher's "see it as students do" link
 var OPEN_AT = (function() { var m = /[?&]open=([^&#]*)/.exec(location.search); return m ? decodeURIComponent(m[1]).replace(/[^A-Za-z0-9:_-]/g, "") : ""; })();        // open one piece of work straight away (the Dashboard's 👀 Preview), e.g. "oral:or_123"
 var S = { token: "", me: "", short: "", home: null, tab: "wall", boardId: "", wall: null, imgs: {}, msgVer: "", msgs: [], albums: null, album: null, roster: [], pin: "", picked: "", pendingPhoto: null, askPhoto: null, timers: [] };
@@ -3777,7 +3779,7 @@ function orSay(text, rate, onWord, onDone) {
   OR.speaking = true;
   if (!ttsSay(text, { rate: rate || .9, whole: !!onWord, onWord: onWord, onDone: function() { OR.speaking = false; if (onDone) onDone(); }, onFail: function() { OR.speaking = false; if (onDone) onDone(); } })) OR.speaking = false;
 }
-function orLevel() { return OR.level || store("orlevel") || (/^P[3-6]/.test((S.home && S.home.className) || "") ? S.home.className.slice(0, 2) : "P5"); }
+function orLevel() { var c = (S.home && (S.home.classLabel || S.home.className)) || ""; return OR.level || store("orlevel") || (/^P[3-6]/.test(c) ? c.slice(0, 2) : "P5"); }
 function orTop() { return '<div id="enSwWrap">' + enSwitch() + '</div>'; }
 function renderOral() {
   window.scrollTo(0, 0);
@@ -3955,7 +3957,7 @@ function showTodayPopup(d) {
   }
   if (rest.length) html += '<div class="pop-sec">📅 Coming up &amp; news</div>' + rest.map(function(u) { return upCard(u, true); }).join("");
   html += '<div class="pop-btns">' + (d.todayLabel ? '<button class="btn ' + (todo.length ? 'soft' : 'primary') + ' big" id="popAll">📅 See everything</button>' : '') + '<button class="btn soft big" data-close>Got it 👍</button></div>';
-  sheet("Today in " + CLASS_NAME, html);
+  sheet("Today in " + classWord(), html);
   var b = $("popAll"); if (b) b.onclick = function() { closeSheet(); go("today"); };
 }
 function renderToday() {
@@ -3972,7 +3974,7 @@ function drawToday(d) {
   var groups = [], byDay = {};
   hw.forEach(function(x) { if (!byDay[x.due]) { byDay[x.due] = []; groups.push(x); } byDay[x.due].push(x); });
   var imp = d.updates.filter(function(u) { return u.pinned; }), dated = d.updates.filter(function(u) { return !u.pinned && u.date; }), news = d.updates.filter(function(u) { return !u.pinned && !u.date; });
-  var html = '<div class="cheer-hero"><span class="hand">' + esc(d.todayLabel) + '</span><h1>Today</h1><p>Your homework, and what’s coming up in ' + esc(CLASS_NAME) + '.</p></div>' + mwCard() + ttRibbon(d.lessons);
+  var html = '<div class="cheer-hero"><span class="hand">' + esc(d.todayLabel) + '</span><h1>Today</h1><p>Your homework, and what’s coming up in ' + esc(classWord()) + '.</p></div>' + mwCard() + ttRibbon(d.lessons);
   if (imp.length) html += '<div class="td-imp">' + imp.map(function(u) { return upCard(u); }).join("") + '</div>';
   html += '<div class="td-cols"><div class="td-main"><div class="bsec">📚 Homework</div>';
   if (subs.length > 1) html += '<div class="chips td-subs" role="tablist"><button class="chip' + (TODAY.subj ? '' : ' on') + '" data-subj="">All</button>' + subs.map(function(s) {
@@ -7573,7 +7575,7 @@ function gaRng(seed) {
     shuffle: function(L) { L = L.slice(); for (var i = L.length - 1; i > 0; i--) { var j = Math.floor(f() * (i + 1)), t = L[i]; L[i] = L[j]; L[j] = t; } return L; } };
   R.some = function(L, k) { return R.shuffle(L).slice(0, k); }; return R;
 }
-function gaR() { return GA.daily ? gaRng(gaHash(GA.h.day + ":" + GA.g + ":" + ((S.home && S.home.className) || ""))) : gaRng(Math.floor(Math.random() * 2147483646) + 1); }
+function gaR() { return GA.daily ? gaRng(gaHash(GA.h.day + ":" + GA.g + ":" + ((S.home && (S.home.classLabel || S.home.className)) || ""))) : gaRng(Math.floor(Math.random() * 2147483646) + 1); }
 function gaTheme(k) { return (GA.h.themes || []).filter(function(t) { return t.k === k; })[0]; }
 /** The words for this round: your weekly words first for today's puzzle, else the chosen topic. */
 function gaWords(R, minLen, maxLen, needClue) {
@@ -8298,7 +8300,7 @@ function renderComp() {
   $("app").innerHTML = '<div id="enSwWrap">' + enSwitch() + '</div><div class="cm-wrap">' + SPIN + '</div>';
   (window.SITE_COMP && !CMX.noFile ? Promise.resolve("file") : CMX.html ? Promise.resolve(CMX.html) : call("cmModule").then(function(h) { CMX.html = h; return h; })).then(function(h) {
     if (S.tab !== "compo" || enSec() !== "comp") return;
-    var boot = { view: "student", bridge: true, embed: true, student: { name: S.home.preview ? "Teacher preview" : S.home.me, cls: S.home.className || "" } };
+    var boot = { view: "student", bridge: true, embed: true, student: { name: S.home.preview ? "Teacher preview" : S.home.me, cls: S.home.classLabel || S.home.className || "" } };
     if (CMX.openPid) { boot.pid = CMX.openPid; CMX.openPid = ""; }
     var f = document.createElement("iframe");
     f.className = "cm-frame"; f.id = "cmFrame"; f.title = "Comprehension";
@@ -9086,7 +9088,7 @@ function mpCall(action, d) { return call("mathPracApi", action, JSON.stringify(d
 function mpOn(k) { return featOn(k) && !(MP.home && MP.home.on && MP.home.on[k] === false); }
 function mpDraw() { if (S.tab === "math" && MA.sec === "prac") { renderMath(); if (mpPaperOn()) padsInit(); } }
 function mpView() {
-  if (!MP.lv) { var slv = store("mplv") || (/^P[1-6]/.test((S.home && S.home.className) || "") ? S.home.className.slice(0, 2) : "P5"); MP.fd = /F$/.test(slv); MP.lv = slv.slice(0, 2); if (MP_LV.indexOf(MP.lv) < 0) MP.lv = "P5"; }
+  if (!MP.lv) { var slv = store("mplv") || (function(c) { return /^P[1-6]/.test(c) ? c.slice(0, 2) : "P5"; })((S.home && (S.home.classLabel || S.home.className)) || ""); MP.fd = /F$/.test(slv); MP.lv = slv.slice(0, 2); if (MP_LV.indexOf(MP.lv) < 0) MP.lv = "P5"; }
   if (MP.view === "round" && MP.round) return MP.round.step ? mpStepView() : mpRoundView();
   if (MP.view === "sprint" && MP.sp) return mpSprintView();
   if (MP.view === "result" && MP.res) return mpResultView();
@@ -9611,7 +9613,7 @@ var MA_SAMPLE = { sample: true, question: "Ali had 3 times as many stickers as B
 function renderMath() {
   $("topTitle").textContent = "Math Assistant";
   if (!MA.model) { try { MA.model = JSON.parse(store("mamodel") || "null"); } catch (e) {} if (!MA.model) MA.model = MA_SAMPLE; MA.shown = 0; MA.g = 0; MA.tries = 0; MA.fb = null; }
-  if (!MA.level) MA.level = store("malevel") || (/^P\d/.test(S.home.className || "") ? S.home.className.slice(0, 2) : "P5");
+  if (!MA.level) MA.level = store("malevel") || (function(c) { return /^P\d/.test(c) ? c.slice(0, 2) : "P5"; })(S.home.classLabel || S.home.className || "");
   if (MA.sec === "hack") { MA.sec = ""; GM.sec = "hack"; return go("games"); }
   var msl = maSections(); if (!msl.some(function(x) { return x.k === MA.sec; })) MA.sec = msl[0].k;
   if (MA.sec === "exam") return renderExam();
