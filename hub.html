@@ -10891,7 +10891,7 @@ start();
 /* 🌟 PEER SPOTLIGHT: spotlight a classmate (the teacher approves every one; the class never sees who sent it). */
 var PSP = { d: null, f: {}, busy: false };
 function psCta() {
-  if (!featOn("peerspot")) return "";
+  if (!featOn("peerspot") || !S.home || !S.home.peerSpot) return "";
   return '<div class="ps-cta"><div class="ps-cta-t"><b>🌟 Spotlight a classmate</b><span>Saw someone do something great? Tell ' + esc(S.home.teacher) + '. If it’s approved, they get <b>+2 stamps</b> and you get <b>+1</b>. Nobody in the class sees it was you.</span></div><button class="btn primary" data-psopen>Spotlight someone</button></div>';
 }
 function psOpen() {
