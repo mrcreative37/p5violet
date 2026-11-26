@@ -2672,7 +2672,7 @@ function clearBoots() {
    older version even after signing out and in. The server says which version is current (HUB_BUILD in Code.gs); when this
    page is older, it reloads itself past any saved copy (?v=…). In the middle of a paper it asks first: answers are saved,
    and after the update the paper opens again (tap "Carry on"). Tried once per version, so it can never loop. */
-var HUB_BUILD = "2026-11-26a";
+var HUB_BUILD = "2026-11-26b";
 function hubCheckBuild(b) {
   if (!b || b === HUB_BUILD || S.preview || store("upd_" + b)) return;
   var sitting = (EX.math && EX.math.sitting && EX.math.paper) || (EX.english && EX.english.sitting && EX.english.paper);
@@ -11805,12 +11805,13 @@ var Studio = (function() {
       G.mk = AC.createGain(); G.mk.gain.value = 1.7;
       G.hp.connect(G.mud); G.mud.connect(G.pres); G.pres.connect(G.air); G.air.connect(G.comp); G.comp.connect(G.mk); G.mk.connect(G.master);
       G.dry = AC.createGain(); G.dry.connect(G.master);
+      G.srDest = AC.createMediaStreamDestination();
       G.mus = AC.createGain(); G.duckG = AC.createGain(); G.fade = AC.createGain(); G.duckG.connect(G.fade); G.fade.connect(G.mus); G.mus.connect(G.master);
     }
     setClear(); attachAll();
     G.orig.gain.value = ST.sound.orig; G.vog.gain.value = ST.vo ? ST.vo.vol : 1; G.mus.gain.value = ST.music.vol;
   }
-  function setClear() { if (!G) return; try { G.voice.disconnect(); } catch (e) {} G.voice.connect(G.an); G.voice.connect(ST.sound.clear ? G.hp : G.dry); }
+  function setClear() { if (!G) return; try { G.voice.disconnect(); } catch (e) {} G.voice.connect(G.an); G.voice.connect(G.srDest); G.voice.connect(ST.sound.clear ? G.hp : G.dry); }
   function attachAll() {
     ST.clips.forEach(function(c) { if (c.src || c.srcFail) return; try { c.src = AC.createMediaElementSource(c.vid); c.src.connect(G.orig); } catch (e) { c.srcFail = true; } });
     if (ST.vo && !ST.vo.src) { try { ST.vo.src = AC.createMediaElementSource(ST.vo.el); ST.vo.src.connect(G.vog); } catch (e) {} }
@@ -11939,7 +11940,7 @@ var Studio = (function() {
     } else if (t === "subs") {
       var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
       html = '<div class="stu-row">' + (SR ? '<button class="stu-btn primary" data-s="autosubs">' + (ST.subsBusy ? '■ Stop listening' : '✨ Auto subtitles') + '</button>' : '') + '<button class="stu-btn soft" data-s="addsub">＋ Add a line here</button></div>' +
-        (SR ? '<p class="stu-note priv">🔒 ✨ Auto plays your video out loud and your device listens to write the words. Your browser uses its own speech service (Google or Apple) to do this. Nothing is saved there, and our class AI never hears it. Check the words after, and fix any mistakes.</p>' : '<p class="stu-note">This browser can’t write subtitles by itself, so type them: move the time bar and tap “Add a line here”.</p>') +
+        (SR ? '<p class="stu-note priv">🔒 ✨ Auto plays your video and your device writes down the words. Newer devices do this on the device itself. Others use the browser’s own speech service (Google or Apple), which doesn’t keep it. Our class AI never hears it. Check the words after, and fix any mistakes.</p>' : '<p class="stu-note">This browser can’t write subtitles by itself, so type them: move the time bar and tap “Add a line here”.</p>') +
         (ST.subsBusy ? '<div class="stu-card">👂 Listening… <span class="stu-note" data-v="heard"></span></div>' : '') +
         '<div class="stu-row">' + SSTY.map(function(s) { return chip("data-sstyle", s[0], s[1], ST.subStyle === s[0]); }).join("") + chip("data-spos", "bottom", "⬇ Bottom", ST.subPos === "bottom") + chip("data-spos", "top", "⬆ Top", ST.subPos === "top") + '</div>' +
         '<div class="stu-subs">' + ST.subs.map(function(s, i) { return '<div class="stu-sub"><button class="t" data-subgo="' + i + '" aria-label="Go to this line">' + fmt(s.t0) + '</button><input class="stu-in" data-in="subtext" data-i="' + i + '" maxlength="90" value="' + h(s.text) + '" aria-label="Subtitle line ' + (i + 1) + '"><button class="d" data-subdel="' + i + '" aria-label="Delete line ' + (i + 1) + '">✕</button></div>'; }).join("") + '</div>' +
@@ -11984,9 +11985,11 @@ var Studio = (function() {
     var SR = window.SpeechRecognition || window.webkitSpeechRecognition; if (!SR) return say("This browser can’t write subtitles by itself. Type them instead.", true);
     if (!ST.vo && ST.sound.orig < 0.05) return say("Turn on the sound from the video (🎙️ Sound) so your device can hear the words.", true);
     if (ST.subs.length && !ST.subsOk) { ST.subsOk = true; say("This replaces your subtitles. Tap ✨ Auto subtitles again to go ahead."); setTimeout(function() { if (ST) ST.subsOk = false; }, 4000); return; }
-    var r, segs = [], startAt = null, live = true, lastEnd = 0, mNow = function() { return Math.max(0, ST.t - introD()); };
+    try { ensureAudio(); unlock(); } catch (e) {}
+    var r, segs = [], startAt = null, live = true, lastEnd = 0, viaTrack = false, track = null, lang = ST.opts.lang || "en-SG", mNow = function() { return Math.max(0, ST.t - introD()); };
     try { r = new SR(); } catch (e) { return say("Subtitles can’t listen on this device. Type them instead.", true); }
-    r.lang = ST.opts.lang || "en-SG"; r.continuous = true; r.interimResults = true; r.maxAlternatives = 1;
+    r.continuous = true; r.interimResults = true; r.maxAlternatives = 1;
+    try { track = G.srDest.stream.getAudioTracks()[0] || null; } catch (e) {}
     r.onresult = function(e) {
       for (var i = e.resultIndex; i < e.results.length; i++) {
         var res = e.results[i]; if (startAt == null) startAt = Math.max(lastEnd, mNow() - 0.8);
@@ -11994,18 +11997,28 @@ var Studio = (function() {
         else { var hd = q('[data-v="heard"]'); if (hd) hd.textContent = "“" + String(res[0] && res[0].transcript || "").slice(-60) + "”"; }
       }
     };
-    r.onerror = function(e) { var er = e && e.error; if (/not-allowed|service-not-allowed|audio-capture|network/.test(er)) { live = false; if (ST && ST.subsBusy) { pause(); say(er === "network" ? "Auto subtitles need the internet. Type them instead." : "Your device couldn’t listen here (the microphone isn’t allowed). Type the subtitles instead.", true); } } };
-    r.onend = function() { if (live && ST && ST.playing && ST.mode === "listen") { try { r.start(); } catch (x) {} } };
-    try { r.start(); } catch (e) { return say("Subtitles can’t listen on this device. Type them instead.", true); }
-    ST.sr = r; ST.subsBusy = true; ST.tool = "subs"; panel();
-    play("listen", introD(), function() {
-      live = false; try { r.stop(); } catch (e) {}
-      setTimeout(function() {
-        if (!ST) return; ST.subsBusy = false; ST.sr = null;
-        if (segs.length) { segs.sort(function(a, b) { return a.t0 - b.t0; }); ST.subs = segs; say("✨ " + segs.length + " subtitle line" + (segs.length === 1 ? "" : "s") + ". Check them and fix any mistakes."); saveDraft(); }
-        else say("No words were heard. Turn the sound up, or type the subtitles.", true);
-        panel(); seek(introD());
-      }, 1200);
+    r.onerror = function(e) { var er = e && e.error; if (/not-allowed|service-not-allowed|audio-capture|network|language-not-supported/.test(er)) { live = false; if (ST && ST.subsBusy) { pause(); say(er === "network" ? "Auto subtitles need the internet on this device. Type them instead." : "Your device couldn’t listen here. Type the subtitles instead.", true); } } };
+    /* The video's sound goes straight to the speech recogniser (not out of the speaker and back into the microphone, which devices filter out). */
+    var begin = function() { if (track && track.readyState === "live") { try { r.start(track); viaTrack = true; return true; } catch (e) {} } try { r.start(); viaTrack = false; return true; } catch (e2) { return false; } };
+    r.onend = function() { if (live && ST && ST.playing && ST.mode === "listen") begin(); };
+    ST.subsBusy = true; ST.tool = "subs"; panel();
+    /* On-device recognition when the device has it: private (nothing leaves the device), free and works offline. */
+    var local = SR.available ? Promise.race([Promise.resolve(SR.available({ langs: [lang], processLocally: true })).then(function(a) { if (a === "available") return lang; return Promise.resolve(SR.available({ langs: ["en-US"], processLocally: true })).then(function(b) { return b === "available" ? "en-US" : ""; }); }).catch(function() { return ""; }), new Promise(function(res) { setTimeout(function() { res(""); }, 1500); })]) : Promise.resolve("");
+    local.then(function(loc) {
+      if (!ST || !ST.subsBusy) return;
+      r.lang = loc || lang; if (loc) { try { r.processLocally = true; } catch (e) {} }
+      if (!begin()) { ST.subsBusy = false; panel(); return say("Subtitles can’t listen on this device. Type them instead.", true); }
+      say(loc ? "👂 Listening on this device…" : viaTrack ? "👂 Listening…" : "👂 Listening… turn the volume up so your device can hear the video.");
+      ST.sr = r;
+      play("listen", introD(), function() {
+        live = false; try { r.stop(); } catch (e) {}
+        setTimeout(function() {
+          if (!ST) return; ST.subsBusy = false; ST.sr = null;
+          if (segs.length) { segs.sort(function(a, b) { return a.t0 - b.t0; }); ST.subs = segs; fixSubTimes(); say("✨ " + segs.length + " subtitle line" + (segs.length === 1 ? "" : "s") + ". Check them and fix any mistakes."); saveDraft(); }
+          else say("No words were heard. Speak clearly in the video or add a voice-over, or type the subtitles.", true);
+          panel(); seek(introD());
+        }, 1500);
+      });
     });
   }
   function pushSegs(segs, txt, a, b) {
